@@ -9,7 +9,7 @@ void i18n.use(initReactI18next).init({
         no: {
             translation: {
                 appName: 'SpillArena',
-                headerTitle: 'Tailwind Temagrunnlag',
+                headerTitle: 'Arenaen hvor spillene dine samles',
                 switchToLight: 'Bytt til lys',
                 switchToDark: 'Bytt til mørk',
                 statusLabel: 'Status',
@@ -22,12 +22,23 @@ void i18n.use(initReactI18next).init({
                 info: 'Info',
                 languageLabel: 'Språk',
                 developedBy: 'Utviklet av {{name}}',
+
+                // Spillspesifikke oversettelser
+                fleetBotTitle: 'FleetBot',
+                fleetBotDescription:
+                    'Battleship - plasser skipene dine og senk motstanderens flåte!',
+                hangBotTitle: 'HangBot',
+                hangBotDescription:
+                    'Hangman - gjett bokstavene riktig før det er for sent!',
+                scribbleBotTitle: 'ScribbleBot',
+                scribbleBotDescription:
+                    'Scribble.io - Der roboten tegner og du gjetter ordet!',
             },
         },
         en: {
             translation: {
                 appName: 'SpillArena',
-                headerTitle: 'Tailwind Theme Foundation',
+                headerTitle: 'The Arena where your games are gathered',
                 switchToLight: 'Switch to Light',
                 switchToDark: 'Switch to Dark',
                 statusLabel: 'Status',
@@ -40,6 +51,17 @@ void i18n.use(initReactI18next).init({
                 info: 'Info',
                 languageLabel: 'Language',
                 developedBy: 'Developed by {{name}}',
+
+                // Game-specific translations
+                fleetBotTitle: 'FleetBot',
+                fleetBotDescription:
+                    'Battleship - place your ships and sink the opponent\'s fleet!',
+                hangBotTitle: 'HangBot',
+                hangBotDescription:
+                    'Hangman - guess the letters right before it\'s too late!',
+                scribbleBotTitle: 'ScribbleBot',
+                scribbleBotDescription:
+                    'Scribble.io - Where the bot draws and you guess the word!',
             },
         },
     },
