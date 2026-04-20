@@ -12,14 +12,13 @@ const PageCard = ({ game, onClick }: Props) => {
     return (
         <div
             onClick={() => onClick(game.route)}
-            className="cursor-pointer rounded-2xl p-6 text-white shadow-md transition-transform hover:scale-105 hover:shadow-xl"
-            style={{ backgroundColor: undefined }}
+            className="cursor-pointer rounded-2xl border border-fuchsia-200/70 bg-white/85 p-6 shadow-md backdrop-blur-sm transition-transform hover:scale-105 hover:shadow-xl dark:border-fuchsia-900/60 dark:bg-slate-900/80"
         >
             <div className={`${game.color} mb-4 inline-flex rounded-xl p-3`}>
                 {LucideIcon && <LucideIcon size={28} />}
             </div>
-            <h2 className="mb-1 text-xl font-bold">{game.title}</h2>
-            <p className="text-sm text-gray-600">{game.description}</p>
+            <h2 className="mb-1 text-xl font-bold text-slate-900 dark:text-slate-100">{game.title}</h2>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{game.description}</p>
         </div>
     );
 };

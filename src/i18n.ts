@@ -21,6 +21,7 @@ void i18n.use(initReactI18next).init({
                 accent: 'Aksent',
                 info: 'Info',
                 languageLabel: 'Språk',
+                developedBy: 'Utviklet av {{name}}',
             },
         },
         en: {
@@ -38,6 +39,7 @@ void i18n.use(initReactI18next).init({
                 accent: 'Accent',
                 info: 'Info',
                 languageLabel: 'Language',
+                developedBy: 'Developed by {{name}}',
             },
         },
     },
