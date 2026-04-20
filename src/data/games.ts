@@ -1,23 +1,27 @@
+import FleetBotShowcase from "../assets/games/FleetBot.png";
+import HangBotShowcase from "../assets/games/HangBot.png";
+import ScribbleBotShowcase from "../assets/games/ScribbleBot.png";
+
 export type Game = {
     id: number;
     title: string;
-    description: string;
+    descriptionKey: string;
     icon: string; // Lucide-ikonnavn (PascalCase)
-    backgroundPicture?: string;
-    route: string;
+    showcase?: string;
     color: string;
     githubUrl: string;
     liveUrl: string;
+    disabled?: boolean;
 };
 
 export const games: Game[] = [
     {
         id: 1,
         title: "FleetBot",
-        description:
-            "Battleship - plasser skipene dine og senk motstanderens flåte!",
+        descriptionKey: "fleetBotDescription",
         icon: "Anchor",
-        route: "/fleet",
+        showcase: FleetBotShowcase,
+
         color: "bg-blue-600",
         githubUrl: "https://github.com/SpillArena/FleetBot",
         liveUrl: "https://fleetbot.pages.dev",
@@ -25,12 +29,22 @@ export const games: Game[] = [
     {
         id: 2,
         title: "HangBot",
-        description:
-            "Hangman - gjett bokstavene riktig før det er for sent!",
+        descriptionKey: "hangBotDescription",
         icon: "Type",
-        route: "/hang",
+        showcase: HangBotShowcase,
         color: "bg-red-500",
         githubUrl: "https://github.com/SpillArena/HangBot",
         liveUrl: "https://hangbot.pages.dev",
     },
+    {
+        id: 3,
+        title: "ScribbleBot",
+        descriptionKey: "scribbleBotDescription",
+        icon: "PenTool",
+        showcase: ScribbleBotShowcase,
+        color: "bg-green-500",
+        githubUrl: "https://github.com/SpillArena/ScribbleBot",
+        liveUrl: "",
+        disabled: true,
+    }
 ];

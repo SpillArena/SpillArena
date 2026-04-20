@@ -9,7 +9,7 @@ function App() {
   const currentLanguage = i18n.resolvedLanguage?.startsWith('en') ? 'en' : 'no'
 
   const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false
+    if (typeof window === 'undefined') return true
 
     if (
       document.documentElement.classList.contains('dark') ||
@@ -20,7 +20,7 @@ function App() {
     if (savedTheme === 'dark') return true
     if (savedTheme === 'light') return false
 
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
+    return true
   })
 
   useEffect(() => {
@@ -34,13 +34,12 @@ function App() {
     window.localStorage.setItem('language', language)
   }
 
-  const handleGameClick = (route: string) => {
-    const selectedGame = games.find((game) => game.route === route)
-    if (!selectedGame?.liveUrl) {
+  const handleGameClick = (liveUrl: string) => {
+    if (!liveUrl) {
       return
     }
 
-    window.open(selectedGame.liveUrl, '_blank', 'noopener,noreferrer')
+    window.open(liveUrl, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -48,9 +47,10 @@ function App() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
 
         {/* Header */}
-        <header className="flex items-center justify-between rounded-3xl border border-fuchsia-200/70 bg-white/70 px-5 py-4 shadow-[0_8px_40px_-20px_rgba(0,0,0,0.35)] backdrop-blur-md dark:border-fuchsia-900/60 dark:bg-slate-900/70">
+        <header className="flex items-center justify-between rounded-3xl border border-fuchsia-200/70 bg-white/70 px-6 py-5 shadow-[0_8px_40px_-20px_rgba(0,0,0,0.35)] backdrop-blur-md dark:border-fuchsia-900/60 dark:bg-slate-900/70 sm:px-8 sm:py-6">
           <div>
-            <h1 className="text-xl font-semibold sm:text-2xl">{t('appName')}</h1>
+            <h1 className="text-2xl font-semibold sm:text-3xl md:text-4xl">{t('appName')}</h1>
+            <p className="text-base text-slate-600 dark:text-slate-300 sm:text-lg">{t('headerTitle')}</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="relative">
@@ -58,7 +58,7 @@ function App() {
                 aria-label={t('languageLabel')}
                 value={currentLanguage}
                 onChange={(e) => changeLanguage(e.target.value as 'no' | 'en')}
-                className="appearance-none rounded-full border border-slate-300 bg-white pl-2 pr-9 py-2 text-xs font-semibold text-slate-700 transition dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 cursor-pointer"
+                className="appearance-none rounded-full border border-slate-300 bg-white pl-3 pr-10 py-2.5 text-sm font-semibold text-slate-700 transition dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 cursor-pointer"
               >
                 <option value="no">🇳🇴 Norsk</option>
                 <option value="en">🇬🇧 English</option>
@@ -72,7 +72,7 @@ function App() {
               type="button"
               onClick={() => setIsDark((c) => !c)}
               aria-label={isDark ? t('switchToLight') : t('switchToDark')}
-              className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:-translate-y-0.5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:-translate-y-0.5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
             >
               {isDark ? <Sun className="h-4 w-4" aria-hidden="true" /> : <Moon className="h-4 w-4" aria-hidden="true" />}
             </button>
