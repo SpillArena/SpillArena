@@ -39,7 +39,7 @@ function App() {
       return
     }
 
-    window.open(liveUrl, '_blank', 'noopener,noreferrer')
+    window.open(liveUrl, 'noopener,noreferrer')
   }
 
   return (
@@ -95,7 +95,6 @@ function App() {
           {t('developedBy', { name: 'Emil Berglund' })} ·{' '}
           <a
             href="https://github.com/EmilB04"
-            target="_blank"
             rel="noopener noreferrer"
             className="underline-offset-2 transition hover:text-fuchsia-700 hover:underline dark:hover:text-fuchsia-300"
           >
