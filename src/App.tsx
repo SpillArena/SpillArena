@@ -39,7 +39,7 @@ function App() {
       return
     }
 
-    window.open(liveUrl, 'noopener,noreferrer')
+    window.location.assign(liveUrl)
   }
 
   return (
