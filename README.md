@@ -1,73 +1,121 @@
-# React + TypeScript + Vite
+# SpillArena
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SpillArena is a lightweight game hub that presents game cards with live links, beta gating, language switching (Norwegian/English), and theme switching (dark/light).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Modern card-based game overview
+- Beta flow with confirmation modal before entering beta games
+- Dark and light mode with persisted user preference
+- Language selector with persisted user preference
+- Automatic default language:
+  - Norwegian system language -> Norwegian (no)
+  - Any other system language -> English (en)
+- Footer links for repository and portfolio
+- App version displayed from package metadata
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- i18next + react-i18next
+- lucide-react icons
+- ESLint 9
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Install dependencies
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Start development server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### 3. Build for production
+
+```bash
+npm run build
+```
+
+### 4. Preview production build
+
+```bash
+npm run preview
+```
+
+## Available Scripts
+
+- npm run dev: Run Vite in development mode
+- npm run build: Type-check and build production bundle
+- npm run lint: Run ESLint
+- npm run preview: Preview production build locally
+
+## Project Structure
+
+```text
+src/
+  App.tsx
+  i18n.ts
+  index.css
+  assets/
+    games/
+    icons/
+  components/
+    HeaderSection.tsx
+    GamesSection.tsx
+    GameCard.tsx
+    BetaWarningModal.tsx
+    FooterSection.tsx
+  data/
+    games.ts
+```
+
+## Game Configuration
+
+Games are defined in src/data/games.ts.
+
+Each game supports:
+
+- id: number
+- title: string
+- descriptionKey: i18n key for description
+- icon: lucide icon key
+- showcase: optional image
+- color: badge color class
+- githubUrl: repository URL
+- liveUrl: game URL
+- disabled: optional, marks a non-clickable game
+- beta: optional, shows beta badge and requires modal confirmation
+
+## Localization
+
+Translations are configured in src/i18n.ts.
+
+- Supported languages: no, en
+- User language is stored in localStorage key language
+- On first visit, language falls back to system language rules described above
+
+## Theme Behavior
+
+- Theme is toggled in the header
+- Current theme is stored in localStorage key theme
+- Dark mode class is applied to html and body
+
+## Notes
+
+- Footer version label is pulled from package.json version
+- Portfolio icon automatically switches between light/dark variants based on current theme
+
+## Contributing
+
+1. Create a branch from development
+2. Make your changes
+3. Run lint and build locally
+4. Open a pull request
