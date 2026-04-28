@@ -1,27 +1,30 @@
-import { Ban, icons } from "lucide-react";
+import { Ban, Zap, icons } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Game } from "../data/games";
 
 type Props = {
     game: Game;
-    onClick: (route: string) => void;
+    onClick: (game: Game) => void;
 };
 
-const PageCard = ({ game, onClick }: Props) => {
+export default function GameCard({ game, onClick }: Props) {
     const { t } = useTranslation();
     const LucideIcon = icons[game.icon as keyof typeof icons];
     const isDisabled = Boolean(game.disabled);
+    const isBeta = Boolean(game.beta);
 
     return (
-        <button
-            onClick={() => {
+        <a
+            href={game.liveUrl}
+            onClick={(event) => {
+                event.preventDefault()
+
                 if (!isDisabled) {
-                    onClick(game.liveUrl);
+                    onClick(game);
                 }
             }}
-            disabled={isDisabled}
             aria-disabled={isDisabled}
-            className={`group overflow-hidden rounded-2xl border border-fuchsia-200/70 bg-white/85 shadow-md backdrop-blur-sm transition-transform dark:border-fuchsia-900/60 dark:bg-slate-900/80 ${
+            className={`group block overflow-hidden rounded-2xl border border-fuchsia-200/70 bg-white/85 shadow-md backdrop-blur-sm transition-transform dark:border-fuchsia-900/60 dark:bg-slate-900/80 ${
                 isDisabled
                     ? "cursor-not-allowed"
                     : "cursor-pointer hover:scale-105 hover:shadow-xl"
@@ -47,14 +50,18 @@ const PageCard = ({ game, onClick }: Props) => {
                         Coming Soon
                     </div>
                 )}
+                {isBeta && !isDisabled && (
+                    <div className="pointer-events-none absolute right-3 top-3 flex items-center gap-1 rounded-full border border-amber-500/80 bg-amber-500/85 px-2 py-1 text-xs font-semibold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                        <Zap size={14} />
+                        Beta
+                    </div>
+                )}
             </div>
 
             <div className="p-6 pt-4 text-left">
                 <h2 className="mb-1 text-xl font-bold text-slate-900 dark:text-slate-100">{game.title}</h2>
                 <p className="text-sm text-slate-600 dark:text-slate-300">{t(game.descriptionKey)}</p>
             </div>
-        </button>
+        </a>
     );
 };
-
-export default PageCard;
