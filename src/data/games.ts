@@ -12,6 +12,7 @@ export type Game = {
     githubUrl: string;
     liveUrl: string;
     disabled?: boolean;
+    beta?: boolean;
 };
 
 export const games: Game[] = [
@@ -21,10 +22,9 @@ export const games: Game[] = [
         descriptionKey: "fleetBotDescription",
         icon: "Anchor",
         showcase: FleetBotShowcase,
-
         color: "bg-blue-600",
         githubUrl: "https://github.com/SpillArena/FleetBot",
-        liveUrl: "https://fleetbot.pages.dev",
+        liveUrl: "https://spillarena.no/fleetbot",
     },
     {
         id: 2,
@@ -34,7 +34,7 @@ export const games: Game[] = [
         showcase: HangBotShowcase,
         color: "bg-red-500",
         githubUrl: "https://github.com/SpillArena/HangBot",
-        liveUrl: "https://hangbot.pages.dev",
+        liveUrl: "https://spillarena.no/hangbot",
     },
     {
         id: 3,
@@ -44,7 +44,7 @@ export const games: Game[] = [
         showcase: ScribbleBotShowcase,
         color: "bg-green-500",
         githubUrl: "https://github.com/SpillArena/ScribbleBot",
-        liveUrl: "",
-        disabled: true,
+        liveUrl: "https://spillarena.no/scribblebot",
+        beta: true,
     }
 ];

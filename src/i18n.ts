@@ -4,12 +4,16 @@ import { initReactI18next } from 'react-i18next'
 const storedLanguage =
     typeof window !== 'undefined' ? window.localStorage.getItem('language') : null
 
+const systemLanguage = typeof navigator !== 'undefined' ? navigator.language : 'en'
+const isSystemNorwegian = systemLanguage.startsWith('no')
+const defaultLanguage = isSystemNorwegian ? 'no' : 'en'
+
 void i18n.use(initReactI18next).init({
     resources: {
         no: {
             translation: {
                 appName: 'SpillArena',
-                headerTitle: 'Arenaen hvor spillene dine samles',
+                headerTitle: 'Arenaen hvor spillene samles',
                 switchToLight: 'Bytt til lys',
                 switchToDark: 'Bytt til mørk',
                 statusLabel: 'Status',
@@ -22,6 +26,13 @@ void i18n.use(initReactI18next).init({
                 info: 'Info',
                 languageLabel: 'Språk',
                 developedBy: 'Utviklet av {{name}}',
+                betaWarningTitle: '⚡ Dette er et betaspill',
+                betaWarningMessage:
+                    '{{title}} er foreløpig i beta og kan ha feil eller uferdige funksjoner. Vil du fortsette?',
+                cancel: 'Avbryt',
+                continue: 'Fortsett',
+                close: 'Lukk',
+                gamesLabel: 'Spill',
 
                 // Spillspesifikke oversettelser
                 fleetBotTitle: 'FleetBot',
@@ -32,13 +43,13 @@ void i18n.use(initReactI18next).init({
                     'Hangman - gjett bokstavene riktig før det er for sent!',
                 scribbleBotTitle: 'ScribbleBot',
                 scribbleBotDescription:
-                    'Scribble.io - Der roboten tegner og du gjetter ordet!',
+                    'Scribbl.io - Der roboten tegner og du gjetter ordet!',
             },
         },
         en: {
             translation: {
                 appName: 'SpillArena',
-                headerTitle: 'The Arena where your games are gathered',
+                headerTitle: 'The Arena where the games are gathered',
                 switchToLight: 'Switch to Light',
                 switchToDark: 'Switch to Dark',
                 statusLabel: 'Status',
@@ -51,6 +62,13 @@ void i18n.use(initReactI18next).init({
                 info: 'Info',
                 languageLabel: 'Language',
                 developedBy: 'Developed by {{name}}',
+                betaWarningTitle: '⚡ This is a Beta Game',
+                betaWarningMessage:
+                    '{{title}} is currently in beta and may have bugs or incomplete features. Continue?',
+                cancel: 'Cancel',
+                continue: 'Continue',
+                close: 'Close',
+                gamesLabel: 'Games',
 
                 // Game-specific translations
                 fleetBotTitle: 'FleetBot',
@@ -61,11 +79,11 @@ void i18n.use(initReactI18next).init({
                     'Hangman - guess the letters right before it\'s too late!',
                 scribbleBotTitle: 'ScribbleBot',
                 scribbleBotDescription:
-                    'Scribble.io - Where the bot draws and you guess the word!',
+                    'Scribbl.io - Where the bot draws and you guess the word!',
             },
         },
     },
-    lng: storedLanguage === 'en' ? 'en' : 'no',
+        lng: storedLanguage || defaultLanguage,
     fallbackLng: 'en',
     interpolation: {
         escapeValue: false,
