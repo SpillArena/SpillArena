@@ -4,6 +4,7 @@ import HeaderSection from './components/HeaderSection'
 import GamesSection from './components/GamesSection'
 import BetaWarningModal from './components/BetaWarningModal'
 import FooterSection from './components/FooterSection'
+import DrawingBackground from './components/DrawingBackground'
 
 
 function App() {
@@ -56,8 +57,9 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(90%_90%_at_10%_0%,#f3d7ff_0%,#fdf4ff_45%,#ffe4f3_100%)] px-6 py-8 text-slate-800 transition-colors duration-300 dark:bg-[radial-gradient(90%_90%_at_10%_0%,#2a0f37_0%,#1a1129_45%,#0a0613_100%)] dark:text-slate-200 sm:px-10 lg:px-16">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+    <main className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(90%_90%_at_10%_0%,#f3d7ff_0%,#fdf4ff_45%,#ffe4f3_100%)] px-6 py-8 text-slate-800 transition-colors duration-300 dark:bg-[radial-gradient(90%_90%_at_10%_0%,#2a0f37_0%,#1a1129_45%,#0a0613_100%)] dark:text-slate-200 sm:px-10 lg:px-16">
+      <DrawingBackground />
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10">
 
         {/* Header */}
         <HeaderSection isDark={isDark} setIsDark={setIsDark} />
