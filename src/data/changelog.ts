@@ -7,6 +7,14 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '30-04-2026',
+        title: 'Background improvements',
+        release: '1.1.1',
+        changes: [
+            'Added icons to the background for a more dynamic and engaging visual experience',
+        ],
+    },
+    {
         date: '29-04-2026',
         title: 'Recent UI & UX improvements',
         release: '1.1.0',
