@@ -13,7 +13,7 @@ void i18n.use(initReactI18next).init({
         no: {
             translation: {
                 appName: 'SpillArena',
-                headerTitle: 'Arenaen hvor spillene dine samles',
+                headerTitle: 'Arenaen hvor spillene samles',
                 switchToLight: 'Bytt til lys',
                 switchToDark: 'Bytt til mørk',
                 statusLabel: 'Status',
@@ -49,7 +49,7 @@ void i18n.use(initReactI18next).init({
         en: {
             translation: {
                 appName: 'SpillArena',
-                headerTitle: 'The Arena where your games are gathered',
+                headerTitle: 'The Arena where the games are gathered',
                 switchToLight: 'Switch to Light',
                 switchToDark: 'Switch to Dark',
                 statusLabel: 'Status',
