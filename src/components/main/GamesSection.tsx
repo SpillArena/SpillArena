@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import type { Game } from '../data/games'
-import { games } from '../data/games'
+import type { Game } from '../../data/games'
+import { games } from '../../data/games'
 import GameCard from './GameCard'
 
 interface GamesSectionProps {

@@ -1,36 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { Game } from './data/games'
-import HeaderSection from './components/HeaderSection'
-import GamesSection from './components/GamesSection'
-import BetaWarningModal from './components/BetaWarningModal'
-import FooterSection from './components/FooterSection'
+import HeaderSection from './components/header/HeaderSection'
+import GamesSection from './components/main/GamesSection'
+import BetaWarningModal from './components/main/BetaWarningModal'
+import FooterSection from './components/footer/FooterSection'
 import DrawingBackground from './components/DrawingBackground'
+import { useTheme } from './hooks/useTheme'
 
 
 function App() {
 
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return true
-
-    if (
-      document.documentElement.classList.contains('dark') ||
-      document.body.classList.contains('dark')
-    ) return true
-
-    const savedTheme = window.localStorage.getItem('theme')
-    if (savedTheme === 'dark') return true
-    if (savedTheme === 'light') return false
-
-    return true
-  })
+  const { isDark } = useTheme()
 
   const [betaWarningGame, setBetaWarningGame] = useState<Game | null>(null)
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDark)
-    document.body.classList.toggle('dark', isDark)
-    window.localStorage.setItem('theme', isDark ? 'dark' : 'light')
-  }, [isDark])
 
   const handleGameClick = (game: Game) => {
     if (game.beta) {
@@ -62,7 +44,7 @@ function App() {
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10">
 
         {/* Header */}
-        <HeaderSection isDark={isDark} setIsDark={setIsDark} />
+        <HeaderSection />
 
         {/* Spill */}
         <GamesSection onClick={handleGameClick} />

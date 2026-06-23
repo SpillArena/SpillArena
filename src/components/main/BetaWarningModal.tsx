@@ -1,7 +1,7 @@
 import { X } from 'lucide-react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Game } from '../data/games'
+import type { Game } from '../../data/games'
 
 interface BetaWarningModalProps {
     game: Game | null

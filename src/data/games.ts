@@ -56,6 +56,7 @@ export const games: Game[] = [
         showcase: NorgesMesterShowcase,
         color: "bg-blue-500",
         githubUrl: "https://github.com/SpillArena/NorgesMester",
-        liveUrl: "",
+        liveUrl: "https://spillarena.no/norgesmester",
+        beta: true,
     }
 ];

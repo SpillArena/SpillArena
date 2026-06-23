@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { changelog } from '../data/changelog'
+import { changelog } from '../../data/changelog'
 
 export default function Changelog() {
     const [open, setOpen] = useState(false)

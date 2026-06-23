@@ -1,6 +1,6 @@
 import { Ban, Zap, icons } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { Game } from "../data/games";
+import type { Game } from "../../data/games";
 
 type Props = {
     game: Game;
@@ -24,11 +24,10 @@ export default function GameCard({ game, onClick }: Props) {
                 }
             }}
             aria-disabled={isDisabled}
-            className={`group block overflow-hidden rounded-2xl border border-fuchsia-200/70 bg-white/85 shadow-md backdrop-blur-sm transition-transform dark:border-fuchsia-900/60 dark:bg-slate-900/80 ${
-                isDisabled
+            className={`group block overflow-hidden rounded-2xl border border-fuchsia-200/70 bg-white/85 shadow-md backdrop-blur-sm transition-transform dark:border-fuchsia-900/60 dark:bg-slate-900/80 ${isDisabled
                     ? "cursor-not-allowed"
                     : "cursor-pointer hover:scale-105 hover:shadow-xl"
-            }`}
+                }`}
         >
             <div className="relative h-50 w-full overflow-hidden">
                 {game.showcase ? (
