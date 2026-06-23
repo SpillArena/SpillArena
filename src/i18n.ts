@@ -44,6 +44,9 @@ void i18n.use(initReactI18next).init({
                 scribbleBotTitle: 'ScribbleBot',
                 scribbleBotDescription:
                     'Scribbl.io - Der roboten tegner og du gjetter ordet!',
+                norgesMesterTitle: 'NorgesMester',
+                norgesMesterDescription:
+                    'NorgesMester - Test din kunnskap om Norge!',
             },
         },
         en: {
@@ -80,10 +83,13 @@ void i18n.use(initReactI18next).init({
                 scribbleBotTitle: 'ScribbleBot',
                 scribbleBotDescription:
                     'Scribbl.io - Where the bot draws and you guess the word!',
+                norgesMesterTitle: 'NorgesMester',
+                norgesMesterDescription:
+                    'NorgesMester - Test your knowledge about Norway!',
             },
         },
     },
-        lng: storedLanguage || defaultLanguage,
+    lng: storedLanguage || defaultLanguage,
     fallbackLng: 'en',
     interpolation: {
         escapeValue: false,

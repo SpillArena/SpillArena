@@ -7,6 +7,14 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '23-06-2026',
+        title: 'Added new game: NorgesMester',
+        release: '1.1.1',
+        changes: [
+            'Added NorgesMester to the games list',
+        ],
+    },
+    {
         date: '30-04-2026',
         title: 'Background improvements',
         release: '1.1.1',

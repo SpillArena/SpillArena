@@ -1,6 +1,7 @@
 import FleetBotShowcase from "../assets/games/FleetBot.png";
 import HangBotShowcase from "../assets/games/HangBot.png";
 import ScribbleBotShowcase from "../assets/games/ScribbleBot.png";
+import NorgesMesterShowcase from "../assets/games/NorgesMester.png";
 
 export type Game = {
     id: number;
@@ -46,5 +47,15 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/ScribbleBot",
         liveUrl: "https://spillarena.no/scribblebot",
         beta: true,
+    },
+    {
+        id: 4,
+        title: "NorgesMester",
+        descriptionKey: "norgesMesterDescription",
+        icon: "Flag",
+        showcase: NorgesMesterShowcase,
+        color: "bg-blue-500",
+        githubUrl: "https://github.com/SpillArena/NorgesMester",
+        liveUrl: "",
     }
 ];
