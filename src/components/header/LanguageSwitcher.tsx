@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiGlobe } from 'react-icons/fi'
-import { SUPPORTED_LANGUAGES } from '../..//i18n.ts'
+import { SUPPORTED_LANGUAGES } from '../../i18n/i18n.ts'
 
 export default function LanguageSwitcher() {
     const { i18n, t } = useTranslation()
