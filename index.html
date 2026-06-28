@@ -1,13 +1,69 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/src/assets/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SpillArena - Samle spillene</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="no">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>SpillArena - Arenaen hvor spillene samles</title>
+  <meta name="description"
+    content="SpillArena er en samling av nettleserbaserte spill med AI-motstandere. Spill Battleship, Hangman, Scribbl.io og NorgesMester - gratis i nettleseren." />
+  <meta name="keywords"
+    content="SpillArena, Spill Arena, spill, nettleser, FleetBot, HangBot, ScribbleBot, NorgesMester, battleship, hangman, norsk, gratis spill, online spill" />
+  <meta name="author" content="Emil Berglund" />
+  <link rel="canonical" href="https://spillarena.no/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://spillarena.no/" />
+  <meta property="og:site_name" content="SpillArena" />
+  <meta property="og:title" content="SpillArena - Arenaen hvor spillene samles" />
+  <meta property="og:description"
+    content="En samling av nettleserbaserte spill med AI-motstandere. Battleship, Hangman, Scribbl.io og NorgesMester - gratis i nettleseren." />
+  <meta property="og:image" content="https://spillarena.no/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SpillArena - Arenaen hvor spillene samles" />
+  <meta name="twitter:description"
+    content="En samling av nettleserbaserte spill med AI-motstandere. Gratis i nettleseren." />
+  <meta name="twitter:image" content="https://spillarena.no/og-image.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SpillArena",
+      "url": "https://spillarena.no/",
+      "description": "En samling av nettleserbaserte spill med AI-motstandere.",
+      "inLanguage": ["no", "en"],
+      "author": {
+        "@type": "Person",
+        "name": "Emil Berglund",
+        "url": "https://emilb.no"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://spillarena.no/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
