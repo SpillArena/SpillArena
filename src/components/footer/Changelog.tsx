@@ -7,7 +7,7 @@ export default function Changelog() {
     const [open, setOpen] = useState(false)
 
     return (
-        <div className="mt-3 w-lg max-w-lg">
+        <div className="mt-3 w-full max-w-2xl sm:mt-0">
             <div className="rounded-xl border-l-4 border-l-fuchsia-500 border border-slate-200/60 bg-white/60 p-2 shadow-sm backdrop-blur dark:border-slate-800/60 dark:bg-slate-900/60 dark:border-l-fuchsia-400">
                 <button
                     type="button"

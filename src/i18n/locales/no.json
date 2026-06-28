@@ -1,0 +1,37 @@
+{
+  "appName": "SpillArena",
+  "headerTitle": "Arenaen hvor spillene samles",
+  "switchToLight": "Bytt til lys",
+  "switchToDark": "Bytt til mørk",
+  "statusLabel": "Status",
+  "statusTitle": "Basisstil migrert til Tailwind",
+  "statusDescription": "Du har nå et rent oppsett for mørk modus med lagret temavalg.",
+  "previewTitle": "Forhåndsvisning av tema",
+  "surface": "Flate",
+  "accent": "Aksent",
+  "info": "Info",
+  "languageLabel": "Språk",
+  "languageSwitcher": {
+    "choose": "Velg språk",
+    "section": "Språk"
+  },
+  "themeSwitcher": {
+    "light": "Bytt til lyst tema",
+    "dark": "Bytt til mørkt tema"
+  },
+  "developedBy": "Utviklet av {{name}}",
+  "betaWarningTitle": "⚡ Dette er et betaspill",
+  "betaWarningMessage": "{{title}} er foreløpig i beta og kan ha feil eller uferdige funksjoner. Vil du fortsette?",
+  "cancel": "Avbryt",
+  "continue": "Fortsett",
+  "close": "Lukk",
+  "gamesLabel": "Spill",
+  "fleetBotTitle": "FleetBot",
+  "fleetBotDescription": "Battleship - plasser skipene dine og senk motstanderens flåte!",
+  "hangBotTitle": "HangBot",
+  "hangBotDescription": "Hangman - gjett bokstavene riktig før det er for sent!",
+  "scribbleBotTitle": "ScribbleBot",
+  "scribbleBotDescription": "Scribbl.io - Der roboten tegner og du gjetter ordet!",
+  "norgesMesterTitle": "NorgesMester",
+  "norgesMesterDescription": "NorgesMester - Test din kunnskap om Norge!"
+}

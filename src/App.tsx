@@ -5,12 +5,13 @@ import GamesSection from './components/main/GamesSection'
 import BetaWarningModal from './components/main/BetaWarningModal'
 import FooterSection from './components/footer/FooterSection'
 import DrawingBackground from './components/DrawingBackground'
-import { useTheme } from './hooks/useTheme'
+import { useTheme } from './context/ThemeContext'
 
 
 function App() {
 
-  const { isDark } = useTheme()
+  const { currentTheme } = useTheme()
+  const isDark = currentTheme === 'dark'
 
   const [betaWarningGame, setBetaWarningGame] = useState<Game | null>(null)
 

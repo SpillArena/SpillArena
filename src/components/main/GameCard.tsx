@@ -1,6 +1,7 @@
 import { Ban, Zap, icons } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Game } from "../../data/games";
+import { motion } from "framer-motion";
 
 type Props = {
     game: Game;
@@ -14,19 +15,19 @@ export default function GameCard({ game, onClick }: Props) {
     const isBeta = Boolean(game.beta);
 
     return (
-        <a
+        <motion.a
             href={game.liveUrl}
             onClick={(event) => {
                 event.preventDefault()
-
-                if (!isDisabled) {
-                    onClick(game);
-                }
+                if (!isDisabled) onClick(game);
             }}
             aria-disabled={isDisabled}
-            className={`group block overflow-hidden rounded-2xl border border-fuchsia-200/70 bg-white/85 shadow-md backdrop-blur-sm transition-transform dark:border-fuchsia-900/60 dark:bg-slate-900/80 ${isDisabled
+            whileHover={!isDisabled ? { scale: 1.05 } : undefined}
+            whileTap={!isDisabled ? { scale: 0.98 } : undefined}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            className={`group block overflow-hidden rounded-2xl border border-fuchsia-200/70 bg-white/85 shadow-md backdrop-blur-sm dark:border-fuchsia-900/60 dark:bg-slate-900/80 ${isDisabled
                     ? "cursor-not-allowed"
-                    : "cursor-pointer hover:scale-105 hover:shadow-xl"
+                    : "cursor-pointer hover:shadow-xl"
                 }`}
         >
             <div className="relative h-50 w-full overflow-hidden">
@@ -61,6 +62,6 @@ export default function GameCard({ game, onClick }: Props) {
                 <h2 className="mb-1 text-xl font-bold text-slate-900 dark:text-slate-100">{game.title}</h2>
                 <p className="text-sm text-slate-600 dark:text-slate-300">{t(game.descriptionKey)}</p>
             </div>
-        </a>
+        </motion.a>
     );
 };
