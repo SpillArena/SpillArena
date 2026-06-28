@@ -1,8 +1,15 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
+export const SUPPORTED_LANGUAGES = [
+    { code: 'no', label: 'Norsk' },
+    { code: 'en', label: 'English' },
+] as const
+
 const storedLanguage =
-    typeof window !== 'undefined' ? window.localStorage.getItem('language') : null
+    typeof window !== 'undefined'
+        ? window.localStorage.getItem('portfolio-lang') ?? window.localStorage.getItem('language')
+        : null
 
 const systemLanguage = typeof navigator !== 'undefined' ? navigator.language : 'en'
 const isSystemNorwegian = systemLanguage.startsWith('no')
@@ -25,6 +32,14 @@ void i18n.use(initReactI18next).init({
                 accent: 'Aksent',
                 info: 'Info',
                 languageLabel: 'Språk',
+                languageSwitcher: {
+                    choose: 'Velg språk',
+                    section: 'Språk',
+                },
+                themeSwitcher: {
+                    light: 'Bytt til lyst tema',
+                    dark: 'Bytt til mørkt tema',
+                },
                 developedBy: 'Utviklet av {{name}}',
                 betaWarningTitle: '⚡ Dette er et betaspill',
                 betaWarningMessage:
@@ -44,6 +59,9 @@ void i18n.use(initReactI18next).init({
                 scribbleBotTitle: 'ScribbleBot',
                 scribbleBotDescription:
                     'Scribbl.io - Der roboten tegner og du gjetter ordet!',
+                norgesMesterTitle: 'NorgesMester',
+                norgesMesterDescription:
+                    'NorgesMester - Test din kunnskap om Norge!',
             },
         },
         en: {
@@ -61,6 +79,14 @@ void i18n.use(initReactI18next).init({
                 accent: 'Accent',
                 info: 'Info',
                 languageLabel: 'Language',
+                languageSwitcher: {
+                    choose: 'Choose language',
+                    section: 'Language',
+                },
+                themeSwitcher: {
+                    light: 'Switch to light',
+                    dark: 'Switch to dark',
+                },
                 developedBy: 'Developed by {{name}}',
                 betaWarningTitle: '⚡ This is a Beta Game',
                 betaWarningMessage:
@@ -80,10 +106,13 @@ void i18n.use(initReactI18next).init({
                 scribbleBotTitle: 'ScribbleBot',
                 scribbleBotDescription:
                     'Scribbl.io - Where the bot draws and you guess the word!',
+                norgesMesterTitle: 'NorgesMester',
+                norgesMesterDescription:
+                    'NorgesMester - Test your knowledge about Norway!',
             },
         },
     },
-        lng: storedLanguage || defaultLanguage,
+    lng: storedLanguage || defaultLanguage,
     fallbackLng: 'en',
     interpolation: {
         escapeValue: false,

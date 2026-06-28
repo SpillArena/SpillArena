@@ -6,11 +6,29 @@
   --font-sans: 'Space Grotesk', 'Avenir Next', 'Segoe UI', sans-serif;
   --color-surface: #fff5fc;
   --color-ink: #1f1230;
+
+  /* Switcher design tokens (light) */
+  --surface: #ffffff;
+  --surface-card: #fdf4ff;
+  --border: #f0d7fb;
+  --border-hover: #e9b8f7;
+  --text: #1f1230;
+  --text-subtle: #6b5b7b;
+  --accent: #d946ef;
 }
 
 html.dark {
   --color-surface: #0a0613;
   --color-ink: #f3e8ff;
+
+  /* Switcher design tokens (dark) */
+  --surface: #1a1129;
+  --surface-card: #251635;
+  --border: #3a2350;
+  --border-hover: #4a2d66;
+  --text: #f3e8ff;
+  --text-subtle: #a892c0;
+  --accent: #e879f9;
 }
 
 html,

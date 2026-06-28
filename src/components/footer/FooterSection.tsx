@@ -1,8 +1,8 @@
-import packageJson from '../../package.json'
+import packageJson from '../../../package.json'
 import { useTranslation } from 'react-i18next'
-import GitHubIcon from '../assets/icons/GitHubIcon'
-import portfolioWhiteIcon from '../assets/eb_whte.png'
-import portfolioBlackIcon from '../assets/eb_black.png'
+import GitHubIcon from '../../assets/icons/GitHubIcon'
+import portfolioWhiteIcon from '../../assets/eb_whte.png'
+import portfolioBlackIcon from '../../assets/eb_black.png'
 import Changelog from './Changelog'
 
 interface FooterSectionProps {
