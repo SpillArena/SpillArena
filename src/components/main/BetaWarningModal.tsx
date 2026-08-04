@@ -34,14 +34,14 @@ export default function BetaWarningModal({ game, onConfirm, onClose }: BetaWarni
                     onClick={onClose}
                 >
                     <motion.div
-                        className="w-full max-w-sm rounded-2xl border border-fuchsia-200/70 bg-white/95 shadow-2xl dark:border-fuchsia-900/60 dark:bg-slate-900/95"
+                        className="w-full max-w-sm rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/95 shadow-2xl dark:bg-slate-900/95"
                         initial={{ opacity: 0, scale: 0.92, y: 16 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.92, y: 16 }}
                         transition={{ duration: 0.22, ease: 'easeOut' }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="flex items-center justify-between border-b border-fuchsia-200/40 p-6 dark:border-fuchsia-900/40">
+                        <div className="flex items-center justify-between border-b border-[color:color-mix(in_srgb,var(--accent)_20%,transparent)] p-6">
                             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                                 {t('betaWarningTitle')}
                             </h2>
@@ -58,7 +58,7 @@ export default function BetaWarningModal({ game, onConfirm, onClose }: BetaWarni
                                 {t('betaWarningMessage', { title: game.title })}
                             </p>
                         </div>
-                        <div className="flex gap-3 border-t border-fuchsia-200/40 p-6 dark:border-fuchsia-900/40">
+                        <div className="flex gap-3 border-t border-[color:color-mix(in_srgb,var(--accent)_20%,transparent)] p-6">
                             <button
                                 onClick={onClose}
                                 className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 cursor-pointer"

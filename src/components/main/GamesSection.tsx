@@ -27,7 +27,7 @@ export default function GamesSection({ onClick }: GamesSectionProps) {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-fuchsia-700 dark:text-fuchsia-300"
+                className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]"
             >
                 {t('gamesLabel', 'Spill')}
             </motion.p>

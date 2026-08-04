@@ -13,50 +13,59 @@ interface FooterSectionProps {
 export default function FooterSection({ isDark }: FooterSectionProps) {
     const { t } = useTranslation()
     const portfolioIcon = isDark ? portfolioWhiteIcon : portfolioBlackIcon
+
     return (
         <motion.footer
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut', delay: 0.35 }}
-            className="flex flex-col items-center justify-center gap-4 border-t border-fuchsia-200/40 pt-8 dark:border-fuchsia-900/40"
+            aria-label={t('footer.siteFooterAria')}
         >
-            <div className="flex items-center gap-3">
-                <a
-                    href="https://github.com/SpillArena/SpillArena"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    className="group flex items-center gap-2 rounded-full border border-slate-300/50 bg-white/40 px-3 py-1.5 text-[12px] font-medium text-slate-600 transition-all hover:border-fuchsia-400/60 hover:bg-fuchsia-50/60 dark:border-slate-700/50 dark:bg-slate-900/40 dark:text-slate-300 dark:hover:border-fuchsia-500/60 dark:hover:bg-slate-800/60"
-                >
-                    <Github />
-                    <span>SpillArena - GitHub</span>
-                </a>
-                <a
-                    href="https://emilb.no"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    className="group flex items-center gap-2 rounded-full border border-slate-300/50 bg-white/40 px-3 py-1.5 text-[12px] font-medium text-slate-600 transition-all hover:border-fuchsia-400/60 hover:bg-fuchsia-50/60 dark:border-slate-700/50 dark:bg-slate-900/40 dark:text-slate-300 dark:hover:border-fuchsia-500/60 dark:hover:bg-slate-800/60"
-                >
-                    <img src={portfolioIcon} alt="Emil Berglund portfolio" className="h-4 w-4" />
-                    <span>Portfolio</span>
-                </a>
-            </div>
-            <div className='flex flex-row items-center justify-center gap-4'>
-                <span className="inline-flex items-center gap-3 rounded-full bg-white/70 px-3 py-1 text-[11px] font-semibold tracking-[0.08em] text-fuchsia-700 shadow-sm backdrop-blur dark:border-fuchsia-500/40 dark:bg-slate-800/70 dark:text-fuchsia-200">
-                    <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-500 shadow-[0_0_0_4px_rgba(217,70,239,0.12)] dark:bg-fuchsia-300 dark:shadow-[0_0_0_4px_rgba(232,121,249,0.14)]" />
-                    <span className="flex items-baseline gap-2">
-                        <span className="text-[12px] font-semibold">v{packageJson.version}</span>
-                        <a
-                            href="https://github.com/EmilB04"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[12px] text-slate-500/70 font-medium hover:underline"
-                        >
-                            {t('developedBy', { name: 'Emil Berglund' })}
-                        </a>
-                    </span>
-                </span>
-            </div>
-            <div className="flex items-center justify-center">
+            <div className="mx-auto flex w-full max-w-screen-xl flex-col items-center gap-5 rounded-3xl border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface)_85%,transparent)] px-6 py-8 text-center shadow-[0_20px_60px_rgba(0,0,0,0.12)] backdrop-blur-md">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-subtle)]">
+                    {t('footer.tagline')}
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                    <a
+                        href="https://github.com/SpillArena/SpillArena"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        aria-label={t('footer.githubAria')}
+                        className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface-card)_60%,transparent)] px-4 py-2 text-sm font-semibold text-[var(--text)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                    >
+                        <Github size={17} />
+                        <span>{t('footer.github')}</span>
+                    </a>
+                    <a
+                        href="https://emilb.no"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        aria-label={t('footer.portfolioAria')}
+                        className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[color:color-mix(in_srgb,var(--surface-card)_60%,transparent)] px-4 py-2 text-sm font-semibold text-[var(--text)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                    >
+                        <img src={portfolioIcon} alt="" className="h-4 w-4" />
+                        <span>{t('footer.portfolio')}</span>
+                    </a>
+                </div>
+
+                <p className="m-0 flex flex-wrap items-center justify-center gap-2 text-sm text-[var(--text-muted)]">
+                    <span
+                        aria-hidden="true"
+                        className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)] shadow-[0_0_0_4px_color-mix(in_srgb,var(--accent)_12%,transparent)]"
+                    />
+                    <span className="font-semibold text-[var(--text)]">v{packageJson.version}</span>
+                    <span aria-hidden="true" className="text-[var(--text-subtle)]">·</span>
+                    <a
+                        href="https://github.com/EmilB04"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[var(--accent)] hover:underline"
+                    >
+                        {t('developedBy', { name: 'Emil Berglund' })}
+                    </a>
+                </p>
+
                 <Changelog />
             </div>
         </motion.footer>
