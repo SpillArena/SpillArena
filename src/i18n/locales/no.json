@@ -1,6 +1,6 @@
 {
   "appName": "SpillArena",
-  "headerTitle": "Arenaen hvor spillene samles",
+  "headerTitle": "Spill du kan, og burde vært god i, men ikke er.",
   "switchToLight": "Bytt til lys",
   "switchToDark": "Bytt til mørk",
   "statusLabel": "Status",
@@ -18,6 +18,38 @@
   "themeSwitcher": {
     "light": "Bytt til lyst tema",
     "dark": "Bytt til mørkt tema"
+  },
+  "theme": {
+    "dark": "Mørk",
+    "system": "System",
+    "light": "Lys"
+  },
+  "settingsMenu": {
+    "settings": "Innstillinger",
+    "appearance": "Utseende",
+    "accentColor": "Aksentfarge",
+    "chooseAccent": "Velg aksentfarge"
+  },
+  "cookieConsent": {
+    "section": "Personvern",
+    "message": "Dette nettstedet bruker informasjonskapsler for å huske tema, aksentfarge og språk. Ingenting deles med tredjeparter.",
+    "accept": "Godta",
+    "decline": "Avslå",
+    "manage": "Endre cookie-innstillinger",
+    "statusAccepted": "Valgene dine lagres på denne enheten.",
+    "statusDeclined": "Valgene dine lagres ikke. De gjelder kun for denne økten.",
+    "statusUndecided": "Du har ikke tatt et valg ennå."
+  },
+  "common": {
+    "logoAlt": "Logo"
+  },
+  "footer": {
+    "tagline": "Et samlested for små nettleserspill - ingen kontoer, ingen reklame, bare spill.",
+    "siteFooterAria": "Bunntekst",
+    "githubAria": "Se SpillArena på GitHub",
+    "portfolioAria": "Besøk Emil Berglunds portefølje",
+    "github": "SpillArena - GitHub",
+    "portfolio": "Portefølje"
   },
   "developedBy": "Utviklet av {{name}}",
   "betaWarningTitle": "⚡ Dette er et betaspill",

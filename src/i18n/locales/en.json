@@ -1,6 +1,6 @@
 {
   "appName": "GameArena",
-  "headerTitle": "The Arena where the games are gathered",
+  "headerTitle": "Games you know, and should be good at, but aren't.",
   "switchToLight": "Switch to Light",
   "switchToDark": "Switch to Dark",
   "statusLabel": "Status",
@@ -18,6 +18,38 @@
   "themeSwitcher": {
     "light": "Switch to light theme",
     "dark": "Switch to dark theme"
+  },
+  "theme": {
+    "dark": "Dark",
+    "system": "System",
+    "light": "Light"
+  },
+  "settingsMenu": {
+    "settings": "Settings",
+    "appearance": "Appearance",
+    "accentColor": "Accent color",
+    "chooseAccent": "Choose accent color"
+  },
+  "cookieConsent": {
+    "section": "Privacy",
+    "message": "This site uses cookies to remember your theme, accent color and language. Nothing is shared with third parties.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "manage": "Change cookie preferences",
+    "statusAccepted": "Preferences are being saved on this device.",
+    "statusDeclined": "Preferences are not saved. Your choices only apply to this session.",
+    "statusUndecided": "You haven't made a choice yet."
+  },
+  "common": {
+    "logoAlt": "Logo"
+  },
+  "footer": {
+    "tagline": "A hub for small browser games - no accounts, no ads, just play.",
+    "siteFooterAria": "Site footer",
+    "githubAria": "View SpillArena on GitHub",
+    "portfolioAria": "Visit Emil Berglund's portfolio",
+    "github": "SpillArena - GitHub",
+    "portfolio": "Portfolio"
   },
   "developedBy": "Developed by {{name}}",
   "betaWarningTitle": "⚡ This is a Beta Game",

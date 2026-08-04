@@ -25,7 +25,7 @@ export default function GameCard({ game, onClick }: Props) {
             whileHover={!isDisabled ? { scale: 1.05 } : undefined}
             whileTap={!isDisabled ? { scale: 0.98 } : undefined}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className={`group block overflow-hidden rounded-2xl border border-fuchsia-200/70 bg-white/85 shadow-md backdrop-blur-sm dark:border-fuchsia-900/60 dark:bg-slate-900/80 ${isDisabled
+            className={`group block overflow-hidden rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/85 shadow-md backdrop-blur-sm dark:bg-slate-900/80 ${isDisabled
                     ? "cursor-not-allowed"
                     : "cursor-pointer hover:shadow-xl"
                 }`}
@@ -38,7 +38,7 @@ export default function GameCard({ game, onClick }: Props) {
                         className="h-full w-full object-cover"
                     />
                 ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-fuchsia-100 via-pink-100 to-sky-100 dark:from-fuchsia-900/40 dark:via-pink-900/30 dark:to-sky-900/30" />
+                    <div className="h-full w-full bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_22%,var(--surface-card))_0%,color-mix(in_srgb,var(--accent)_10%,var(--surface-card))_55%,var(--surface-card)_100%)]" />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
                 <div className={`${game.color} absolute bottom-3 left-3 inline-flex rounded-xl p-2.5 text-white shadow-lg`}>
