@@ -25,12 +25,12 @@ export default function GameCard({ game, onClick }: Props) {
             whileHover={!isDisabled ? { scale: 1.05 } : undefined}
             whileTap={!isDisabled ? { scale: 0.98 } : undefined}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className={`group block overflow-hidden rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/85 shadow-md backdrop-blur-sm dark:bg-slate-900/80 ${isDisabled
+            className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/85 shadow-md backdrop-blur-sm dark:bg-slate-900/80 ${isDisabled
                     ? "cursor-not-allowed"
                     : "cursor-pointer hover:shadow-xl"
                 }`}
         >
-            <div className="relative h-50 w-full overflow-hidden">
+            <div className="relative h-50 w-full shrink-0 overflow-hidden">
                 {game.showcase ? (
                     <img
                         src={game.showcase}
@@ -58,9 +58,9 @@ export default function GameCard({ game, onClick }: Props) {
                 )}
             </div>
 
-            <div className="p-6 pt-4 text-left">
+            <div className="flex flex-1 flex-col p-6 pt-4 text-left">
                 <h2 className="mb-1 text-xl font-bold text-slate-900 dark:text-slate-100">{game.title}</h2>
-                <p className="text-sm text-slate-600 dark:text-slate-300">{t(game.descriptionKey)}</p>
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t(game.descriptionKey)}</p>
             </div>
         </motion.a>
     );

@@ -1,7 +1,7 @@
 import FleetBotShowcase from "../assets/games/FleetBot.png";
 import HangBotShowcase from "../assets/games/HangBot.png";
 import ScribbleBotShowcase from "../assets/games/ScribbleBot.png";
-import NorgesMesterShowcase from "../assets/games/NorgesMester.png";
+import AtlasMasterShowcase from "../assets/games/AtlasMaster.png";
 
 export type Game = {
     id: number;
@@ -50,12 +50,12 @@ export const games: Game[] = [
     },
     {
         id: 4,
-        title: "NorgesMester",
-        descriptionKey: "norgesMesterDescription",
-        icon: "Flag",
-        showcase: NorgesMesterShowcase,
+        title: "AtlasMaster",
+        descriptionKey: "atlasMasterDescription",
+        icon: "Globe",
+        showcase: AtlasMasterShowcase,
         color: "bg-blue-500",
-        githubUrl: "https://github.com/SpillArena/NorgesMester",
-        liveUrl: "https://spillarena.no/norgesmester",
+        githubUrl: "https://github.com/SpillArena/AtlasMaster",
+        liveUrl: "https://spillarena.no/atlasmaster",
     }
 ];
