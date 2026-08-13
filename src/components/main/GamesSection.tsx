@@ -32,13 +32,13 @@ export default function GamesSection({ onClick }: GamesSectionProps) {
                 {t('gamesLabel', 'Spill')}
             </motion.p>
             <motion.div
-                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                className="grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
                 {games.map((game) => (
-                    <motion.div key={game.id} variants={itemVariants}>
+                    <motion.div key={game.id} variants={itemVariants} className="h-full">
                         <GameCard game={game} onClick={onClick} />
                     </motion.div>
                 ))}
