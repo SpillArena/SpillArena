@@ -7,6 +7,23 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '16-08-2026',
+        title: 'New game preview posters',
+        release: '1.1.6',
+        changes: [
+            'Redesigned all four game preview cards as modern, gamified poster art',
+            'Removed the floating icon badge overlay on cards - branding now lives in the artwork itself',
+        ],
+    },
+    {
+        date: '16-08-2026',
+        title: 'NorgesMester renamed to AtlasMaster',
+        release: '1.1.5',
+        changes: [
+            'Renamed NorgesMester to AtlasMaster to reflect its broader scope beyond Norway (Europe, Asia, USA)',
+        ],
+    },
+    {
         date: '05-08-2026',
         title: 'Settings menu and cookie consent',
         release: '1.1.4',
