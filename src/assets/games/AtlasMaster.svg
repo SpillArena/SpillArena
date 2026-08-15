@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#080a1c"/>
+      <stop offset="100%" stop-color="#181038"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="scrim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.6"/>
+      <stop offset="48%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+    <filter id="blur1"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#dots)"/>
+  <circle cx="900" cy="300" r="260" fill="url(#glow)" filter="url(#blur1)"/>
+  <line x1="-40" y1="700" x2="560" y2="-40" stroke="#818cf8" stroke-width="3" opacity="0.35"/>
+  <rect width="1200" height="675" fill="url(#scrim)"/>
+
+  <!-- orbit ring -->
+  <circle cx="900" cy="300" r="220" fill="none" stroke="#a5b4fc" stroke-opacity="0.25" stroke-width="2" stroke-dasharray="4 10"/>
+
+  <!-- wireframe globe -->
+  <g transform="translate(900,300)" fill="none" stroke="#93c5fd" stroke-opacity="0.7">
+    <circle r="150" stroke-width="2.5"/>
+    <ellipse rx="60" ry="150" stroke-width="1.5" opacity="0.7"/>
+    <ellipse rx="110" ry="150" stroke-width="1.5" opacity="0.5"/>
+    <ellipse rx="150" ry="55" stroke-width="1.5" opacity="0.6"/>
+    <ellipse rx="150" ry="105" stroke-width="1.5" opacity="0.4"/>
+    <line x1="-150" y1="0" x2="150" y2="0" stroke-width="1.5" opacity="0.3"/>
+  </g>
+
+  <!-- location pins -->
+  <g>
+    <g transform="translate(830,220)">
+      <path d="M0,-22 C13,-22 22,-13 22,0 C22,16 0,34 0,34 C0,34 -22,16 -22,0 C-22,-13 -13,-22 0,-22 Z" fill="#f472b6" stroke="#fbcfe8" stroke-width="2"/>
+      <circle cy="0" r="7" fill="#fff"/>
+    </g>
+    <g transform="translate(985,260) scale(0.75)">
+      <path d="M0,-22 C13,-22 22,-13 22,0 C22,16 0,34 0,34 C0,34 -22,16 -22,0 C-22,-13 -13,-22 0,-22 Z" fill="#93c5fd" stroke="#dbeafe" stroke-width="2"/>
+      <circle cy="0" r="7" fill="#fff"/>
+    </g>
+    <g transform="translate(915,395) scale(0.6)">
+      <path d="M0,-22 C13,-22 22,-13 22,0 C22,16 0,34 0,34 C0,34 -22,16 -22,0 C-22,-13 -13,-22 0,-22 Z" fill="#a78bfa" stroke="#ede9fe" stroke-width="2"/>
+      <circle cy="0" r="7" fill="#fff"/>
+    </g>
+  </g>
+
+  <!-- genre pill -->
+  <g transform="translate(60,56)">
+    <rect width="204" height="40" rx="20" fill="#181038" stroke="#818cf8" stroke-opacity="0.5"/>
+    <circle cx="24" cy="20" r="9" fill="none" stroke="#c7d2fe" stroke-width="2"/>
+    <line x1="15" y1="20" x2="33" y2="20" stroke="#c7d2fe" stroke-width="1.5"/>
+    <ellipse cx="24" cy="20" rx="4" ry="9" fill="none" stroke="#c7d2fe" stroke-width="1.5"/>
+    <text x="44" y="26" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.5" fill="#c7d2fe">GEO CHALLENGE</text>
+  </g>
+
+  <!-- wordmark -->
+  <text x="58" y="560" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="88" letter-spacing="-1" fill="#ffffff">ATLAS</text>
+  <text x="58" y="636" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="88" letter-spacing="-1" fill="#a78bfa">MASTER</text>
+  <text x="64" y="468" font-family="'Segoe UI', Arial, sans-serif" font-weight="600" font-size="21" fill="#9ca3d6">Countries, capitals, speed round.</text>
+
+  <!-- brand mark -->
+  <g transform="translate(1128,612)" opacity="0.9">
+    <polygon points="20,0 40,12 40,28 20,40 0,28 0,12" fill="none" stroke="#e879f9" stroke-width="2"/>
+    <text x="20" y="25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="14" fill="#e879f9">SA</text>
+  </g>
+</svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050b16"/>
+      <stop offset="100%" stop-color="#0c2038"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="scrim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.6"/>
+      <stop offset="48%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+    <filter id="blur1"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#dots)"/>
+  <circle cx="880" cy="300" r="260" fill="url(#glow)" filter="url(#blur1)"/>
+  <line x1="-40" y1="700" x2="560" y2="-40" stroke="#38bdf8" stroke-width="3" opacity="0.35"/>
+  <rect width="1200" height="675" fill="url(#scrim)"/>
+
+  <!-- sonar rings + reticle + ship, enlarged -->
+  <g transform="translate(900,305) scale(1.3) translate(-900,-305)">
+    <g stroke="#7dd3fc" fill="none" opacity="0.55">
+      <circle cx="900" cy="310" r="50"/>
+      <circle cx="900" cy="310" r="100" opacity="0.75"/>
+      <circle cx="900" cy="310" r="150" opacity="0.5"/>
+      <circle cx="900" cy="310" r="200" opacity="0.25"/>
+    </g>
+    <g stroke="#e0f2fe" stroke-width="2" opacity="0.8">
+      <line x1="900" y1="230" x2="900" y2="270"/>
+      <line x1="900" y1="350" x2="900" y2="390"/>
+      <line x1="820" y1="310" x2="860" y2="310"/>
+      <line x1="940" y1="310" x2="980" y2="310"/>
+    </g>
+    <circle cx="900" cy="310" r="6" fill="#f87171"/>
+
+    <!-- ship silhouette -->
+    <g transform="translate(720,430)">
+      <path d="M0,40 L40,40 L60,10 L220,10 L240,40 L280,40 L260,60 L20,60 Z" fill="#1e3a5f" stroke="#7dd3fc" stroke-width="2"/>
+      <rect x="120" y="-30" width="14" height="40" fill="#1e3a5f" stroke="#7dd3fc" stroke-width="2"/>
+      <line x1="127" y1="-30" x2="127" y2="-55" stroke="#7dd3fc" stroke-width="2"/>
+      <circle cx="127" cy="-58" r="5" fill="none" stroke="#f87171" stroke-width="2"/>
+      <rect x="60" y="0" width="30" height="10" fill="#0c2038" stroke="#38bdf8"/>
+      <rect x="170" y="0" width="30" height="10" fill="#0c2038" stroke="#38bdf8"/>
+    </g>
+  </g>
+
+  <!-- targeting grid corner, echo of gameplay board -->
+  <g transform="translate(1030,520)" opacity="0.85">
+    <g stroke="#1e3a5f" fill="#0c2038">
+      <rect x="0" y="0" width="26" height="26"/>
+      <rect x="30" y="0" width="26" height="26"/>
+      <rect x="60" y="0" width="26" height="26"/>
+      <rect x="0" y="30" width="26" height="26"/>
+      <rect x="30" y="30" width="26" height="26"/>
+      <rect x="60" y="30" width="26" height="26"/>
+    </g>
+    <rect x="30" y="0" width="26" height="26" fill="#f87171" opacity="0.85"/>
+    <line x1="34" y1="4" x2="52" y2="22" stroke="#fff" stroke-width="2"/>
+    <line x1="52" y1="4" x2="34" y2="22" stroke="#fff" stroke-width="2"/>
+    <circle cx="13" cy="43" r="3" fill="#94a3b8"/>
+    <circle cx="73" cy="13" r="3" fill="#94a3b8"/>
+  </g>
+
+  <!-- genre pill -->
+  <g transform="translate(60,56)">
+    <rect width="222" height="40" rx="20" fill="#0c2038" stroke="#38bdf8" stroke-opacity="0.5"/>
+    <circle cx="24" cy="20" r="8" fill="none" stroke="#7dd3fc" stroke-width="2"/>
+    <line x1="24" y1="4" x2="24" y2="12" stroke="#7dd3fc" stroke-width="2"/>
+    <text x="46" y="26" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.5" fill="#bae6fd">NAVAL STRATEGY</text>
+  </g>
+
+  <!-- wordmark -->
+  <text x="58" y="560" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="88" letter-spacing="-1" fill="#ffffff">FLEET</text>
+  <text x="58" y="636" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="88" letter-spacing="-1" fill="#38bdf8">BOT</text>
+  <text x="64" y="468" font-family="'Segoe UI', Arial, sans-serif" font-weight="600" font-size="21" fill="#94a3b8">Outsmart the AI. Sink the fleet.</text>
+
+  <!-- brand mark -->
+  <g transform="translate(1128,612)" opacity="0.9">
+    <polygon points="20,0 40,12 40,28 20,40 0,28 0,12" fill="none" stroke="#e879f9" stroke-width="2"/>
+    <text x="20" y="25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="14" fill="#e879f9">SA</text>
+  </g>
+</svg>

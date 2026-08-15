@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#160709"/>
+      <stop offset="100%" stop-color="#341015"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f87171" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#f87171" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="scrim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.6"/>
+      <stop offset="48%" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+    <filter id="blur1"><feGaussianBlur stdDeviation="22"/></filter>
+    <linearGradient id="tileA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fca5a5"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+    <linearGradient id="tileB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#dots)"/>
+  <circle cx="900" cy="300" r="260" fill="url(#glow)" filter="url(#blur1)"/>
+  <line x1="-40" y1="700" x2="560" y2="-40" stroke="#f87171" stroke-width="3" opacity="0.35"/>
+  <rect width="1200" height="675" fill="url(#scrim)"/>
+
+  <!-- countdown ring -->
+  <circle cx="900" cy="300" r="190" fill="none" stroke="#fca5a5" stroke-opacity="0.35" stroke-width="3" stroke-dasharray="10 12"/>
+
+  <!-- letter tiles -->
+  <g font-family="'Segoe UI', Arial, sans-serif" font-weight="900" text-anchor="middle">
+    <g transform="translate(770,240) rotate(-8)">
+      <rect x="-38" y="-38" width="76" height="76" rx="12" fill="url(#tileA)" stroke="#fff" stroke-opacity="0.25"/>
+      <text x="0" y="16" font-size="46" fill="#fff">W</text>
+    </g>
+    <g transform="translate(858,205) rotate(6)">
+      <rect x="-38" y="-38" width="76" height="76" rx="12" fill="#7f1d1d" stroke="#fca5a5" stroke-opacity="0.6"/>
+      <text x="0" y="16" font-size="46" fill="#fecaca">O</text>
+    </g>
+    <g transform="translate(950,235) rotate(-5)">
+      <rect x="-38" y="-38" width="76" height="76" rx="12" fill="url(#tileB)" stroke="#fff" stroke-opacity="0.25"/>
+      <text x="0" y="16" font-size="46" fill="#fff">R</text>
+    </g>
+    <g transform="translate(1030,285) rotate(9)">
+      <rect x="-38" y="-38" width="76" height="76" rx="12" fill="#7f1d1d" stroke="#fca5a5" stroke-opacity="0.6"/>
+      <text x="0" y="16" font-size="46" fill="#fecaca">D</text>
+    </g>
+    <g transform="translate(900,360) rotate(-4)">
+      <rect x="-38" y="-38" width="76" height="76" rx="12" fill="none" stroke="#fca5a5" stroke-width="3" stroke-dasharray="6 8"/>
+      <text x="0" y="16" font-size="46" fill="#fca5a5">?</text>
+    </g>
+  </g>
+
+  <!-- genre pill -->
+  <g transform="translate(60,56)">
+    <rect width="180" height="40" rx="20" fill="#341015" stroke="#f87171" stroke-opacity="0.5"/>
+    <path d="M22,12 L26,20 L18,20 Z" fill="#fca5a5"/>
+    <text x="42" y="26" font-family="'Segoe UI', Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.5" fill="#fecaca">WORD DUEL</text>
+  </g>
+
+  <!-- wordmark -->
+  <text x="58" y="560" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="88" letter-spacing="-1" fill="#ffffff">HANG</text>
+  <text x="58" y="636" font-family="'Segoe UI', Arial, sans-serif" font-weight="900" font-size="88" letter-spacing="-1" fill="#f87171">BOT</text>
+  <text x="64" y="468" font-family="'Segoe UI', Arial, sans-serif" font-weight="600" font-size="21" fill="#c9a3a8">Crack the word before time runs out.</text>
+
+  <!-- brand mark -->
+  <g transform="translate(1128,612)" opacity="0.9">
+    <polygon points="20,0 40,12 40,28 20,40 0,28 0,12" fill="none" stroke="#e879f9" stroke-width="2"/>
+    <text x="20" y="25" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="14" fill="#e879f9">SA</text>
+  </g>
+</svg>

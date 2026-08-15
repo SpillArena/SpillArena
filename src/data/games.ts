@@ -1,7 +1,7 @@
-import FleetBotShowcase from "../assets/games/FleetBot.png";
-import HangBotShowcase from "../assets/games/HangBot.png";
-import ScribbleBotShowcase from "../assets/games/ScribbleBot.png";
-import AtlasMasterShowcase from "../assets/games/AtlasMaster.png";
+import FleetBotShowcase from "../assets/games/FleetBot.svg";
+import HangBotShowcase from "../assets/games/HangBot.svg";
+import ScribbleBotShowcase from "../assets/games/ScribbleBot.svg";
+import AtlasMasterShowcase from "../assets/games/AtlasMaster.svg";
 
 export type Game = {
     id: number;
