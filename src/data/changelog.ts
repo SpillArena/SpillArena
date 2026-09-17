@@ -7,6 +7,17 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '17-09-2026',
+        title: 'Proportion Panic joins the arena',
+        release: '1.1.8',
+        changes: [
+            'Added Proportion Panic to the game list - guess how big real-world objects are on a logarithmic ruler before the panic timer runs out',
+            'AtlasMaster now also covers South America and Africa, on top of Europe, Asia, the USA and Norway',
+            'ScribbleBot is out of beta - no more beta warning before you play it',
+            'Redesigned every game poster around one shared layout, with artwork that survives the card crop on phones and tablets',
+        ],
+    },
+    {
         date: '05-09-2026',
         title: 'AtlasMaster: world map, accounts and profiles',
         release: '1.1.7',

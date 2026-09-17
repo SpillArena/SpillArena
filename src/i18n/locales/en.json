@@ -65,5 +65,7 @@
   "scribbleBotTitle": "ScribbleBot",
   "scribbleBotDescription": "Scribbl.io - Where the bot draws and you guess the word!",
   "atlasMasterTitle": "AtlasMaster",
-  "atlasMasterDescription": "AtlasMaster - Test your knowledge of Europe, Asia, the USA and Norway!"
+  "atlasMasterDescription": "AtlasMaster - Test your knowledge of Europe, Asia, Africa, South America, the USA and Norway!",
+  "proportionPanicTitle": "Proportion Panic",
+  "proportionPanicDescription": "Proportion Panic - guess how big things really are before the panic timer runs out!"
 }
