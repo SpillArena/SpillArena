@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Proportion Panic poster - a tower drawn at a fixed size above a logarithmic ruler from millimetres to kilometres, with a panic countdown">
+  <title>Proportion Panic poster - a tower drawn at a fixed size above a logarithmic ruler from millimetres to kilometres, with a panic countdown</title>
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#150802"/>
+      <stop offset="100%" stop-color="#331705"/>
+    </linearGradient>
+    <radialGradient id="mesh1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mesh2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wordmark" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="streak" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#fbbf24" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48,0 H0 V48" fill="none" stroke="#ffffff" stroke-opacity="0.055" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="gridFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.3"/>
+    </linearGradient>
+    <mask id="gridMask"><rect width="1200" height="675" fill="url(#gridFade)"/></mask>
+    <linearGradient id="scrim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#150802" stop-opacity="0.92"/>
+      <stop offset="42%" stop-color="#150802" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#150802" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="vscrim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="50%" stop-color="#150802" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#150802" stop-opacity="0.75"/>
+    </linearGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <linearGradient id="object" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#base)"/>
+  <rect width="1200" height="675" fill="url(#grid)" mask="url(#gridMask)"/>
+  <ellipse cx="905" cy="290" rx="340" ry="300" fill="url(#mesh1)" filter="url(#soft)"/>
+  <ellipse cx="1140" cy="600" rx="280" ry="230" fill="url(#mesh2)" filter="url(#soft)"/>
+  <ellipse cx="180" cy="40" rx="260" ry="180" fill="url(#mesh2)" filter="url(#soft)" opacity="0.5"/>
+  <path d="M-60,700 L520,-40" stroke="url(#streak)" stroke-width="2.5" fill="none"/>
+  <path d="M120,720 L700,-20" stroke="url(#streak)" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <rect width="1200" height="675" fill="url(#scrim)"/>
+  <rect width="1200" height="675" fill="url(#vscrim)"/>
+  <rect width="1200" height="675" filter="url(#grain)" opacity="0.06" style="mix-blend-mode:overlay"/>
+
+  <!-- hero -->
+  <g>
+    <!-- fixed-size viewport: every object is drawn this big, whatever it really is -->
+    <g transform="translate(790,140)">
+      <rect width="188" height="188" rx="24" fill="#2a1206" fill-opacity="0.72" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="10 9"/>
+      <g stroke="#fcd34d" stroke-width="3" stroke-linecap="round" stroke-opacity="0.9">
+        <path d="M20,14 L20,40 M20,14 L46,14"/>
+        <path d="M168,14 L168,40 M168,14 L142,14"/>
+        <path d="M20,174 L20,148 M20,174 L46,174"/>
+        <path d="M168,174 L168,148 M168,174 L142,174"/>
+      </g>
+      <!-- tower silhouette -->
+      <g transform="translate(94,152) scale(0.86)">
+        <path d="M0,-134 L7,-104 L14,-56 L38,10 L22,10 L11,-18 L-11,-18 L-22,10 L-38,10 L-14,-56 L-7,-104 Z"
+              fill="url(#object)" stroke="#fde68a" stroke-opacity="0.5" stroke-width="1.5"/>
+        <g stroke="#fde68a" stroke-opacity="0.75" stroke-width="3.5" stroke-linecap="round">
+          <path d="M-15,-55 L15,-55"/>
+          <path d="M-9,-92 L9,-92"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- panic timer -->
+    <g transform="translate(1072,170)">
+      <circle r="46" fill="none" stroke="#f97316" stroke-opacity="0.25" stroke-width="8"/>
+      <circle r="46" fill="none" stroke="url(#wordmark)" stroke-width="8" stroke-linecap="round"
+              stroke-dasharray="188 289" transform="rotate(-90)"/>
+      <text y="12" text-anchor="middle" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="900" font-size="34" fill="#ffffff">4</text>
+    </g>
+
+    <!-- the guess, on its way to the ruler -->
+    <g transform="translate(930,348)">
+      <rect width="100" height="42" rx="15" fill="#2a1206" stroke="#fbbf24" stroke-opacity="0.6"/>
+      <path d="M38,42 L48,56 L58,42 Z" fill="#2a1206"/>
+      <text x="50" y="28" text-anchor="middle" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="800" font-size="18" fill="#fde68a">324 m?</text>
+    </g>
+
+    <!-- logarithmic ruler -->
+    <g>
+      <line x1="690" y1="452" x2="1118" y2="452" stroke="#fbbf24" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round"/>
+      <line x1="690" y1="452" x2="978" y2="452" stroke="url(#wordmark)" stroke-width="4" stroke-linecap="round"/>
+      <line x1="690" y1="433" x2="690" y2="471" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+      <text x="690" y="498" text-anchor="middle" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.4" fill="#fcd34d">mm</text>
+      <line x1="719" y1="444" x2="719" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="747" y1="444" x2="747" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="776" y1="444" x2="776" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="804" y1="444" x2="804" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="833" y1="433" x2="833" y2="471" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+      <text x="833" y="498" text-anchor="middle" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.4" fill="#fcd34d">cm</text>
+      <line x1="861" y1="444" x2="861" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="890" y1="444" x2="890" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="918" y1="444" x2="918" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="947" y1="444" x2="947" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="975" y1="433" x2="975" y2="471" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+      <text x="975" y="498" text-anchor="middle" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.4" fill="#fcd34d">m</text>
+      <line x1="1004" y1="444" x2="1004" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1032" y1="444" x2="1032" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1061" y1="444" x2="1061" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1089" y1="444" x2="1089" y2="460" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1118" y1="433" x2="1118" y2="471" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+      <text x="1118" y="498" text-anchor="middle" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.4" fill="#fcd34d">km</text>
+      <line x1="978" y1="404" x2="978" y2="430" stroke="#fb923c" stroke-width="2" stroke-dasharray="5 7" opacity="0.8"/>
+      <g transform="translate(978,452)">
+        <circle r="25" fill="#f97316" fill-opacity="0.2"/>
+        <circle r="15" fill="#fbbf24" stroke="#ffffff" stroke-width="3"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- left column -->
+  <g transform="translate(58,176)">
+    <rect width="213" height="40" rx="20" fill="#2a1206" fill-opacity="0.75" stroke="#fde68a" stroke-opacity="0.45"/>
+    <circle cx="24" cy="20" r="5" fill="#fde68a"/>
+    <text x="40" y="26" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="700" font-size="15" letter-spacing="1.6" fill="#fde68a">SCALE GUESSING</text>
+  </g>
+  <text x="56" y="300" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="900" font-size="64" letter-spacing="-2" fill="#ffffff">PROPORTION</text>
+  <text x="56" y="392" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="900" font-size="86" letter-spacing="-2" fill="url(#wordmark)">PANIC</text>
+  <rect x="58" y="424" width="72" height="5" rx="2.5" fill="url(#wordmark)"/>
+  <text x="58" y="470" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="600" font-size="21" fill="#c2a184">How big could it be? Guess before the panic.</text>
+  <g transform="translate(58,500)" opacity="0.72">
+    <polygon points="13,0 26,7.5 26,22.5 13,30 0,22.5 0,7.5" fill="none" stroke="#fde68a" stroke-width="1.6"/>
+    <text x="13" y="20" text-anchor="middle" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="800" font-size="11" fill="#fde68a">SA</text>
+    <text x="40" y="20" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="700" font-size="13" letter-spacing="2.6" fill="#c2a184">SPILLARENA</text>
+  </g>
+</svg>

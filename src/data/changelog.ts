@@ -7,6 +7,30 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '17-09-2026',
+        title: 'Proportion Panic joins the arena',
+        release: '1.1.8',
+        changes: [
+            'Added Proportion Panic to the game list - guess how big real-world objects are on a logarithmic ruler before the panic timer runs out',
+            'AtlasMaster now also covers South America and Africa, on top of Europe, Asia, the USA and Norway',
+            'ScribbleBot is out of beta - no more beta warning before you play it',
+            'Redesigned every game poster around one shared layout, with artwork that survives the card crop on phones and tablets',
+        ],
+    },
+    {
+        date: '05-09-2026',
+        title: 'AtlasMaster: world map, accounts and profiles',
+        release: '1.1.7',
+        changes: [
+            'The world map in AtlasMaster now renders at full resolution, with every country a playable answer',
+            'Microstates like San Marino, Monaco and the Vatican are now clickable on the world map instead of being left out',
+            'Added accounts to AtlasMaster - a username and a PIN - so a leaderboard score cannot be taken over by someone else',
+            'The AtlasMaster leaderboard now splits by pace and mode, so a fast round is never ranked against a careful one',
+            'Added a profile to AtlasMaster with badges and personal best records',
+            'Gave AtlasMaster a new aged-atlas visual theme - worn paper, ink and brass',
+        ],
+    },
+    {
         date: '16-08-2026',
         title: 'New game preview posters',
         release: '1.1.6',
