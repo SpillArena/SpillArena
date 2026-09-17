@@ -21,41 +21,48 @@ export default function GameCard({ game, onClick }: Props) {
                 if (!isDisabled) onClick(game);
             }}
             aria-disabled={isDisabled}
-            whileHover={!isDisabled ? { scale: 1.05 } : undefined}
+            whileHover={!isDisabled ? { rotate: 0, y: -6 } : undefined}
             whileTap={!isDisabled ? { scale: 0.98 } : undefined}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/85 shadow-md backdrop-blur-sm dark:bg-slate-900/80 ${isDisabled
-                    ? "cursor-not-allowed"
-                    : "cursor-pointer hover:shadow-xl"
+            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            className={`group flex h-full flex-col rounded-[28px] p-5 ${isDisabled ? "cursor-not-allowed opacity-70" : "cursor-pointer"
                 }`}
+            style={{
+                background: 'var(--surface-card)',
+                boxShadow: '0 18px 40px -24px color-mix(in srgb, var(--accent) 40%, rgba(0,0,0,0.35))',
+            }}
         >
-            <div className="relative h-50 w-full shrink-0 overflow-hidden">
+            <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-lg">
                 {game.showcase ? (
                     <img
                         src={game.showcase}
                         alt={`${game.title} showcase`}
-                        className="h-full w-full object-cover object-left"
+                        className="h-full w-full object-cover"
                     />
                 ) : (
-                    <div className="h-full w-full bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent)_22%,var(--surface-card))_0%,color-mix(in_srgb,var(--accent)_10%,var(--surface-card))_55%,var(--surface-card)_100%)]" />
+                    <div className="h-full w-full" style={{ background: 'color-mix(in srgb, var(--accent) 18%, var(--surface))' }} />
                 )}
+
                 {isDisabled && (
-                    <div className="pointer-events-none absolute right-3 top-3 flex items-center gap-1 rounded-full border border-red-500/80 bg-red-600/85 px-2 py-1 text-xs font-semibold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                        <Ban size={14} />
-                        Coming Soon
+                    <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-[color:color-mix(in_srgb,var(--surface-card)_92%,#000_8%)] px-2.5 py-1 text-xs font-semibold" style={{ color: 'var(--text-subtle)' }}>
+                        <Ban size={13} />
+                        {t('comingSoon', 'Coming soon')}
                     </div>
                 )}
                 {isBeta && !isDisabled && (
-                    <div className="pointer-events-none absolute right-3 top-3 flex items-center gap-1 rounded-full border border-amber-500/80 bg-amber-500/85 px-2 py-1 text-xs font-semibold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                        <Zap size={14} />
-                        Beta
+                    <div className="pointer-events-none absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-amber-400/90 px-2.5 py-1 text-xs font-semibold text-amber-950">
+                        <Zap size={13} />
+                        {t('betaLabel', 'Beta')}
                     </div>
                 )}
             </div>
 
-            <div className="flex flex-1 flex-col p-6 pt-4 text-left">
-                <h2 className="mb-1 text-xl font-bold text-slate-900 dark:text-slate-100">{game.title}</h2>
-                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t(game.descriptionKey)}</p>
+            <div className="flex flex-1 flex-col pt-5 text-left">
+                <h3 className="mb-1.5 font-[family-name:var(--font-serif)] text-xl font-medium" style={{ color: 'var(--text)' }}>
+                    {game.title}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-subtle)' }}>
+                    {t(game.descriptionKey)}
+                </p>
             </div>
         </motion.a>
     );

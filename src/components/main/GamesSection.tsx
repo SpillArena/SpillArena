@@ -13,7 +13,7 @@ const containerVariants = {
     visible: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
 }
 
-export const itemVariants = {
+const itemVariants = {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' as const } },
 }
@@ -23,25 +23,29 @@ export default function GamesSection({ onClick }: GamesSectionProps) {
 
     return (
         <section>
-            <motion.p
+            <motion.h2
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]"
+                className="mb-8 font-[family-name:var(--font-serif)] text-2xl font-medium sm:text-3xl"
             >
                 {t('gamesLabel', 'Spill')}
-            </motion.p>
+            </motion.h2>
             <motion.div
-                className="grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                className="grid auto-rows-fr gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
-                {games.map((game) => (
-                    <motion.div key={game.id} variants={itemVariants} className="h-full">
-                        <GameCard game={game} onClick={onClick} />
-                    </motion.div>
-                ))}
+                {games.map((game, index) => {
+                    const drift = index % 3 === 1 ? 'sm:translate-y-8' : index % 3 === 2 ? 'sm:-translate-y-4' : ''
+                    const tilt = index % 2 === 0 ? '-rotate-1' : 'rotate-1'
+                    return (
+                        <motion.div key={game.id} variants={itemVariants} className={`h-full ${drift} ${tilt}`}>
+                            <GameCard game={game} onClick={onClick} />
+                        </motion.div>
+                    )
+                })}
             </motion.div>
         </section>
     )
