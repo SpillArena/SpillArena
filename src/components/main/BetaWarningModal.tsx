@@ -34,40 +34,44 @@ export default function BetaWarningModal({ game, onConfirm, onClose }: BetaWarni
                     onClick={onClose}
                 >
                     <motion.div
-                        className="w-full max-w-sm rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/95 shadow-2xl dark:bg-slate-900/95"
+                        className="w-full max-w-sm rounded-[28px] shadow-2xl"
+                        style={{ background: 'var(--surface-card)' }}
                         initial={{ opacity: 0, scale: 0.92, y: 16 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.92, y: 16 }}
                         transition={{ duration: 0.22, ease: 'easeOut' }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="flex items-center justify-between border-b border-[color:color-mix(in_srgb,var(--accent)_20%,transparent)] p-6">
-                            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                        <div className="flex items-center justify-between border-b p-6" style={{ borderColor: 'var(--border)' }}>
+                            <h2 className="font-[family-name:var(--font-serif)] text-lg font-medium" style={{ color: 'var(--text)' }}>
                                 {t('betaWarningTitle')}
                             </h2>
                             <button
                                 onClick={onClose}
-                                className="text-slate-500 transition hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 cursor-pointer"
+                                className="transition cursor-pointer"
+                                style={{ color: 'var(--text-subtle)' }}
                                 aria-label={t('close')}
                             >
                                 <X className="h-5 w-5" />
                             </button>
                         </div>
                         <div className="p-6">
-                            <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">
+                            <p className="mb-4 text-sm" style={{ color: 'var(--text-subtle)' }}>
                                 {t('betaWarningMessage', { title: game.title })}
                             </p>
                         </div>
-                        <div className="flex gap-3 border-t border-[color:color-mix(in_srgb,var(--accent)_20%,transparent)] p-6">
+                        <div className="flex gap-3 border-t p-6" style={{ borderColor: 'var(--border)' }}>
                             <button
                                 onClick={onClose}
-                                className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 cursor-pointer"
+                                className="flex-1 rounded-full border px-4 py-2.5 text-sm font-semibold transition cursor-pointer"
+                                style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
                             >
                                 {t('cancel')}
                             </button>
                             <button
                                 onClick={onConfirm}
-                                className="flex-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:shadow-lg dark:from-amber-600 dark:to-orange-600 cursor-pointer"
+                                className="flex-1 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-110 cursor-pointer"
+                                style={{ background: 'var(--accent)' }}
                             >
                                 {t('continue')}
                             </button>

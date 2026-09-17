@@ -1,6 +1,6 @@
 {
   "appName": "SpillArena",
-  "headerTitle": "Spill du kan, og burde vært god i, men ikke er.",
+  "headerTitle": "Lett å lære. Vanskelig å innrømme at du tapte.",
   "switchToLight": "Bytt til lys",
   "switchToDark": "Bytt til mørk",
   "statusLabel": "Status",
@@ -41,10 +41,10 @@
     "statusUndecided": "Du har ikke tatt et valg ennå."
   },
   "common": {
-    "logoAlt": "Logo"
+    "logoAlt": "SpillArena-logo"
   },
   "footer": {
-    "tagline": "Et samlested for små nettleserspill - ingen kontoer, ingen reklame, bare spill.",
+    "tagline": "Fem små nettleserspill. Ingen konto, ingen reklame - bare spill.",
     "siteFooterAria": "Bunntekst",
     "githubAria": "Se SpillArena på GitHub",
     "portfolioAria": "Besøk Emil Berglunds portefølje",
@@ -58,6 +58,8 @@
   "continue": "Fortsett",
   "close": "Lukk",
   "gamesLabel": "Spill",
+  "comingSoon": "Kommer snart",
+  "betaLabel": "Beta",
   "fleetBotTitle": "FleetBot",
   "fleetBotDescription": "Battleship - plasser skipene dine og senk motstanderens flåte!",
   "hangBotTitle": "HangBot",
@@ -67,5 +69,5 @@
   "atlasMasterTitle": "AtlasMaster",
   "atlasMasterDescription": "AtlasMaster - Test kunnskapen din om Europa, Asia, Afrika, Sør-Amerika, USA og Norge!",
   "proportionPanicTitle": "Proportion Panic",
-  "proportionPanicDescription": "Proportion Panic - gjett hvor store ting egentlig er før panikktiden renner ut!"
+  "proportionPanicDescription": "Proportion Panic - gjett hvor store ting egentlig er før tiden renner ut!"
 }

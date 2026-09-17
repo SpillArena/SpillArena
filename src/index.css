@@ -1,33 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --font-sans: 'Space Grotesk', 'Avenir Next', 'Segoe UI', sans-serif;
-  --color-surface: #fff5fc;
-  --color-ink: #1f1230;
+  --font-serif: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', serif;
+  --color-surface: #f1f3ec;
+  --color-ink: #20241d;
 
   /* Switcher design tokens (light) */
-  --surface: #ffffff;
-  --surface-card: #fdf4ff;
-  --border: #f0d7fb;
-  --border-hover: #e9b8f7;
-  --text: #1f1230;
-  --text-subtle: #6b5b7b;
+  --surface: #f1f3ec;
+  --surface-card: #fbfcf8;
+  --border: #dce1d2;
+  --border-hover: #c4cbb6;
+  --text: #20241d;
+  --text-subtle: #5c6354;
   --accent: #d946ef;
 }
 
 html.dark {
-  --color-surface: #0a0613;
-  --color-ink: #f3e8ff;
+  --color-surface: #14140f;
+  --color-ink: #edefe4;
 
   /* Switcher design tokens (dark) */
-  --surface: #1a1129;
-  --surface-card: #251635;
-  --border: #3a2350;
-  --border-hover: #4a2d66;
-  --text: #f3e8ff;
-  --text-subtle: #a892c0;
+  --surface: #14140f;
+  --surface-card: #1d1e17;
+  --border: #33362a;
+  --border-hover: #454935;
+  --text: #edefe4;
+  --text-subtle: #9aa08c;
   --accent: #e879f9;
 }
 

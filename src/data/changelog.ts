@@ -8,6 +8,19 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '17-09-2026',
+        title: 'A calmer, more organic look',
+        release: '1.2.0',
+        changes: [
+            'Redesigned the whole page with a warmer, minimalist look and a new typeface pairing',
+            'The background now shows a few slow, softly drifting shapes instead of scattered icons',
+            'Game posters sit in a loosely staggered layout instead of a strict grid',
+            'Poster artwork is no longer cropped and now has slightly rounded corners',
+            'Beta and coming-soon labels on posters are now always visible, and shown in your chosen language',
+            'Refreshed the header, footer and beta warning popup to match the new style',
+        ],
+    },
+    {
+        date: '17-09-2026',
         title: 'Proportion Panic joins the arena',
         release: '1.1.8',
         changes: [

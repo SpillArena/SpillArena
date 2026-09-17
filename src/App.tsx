@@ -40,9 +40,9 @@ function App() {
   }
 
   return (
-    <main className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(90%_90%_at_10%_0%,#f3d7ff_0%,#fdf4ff_45%,#ffe4f3_100%)] px-6 py-8 text-slate-800 transition-colors duration-300 dark:bg-[radial-gradient(90%_90%_at_10%_0%,#2a0f37_0%,#1a1129_45%,#0a0613_100%)] dark:text-slate-200 sm:px-10 lg:px-16">
+    <main className="relative isolate min-h-screen overflow-hidden bg-[var(--color-surface)] px-6 py-10 text-[var(--text)] transition-colors duration-300 sm:px-10 sm:py-14 lg:px-16">
       <DrawingBackground />
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10">
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-16 sm:gap-20">
 
         {/* Header */}
         <HeaderSection />
