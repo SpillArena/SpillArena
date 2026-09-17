@@ -1,6 +1,6 @@
 {
-  "appName": "GameArena",
-  "headerTitle": "Games you know, and should be good at, but aren't.",
+  "appName": "SpillArena",
+  "headerTitle": "Easy to learn. Hard to admit you lost.",
   "switchToLight": "Switch to Light",
   "switchToDark": "Switch to Dark",
   "statusLabel": "Status",
@@ -41,10 +41,10 @@
     "statusUndecided": "You haven't made a choice yet."
   },
   "common": {
-    "logoAlt": "Logo"
+    "logoAlt": "SpillArena logo"
   },
   "footer": {
-    "tagline": "A hub for small browser games - no accounts, no ads, just play.",
+    "tagline": "Five small browser games. No accounts, no ads - just play.",
     "siteFooterAria": "Site footer",
     "githubAria": "View SpillArena on GitHub",
     "portfolioAria": "Visit Emil Berglund's portfolio",
@@ -69,5 +69,5 @@
   "atlasMasterTitle": "AtlasMaster",
   "atlasMasterDescription": "AtlasMaster - Test your knowledge of Europe, Asia, Africa, South America, the USA and Norway!",
   "proportionPanicTitle": "Proportion Panic",
-  "proportionPanicDescription": "Proportion Panic - guess how big things really are before the panic timer runs out!"
+  "proportionPanicDescription": "Proportion Panic - guess how big things really are before the timer runs out!"
 }
