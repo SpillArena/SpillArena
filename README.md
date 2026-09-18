@@ -127,15 +127,15 @@ issues a sign-in; every game trusts it and none of them ask again.
 
 ### Why it is this simple
 
-Every game is served from `https://spillarena.no` — the router strips
-`/<game>` before it proxies on to that game's Pages project, so the browser
-never leaves the origin. One origin means one `localStorage`, and the token the
-front page writes is already in the browser when the player clicks into a game.
-There is no cross-domain handshake, because there is no second domain.
+Every game is served from `https://spillarena.no`. The router strips `/<game>`
+before it proxies on to that game's Pages project, so the browser never leaves
+the origin. One origin means one `localStorage`. The token the front page
+writes is already sitting in the browser when the player clicks into a game.
+No cross-domain handshake, because there is no second domain.
 
-The token is signed, not encrypted: `base64url({username, expiry}).signature`,
-HMAC-SHA256 with `AUTH_SECRET`. A game verifies it by recomputing the
-signature. That is the whole trick — a game learns who the player is without a
+The token is signed rather than encrypted: `base64url({username,
+expiry}).signature`, HMAC-SHA256 with `AUTH_SECRET`. A game verifies it by
+recomputing the signature. So a game learns who the player is without a
 database lookup, without calling the front page, and without sharing a database
 with it.
 
@@ -145,11 +145,11 @@ with it.
 |---|---|
 | `functions/api/auth/` | Register, sign in, and check a token. The only issuer. |
 | `functions/api/profile/[game].js` | One JSON document per (account, game). The game owns its shape. |
-| `functions/api/profile/` | Every game at once — what the header panel shows. |
+| `functions/api/profile/` | Every game in one call, for the header panel. |
 | `functions/api/account/` | Change PIN, delete the account and its profiles. |
 | `shared/account-server.js` | PBKDF2, HMAC, token issue and verify. |
 | `shared/games-registry.js` | Which game ids exist, and the size limits on a profile. |
-| `src/account/` | The client. **Vendored** — identical copies live in every game repo. |
+| `src/account/` | The client. **Vendored**: identical copies live in every game repo. |
 
 `src/account/` is the canonical copy. Fix it here, then copy it out:
 
@@ -165,11 +165,11 @@ which mirrors the computation in `shared/account-server.js`.
 ### What a PIN protects
 
 Four to six digits is ten thousand to a million values, and no key derivation
-makes that number big. What stops guessing is the attempt limit — five wrong in
-a row locks the account for fifteen minutes. PBKDF2 is there for the other case:
-if the database leaks, the PINs should not be readable with one lookup. Both are
-needed; neither alone is enough. This is a game account on a scoreboard, and
-that is the level chosen deliberately.
+makes that number big. The attempt limit is what stops someone guessing: five
+wrong in a row locks the account for fifteen minutes. PBKDF2 covers the other
+case. If the database leaks, nobody should be able to read a PIN straight out
+of it. You need both. This guards a game account on a scoreboard, which is the
+level I picked on purpose.
 
 ### Setting it up
 
@@ -179,7 +179,7 @@ npx wrangler d1 create spillarena-accounts
 #    paste the id into wrangler.toml, then
 npx wrangler d1 migrations apply spillarena-accounts --remote
 
-# 2. the signing key, once — the SAME string on every project below
+# 2. the signing key, once. The SAME string on every project below
 npx wrangler pages secret put AUTH_SECRET            # in SpillArena/
 #    AtlasMaster/, ScribbleBot/, FleetBot/battleship-frontend/  (pages secret put)
 #    ProportionPanic/worker/                                    (wrangler secret put)
@@ -190,9 +190,9 @@ node scripts/migrate-atlasmaster-accounts.mjs --apply  # and runs it
 ```
 
 Use **AtlasMaster's existing `AUTH_SECRET`** as the domain-wide one. The PIN
-hashes are copied across verbatim, so players sign in with the same PIN they
-always had — and reusing the secret keeps the tokens already sitting in their
-browsers valid through the switch.
+hashes are copied across verbatim, so players sign in with the PIN they already
+have. Reusing the secret also keeps the tokens sitting in their browsers valid
+through the switch.
 
 One thing lives outside these repos: the router has to send `/api/*` to this
 Pages project. Everything else is already on this origin, but if `/api/auth`
@@ -208,8 +208,8 @@ account service beside the game:
 cd SpillArena && npx wrangler pages dev --port 8789
 ```
 
-With nothing on 8789 the games still run — they just have no accounts, which is
-the same path a player without one takes.
+With nothing on 8789 the games still run, without accounts. That is the path a
+player without one takes anyway.
 
 ### What changed in the games
 
@@ -218,8 +218,8 @@ the same path a player without one takes.
   gone. Sessions stored under the old `auth` key are adopted on first load.
 - **ScribbleBot, HangBot, FleetBot** took a name from a text field. Posting to
   the shared board now requires an account, and the name on a row comes from the
-  token. Playing without one still works — the score stays in that browser's
-  local board, as it always did when the API was unreachable.
+  token. Playing without one still works. The score stays on the device, the
+  way it always did when the API was unreachable.
 - **HangBot and FleetBot** also let anyone delete any row by id. Deleting now
   requires a token and only touches your own rows.
 - **ProportionPanic** identified a player by a random per-device `clientId`.
