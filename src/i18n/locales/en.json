@@ -95,7 +95,16 @@
       "not_configured": "Accounts are not set up on this deployment.",
       "unauthorized": "You were signed out. Sign in again.",
       "service_failed": "The service did not answer as expected.",
-      "unreachable": "Could not reach the service."
-    }
+      "unreachable": "Could not reach the service.",
+      "name_not_allowed": "That name can't be used here.",
+      "name_reserved": "That name is reserved."
+    },
+    "rename": "Change",
+    "newUsername": "New username",
+    "confirmPin": "Confirm with PIN",
+    "saveName": "Save name",
+    "memberSince": "Account created {{date}}",
+    "xpAndLevel": "{{xp}} XP · level {{level}}",
+    "renameWarning": "Scores you have already posted keep the old name. The leaderboards live in each game and do not follow the change."
   }
 }

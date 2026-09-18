@@ -27,6 +27,7 @@
  */
 
 import {
+  PIN_RE,
   TOKEN_TTL_MS,
   hashPin,
   issueToken,
@@ -34,26 +35,19 @@ import {
   requireUser,
   timingSafeEqual,
   toBase64Url,
+  validateUsername,
 } from '../../../shared/account-server.js'
-
-const PIN_MIN = 4
-const PIN_MAX = 6
-const USERNAME_MAX = 20
 
 /** Feil på rad før kontoen blir stengt, og hvor lenge den er stengt. */
 const MAX_FAILED = 5
 const LOCKOUT_MS = 15 * 60 * 1000
 
 function validate(username, pin) {
-  if (typeof username !== 'string') return 'bad_username'
-  const trimmed = username.trim()
-  if (!trimmed || trimmed.length > USERNAME_MAX) return 'bad_username'
-  // ingen kontroll- eller formateringstegn: et navn på en tavle skal være det
-  // samme navnet uansett hva som renderer det
-  if (!/^[\p{L}\p{N} ._'-]+$/u.test(trimmed)) return 'bad_username'
-  if (typeof pin !== 'string' || !new RegExp(`^\\d{${PIN_MIN},${PIN_MAX}}$`).test(pin)) {
-    return 'bad_pin'
-  }
+  // navneregelen bor i shared/account-server.js, fordi navnebytte i
+  // functions/api/account/ må bruke nøyaktig den samme
+  const invalidName = validateUsername(username)
+  if (invalidName) return invalidName
+  if (typeof pin !== 'string' || !PIN_RE.test(pin)) return 'bad_pin'
   return null
 }
 

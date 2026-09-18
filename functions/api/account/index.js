@@ -1,8 +1,9 @@
 /**
  * Kontoen selv: bytte PIN, og slette alt.
  *
- * POST   /api/account  { action: 'change-pin', pin, newPin } → 200 { username, token, expiresAt }
- * DELETE /api/account  { pin }                                → 200 { deleted: true }
+ * POST   /api/account  { action: 'change-pin', pin, newPin }      → 200 { username, token, expiresAt }
+ * POST   /api/account  { action: 'rename', pin, newUsername }   → 200 { username, token, expiresAt }
+ * DELETE /api/account  { pin }                                  → 200 { deleted: true }
  *
  * Begge krever BÅDE et gyldig tegn og PIN-en på nytt. Tegnet sier hvem du er,
  * men det ligger i nettleseren i tretti dager — en åpen enhet skal ikke kunne
@@ -17,6 +18,7 @@
  */
 
 import {
+  PIN_RE,
   TOKEN_TTL_MS,
   hashPin,
   issueToken,
@@ -24,11 +26,8 @@ import {
   requireUser,
   timingSafeEqual,
   toBase64Url,
+  validateUsername,
 } from '../../../shared/account-server.js'
-
-const PIN_MIN = 4
-const PIN_MAX = 6
-const PIN_RE = new RegExp(`^\\d{${PIN_MIN},${PIN_MAX}}$`)
 
 /** Sjekker PIN-en mot raden. Teller IKKE feil forsøk: kontoen er alt bevist. */
 async function checkPin(env, username, pin) {
@@ -44,6 +43,76 @@ async function checkPin(env, username, pin) {
   return {}
 }
 
+/**
+ * Bytter brukernavn.
+ *
+ * TEGNET MÅ BYTTES SAMTIDIG. Signaturen dekker navnet, så tegnet du kom inn med
+ * peker på en konto som ikke finnes lenger i det øyeblikket raden er omdøpt.
+ * Uten et nytt tegn tilbake ville spilleren vært logget ut av alle fem spillene
+ * av å bytte navn.
+ *
+ * PROFILENE FØLGER MED. `player_progress` er nøklet på brukernavn, ikke på en
+ * id, så radene må omdøpes i samme slengen. Begge setningene går i én `batch`,
+ * som D1 kjører som én transaksjon: enten flytter kontoen og profilene sammen,
+ * eller så flytter ingenting. Alternativet — to kall — har en tilstand imellom
+ * der kontoen heter det nye og profilene det gamle, og da er profilene borte.
+ *
+ * DET SOM IKKE FØLGER MED er radene på spillenes egne ledertavler. De ligger i
+ * fem andre databaser (se SpillArena/README.md om hvorfor de ikke er slått
+ * sammen), og en poengsum der er en oppføring i en liste andre har lest, ikke
+ * data kontoen bærer med seg. Gamle resultater blir stående under det gamle
+ * navnet. Klienten sier fra om det før byttet — se AccountMenu.
+ */
+async function rename(env, currentName, newName) {
+  const invalid = validateUsername(newName)
+  if (invalid) return json({ error: invalid }, 400)
+
+  const trimmed = newName.trim()
+
+  /*
+   * Å bytte til sitt eget navn med annen bokstavstørrelse er lov — «emil» til
+   * «Emil». Primærnøkkelen er COLLATE NOCASE, så det er SAMME rad, og en
+   * opptatthets-sjekk ville sagt at navnet er tatt av deg selv.
+   */
+  const sameRow = trimmed.toLowerCase() === currentName.toLowerCase()
+  if (!sameRow) {
+    const taken = await env.DB.prepare(`SELECT username FROM players WHERE username = ?`)
+      .bind(trimmed)
+      .first()
+    if (taken) return json({ error: 'name_taken' }, 409)
+  }
+
+  const now = Date.now()
+  try {
+    await env.DB.batch([
+      env.DB.prepare(`UPDATE player_progress SET username = ? WHERE username = ?`).bind(
+        trimmed,
+        currentName,
+      ),
+      env.DB.prepare(`UPDATE players SET username = ? WHERE username = ?`).bind(
+        trimmed,
+        currentName,
+      ),
+    ])
+  } catch (error) {
+    /*
+     * Primærnøkkelen er siste ord. Sjekken over kan tape et kappløp mot noen
+     * som registrerer det samme navnet i mellomtiden, og da er det databasen —
+     * ikke sjekken — som avgjør, med nøyaktig samme svar til klienten.
+     */
+    if (String(error).includes('UNIQUE') || String(error).includes('PRIMARY KEY')) {
+      return json({ error: 'name_taken' }, 409)
+    }
+    return json({ error: 'service_failed', details: String(error) }, 500)
+  }
+
+  return json({
+    username: trimmed,
+    token: await issueToken(env.AUTH_SECRET, trimmed, now),
+    expiresAt: now + TOKEN_TTL_MS,
+  })
+}
+
 export async function onRequestPost(context) {
   const { env, request } = context
   const auth = await requireUser(env, request)
@@ -55,14 +124,20 @@ export async function onRequestPost(context) {
   } catch {
     return json({ error: 'bad_body' }, 400)
   }
-  if (body?.action !== 'change-pin') return json({ error: 'bad_action' }, 400)
-  if (typeof body.newPin !== 'string' || !PIN_RE.test(body.newPin)) {
+  if (body?.action !== 'change-pin' && body?.action !== 'rename') {
+    return json({ error: 'bad_action' }, 400)
+  }
+  if (body.action === 'change-pin' && (typeof body.newPin !== 'string' || !PIN_RE.test(body.newPin))) {
     return json({ error: 'bad_pin' }, 400)
   }
 
   try {
+    // begge handlingene krever PIN-en på nytt: tegnet ligger i nettleseren i
+    // tretti dager, og en åpen enhet skal ikke kunne døpe om kontoen
     const check = await checkPin(env, auth.username, body.pin)
     if (check.error) return check.error
+
+    if (body.action === 'rename') return await rename(env, auth.username, body.newUsername)
 
     const salt = toBase64Url(crypto.getRandomValues(new Uint8Array(16)))
     const now = Date.now()

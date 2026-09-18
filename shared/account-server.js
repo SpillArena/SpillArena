@@ -11,6 +11,8 @@
  * eksisterende PIN-er å stemme.
  */
 
+import { checkName } from '../src/account/username-policy.ts'
+
 /** Hvor lenge en innlogging varer. */
 export const TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000
 
@@ -26,6 +28,47 @@ export const TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000
  * MÅ være det samme tallet som AtlasMaster brukte da radene ble skrevet.
  */
 export const PBKDF2_ROUNDS = 25000
+
+export const PIN_MIN = 4
+export const PIN_MAX = 6
+export const PIN_RE = new RegExp(`^\\d{${PIN_MIN},${PIN_MAX}}$`)
+export const USERNAME_MAX = 20
+
+/**
+ * Regelen for et brukernavn — ETT sted.
+ *
+ * Den sto i functions/api/auth/ og trengs nå også av navnebytte i
+ * functions/api/account/. To kopier av en slik regel driver fra hverandre i
+ * det stille: den ene slipper inn et navn den andre ville nektet, og hvilken
+ * av dem som gjelder blir et spørsmål om hvilket endepunkt du traff.
+ *
+ * Regelen er med vilje løsere enn reglene spillene har for gjestenavn. Den
+ * tillater mellomrom, punktum og apostrof, fordi et navn på en tavle skal kunne
+ * være et navn. Se src/account/identity.ts for hvorfor spillene da MÅ hoppe
+ * over sin egen strengere sjekk for en innlogget spiller.
+ *
+ * Returnerer en feilkode, eller null når navnet er greit.
+ */
+export function validateUsername(username) {
+  if (typeof username !== 'string') return 'bad_username'
+  const trimmed = username.trim()
+  if (!trimmed || trimmed.length > USERNAME_MAX) return 'bad_username'
+  // ingen kontroll- eller formateringstegn: et navn på en tavle skal være det
+  // samme navnet uansett hva som renderer det
+  if (!/^[\p{L}\p{N} ._'-]+$/u.test(trimmed)) return 'bad_username'
+
+  /*
+   * Navnefilteret kjører HER, på tjeneren, og ikke bare i skjemaet.
+   * Registrering er et POST-kall hvem som helst kan gjøre med curl, så en
+   * sjekk som bare finnes i klienten er ingen sjekk. Dette var hullet:
+   * spillene hadde hver sin liste, mens kontoen — den ene identiteten på tvers
+   * av alle fem — ble laget helt uten.
+   */
+  const rejected = checkName(trimmed)
+  if (rejected) return rejected === 'reserved' ? 'name_reserved' : 'name_not_allowed'
+
+  return null
+}
 
 export const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
