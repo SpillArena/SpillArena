@@ -12,35 +12,21 @@ interface AuthModalProps {
 }
 
 /**
- * Registrering og innlogging for hele SpillArena.
+ * The form is its own component so that closing the modal UNMOUNTS it.
  *
- * Feilen fra tjeneren er en kode, ikke en setning — `account.errors.<kode>` i
- * oversettelsene. Det er derfor spilleren får norsk feilmelding av en Worker
- * som ikke kan norsk.
+ * It used to be one component that cleared the PIN and the error in an effect
+ * whenever `open` went false. That worked, but it meant the typed PIN sat in
+ * React state for as long as the page was open, and it made closing a render
+ * that sets state during another render. Letting it unmount does both jobs at
+ * once: the state is gone because the component is gone.
  */
-export default function AuthModal({ open, onClose }: AuthModalProps) {
+function AuthForm({ onClose }: { onClose: () => void }) {
     const { t } = useTranslation()
     const [action, setAction] = useState<AuthAction>('login')
     const [username, setUsername] = useState('')
     const [pin, setPin] = useState('')
     const [error, setError] = useState<string | null>(null)
     const [busy, setBusy] = useState(false)
-
-    useEffect(() => {
-        const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') onClose()
-        }
-        window.addEventListener('keydown', onKeyDown)
-        return () => window.removeEventListener('keydown', onKeyDown)
-    }, [onClose])
-
-    useEffect(() => {
-        if (!open) {
-            setPin('')
-            setError(null)
-            setBusy(false)
-        }
-    }, [open])
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -58,8 +44,6 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
     }
 
     return (
-        <AnimatePresence>
-            {open && (
                 <motion.div
                     key="auth-overlay"
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
@@ -164,7 +148,27 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                         </form>
                     </motion.div>
                 </motion.div>
-            )}
-        </AnimatePresence>
+    )
+}
+
+/**
+ * Registrering og innlogging for hele SpillArena.
+ *
+ * Feilen fra tjeneren er en kode, ikke en setning — `account.errors.<kode>` i
+ * oversettelsene. Det er derfor spilleren får norsk feilmelding av en Worker
+ * som ikke kan norsk.
+ */
+export default function AuthModal({ open, onClose }: AuthModalProps) {
+    useEffect(() => {
+        if (!open) return
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') onClose()
+        }
+        window.addEventListener('keydown', onKeyDown)
+        return () => window.removeEventListener('keydown', onKeyDown)
+    }, [open, onClose])
+
+    return (
+        <AnimatePresence>{open && <AuthForm onClose={onClose} />}</AnimatePresence>
     )
 }
