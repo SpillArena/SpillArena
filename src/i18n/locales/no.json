@@ -69,5 +69,33 @@
   "atlasMasterTitle": "AtlasMaster",
   "atlasMasterDescription": "AtlasMaster - Test kunnskapen din om Europa, Asia, Afrika, Sør-Amerika, USA og Norge!",
   "proportionPanicTitle": "Proportion Panic",
-  "proportionPanicDescription": "Proportion Panic - gjett hvor store ting egentlig er før tiden renner ut!"
+  "proportionPanicDescription": "Proportion Panic - gjett hvor store ting egentlig er før tiden renner ut!",
+  "account": {
+    "title": "Konto",
+    "signIn": "Logg inn",
+    "signOut": "Logg ut",
+    "register": "Lag konto",
+    "username": "Brukernavn",
+    "pin": "PIN",
+    "pinHint": "4–6 siffer. Den brukes på alle spillene.",
+    "blurb": "Én konto for hele SpillArena. Fremgangen din følger deg mellom spillene.",
+    "noConsent": "Du har avslått lagring. Du blir logget inn, men ikke husket til neste besøk.",
+    "switchToRegister": "Har du ikke konto? Lag en.",
+    "switchToSignIn": "Har du konto? Logg inn.",
+    "yourProfile": "Profilen din",
+    "notPlayed": "Ikke spilt",
+    "errors": {
+      "bad_username": "Ugyldig brukernavn. Bokstaver, tall, mellomrom og . _ ' -",
+      "bad_pin": "PIN-en må være 4–6 siffer.",
+      "bad_credentials": "Feil brukernavn eller PIN.",
+      "bad_body": "Noe gikk galt med forespørselen.",
+      "bad_action": "Noe gikk galt med forespørselen.",
+      "name_taken": "Brukernavnet er opptatt.",
+      "locked": "For mange forsøk. Prøv igjen om et kvarter.",
+      "not_configured": "Kontoer er ikke satt opp her ennå.",
+      "unauthorized": "Du er logget ut. Logg inn på nytt.",
+      "service_failed": "Tjenesten svarte ikke som den skulle.",
+      "unreachable": "Fikk ikke kontakt med tjenesten."
+    }
+  }
 }

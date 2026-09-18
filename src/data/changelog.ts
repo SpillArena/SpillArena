@@ -7,6 +7,14 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '18-09-2026',
+        title: 'Global profile',
+        release: '1.3.0',
+        changes: [
+            'Added global profile feature, allowing progress to be tracked across all games with a single account',
+        ],
+    },
+    {
         date: '17-09-2026',
         title: 'A calmer, more organic look',
         release: '1.2.0',

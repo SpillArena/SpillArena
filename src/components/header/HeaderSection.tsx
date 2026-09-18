@@ -1,6 +1,7 @@
 import logo from '../../assets/logo.png'
 import { useTranslation } from 'react-i18next'
 import SettingsMenu from './SettingsMenu'
+import AccountMenu from '../account/AccountMenu'
 import { motion } from 'framer-motion'
 
 export default function HeaderSection() {
@@ -34,7 +35,10 @@ export default function HeaderSection() {
                     </p>
                 </div>
             </a>
-            <SettingsMenu />
+            <div className="flex items-center gap-2">
+                <AccountMenu />
+                <SettingsMenu />
+            </div>
         </motion.header>
     )
 }
