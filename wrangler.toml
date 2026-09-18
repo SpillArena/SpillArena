@@ -1,0 +1,32 @@
+name = "spillarena"
+compatibility_date = "2026-09-01"
+pages_build_output_dir = "./dist"
+
+# Kontodatabasen for HELE domenet.
+#
+# Spillene ligger på samme opphav — spillarena.no/<spill> er routeren som
+# strippar prefikset før han proxyar vidare — så /api/* her er det ene stedet
+# alle spillene snakker med om identitet. Hvert spill beholder sin egen
+# ledertavle-database; det som flyttet hit er kontoen og profilen.
+#
+# Databasen må opprettes én gang og id-en limes inn:
+#
+#   npx wrangler d1 create spillarena-accounts
+#   npx wrangler d1 migrations apply spillarena-accounts --remote
+[[d1_databases]]
+binding = "DB"
+database_name = "spillarena-accounts"
+database_id = "1b071391-f828-45e0-85ff-d5d678c1eb39"
+migrations_dir = "migrations"
+
+# AUTH_SECRET er ikke her med vilje — en signeringsnøkkel i git er ingen nøkkel.
+#
+#   npx wrangler pages secret put AUTH_SECRET
+#
+# SAMME hemmelighet må settes på hvert spill som skal stole på et tegn herfra
+# (AtlasMaster, ScribbleBot, HangBot, ProportionPanic). Tegnet er signert, ikke
+# kryptert: spillene verifiserer signaturen selv og trenger aldri å slå opp i
+# kontodatabasen. Byttes nøkkelen ett sted, må den byttes alle steder, og alle
+# innlogginger faller.
+#
+# Lokalt: AUTH_SECRET=... i .dev.vars (holdt utenfor av .gitignore).

@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.dev.vars
+
+# Eksporterte kontorader: PIN-hasher og salt. Hører ikke hjemme i git.
+migrations/data/

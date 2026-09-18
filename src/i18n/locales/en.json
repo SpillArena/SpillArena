@@ -69,5 +69,33 @@
   "atlasMasterTitle": "AtlasMaster",
   "atlasMasterDescription": "AtlasMaster - Test your knowledge of Europe, Asia, Africa, South America, the USA and Norway!",
   "proportionPanicTitle": "Proportion Panic",
-  "proportionPanicDescription": "Proportion Panic - guess how big things really are before the timer runs out!"
+  "proportionPanicDescription": "Proportion Panic - guess how big things really are before the timer runs out!",
+  "account": {
+    "title": "Account",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "register": "Create account",
+    "username": "Username",
+    "pin": "PIN",
+    "pinHint": "4–6 digits. It works across every game.",
+    "blurb": "One account for all of SpillArena. Your progress follows you between the games.",
+    "noConsent": "You declined storage. You will be signed in, but not remembered next visit.",
+    "switchToRegister": "No account? Create one.",
+    "switchToSignIn": "Already have an account? Sign in.",
+    "yourProfile": "Your profile",
+    "notPlayed": "Not played",
+    "errors": {
+      "bad_username": "Invalid username. Letters, numbers, spaces and . _ ' -",
+      "bad_pin": "The PIN must be 4–6 digits.",
+      "bad_credentials": "Wrong username or PIN.",
+      "bad_body": "Something went wrong with the request.",
+      "bad_action": "Something went wrong with the request.",
+      "name_taken": "That username is taken.",
+      "locked": "Too many attempts. Try again in fifteen minutes.",
+      "not_configured": "Accounts are not set up on this deployment.",
+      "unauthorized": "You were signed out. Sign in again.",
+      "service_failed": "The service did not answer as expected.",
+      "unreachable": "Could not reach the service."
+    }
+  }
 }
