@@ -95,7 +95,16 @@
       "not_configured": "Kontoer er ikke satt opp her ennå.",
       "unauthorized": "Du er logget ut. Logg inn på nytt.",
       "service_failed": "Tjenesten svarte ikke som den skulle.",
-      "unreachable": "Fikk ikke kontakt med tjenesten."
-    }
+      "unreachable": "Fikk ikke kontakt med tjenesten.",
+      "name_not_allowed": "Det navnet går ikke an å bruke her.",
+      "name_reserved": "Det navnet er reservert."
+    },
+    "rename": "Endre",
+    "newUsername": "Nytt brukernavn",
+    "confirmPin": "Bekreft med PIN",
+    "saveName": "Lagre navn",
+    "memberSince": "Konto opprettet {{date}}",
+    "xpAndLevel": "{{xp}} XP · nivå {{level}}",
+    "renameWarning": "Resultater du alt har sendt inn blir stående under det gamle navnet. Ledertavlene ligger i hvert spill og følger ikke med på byttet."
   }
 }
