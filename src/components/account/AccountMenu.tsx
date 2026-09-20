@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { LogOut, Pencil, User } from 'lucide-react'
 import { fetchAccount, levelProgress, useAccount } from '../../account'
 import type { AccountOverview, GameId } from '../../account'
-import { games } from '../../data/games'
+import { games, type Game } from '../../data/games'
 import { formatDate } from '../../lib/formatDate'
 import AuthModal from './AuthModal'
 import RenameForm from './RenameForm'
@@ -17,7 +17,10 @@ const TITLES: Record<GameId, string> = {
     fleetbot: 'FleetBot',
 }
 
-const idOf = (title: string) => title.toLowerCase() as GameId
+/** The account server keys profiles by the route slug (see src/account/session.ts),
+ * not the display title — "Proportion Panic" has a space the title lacks a
+ * slug for. `liveUrl` already carries that slug, so read it from there. */
+const idOf = (game: Game) => (game.liveUrl.split('/').filter(Boolean).pop() ?? '') as GameId
 
 /**
  * XP-en et spill har lagret på kontoen.
@@ -155,7 +158,7 @@ export default function AccountMenu() {
                         <>
                             <ul className="mt-3 flex flex-col gap-2.5">
                                 {games.map((game) => {
-                                    const id = idOf(game.title)
+                                    const id = idOf(game)
                                     const entry = overview?.games?.[id]
                                     const xp = xpOf(entry?.progress)
                                     const level = xp === null ? null : levelProgress(xp)
