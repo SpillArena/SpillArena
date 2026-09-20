@@ -2,21 +2,30 @@ name = "spillarena"
 compatibility_date = "2026-09-01"
 pages_build_output_dir = "./dist"
 
-# Kontodatabasen for HELE domenet.
+# Databasen for HELE domenet — kontoer OG ledertavler.
 #
 # Spillene ligger på samme opphav — spillarena.no/<spill> er routeren som
 # strippar prefikset før han proxyar vidare — så /api/* her er det ene stedet
-# alle spillene snakker med om identitet. Hvert spill beholder sin egen
-# ledertavle-database; det som flyttet hit er kontoen og profilen.
+# alle spillene snakker med om identitet.
 #
-# Databasen må opprettes én gang og id-en limes inn:
+# Hvert spill hadde tidligere sin egen D1-database. Det var seks databaser med
+# til sammen førtito rader, og gratisplanen tåler ti databaser i kontoen. Å
+# slå dem sammen sparer IKKE kvote: radlesninger, radskrivinger og lagring
+# telles per konto, ikke per database. Det det sparer er antallet databaser,
+# og at skjemaet har ett sted å bo.
 #
-#   npx wrangler d1 create spillarena-accounts
-#   npx wrangler d1 migrations apply spillarena-accounts --remote
+# FleetBot ligger fortsatt for seg selv. Det spillet poller `multiplayer_rooms`
+# hvert halve sekund så lenge et rom står åpent, og den trafikken har ingenting
+# å gjøre ved siden av kontoradene.
+#
+# MIGRASJONENE HER EIER HELE SKJEMAET, også spillenes tavler. `d1_migrations`
+# er én tabell per database med UNIQUE på navnet: hadde hvert spill beholdt sin
+# egen migrations-mappe mot denne databasen, ville fire `0001_*.sql` kollidert.
+# Spillene har derfor bindingen, men ingen migrations_dir.
 [[d1_databases]]
 binding = "DB"
-database_name = "spillarena-accounts"
-database_id = "1b071391-f828-45e0-85ff-d5d678c1eb39"
+database_name = "spillarena-hub"
+database_id = "01624d56-fcd9-495d-9dd7-59b59a85da81"
 migrations_dir = "migrations"
 
 # AUTH_SECRET er ikke her med vilje — en signeringsnøkkel i git er ingen nøkkel.
