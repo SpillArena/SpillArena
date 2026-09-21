@@ -27,6 +27,8 @@ function AuthForm({ onClose }: { onClose: () => void }) {
     const [pin, setPin] = useState('')
     const [confirm, setConfirm] = useState('')
     const [error, setError] = useState<string | null>(null)
+    /** Sekunder igjen av en utestenging, når tjenesten sier det. */
+    const [retryAfter, setRetryAfter] = useState<number | undefined>(undefined)
     const [busy, setBusy] = useState(false)
 
     const submit = async (event: React.FormEvent) => {
@@ -54,6 +56,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
 
         setBusy(true)
         setError(null)
+        setRetryAfter(undefined)
         const result = await authenticate(action, username, pin)
         setBusy(false)
         if (result.ok) {
@@ -63,7 +66,25 @@ function AuthForm({ onClose }: { onClose: () => void }) {
             return
         }
         setError(result.error)
+        setRetryAfter(result.retryAfter)
     }
+
+    /*
+     * «Prøv igjen senere» er ikke en beskjed, det er en avvisning. Tjenesten vet
+     * nøyaktig hvor lenge det er igjen, så den sier det, og her blir sekundene
+     * til noe et menneske ville sagt.
+     */
+    const waitText = (seconds: number): string =>
+        seconds < 60
+            ? t('account.wait.seconds', { count: seconds })
+            : Math.ceil(seconds / 60) === 1
+              ? t('account.wait.minute')
+              : t('account.wait.minutes', { count: Math.ceil(seconds / 60) })
+
+    const errorText = (code: string): string =>
+        code === 'locked' && retryAfter && retryAfter > 0
+            ? t('account.errors.locked_wait', { wait: waitText(retryAfter) })
+            : t(`account.errors.${code}`, { defaultValue: t('account.errors.service_failed') })
 
     return (
                 <motion.div
@@ -163,7 +184,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
 
                             {error && (
                                 <p role="alert" className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-800 dark:bg-red-900/40 dark:text-red-100">
-                                    {t(`account.errors.${error}`, { defaultValue: t('account.errors.service_failed') })}
+                                    {errorText(error)}
                                 </p>
                             )}
 
@@ -180,6 +201,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                                 onClick={() => {
                                     setAction(action === 'login' ? 'register' : 'login')
                                     setError(null)
+                                    setRetryAfter(undefined)
                                     setConfirm('')
                                 }}
                                 className="cursor-pointer text-sm text-slate-600 underline-offset-2 hover:underline dark:text-slate-300"
