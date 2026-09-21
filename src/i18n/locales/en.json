@@ -78,6 +78,8 @@
     "username": "Username",
     "pin": "PIN",
     "pinHint": "4–6 digits. It works across every game.",
+    "repeatPin": "Repeat PIN",
+    "confirmPin": "Confirm with PIN",
     "blurb": "One account for all of SpillArena. Your progress follows you between the games.",
     "noConsent": "You declined storage. You will be signed in, but not remembered next visit.",
     "switchToRegister": "No account? Create one.",
@@ -97,11 +99,11 @@
       "service_failed": "The service did not answer as expected.",
       "unreachable": "Could not reach the service.",
       "name_not_allowed": "That name can't be used here.",
-      "name_reserved": "That name is reserved."
+      "name_reserved": "That name is reserved.",
+      "pin_mismatch": "The two PINs are not the same."
     },
     "rename": "Change",
     "newUsername": "New username",
-    "confirmPin": "Confirm with PIN",
     "saveName": "Save name",
     "memberSince": "Account created {{date}}",
     "xpAndLevel": "{{xp}} XP · level {{level}}",

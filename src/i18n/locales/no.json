@@ -78,6 +78,8 @@
     "username": "Brukernavn",
     "pin": "PIN",
     "pinHint": "4–6 siffer. Den brukes på alle spillene.",
+    "repeatPin": "Gjenta PIN",
+    "confirmPin": "Bekreft med PIN",
     "blurb": "Én konto for hele SpillArena. Fremgangen din følger deg mellom spillene.",
     "noConsent": "Du har avslått lagring. Du blir logget inn, men ikke husket til neste besøk.",
     "switchToRegister": "Har du ikke konto? Lag en.",
@@ -97,11 +99,11 @@
       "service_failed": "Tjenesten svarte ikke som den skulle.",
       "unreachable": "Fikk ikke kontakt med tjenesten.",
       "name_not_allowed": "Det navnet går ikke an å bruke her.",
-      "name_reserved": "Det navnet er reservert."
+      "name_reserved": "Det navnet er reservert.",
+      "pin_mismatch": "De to PIN-kodene er ikke like."
     },
     "rename": "Endre",
     "newUsername": "Nytt brukernavn",
-    "confirmPin": "Bekreft med PIN",
     "saveName": "Lagre navn",
     "memberSince": "Konto opprettet {{date}}",
     "xpAndLevel": "{{xp}} XP · nivå {{level}}",
