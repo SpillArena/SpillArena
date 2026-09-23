@@ -44,7 +44,7 @@
     "logoAlt": "SpillArena-logo"
   },
   "footer": {
-    "tagline": "Fem små nettleserspill. Ingen konto, ingen reklame - bare spill.",
+    "tagline": "Seks små nettleserspill. Ingen konto, ingen reklame - bare spill.",
     "siteFooterAria": "Bunntekst",
     "githubAria": "Se SpillArena på GitHub",
     "portfolioAria": "Besøk Emil Berglunds portefølje",
@@ -70,6 +70,8 @@
   "atlasMasterDescription": "AtlasMaster - Test kunnskapen din om Europa, Asia, Afrika, Sør-Amerika, USA og Norge!",
   "proportionPanicTitle": "Proportion Panic",
   "proportionPanicDescription": "Proportion Panic - gjett hvor store ting egentlig er før tiden renner ut!",
+  "pixelPanicTitle": "Pixel Panic",
+  "pixelPanicDescription": "Pixel Panic - gjett filmen, stedet, dyret, maleriet eller flagget mens bildet blir skarpere, piksel for piksel!",
   "account": {
     "title": "Konto",
     "signIn": "Logg inn",

@@ -14,6 +14,7 @@ const TITLES: Record<GameId, string> = {
     scribblebot: 'ScribbleBot',
     hangbot: 'HangBot',
     proportionpanic: 'ProportionPanic',
+    pixelpanic: 'PixelPanic',
     fleetbot: 'FleetBot',
 }
 
