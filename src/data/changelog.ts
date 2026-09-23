@@ -9,7 +9,7 @@ export const changelog: ChangelogEntry[] = [
     {
         date: '23-09-2026',
         title: 'Pixel Panic joins the arena',
-        release: '1.4.0',
+        release: '1.3.1',
         changes: [
             'Added Pixel Panic to the game list - name the film, place, animal, painting or flag while a pixelated picture sharpens',
             'A new daily board of four pictures from eight categories every day, with a shared leaderboard',
