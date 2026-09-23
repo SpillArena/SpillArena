@@ -11,8 +11,8 @@ export const changelog: ChangelogEntry[] = [
         title: 'Pixel Panic joins the arena',
         release: '1.3.1',
         changes: [
-            'Added Pixel Panic to the game list - name the film, place, animal, painting or flag while a pixelated picture sharpens',
-            'A new daily board of four pictures from eight categories every day, with a shared leaderboard',
+            'Added Pixel Panic to the game list - name the film, game, place, animal or flag while a pixelated picture sharpens',
+            'A new daily board of four pictures from seven categories every day, with a shared leaderboard',
         ],
     },
     {
