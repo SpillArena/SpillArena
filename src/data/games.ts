@@ -3,6 +3,7 @@ import HangBotShowcase from "../assets/games/HangBot.svg";
 import ScribbleBotShowcase from "../assets/games/ScribbleBot.svg";
 import AtlasMasterShowcase from "../assets/games/AtlasMaster.svg";
 import ProportionPanicShowcase from "../assets/games/ProportionPanic.svg";
+import PixelPanicShowcase from "../assets/games/PixelPanic.svg";
 
 export type Game = {
     id: number;
@@ -67,6 +68,17 @@ export const games: Game[] = [
         color: "bg-amber-500",
         githubUrl: "https://github.com/SpillArena/ProportionPanic",
         liveUrl: "https://spillarena.no/proportionpanic",
+        beta: true,
+    },
+    {
+        id: 6,
+        title: "Pixel Panic",
+        descriptionKey: "pixelPanicDescription",
+        icon: "Grid3x3",
+        showcase: PixelPanicShowcase,
+        color: "bg-fuchsia-500",
+        githubUrl: "https://github.com/SpillArena/PixelPanic",
+        liveUrl: "https://spillarena.no/pixelpanic",
         beta: true,
     }
 ];

@@ -1,10 +1,10 @@
 // One SpillArena account, shared by every game on the domain.
 //
 // This folder is VENDORED: the same files exist in AtlasMaster, ScribbleBot,
-// HangBot, ProportionPanic and FleetBot, byte for byte. SpillArena is the
-// canonical copy — fix it here, then copy it out. That is why the comments in
-// this folder are English while the rest of this repo is Norwegian: this file
-// also lives in repos that are written in English.
+// HangBot, ProportionPanic, PixelPanic and FleetBot, byte for byte. SpillArena
+// is the canonical copy — fix it here, then copy it out. That is why the
+// comments in this folder are English while the rest of this repo is
+// Norwegian: this file also lives in repos that are written in English.
 
 /** A signed, non-secret proof of who the player is. Lives 30 days. */
 export interface Session {
@@ -63,7 +63,7 @@ export type AuthResult = { ok: true; session: Session } | AuthFailure
 export type ApiResult<T> = { ok: true; data: T } | AuthFailure
 
 /** The path segment the game is served under: spillarena.no/<id>. */
-export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'fleetbot'
+export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'pixelpanic' | 'fleetbot'
 
 export interface ProfileResponse<T> {
     game: GameId

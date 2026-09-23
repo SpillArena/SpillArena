@@ -44,7 +44,7 @@
     "logoAlt": "SpillArena logo"
   },
   "footer": {
-    "tagline": "Five small browser games. No accounts, no ads - just play.",
+    "tagline": "Six small browser games. No accounts, no ads - just play.",
     "siteFooterAria": "Site footer",
     "githubAria": "View SpillArena on GitHub",
     "portfolioAria": "Visit Emil Berglund's portfolio",
@@ -70,6 +70,8 @@
   "atlasMasterDescription": "AtlasMaster - Test your knowledge of Europe, Asia, Africa, South America, the USA and Norway!",
   "proportionPanicTitle": "Proportion Panic",
   "proportionPanicDescription": "Proportion Panic - guess how big things really are before the timer runs out!",
+  "pixelPanicTitle": "Pixel Panic",
+  "pixelPanicDescription": "Pixel Panic - name the film, place, animal, painting or flag while the picture sharpens, pixel by pixel!",
   "account": {
     "title": "Account",
     "signIn": "Sign in",

@@ -1,10 +1,10 @@
-import packageJson from '../../../package.json'
 import { useTranslation } from 'react-i18next'
 import { Github } from '../../lib/icons'
 import portfolioWhiteIcon from '../../assets/icons/eb_whte.png'
 import portfolioBlackIcon from '../../assets/icons/eb_black.png'
 import Changelog from './Changelog'
 import { motion } from 'framer-motion'
+import { changelog } from '../../data/changelog'
 
 interface FooterSectionProps {
     isDark: boolean
@@ -13,6 +13,7 @@ interface FooterSectionProps {
 export default function FooterSection({ isDark }: FooterSectionProps) {
     const { t } = useTranslation()
     const portfolioIcon = isDark ? portfolioWhiteIcon : portfolioBlackIcon
+    const latestVersion = changelog[0]?.release
 
     return (
         <motion.footer
@@ -63,7 +64,7 @@ export default function FooterSection({ isDark }: FooterSectionProps) {
                     >
                         {t('developedBy', { name: 'Emil Berglund' })}
                     </a>
-                    <span> — v{packageJson.version}</span>
+                    <span> — v{latestVersion}</span>
                 </p>
 
                 <Changelog />
