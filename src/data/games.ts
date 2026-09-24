@@ -4,6 +4,7 @@ import ScribbleBotShowcase from "../assets/games/ScribbleBot.svg";
 import AtlasMasterShowcase from "../assets/games/AtlasMaster.svg";
 import ProportionPanicShowcase from "../assets/games/ProportionPanic.svg";
 import PixelPanicShowcase from "../assets/games/PixelPanic.svg";
+import type { GameId } from "../account";
 
 export type Game = {
     id: number;
@@ -68,7 +69,6 @@ export const games: Game[] = [
         color: "bg-amber-500",
         githubUrl: "https://github.com/SpillArena/ProportionPanic",
         liveUrl: "https://spillarena.no/proportionpanic",
-        beta: true,
     },
     {
         id: 6,
@@ -82,3 +82,13 @@ export const games: Game[] = [
         beta: true,
     }
 ];
+
+/** Spillnavnet slik forsiden viser det, ut fra id-en tjeneren lagrer. */
+export const GAME_TITLES: Record<GameId, string> = {
+    atlasmaster: "AtlasMaster",
+    scribblebot: "ScribbleBot",
+    hangbot: "HangBot",
+    proportionpanic: "ProportionPanic",
+    pixelpanic: "PixelPanic",
+    fleetbot: "FleetBot",
+};

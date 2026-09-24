@@ -176,14 +176,36 @@ export function bearer(request) {
 }
 
 /**
- * Brukernavnet bak forespørselen, eller et ferdig 401/503-svar.
+ * Brukernavnet bak forespørselen, og om kontoen er admin — eller et ferdig
+ * feilsvar.
  *
  * Navnet kommer ALLTID herfra og aldri fra kroppen. Det er hele grunnen til at
  * en toppplassering er verdt noe.
+ *
+ * RADEN SLÅS OPP. Signaturen alene sier bare at tegnet en gang ble utstedt; den
+ * vet ikke at kontoen siden er slettet eller utestengt. Hvert endepunkt her
+ * snakker med databasen uansett, så ett oppslag på primærnøkkelen er billig.
+ * Spillene verifiserer fortsatt uten oppslag — dette gjelder bare /api/*.
+ *
+ * En utestengt konto får 401, ikke 403: 401 er det hver kopi av src/account/,
+ * også de i spillene, allerede tolker som «kast økten». Da blir spilleren
+ * logget ut over alt ved neste kall, uten at spillene må oppdateres.
  */
 export async function requireUser(env, request) {
   if (!env.AUTH_SECRET) return { response: json({ error: 'not_configured' }, 503) }
   const username = await verifyToken(env.AUTH_SECRET, bearer(request))
   if (!username) return { response: json({ error: 'unauthorized' }, 401) }
-  return { username }
+
+  let row
+  try {
+    // SELECT * og ikke en kolonneliste: kjører koden før migrasjon 0009, finnes
+    // ikke `admin` og `banned_at` ennå, og en navngitt kolonne ville felt hvert
+    // eneste kall. Uten kolonnene er ingen admin og ingen utestengt.
+    row = await env.DB.prepare(`SELECT * FROM players WHERE username = ?`).bind(username).first()
+  } catch (error) {
+    return { response: json({ error: 'service_failed', details: String(error) }, 500) }
+  }
+  if (!row) return { response: json({ error: 'unauthorized' }, 401) }
+  if (row.banned_at) return { response: json({ error: 'banned' }, 401) }
+  return { username: row.username, admin: row.admin === 1 }
 }

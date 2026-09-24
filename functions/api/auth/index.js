@@ -6,8 +6,9 @@
  *   → 4xx { error: <kode> }
  *
  * GET  /api/auth  (Authorization: Bearer <tegn>)
- *   → 200 { username }             — tegnet er gyldig
+ *   → 200 { username, admin }       — tegnet er gyldig
  *   → 401 { error: 'unauthorized' } — det er det ikke
+ *   → 401 { error: 'banned' }       — kontoen er utestengt
  *
  * Feilkodene er stabile strenger, ikke setninger: klienten oversetter dem.
  * En engelsk setning fra en Worker kan den bare vise fram.
@@ -67,7 +68,7 @@ export async function onRequestGet(context) {
     // et mislykket stempel er ikke verdt å avvise en gyldig økt for
   }
 
-  return json({ username: auth.username })
+  return json({ username: auth.username, admin: auth.admin })
 }
 
 export async function onRequestPost(context) {
@@ -99,9 +100,9 @@ export async function onRequestPost(context) {
   const nowIso = now.toISOString()
 
   try {
-    const existing = await env.DB.prepare(
-      `SELECT username, pin_hash, pin_salt, failed, locked_until FROM players WHERE username = ?`,
-    )
+    // SELECT * av samme grunn som i requireUser: `banned_at` finnes ikke før
+    // migrasjon 0009 er kjørt, og innloggingen skal ikke falle på det
+    const existing = await env.DB.prepare(`SELECT * FROM players WHERE username = ?`)
       .bind(username)
       .first()
 
@@ -165,6 +166,14 @@ export async function onRequestPost(context) {
         .run()
       return json({ error: 'bad_credentials' }, 401)
     }
+
+    /*
+     * Utestengingen sjekkes ETTER PIN-en, ikke før. Svarte vi «utestengt» på
+     * et hvilket som helst navn, kunne hvem som helst slå opp hvem som er
+     * utestengt — og dermed hvem som finnes. Bare den som kan PIN-en får vite
+     * det.
+     */
+    if (existing.banned_at) return json({ error: 'banned' }, 403)
 
     await env.DB.prepare(
       `UPDATE players SET failed = 0, locked_until = NULL, last_seen = ? WHERE username = ?`,

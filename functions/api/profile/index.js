@@ -1,7 +1,7 @@
 /**
  * Hele profilen på tvers av spillene — det forsiden viser fram.
  *
- * GET /api/profile → 200 { username, createdAt, games: { <spill>: { progress, updatedAt } } }
+ * GET /api/profile → 200 { username, createdAt, lastSeen, admin, games: { <spill>: { progress, updatedAt } } }
  *
  * Ett kall i stedet for ett per spill. Forsiden vet ikke hva som står inni
  * hvert dokument — det gjør bare spillet selv — men den vet hvilke spill kontoen
@@ -45,6 +45,9 @@ export async function onRequestGet(context) {
       username: account.username,
       createdAt: account.createdAt,
       lastSeen: account.lastSeen,
+      // forsiden viser adminpanelet ut fra dette; hvert admin-kall sjekker
+      // flagget på nytt, så feltet åpner ingenting i seg selv
+      admin: auth.admin,
       games,
     })
   } catch (error) {

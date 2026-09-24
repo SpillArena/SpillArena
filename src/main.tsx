@@ -7,15 +7,13 @@ import { ThemeProvider } from './context/ThemeContext'
 import { AccentProvider } from './context/AccentProvider'
 import App from './App'
 import CookieConsentBanner from './components/CookieConsentBanner'
-import { configureSession } from './account'
-import { hasConsent } from './lib/cookieConsent'
 
 /*
  * Økten lagres bare når samtykket er gitt. Uten det lever innloggingen i minnet
- * og dør med fanen — spilleren kommer inn, men blir ikke husket. Se
- * src/account/session.ts.
+ * og dør med fanen — spilleren kommer inn, men blir ikke husket. Den koblingen
+ * ligger nå i src/account/ (session.ts leser svaret fra consent.ts), felles for
+ * forsiden og alle spillene, så den trenger ikke settes opp her.
  */
-configureSession({ hasConsent })
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

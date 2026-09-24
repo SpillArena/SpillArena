@@ -32,12 +32,46 @@
   },
   "cookieConsent": {
     "section": "Privacy",
-    "message": "This site uses cookies to remember your theme, accent color and language. Nothing is shared with third parties.",
-    "accept": "Accept",
+    "title": "Save your progress on this device?",
+    "lead": "SpillArena stores a few small things in your browser so you stay signed in and your progress follows you between the games.",
+    "scope": "Your answer applies to all of SpillArena – the front page and every game.",
+    "withoutTitle": "If you decline:",
+    "without": {
+      "signin": "You aren't remembered. You have to sign in again every time you open a game or reload the page.",
+      "progress": "If you play without signing in, your XP, levels and records are gone when you close the tab.",
+      "results": "Rounds you play while signed out aren't posted under your name on the leaderboards.",
+      "settings": "Theme, accent color and language reset on every visit."
+    },
+    "storedTitle": "What is stored in your browser",
+    "items": {
+      "session": {
+        "title": "Keeps you signed in",
+        "body": "Your username and a sign-in key that lasts up to 30 days, so you don't have to sign in again in every game. Your PIN is never stored here."
+      },
+      "settings": {
+        "title": "Your settings",
+        "body": "Whether you chose light or dark mode, your favourite color and your language."
+      },
+      "choice": {
+        "title": "Your answer to this question",
+        "body": "Whether you said yes or no, so we don't ask again. This is saved even if you decline."
+      }
+    },
+    "alwaysStored": "Always stored",
+    "server": "Only if you create an account, this is also saved on our server: your username, a protected version of your PIN that nobody can read, and your progress in each game.",
+    "noTracking": "No ads, no tracking, and nothing is shared with third parties.",
+    "accept": "Accept and save",
     "decline": "Decline",
-    "manage": "Change cookie preferences",
-    "statusAccepted": "Preferences are being saved on this device.",
-    "statusDeclined": "Preferences are not saved. Your choices only apply to this session.",
+    "current": "Your current choice: {{choice}}",
+    "choiceAccepted": "accepted",
+    "choiceDeclined": "declined",
+    "close": "Close",
+    "reminder": "Your progress isn't being saved.",
+    "turnOn": "Turn on",
+    "hideReminder": "Hide until next visit",
+    "manage": "See what is stored and change your choice",
+    "statusAccepted": "Your sign-in and settings are saved on this device, so your progress and results follow your account.",
+    "statusDeclined": "Nothing is saved on this device. You have to sign in again each visit; while signed in, progress and results are saved to your account.",
     "statusUndecided": "You haven't made a choice yet."
   },
   "common": {
@@ -80,10 +114,9 @@
     "username": "Username",
     "pin": "PIN",
     "pinHint": "4–6 digits. It works across every game.",
-    "repeatPin": "Repeat PIN",
-    "confirmPin": "Confirm with PIN",
     "blurb": "One account for all of SpillArena. Your progress follows you between the games.",
-    "noConsent": "You declined storage. You will be signed in, but not remembered next visit.",
+    "noConsent": "Storage is off, so you're only signed in until you leave this page. In a game you can sign in again from the badge in the corner — your progress and results are then saved to your account.",
+    "enableStorage": "Turn on saving",
     "switchToRegister": "No account? Create one.",
     "switchToSignIn": "Already have an account? Sign in.",
     "yourProfile": "Your profile",
@@ -96,6 +129,7 @@
       "bad_action": "Something went wrong with the request.",
       "name_taken": "That username is taken. If it is yours, sign in instead.",
       "locked": "Too many wrong attempts. Try again in a few minutes.",
+      "banned": "This account is banned.",
       "not_configured": "Accounts are unavailable right now. You can keep playing as a guest.",
       "unauthorized": "You were signed out. Sign in again.",
       "service_failed": "The service did not answer as expected.",
@@ -110,14 +144,177 @@
     },
     "rename": "Change",
     "newUsername": "New username",
+    "confirmPin": "Confirm with PIN",
     "saveName": "Save name",
     "memberSince": "Account created {{date}}",
     "xpAndLevel": "{{xp}} XP · level {{level}}",
     "renameWarning": "Scores you have already posted keep the old name. The leaderboards live in each game and do not follow the change.",
+    "repeatPin": "Repeat PIN",
     "wait": {
       "seconds": "{{count}} seconds",
       "minute": "a minute",
       "minutes": "{{count}} minutes"
+    }
+  },
+  "admin": {
+    "open": "Admin panel",
+    "title": "Admin panel",
+    "signedInAs": "Signed in as {{name}}",
+    "tabs": {
+      "overview": "Overview",
+      "players": "Players",
+      "log": "Log"
+    },
+    "loading": "Loading…",
+    "retry": "Try again",
+    "stats": {
+      "players": "Players",
+      "activeDay": "Active last 24 hours",
+      "activeWeek": "Active last 7 days",
+      "newWeek": "New last 7 days",
+      "banned": "Banned",
+      "locked": "Locked out",
+      "admins_one": "{{count}} admin",
+      "admins_other": "{{count}} admins"
+    },
+    "gamesHeading": "Players per game",
+    "gamePlayers_one": "{{count}} player",
+    "gamePlayers_other": "{{count}} players",
+    "lastActivity": "last {{date}}",
+    "gamesNote": "Accounts that have saved progress in the game. The bar is the share of all accounts.",
+    "recentActions": "Recent admin actions",
+    "seeAll": "See all",
+    "noLog": "No admin actions yet.",
+    "search": "Search by username",
+    "filters": {
+      "label": "Filter",
+      "all": "All",
+      "banned": "Banned",
+      "admins": "Admins",
+      "locked": "Locked out"
+    },
+    "sort": {
+      "label": "Sort",
+      "seen": "Last seen",
+      "created": "Newest",
+      "name": "Name",
+      "xp": "Most XP"
+    },
+    "results": "Showing {{shown}} of {{total}}",
+    "noPlayers": "No players match.",
+    "loadMore": "Load more",
+    "badges": {
+      "admin": "Admin",
+      "banned": "Banned",
+      "locked": "Locked"
+    },
+    "row": {
+      "xpGames_one": "{{xp}} XP · {{count}} game",
+      "xpGames_other": "{{xp}} XP · {{count}} games",
+      "lastSeen": "Seen {{date}}"
+    },
+    "back": "All players",
+    "created": "Created {{date}}",
+    "lastSeen": "Last seen {{date}}",
+    "failed_one": "{{count}} wrong PIN in a row",
+    "failed_other": "{{count}} wrong PINs in a row",
+    "lockedUntil": "Locked until {{date}}",
+    "bannedNotice": "Banned {{date}} by {{admin}}",
+    "noReason": "No reason given.",
+    "sections": {
+      "actions": "Actions",
+      "progress": "Progress",
+      "boards": "Leaderboards",
+      "history": "History"
+    },
+    "actions": {
+      "ban": "Ban",
+      "unban": "Unban",
+      "unlock": "Unlock",
+      "resetPin": "Reset PIN",
+      "rename": "Rename",
+      "makeAdmin": "Make admin",
+      "delete": "Delete account",
+      "confirm": "Click again to confirm",
+      "banReason": "Reason (optional, only admins see it)",
+      "banHelp": "The player is signed out of SpillArena and can't sign in again. The name stays taken, so it can't be registered again.",
+      "newPin": "New PIN (4–6 digits)",
+      "resetPinHelp": "Give the player the new PIN yourself. Sessions they already have keep working.",
+      "newName": "New username",
+      "renameHelp": "The player is signed out and signs in again with the new name. Scores already posted keep the old name.",
+      "deleteHelp": "Deletes the account and all saved progress. This can't be undone.",
+      "deleteScores": "Also remove their leaderboard entries",
+      "deleteConfirm": "Type {{name}} to confirm",
+      "selfHint": "This is your own account. Change it from the account menu.",
+      "adminHint": "Admins can't be banned, renamed, deleted or given a new PIN. Admin rights are removed in the database, not here."
+    },
+    "done": {
+      "ban": "{{name}} is banned.",
+      "unban": "{{name}} is no longer banned.",
+      "unlock": "{{name}} can sign in again.",
+      "reset-pin": "The PIN for {{name}} was changed.",
+      "rename": "Renamed to {{name}}.",
+      "make-admin": "{{name}} is now an admin.",
+      "clear-scores_one": "Removed {{count}} leaderboard entry.",
+      "clear-scores_other": "Removed {{count}} leaderboard entries.",
+      "delete": "{{name}} was deleted."
+    },
+    "progress": {
+      "none": "Hasn't saved progress in any game.",
+      "notPlayed": "Not played: {{games}}",
+      "level": "Level {{level}}",
+      "toNext": "{{pct}}% to level {{level}}",
+      "plays": "Rounds",
+      "bestStreak": "Best streak",
+      "flawless": "Flawless",
+      "correct": "Correct",
+      "records": "Personal bests",
+      "updated": "Saved {{date}}",
+      "raw": "Show saved data",
+      "unreadable": "The saved data can't be read."
+    },
+    "boards": {
+      "game": "Game",
+      "entries": "Entries",
+      "best": "Best",
+      "last": "Latest",
+      "remove": "Remove",
+      "removeAll": "Remove all",
+      "none": "No leaderboard entries.",
+      "fleetbot": "FleetBot keeps its leaderboard in its own database and isn't included.",
+      "dailyNote": "Removing today's row in Proportion Panic or Pixel Panic lets the player play today again."
+    },
+    "log": {
+      "ban": "banned",
+      "unban": "unbanned",
+      "unlock": "unlocked",
+      "reset-pin": "reset the PIN for",
+      "rename": "renamed",
+      "make-admin": "gave admin rights to",
+      "clear-scores": "removed scores for",
+      "delete": "deleted",
+      "allBoards": "all leaderboards",
+      "withScores": "including leaderboard entries"
+    },
+    "errors": {
+      "forbidden": "Your account isn't an admin.",
+      "unauthorized": "You were signed out. Sign in again.",
+      "banned": "Your account is banned.",
+      "not_found": "That player no longer exists.",
+      "bad_target": "Something went wrong with the request.",
+      "bad_body": "Something went wrong with the request.",
+      "bad_action": "Something went wrong with the request.",
+      "bad_pin": "The PIN must be 4–6 digits.",
+      "bad_username": "Invalid username. Letters, numbers, spaces and . _ ' -",
+      "name_taken": "That username is taken.",
+      "name_reserved": "That name is reserved.",
+      "name_not_allowed": "That name can't be used here.",
+      "self_action": "You can't do that to your own account.",
+      "target_is_admin": "That can't be done to an admin.",
+      "target_banned": "Unban the player first.",
+      "unknown_game": "Unknown game.",
+      "service_failed": "The service did not answer as expected.",
+      "unreachable": "Could not reach the service."
     }
   }
 }

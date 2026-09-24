@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { authenticate } from '../../account'
 import type { AuthAction } from '../../account'
-import { hasConsent } from '../../lib/cookieConsent'
+import { useCookieConsent } from '../../context/useCookieConsent'
 
 interface AuthModalProps {
     open: boolean
@@ -30,6 +30,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
     /** Sekunder igjen av en utestenging, når tjenesten sier det. */
     const [retryAfter, setRetryAfter] = useState<number | undefined>(undefined)
     const [busy, setBusy] = useState(false)
+    const { consent, showBanner } = useCookieConsent()
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -175,11 +176,19 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                             )}
 
                             {/* Uten samtykke blir ingenting lagret, og økten dør når fanen gjør
-                                det. Bedre å si det før innlogging enn å la den forsvinne. */}
-                            {!hasConsent() && (
-                                <p className="rounded-lg bg-amber-100 px-3 py-2 text-xs text-amber-900 dark:bg-amber-900/40 dark:text-amber-100">
-                                    {t('account.noConsent')}
-                                </p>
+                                det — spillene ser en utlogget spiller. Bedre å si det før
+                                innlogging enn å la den forsvinne, og å la det rettes her. */}
+                            {consent !== 'accepted' && (
+                                <div className="flex flex-col items-start gap-1.5 rounded-lg bg-amber-100 px-3 py-2 text-xs text-amber-900 dark:bg-amber-900/40 dark:text-amber-100">
+                                    <p>{t('account.noConsent')}</p>
+                                    <button
+                                        type="button"
+                                        onClick={showBanner}
+                                        className="cursor-pointer font-semibold underline underline-offset-2"
+                                    >
+                                        {t('account.enableStorage')}
+                                    </button>
+                                </div>
                             )}
 
                             {error && (
