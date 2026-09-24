@@ -25,24 +25,67 @@ function AuthForm({ onClose }: { onClose: () => void }) {
     const [action, setAction] = useState<AuthAction>('login')
     const [username, setUsername] = useState('')
     const [pin, setPin] = useState('')
+    const [confirm, setConfirm] = useState('')
     const [error, setError] = useState<string | null>(null)
+    /** Sekunder igjen av en utestenging, når tjenesten sier det. */
+    const [retryAfter, setRetryAfter] = useState<number | undefined>(undefined)
     const [busy, setBusy] = useState(false)
     const { consent, showBanner } = useCookieConsent()
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault()
         if (busy) return
+
+        /*
+         * En ny PIN bekreftes før noe sendes.
+         *
+         * Registrerer du deg med en tastefeil, har du en konto ingen kommer inn
+         * i: PIN-en vises aldri tilbake, det finnes ingen e-post å nullstille
+         * med, og navnet er opptatt fra da av. Innlogging har ingen slik felle
+         * — feil PIN feiler bare, og kan prøves på nytt — så det andre feltet
+         * ville bare vært i veien der.
+         *
+         * `pin_mismatch` er ikke en kode fra tjeneren. Den ligger likevel under
+         * samme `account.errors.*` som resten, fordi spilleren ikke bryr seg om
+         * hvor feilen ble oppdaget.
+         */
+        if (action === 'register' && pin !== confirm) {
+            setError('pin_mismatch')
+            setConfirm('')
+            return
+        }
+
         setBusy(true)
         setError(null)
+        setRetryAfter(undefined)
         const result = await authenticate(action, username, pin)
         setBusy(false)
         if (result.ok) {
             setPin('')
+            setConfirm('')
             onClose()
             return
         }
         setError(result.error)
+        setRetryAfter(result.retryAfter)
     }
+
+    /*
+     * «Prøv igjen senere» er ikke en beskjed, det er en avvisning. Tjenesten vet
+     * nøyaktig hvor lenge det er igjen, så den sier det, og her blir sekundene
+     * til noe et menneske ville sagt.
+     */
+    const waitText = (seconds: number): string =>
+        seconds < 60
+            ? t('account.wait.seconds', { count: seconds })
+            : Math.ceil(seconds / 60) === 1
+              ? t('account.wait.minute')
+              : t('account.wait.minutes', { count: Math.ceil(seconds / 60) })
+
+    const errorText = (code: string): string =>
+        code === 'locked' && retryAfter && retryAfter > 0
+            ? t('account.errors.locked_wait', { wait: waitText(retryAfter) })
+            : t(`account.errors.${code}`, { defaultValue: t('account.errors.service_failed') })
 
     return (
                 <motion.div
@@ -114,6 +157,24 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                                 </span>
                             </label>
 
+                            {action === 'register' && (
+                                <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
+                                    {t('account.repeatPin')}
+                                    <input
+                                        value={confirm}
+                                        onChange={(event) => setConfirm(event.target.value.replace(/\D/g, ''))}
+                                        inputMode="numeric"
+                                        pattern="\d{4,6}"
+                                        minLength={4}
+                                        maxLength={6}
+                                        autoComplete="new-password"
+                                        type="password"
+                                        required
+                                        className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm tracking-[0.4em] text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                                    />
+                                </label>
+                            )}
+
                             {/* Uten samtykke blir ingenting lagret, og økten dør når fanen gjør
                                 det — spillene ser en utlogget spiller. Bedre å si det før
                                 innlogging enn å la den forsvinne, og å la det rettes her. */}
@@ -132,7 +193,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
 
                             {error && (
                                 <p role="alert" className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-800 dark:bg-red-900/40 dark:text-red-100">
-                                    {t(`account.errors.${error}`, { defaultValue: t('account.errors.service_failed') })}
+                                    {errorText(error)}
                                 </p>
                             )}
 
@@ -149,6 +210,8 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                                 onClick={() => {
                                     setAction(action === 'login' ? 'register' : 'login')
                                     setError(null)
+                                    setRetryAfter(undefined)
+                                    setConfirm('')
                                 }}
                                 className="cursor-pointer text-sm text-slate-600 underline-offset-2 hover:underline dark:text-slate-300"
                             >

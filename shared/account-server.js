@@ -52,10 +52,20 @@ export const USERNAME_MAX = 20
 export function validateUsername(username) {
   if (typeof username !== 'string') return 'bad_username'
   const trimmed = username.trim()
-  if (!trimmed || trimmed.length > USERNAME_MAX) return 'bad_username'
+
+  /*
+   * ÉN KODE PER GRUNN.
+   *
+   * Alle tre sa `bad_username` før, og klienten kunne bare svare «det navnet
+   * kan ikke brukes» — sant, men ubrukelig: spilleren vet fortsatt ikke om
+   * navnet var for langt, hadde et tegn som ikke er lov, eller var tomt. En
+   * feilmelding som ikke sier hva som skal endres, ber spilleren gjette.
+   */
+  if (!trimmed) return 'username_empty'
+  if (trimmed.length > USERNAME_MAX) return 'username_too_long'
   // ingen kontroll- eller formateringstegn: et navn på en tavle skal være det
   // samme navnet uansett hva som renderer det
-  if (!/^[\p{L}\p{N} ._'-]+$/u.test(trimmed)) return 'bad_username'
+  if (!/^[\p{L}\p{N} ._'-]+$/u.test(trimmed)) return 'username_chars'
 
   /*
    * Navnefilteret kjører HER, på tjeneren, og ikke bare i skjemaet.

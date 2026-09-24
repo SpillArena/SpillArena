@@ -123,18 +123,23 @@
     "errors": {
       "bad_username": "Ugyldig brukernavn. Bokstaver, tall, mellomrom og . _ ' -",
       "bad_pin": "PIN-en må være 4–6 siffer.",
-      "bad_credentials": "Feil brukernavn eller PIN.",
+      "bad_credentials": "Feil brukernavn eller PIN. Har du ikke laget konto ennå, velg Opprett konto.",
       "bad_body": "Noe gikk galt med forespørselen.",
       "bad_action": "Noe gikk galt med forespørselen.",
-      "name_taken": "Brukernavnet er opptatt.",
-      "locked": "For mange forsøk. Prøv igjen om et kvarter.",
+      "name_taken": "Brukernavnet er opptatt. Er det ditt, logg inn i stedet.",
+      "locked": "For mange feil forsøk. Prøv igjen om noen minutter.",
       "banned": "Denne kontoen er utestengt.",
-      "not_configured": "Kontoer er ikke satt opp her ennå.",
+      "not_configured": "Kontoer er utilgjengelige akkurat nå. Du kan spille videre som gjest.",
       "unauthorized": "Du er logget ut. Logg inn på nytt.",
       "service_failed": "Tjenesten svarte ikke som den skulle.",
-      "unreachable": "Fikk ikke kontakt med tjenesten.",
+      "unreachable": "Fikk ikke kontakt med kontotjenesten. Sjekk nettet og prøv igjen.",
       "name_not_allowed": "Det navnet går ikke an å bruke her.",
-      "name_reserved": "Det navnet er reservert."
+      "name_reserved": "Det navnet er reservert.",
+      "pin_mismatch": "De to PIN-kodene er ikke like.",
+      "username_empty": "Skriv et brukernavn først.",
+      "username_too_long": "Brukernavnet er for langt — maks 20 tegn.",
+      "username_chars": "Brukernavn kan bare bruke bokstaver, tall, mellomrom og . _ ' -",
+      "locked_wait": "For mange feil forsøk. Prøv igjen om {{wait}}."
     },
     "rename": "Endre",
     "newUsername": "Nytt brukernavn",
@@ -142,7 +147,13 @@
     "saveName": "Lagre navn",
     "memberSince": "Konto opprettet {{date}}",
     "xpAndLevel": "{{xp}} XP · nivå {{level}}",
-    "renameWarning": "Resultater du alt har sendt inn blir stående under det gamle navnet. Ledertavlene ligger i hvert spill og følger ikke med på byttet."
+    "renameWarning": "Resultater du alt har sendt inn blir stående under det gamle navnet. Ledertavlene ligger i hvert spill og følger ikke med på byttet.",
+    "repeatPin": "Gjenta PIN",
+    "wait": {
+      "seconds": "{{count}} sekunder",
+      "minute": "ett minutt",
+      "minutes": "{{count}} minutter"
+    }
   },
   "admin": {
     "open": "Adminpanel",

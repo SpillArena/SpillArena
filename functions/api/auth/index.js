@@ -129,7 +129,29 @@ export async function onRequestPost(context) {
     if (!existing) return json({ error: 'bad_credentials' }, 401)
 
     if (existing.locked_until && existing.locked_until > nowIso) {
-      return json({ error: 'locked' }, 429)
+      /*
+       * Si HVOR LENGE, ikke bare at det er stengt.
+       *
+       * «Prøv igjen senere» gjør at spilleren enten prøver igjen med en gang —
+       * og får samme svar — eller gir opp. Med et tall kan de faktisk vente.
+       * Sekunder, avrundet opp, så klienten kan skrive det på sitt eget språk;
+       * en setning herfra ville bare kunnet vises på norsk.
+       *
+       * Retry-After er standardheaderen for nøyaktig dette, og koster
+       * ingenting å sette i tillegg.
+       */
+      const retryAfter = Math.max(
+        1,
+        Math.ceil((new Date(existing.locked_until).getTime() - now.getTime()) / 1000),
+      )
+      return new Response(JSON.stringify({ error: 'locked', retryAfter }), {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'no-store',
+          'Retry-After': String(retryAfter),
+        },
+      })
     }
 
     const attempted = await hashPin(pin, existing.pin_salt)
