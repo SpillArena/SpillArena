@@ -32,12 +32,45 @@
   },
   "cookieConsent": {
     "section": "Privacy",
-    "message": "This site uses cookies to remember your theme, accent color and language. Nothing is shared with third parties.",
-    "accept": "Accept",
+    "title": "Save your progress on this device?",
+    "lead": "SpillArena stores a few small things in your browser so you stay signed in and your progress follows you between the games.",
+    "withoutTitle": "If you decline, nothing is saved:",
+    "without": {
+      "signin": "You're signed out as soon as you leave this page, including when you open a game.",
+      "progress": "Your XP, levels and personal records aren't saved to your account.",
+      "results": "Your results aren't posted under your name on the leaderboards.",
+      "settings": "Theme, accent color and language reset on every visit."
+    },
+    "storedTitle": "What is stored in your browser",
+    "items": {
+      "session": {
+        "title": "Keeps you signed in",
+        "body": "Your username and a sign-in key that lasts up to 30 days, so you don't have to sign in again in every game. Your PIN is never stored here."
+      },
+      "settings": {
+        "title": "Your settings",
+        "body": "Whether you chose light or dark mode, your favourite color and your language."
+      },
+      "choice": {
+        "title": "Your answer to this question",
+        "body": "Whether you said yes or no, so we don't ask again. This is saved even if you decline."
+      }
+    },
+    "alwaysStored": "Always stored",
+    "server": "Only if you create an account, this is also saved on our server: your username, a protected version of your PIN that nobody can read, and your progress in each game.",
+    "noTracking": "No ads, no tracking, and nothing is shared with third parties.",
+    "accept": "Accept and save",
     "decline": "Decline",
-    "manage": "Change cookie preferences",
-    "statusAccepted": "Preferences are being saved on this device.",
-    "statusDeclined": "Preferences are not saved. Your choices only apply to this session.",
+    "current": "Your current choice: {{choice}}",
+    "choiceAccepted": "accepted",
+    "choiceDeclined": "declined",
+    "close": "Close",
+    "reminder": "Your progress isn't being saved.",
+    "turnOn": "Turn on",
+    "hideReminder": "Hide until next visit",
+    "manage": "See what is stored and change your choice",
+    "statusAccepted": "Your sign-in and settings are saved on this device, so your progress and results follow your account.",
+    "statusDeclined": "Nothing is saved. You're signed out when you leave, and progress and results aren't saved to your account.",
     "statusUndecided": "You haven't made a choice yet."
   },
   "common": {
@@ -81,7 +114,8 @@
     "pin": "PIN",
     "pinHint": "4–6 digits. It works across every game.",
     "blurb": "One account for all of SpillArena. Your progress follows you between the games.",
-    "noConsent": "You declined storage. You will be signed in, but not remembered next visit.",
+    "noConsent": "Storage is turned off. You're only signed in on this page: you're signed out when you open a game, and progress isn't saved.",
+    "enableStorage": "Turn on saving",
     "switchToRegister": "No account? Create one.",
     "switchToSignIn": "Already have an account? Sign in.",
     "yourProfile": "Your profile",

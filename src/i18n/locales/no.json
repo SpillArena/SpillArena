@@ -32,12 +32,45 @@
   },
   "cookieConsent": {
     "section": "Personvern",
-    "message": "Dette nettstedet bruker informasjonskapsler for å huske tema, aksentfarge og språk. Ingenting deles med tredjeparter.",
-    "accept": "Godta",
+    "title": "Lagre fremgangen din på denne enheten?",
+    "lead": "SpillArena lagrer noen få ting i nettleseren din, slik at du forblir innlogget og fremgangen din følger deg mellom spillene.",
+    "withoutTitle": "Hvis du avslår, lagres ingenting:",
+    "without": {
+      "signin": "Du blir logget ut så snart du forlater siden – også når du åpner et spill.",
+      "progress": "XP, nivåer og personlige rekorder lagres ikke på kontoen din.",
+      "results": "Resultatene dine havner ikke under navnet ditt på ledertavlene.",
+      "settings": "Tema, aksentfarge og språk nullstilles ved hvert besøk."
+    },
+    "storedTitle": "Dette lagres i nettleseren din",
+    "items": {
+      "session": {
+        "title": "Holder deg innlogget",
+        "body": "Brukernavnet ditt og en innloggingsnøkkel som varer i opptil 30 dager, så du slipper å logge inn på nytt i hvert spill. PIN-koden din lagres aldri her."
+      },
+      "settings": {
+        "title": "Innstillingene dine",
+        "body": "Om du har valgt lyst eller mørkt tema, favorittfargen din og språket ditt."
+      },
+      "choice": {
+        "title": "Svaret ditt på dette spørsmålet",
+        "body": "Om du sa ja eller nei, så vi ikke spør igjen. Dette lagres også hvis du avslår."
+      }
+    },
+    "alwaysStored": "Lagres alltid",
+    "server": "Bare hvis du lager en konto, lagres dette også på serveren vår: brukernavnet ditt, en beskyttet utgave av PIN-koden som ingen kan lese, og fremgangen din i hvert spill.",
+    "noTracking": "Ingen reklame, ingen sporing, og ingenting deles med tredjeparter.",
+    "accept": "Godta og lagre",
     "decline": "Avslå",
-    "manage": "Endre cookie-innstillinger",
-    "statusAccepted": "Valgene dine lagres på denne enheten.",
-    "statusDeclined": "Valgene dine lagres ikke. De gjelder kun for denne økten.",
+    "current": "Valget ditt nå: {{choice}}",
+    "choiceAccepted": "godtatt",
+    "choiceDeclined": "avslått",
+    "close": "Lukk",
+    "reminder": "Fremgangen din lagres ikke.",
+    "turnOn": "Slå på",
+    "hideReminder": "Skjul til neste besøk",
+    "manage": "Se hva som lagres, og endre valget",
+    "statusAccepted": "Innloggingen og innstillingene lagres på denne enheten, så fremgang og resultater følger kontoen din.",
+    "statusDeclined": "Ingenting lagres. Du blir logget ut når du går, og fremgang og resultater lagres ikke på kontoen din.",
     "statusUndecided": "Du har ikke tatt et valg ennå."
   },
   "common": {
@@ -81,7 +114,8 @@
     "pin": "PIN",
     "pinHint": "4–6 siffer. Den brukes på alle spillene.",
     "blurb": "Én konto for hele SpillArena. Fremgangen din følger deg mellom spillene.",
-    "noConsent": "Du har avslått lagring. Du blir logget inn, men ikke husket til neste besøk.",
+    "noConsent": "Lagring er slått av. Du er bare logget inn på denne siden: du logges ut når du åpner et spill, og fremgangen lagres ikke.",
+    "enableStorage": "Slå på lagring",
     "switchToRegister": "Har du ikke konto? Lag en.",
     "switchToSignIn": "Har du konto? Logg inn.",
     "yourProfile": "Profilen din",

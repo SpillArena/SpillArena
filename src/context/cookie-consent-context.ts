@@ -7,6 +7,8 @@ export interface CookieConsentContextValue {
     accept: () => void
     decline: () => void
     showBanner: () => void
+    /** Lukker banneret uten å endre svaret. Gjør ingenting før det finnes et svar. */
+    hideBanner: () => void
 }
 
 export const CookieConsentContext = createContext<CookieConsentContextValue | null>(null)
