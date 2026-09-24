@@ -69,7 +69,6 @@ export const games: Game[] = [
         color: "bg-amber-500",
         githubUrl: "https://github.com/SpillArena/ProportionPanic",
         liveUrl: "https://spillarena.no/proportionpanic",
-        beta: true,
     },
     {
         id: 6,

@@ -34,11 +34,12 @@
     "section": "Personvern",
     "title": "Lagre fremgangen din på denne enheten?",
     "lead": "SpillArena lagrer noen få ting i nettleseren din, slik at du forblir innlogget og fremgangen din følger deg mellom spillene.",
-    "withoutTitle": "Hvis du avslår, lagres ingenting:",
+    "scope": "Svaret gjelder hele SpillArena – forsiden og alle spillene.",
+    "withoutTitle": "Hvis du avslår:",
     "without": {
-      "signin": "Du blir logget ut så snart du forlater siden – også når du åpner et spill.",
-      "progress": "XP, nivåer og personlige rekorder lagres ikke på kontoen din.",
-      "results": "Resultatene dine havner ikke under navnet ditt på ledertavlene.",
+      "signin": "Du blir ikke husket. Du må logge inn på nytt hver gang du åpner et spill eller laster siden på nytt.",
+      "progress": "Spiller du uten å logge inn, forsvinner XP, nivåer og rekorder når du lukker fanen.",
+      "results": "Runder du spiller uten å være innlogget, havner ikke under navnet ditt på ledertavlene.",
       "settings": "Tema, aksentfarge og språk nullstilles ved hvert besøk."
     },
     "storedTitle": "Dette lagres i nettleseren din",
@@ -70,7 +71,7 @@
     "hideReminder": "Skjul til neste besøk",
     "manage": "Se hva som lagres, og endre valget",
     "statusAccepted": "Innloggingen og innstillingene lagres på denne enheten, så fremgang og resultater følger kontoen din.",
-    "statusDeclined": "Ingenting lagres. Du blir logget ut når du går, og fremgang og resultater lagres ikke på kontoen din.",
+    "statusDeclined": "Ingenting lagres på denne enheten. Du må logge inn på nytt hvert besøk; mens du er innlogget, lagres fremgang og resultater på kontoen din.",
     "statusUndecided": "Du har ikke tatt et valg ennå."
   },
   "common": {
@@ -114,7 +115,7 @@
     "pin": "PIN",
     "pinHint": "4–6 siffer. Den brukes på alle spillene.",
     "blurb": "Én konto for hele SpillArena. Fremgangen din følger deg mellom spillene.",
-    "noConsent": "Lagring er slått av. Du er bare logget inn på denne siden: du logges ut når du åpner et spill, og fremgangen lagres ikke.",
+    "noConsent": "Lagring er slått av, så du er bare innlogget til du forlater siden. I et spill kan du logge inn igjen fra merket i hjørnet – da lagres fremgang og resultater på kontoen din.",
     "enableStorage": "Slå på lagring",
     "switchToRegister": "Har du ikke konto? Lag en.",
     "switchToSignIn": "Har du konto? Logg inn.",

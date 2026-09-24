@@ -1,39 +1,47 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { CookieConsentContext } from './cookie-consent-context'
-import { CONSENT_KEY, OPTIONAL_KEYS, type ConsentStatus } from '../lib/cookieConsent'
-import { getSession, setSession } from '../account'
+import { OPTIONAL_KEYS } from '../lib/cookieConsent'
+import { declareStoredKeys, getConsent, onConsentChange, setConsent as recordConsent } from '../account'
+import type { ConsentStatus } from '../account'
 
-function readConsent(): ConsentStatus {
-    if (typeof window === 'undefined') return null
-    const stored = window.localStorage.getItem(CONSENT_KEY)
-    return stored === 'accepted' || stored === 'declined' ? stored : null
-}
+/*
+ * Svaret eies av src/account/consent.ts, som er felles for forsiden og alle
+ * spillene — samme nøkkel, samme regler. Et nei her gjelder også i spillene, og
+ * et ja gitt i et spill gjelder her. Denne providerens jobb er bare å speile
+ * svaret i React og styre når dialogen vises.
+ *
+ * Nøklene forsiden selv bruker meldes inn ved oppstart, så et nei — gitt her
+ * eller i et spill — rydder dem bort. Økten er meldt inn av consent.ts selv.
+ */
+declareStoredKeys(OPTIONAL_KEYS)
 
 export function CookieConsentProvider({ children }: { children: ReactNode }) {
-    const [consent, setConsent] = useState<ConsentStatus>(readConsent)
-    const [bannerVisible, setBannerVisible] = useState<boolean>(() => readConsent() === null)
+    const [consent, setConsent] = useState<ConsentStatus>(getConsent)
+    const [bannerVisible, setBannerVisible] = useState<boolean>(() => getConsent() === null)
 
+    // svar gitt i en annen fane — et spill, eller forsiden i et annet vindu
+    useEffect(
+        () =>
+            onConsentChange((status) => {
+                setConsent(status)
+                if (status !== null) setBannerVisible(false)
+            }),
+        [],
+    )
+
+    /*
+     * recordConsent tar seg av det som må skje ved et svar: ja skriver en økt
+     * som bare lå i minnet ned på disken, nei sletter økten og innstillingene fra
+     * disken, men lar spilleren være innlogget til fanen lukkes.
+     */
     function accept() {
-        window.localStorage.setItem(CONSENT_KEY, 'accepted')
-        /*
-         * En spiller som logget inn før de svarte, har økten bare i minnet. Skrives
-         * den ikke ned nå, er de logget ut i det øyeblikket de åpner et spill —
-         * akkurat det de nettopp sa ja til å slippe.
-         */
-        const session = getSession()
-        if (session) setSession(session)
-        setConsent('accepted')
+        recordConsent('accepted')
         setBannerVisible(false)
     }
 
     function decline() {
-        window.localStorage.setItem(CONSENT_KEY, 'declined')
-        // også innloggingen: spillene leser den samme nøkkelen, og et nei skal ikke
-        // etterlate et tegn på disken de fortsatt kan finne. Økten i minnet blir
-        // stående, så spilleren er logget inn til fanen lukkes.
-        OPTIONAL_KEYS.forEach((key) => window.localStorage.removeItem(key))
-        setConsent('declined')
+        recordConsent('declined')
         setBannerVisible(false)
     }
 

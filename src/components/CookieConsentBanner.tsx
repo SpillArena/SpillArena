@@ -133,6 +133,9 @@ export default function CookieConsentBanner() {
                                 <p id="consent-lead" className="mt-3 text-sm leading-relaxed" style={{ color: 'var(--text-subtle)' }}>
                                     {t('cookieConsent.lead')}
                                 </p>
+                                <p className="mt-1.5 text-xs font-semibold" style={{ color: 'var(--text-subtle)' }}>
+                                    {t('cookieConsent.scope')}
+                                </p>
 
                                 <div className="mt-4 rounded-2xl bg-amber-100 px-4 py-3 text-amber-950 dark:bg-amber-900/35 dark:text-amber-50">
                                     <p className="flex items-center gap-2 text-sm font-semibold">

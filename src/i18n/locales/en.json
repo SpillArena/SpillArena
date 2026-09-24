@@ -34,11 +34,12 @@
     "section": "Privacy",
     "title": "Save your progress on this device?",
     "lead": "SpillArena stores a few small things in your browser so you stay signed in and your progress follows you between the games.",
-    "withoutTitle": "If you decline, nothing is saved:",
+    "scope": "Your answer applies to all of SpillArena – the front page and every game.",
+    "withoutTitle": "If you decline:",
     "without": {
-      "signin": "You're signed out as soon as you leave this page, including when you open a game.",
-      "progress": "Your XP, levels and personal records aren't saved to your account.",
-      "results": "Your results aren't posted under your name on the leaderboards.",
+      "signin": "You aren't remembered. You have to sign in again every time you open a game or reload the page.",
+      "progress": "If you play without signing in, your XP, levels and records are gone when you close the tab.",
+      "results": "Rounds you play while signed out aren't posted under your name on the leaderboards.",
       "settings": "Theme, accent color and language reset on every visit."
     },
     "storedTitle": "What is stored in your browser",
@@ -70,7 +71,7 @@
     "hideReminder": "Hide until next visit",
     "manage": "See what is stored and change your choice",
     "statusAccepted": "Your sign-in and settings are saved on this device, so your progress and results follow your account.",
-    "statusDeclined": "Nothing is saved. You're signed out when you leave, and progress and results aren't saved to your account.",
+    "statusDeclined": "Nothing is saved on this device. You have to sign in again each visit; while signed in, progress and results are saved to your account.",
     "statusUndecided": "You haven't made a choice yet."
   },
   "common": {
@@ -114,7 +115,7 @@
     "pin": "PIN",
     "pinHint": "4–6 digits. It works across every game.",
     "blurb": "One account for all of SpillArena. Your progress follows you between the games.",
-    "noConsent": "Storage is turned off. You're only signed in on this page: you're signed out when you open a game, and progress isn't saved.",
+    "noConsent": "Storage is off, so you're only signed in until you leave this page. In a game you can sign in again from the badge in the corner — your progress and results are then saved to your account.",
     "enableStorage": "Turn on saving",
     "switchToRegister": "No account? Create one.",
     "switchToSignIn": "Already have an account? Sign in.",
