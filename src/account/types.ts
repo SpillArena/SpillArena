@@ -29,6 +29,8 @@ export type AuthErrorCode =
     | 'bad_action'
     | 'name_taken'
     | 'locked'
+    /** Returned on sign-in with the right PIN, and as a 401 on any signed call. */
+    | 'banned'
     | 'not_configured'
     | 'unauthorized'
     | 'service_failed'
@@ -51,5 +53,10 @@ export interface AccountOverview {
     username: string
     createdAt: string
     lastSeen: string
+    /**
+     * Only the front page reads this, to decide whether to offer the admin panel.
+     * It opens nothing by itself: every admin call checks the flag again.
+     */
+    admin?: boolean
     games: Partial<Record<GameId, { progress: unknown; updatedAt: string }>>
 }

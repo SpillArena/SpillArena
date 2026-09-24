@@ -1,22 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { LogOut, Pencil, User } from 'lucide-react'
+import { LogOut, Pencil, ShieldCheck, User } from 'lucide-react'
 import { fetchAccount, levelProgress, useAccount } from '../../account'
 import type { AccountOverview, GameId } from '../../account'
-import { games, type Game } from '../../data/games'
+import { GAME_TITLES, games, type Game } from '../../data/games'
 import { formatDate } from '../../lib/formatDate'
 import AuthModal from './AuthModal'
+import AdminPanel from '../admin/AdminPanel'
 import RenameForm from './RenameForm'
-
-/** Spillnavnet slik forsiden viser det, ut fra id-en tjeneren lagrer. */
-const TITLES: Record<GameId, string> = {
-    atlasmaster: 'AtlasMaster',
-    scribblebot: 'ScribbleBot',
-    hangbot: 'HangBot',
-    proportionpanic: 'ProportionPanic',
-    pixelpanic: 'PixelPanic',
-    fleetbot: 'FleetBot',
-}
 
 /** The account server keys profiles by the route slug (see src/account/session.ts),
  * not the display title — "Proportion Panic" has a space the title lacks a
@@ -52,6 +43,7 @@ export default function AccountMenu() {
     const [modalOpen, setModalOpen] = useState(false)
     const [overview, setOverview] = useState<AccountOverview | null>(null)
     const [renaming, setRenaming] = useState(false)
+    const [adminOpen, setAdminOpen] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -166,7 +158,7 @@ export default function AccountMenu() {
                                     return (
                                         <li key={game.id} className="flex flex-col gap-1">
                                             <div className="flex items-baseline justify-between gap-3 text-sm">
-                                                <span className="truncate">{TITLES[id] ?? game.title}</span>
+                                                <span className="truncate">{GAME_TITLES[id] ?? game.title}</span>
                                                 <span className="shrink-0 text-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
                                                     {xp === null
                                                         ? t('account.notPlayed')
@@ -191,13 +183,29 @@ export default function AccountMenu() {
                                 })}
                             </ul>
 
+                            {/* Flagget kommer fra /api/profile. Knappen er bare en snarvei —
+                                hvert kall panelet gjør sjekker det på nytt. */}
+                            {overview?.admin && (
+                                <button
+                                    onClick={() => {
+                                        setOpen(false)
+                                        setAdminOpen(true)
+                                    }}
+                                    className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition hover:shadow-md"
+                                    style={{ background: 'color-mix(in srgb, var(--accent) 16%, transparent)' }}
+                                >
+                                    <ShieldCheck className="h-4 w-4" />
+                                    {t('admin.open')}
+                                </button>
+                            )}
+
                             <button
                                 onClick={() => {
                                     signOut()
                                     setOverview(null)
                                     setOpen(false)
                                 }}
-                                className="mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition hover:shadow-md"
+                                className={`${overview?.admin ? 'mt-2' : 'mt-4'} flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition hover:shadow-md`}
                                 style={{ borderColor: 'var(--border)' }}
                             >
                                 <LogOut className="h-4 w-4" />
@@ -207,6 +215,8 @@ export default function AccountMenu() {
                     )}
                 </div>
             )}
+
+            <AdminPanel open={adminOpen} onClose={() => setAdminOpen(false)} username={username ?? ''} />
         </div>
     )
 }

@@ -198,6 +198,48 @@ One thing lives outside these repos: the router has to send `/api/*` to this
 Pages project. Everything else is already on this origin, but if `/api/auth`
 404s in production, that rule is why.
 
+### The admin panel
+
+Accounts with `players.admin = 1` get an **Admin panel** button in the
+account menu. It shows sign-up and activity numbers, every player's saved
+progress and leaderboard rows, and a log of what admins have done. From a
+player's card an admin can ban and unban, lift a PIN lockout, set a new PIN,
+rename, remove leaderboard rows, make another player admin, and delete the
+account.
+
+| Path | What it is |
+|---|---|
+| `functions/api/admin/` | Overview, player list, and one player (read and act). |
+| `shared/admin-server.js` | The admin check, the audit log, and which leaderboards live in the hub database. |
+| `src/admin/`, `src/components/admin/` | The panel. Front page only; not vendored. |
+
+`admin` is a 0/1 column on the `players` row, read on every call and never from
+the token, so clearing it takes effect on the next click. Migration 0009 sets it
+for `Emil`; if that account does not exist yet, create it and run
+`UPDATE players SET admin = 1 WHERE username = 'Emil'` by hand.
+
+The panel can make someone admin but cannot take it away, and admins cannot
+ban, rename, reset or delete each other. All admins are equal, so a remove
+button would let any one of them remove the rest. Removing admin is done in the
+database: `UPDATE players SET admin = 0 WHERE username = '<name>'`.
+
+**A ban reaches the games only partly.** Every `/api/*` call here looks up the
+row, so a banned player is signed out on the front page and in every game the
+next time that game syncs a profile, and cannot sign in again. The games'
+leaderboard endpoints verify the token by signature alone, though, so a token
+issued before the ban can still post scores until it expires (30 days). Closing
+that gap means each game checking `players.banned_at`, which the shared database
+now allows.
+
+Apply the migration **before** deploying this code:
+
+```bash
+npx wrangler d1 migrations apply spillarena-hub --remote
+```
+
+The account endpoints read the row with `SELECT *` so they keep working either
+way, but the panel needs the new columns.
+
 ### Local development
 
 The router does not exist locally, so each game proxies `/api/auth`,
