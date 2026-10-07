@@ -8,6 +8,31 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '07-10-2026',
+        title: 'MelodyRush: playlists and a better listening experience',
+        release: '1.6.1',
+        changes: [
+            'MelodyRush now includes curated playlists alongside the daily mixtape and practice by decade',
+            'A new in-game header shows the current mode or playlist, and a wider layout gives listening and guessing their own space',
+            'Clip indicators show how much you can hear, with playback time and volume controls together',
+            'Click the record or press Space to start and stop playback; Enter selects a search result, confirms your answer and advances after the reveal',
+            'Correct answers continue the preview at a lower volume with smooth fades, and a wrong song by the right artist reveals an artist hint',
+            'Updated the MelodyRush preview with vinyl artwork and a clearer overview of its game modes',
+        ],
+    },
+    {
+        date: '07-10-2026',
+        title: 'MelodyRush preview and Pixel Panic out of beta',
+        release: '1.6.0',
+        changes: [
+            'Added MelodyRush to the game list with a new record-cover poster and a coming-soon label',
+            'MelodyRush challenges you to recognise pop songs from short audio clips, with a daily mixtape and practice by decade; less listening earns more points',
+            'New MelodyRush logo and retro record player, plus a continuously spinning landing-page record that slides out of its sleeve on hover and a cover that flips on click',
+            'MelodyRush includes XP, levels, daily streaks and achievement badges',
+            'Pixel Panic is out of beta - removed the beta label and the warning before you play',
+        ],
+    },
+    {
+        date: '07-10-2026',
         title: 'A new look',
         release: '1.5.0',
         changes: [

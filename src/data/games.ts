@@ -5,6 +5,7 @@ import AtlasMasterShowcase from "../assets/games/AtlasMaster.svg";
 import ProportionPanicShowcase from "../assets/games/ProportionPanic.svg";
 import PixelPanicShowcase from "../assets/games/PixelPanic.svg";
 import EraShuffleShowcase from "../assets/games/EraShuffle.svg";
+import MelodyRushShowcase from "../assets/games/MelodyRush.svg";
 import type { GameId } from "../account";
 
 export type Game = {
@@ -80,7 +81,6 @@ export const games: Game[] = [
         color: "bg-fuchsia-500",
         githubUrl: "https://github.com/SpillArena/PixelPanic",
         liveUrl: "https://spillarena.no/pixelpanic",
-        beta: true,
     },
     {
         id: 7,
@@ -92,6 +92,18 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/EraShuffle",
         liveUrl: "https://spillarena.no/erashuffle",
         beta: true,
+    },
+    {
+        id: 8,
+        title: "MelodyRush",
+        descriptionKey: "melodyRushDescription",
+        icon: "Music",
+        showcase: MelodyRushShowcase,
+        color: "bg-orange-600",
+        githubUrl: "https://github.com/SpillArena/MelodyRush",
+        liveUrl: "https://spillarena.no/melodyrush/",
+        beta: true,
+        disabled: true,
     }
 ];
 
@@ -104,4 +116,5 @@ export const GAME_TITLES: Record<GameId, string> = {
     pixelpanic: "PixelPanic",
     fleetbot: "FleetBot",
     erashuffle: "EraShuffle",
+    melodyrush: "MelodyRush",
 };

@@ -43,6 +43,8 @@ export interface ConsentDialogProps {
      * storage key — a player cannot read those.
      */
     items?: ConsentItem[]
+    /** Game-specific disclosure for external media services, if used. */
+    privacyNote?: { no: string; en: string }
 }
 
 const TEXT = {
@@ -305,7 +307,7 @@ const CookieIcon = () => (
     </svg>
 )
 
-export function ConsentDialog({ language, game, items = [] }: ConsentDialogProps) {
+export function ConsentDialog({ language, game, items = [], privacyNote }: ConsentDialogProps) {
     useInjectedStyle()
     const text = TEXT[detectLanguage(language)]
     const consent = useConsent()
@@ -447,7 +449,7 @@ export function ConsentDialog({ language, game, items = [] }: ConsentDialogProps
 
                             <p className="sac-note">☁ {text.server}</p>
                             <p className="sac-note" style={{ marginTop: 6, fontWeight: 600 }}>
-                                {text.noTracking}
+                                {privacyNote?.[detectLanguage(language)] ?? text.noTracking}
                             </p>
                         </div>
 

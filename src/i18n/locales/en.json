@@ -357,5 +357,6 @@
       "service_failed": "The service did not answer as expected.",
       "unreachable": "Could not reach the service."
     }
-  }
+  },
+  "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!"
 }
