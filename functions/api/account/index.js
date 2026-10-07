@@ -51,7 +51,7 @@ async function checkPin(env, username, pin) {
  *
  * TEGNET MÅ BYTTES SAMTIDIG. Signaturen dekker navnet, så tegnet du kom inn med
  * peker på en konto som ikke finnes lenger i det øyeblikket raden er omdøpt.
- * Uten et nytt tegn tilbake ville spilleren vært logget ut av alle fem spillene
+ * Uten et nytt tegn tilbake ville spilleren vært logget ut av alle spillene
  * av å bytte navn.
  *
  * PROFILENE FØLGER MED. `player_progress` er nøklet på brukernavn, ikke på en

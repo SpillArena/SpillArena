@@ -1,4 +1,4 @@
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.svg'
 import { useTranslation } from 'react-i18next'
 import SettingsMenu from './SettingsMenu'
 import AccountMenu from '../account/AccountMenu'

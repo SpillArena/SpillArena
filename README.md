@@ -122,7 +122,7 @@ Translations are configured in src/i18n.ts.
 
 ## The SpillArena account
 
-One account, six games. The front page is the only service on the domain that
+One account, every game. The front page is the only service on the domain that
 issues a sign-in; every game trusts it and none of them ask again.
 
 ### Why it is this simple
