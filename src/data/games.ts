@@ -103,7 +103,6 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/MelodyRush",
         liveUrl: "https://spillarena.no/melodyrush/",
         beta: true,
-        disabled: true,
     }
 ];
 
