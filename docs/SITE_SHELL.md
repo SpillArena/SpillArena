@@ -14,7 +14,9 @@ Storage controls show the same accept, decline, status and manage actions in Eng
 
 ## Branding and link previews
 
-Page titles describe the game, without author or lobby suffixes. Author metadata and footer credit identify Emil Berglund / EmilB04. Canonical, Open Graph, Twitter and structured-data URLs use the public game URL. Favicons, touch icons and manifests resolve under the game's base path.
+Page titles describe the game, without author or lobby suffixes. Author metadata identifies Emil Berglund / EmilB04. The footer links to SpillArena with “En del av SpillArena” in Norwegian or “Part of SpillArena” in English, with the SpillArena logo on the left. Canonical, Open Graph, Twitter and structured-data URLs use the public game URL. Favicons, touch icons and manifests resolve under the game's base path.
+
+`src/ui/spillarena-logo.svg` is an unchanged copy of `SpillArena/src/assets/logo.svg`. Bundle it locally so the footer does not depend on another repository or a remote image. Keep this copy synchronized when the SpillArena logo changes.
 
 The lobby retains its current logo, “Alt står på spill” tagline and 1200 × 630 link-preview image. The shared header uses `src/assets/logo.svg`, and the browser and touch icons remain the lobby’s own assets. Its titles describe the site while retaining this branding.
 
