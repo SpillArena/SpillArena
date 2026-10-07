@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { CookieConsentContext } from './cookie-consent-context'
 import { OPTIONAL_KEYS } from '../lib/cookieConsent'
-import { declareStoredKeys, getConsent, onConsentChange, setConsent as recordConsent } from '../account'
+import { declareStoredKeys, getConsent, onConsentChange, openConsentDialog, setConsent as recordConsent } from '../account'
 import type { ConsentStatus } from '../account'
 
 /*
@@ -46,7 +46,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
     }
 
     function showBanner() {
-        setBannerVisible(true)
+        openConsentDialog()
     }
 
     // lukker uten å endre svaret — bare mulig når det finnes et svar fra før.

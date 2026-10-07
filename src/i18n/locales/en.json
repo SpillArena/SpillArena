@@ -1,6 +1,6 @@
 {
   "appName": "SpillArena",
-  "headerTitle": "Easy to learn. Hard to admit you lost.",
+  "headerTitle": "Everything's at stake.",
   "switchToLight": "Switch to Light",
   "switchToDark": "Switch to Dark",
   "statusLabel": "Status",
@@ -78,7 +78,7 @@
     "logoAlt": "SpillArena logo"
   },
   "footer": {
-    "tagline": "Seven small browser games. No accounts, no ads - just play.",
+    "tagline": "Small browser games against bots. No account needed - just play.",
     "siteFooterAria": "Site footer",
     "githubAria": "View SpillArena on GitHub",
     "portfolioAria": "Visit Emil Berglund's portfolio",

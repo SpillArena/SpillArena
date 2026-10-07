@@ -1,6 +1,6 @@
 {
   "appName": "SpillArena",
-  "headerTitle": "Lett å lære. Vanskelig å innrømme at du tapte.",
+  "headerTitle": "Alt står på spill.",
   "switchToLight": "Bytt til lys",
   "switchToDark": "Bytt til mørk",
   "statusLabel": "Status",
@@ -78,7 +78,7 @@
     "logoAlt": "SpillArena-logo"
   },
   "footer": {
-    "tagline": "Sju små nettleserspill. Ingen konto, ingen reklame - bare spill.",
+    "tagline": "Små nettleserspill mot bots. Ingen konto nødvendig - bare spill.",
     "siteFooterAria": "Bunntekst",
     "githubAria": "Se SpillArena på GitHub",
     "portfolioAria": "Besøk Emil Berglunds portefølje",

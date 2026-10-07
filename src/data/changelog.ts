@@ -8,6 +8,16 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '07-10-2026',
+        title: 'A new look',
+        release: '1.5.0',
+        changes: [
+            'New SpillArena logo - a pixel S of game tiles in the colours of every game in the arena, with a direct hit in the corner',
+            'New tagline: Alt står på spill / Everything\'s at stake',
+            'New link preview image, SVG favicon and home screen icon',
+        ],
+    },
+    {
+        date: '07-10-2026',
         title: 'EraShuffle joins the arena',
         release: '1.4.0',
         changes: [

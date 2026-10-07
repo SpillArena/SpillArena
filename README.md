@@ -122,7 +122,7 @@ Translations are configured in src/i18n.ts.
 
 ## The SpillArena account
 
-One account, six games. The front page is the only service on the domain that
+One account, every game. The front page is the only service on the domain that
 issues a sign-in; every game trusts it and none of them ask again.
 
 ### Why it is this simple
@@ -267,3 +267,7 @@ player without one takes anyway.
 - **ProportionPanic** identified a player by a random per-device `clientId`.
   Signed in, the daily row is keyed to the account instead, so today's result
   follows the player between devices and still collapses to one row per day.
+
+## Shared site shell
+
+The site follows the 1760px SpillArena shell, with consistent navigation, a slim footer, shared storage controls and game-specific link previews. See [site shell and branding](docs/SITE_SHELL.md).

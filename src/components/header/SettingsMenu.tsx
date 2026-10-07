@@ -1,3 +1,4 @@
+import { StorageSettings } from '../../ui/SiteShell'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiSettings } from 'react-icons/fi'
@@ -5,7 +6,6 @@ import { SUPPORTED_LANGUAGES } from '../../i18n/i18n'
 import { ACCENT_PRESETS, type AccentColor } from '../../context/accent-context'
 import { useAccent } from '../../context/useAccent'
 import { type Theme, useTheme } from '../../context/ThemeContext'
-import { useCookieConsent } from '../../context/useCookieConsent'
 import { writePreference } from '../../lib/cookieConsent'
 
 function MoonIcon() {
@@ -59,7 +59,6 @@ export default function SettingsMenu() {
     const { i18n, t } = useTranslation()
     const { theme, currentTheme, setTheme } = useTheme()
     const { accent, setAccent } = useAccent()
-    const { consent, accept, decline, showBanner } = useCookieConsent()
     const [open, setOpen] = useState(false)
     const rootRef = useRef<HTMLDivElement | null>(null)
 
@@ -242,45 +241,7 @@ export default function SettingsMenu() {
                         </div>
                     </section>
 
-                    <section className="border-t border-[var(--border)] pt-4">
-                        <h3 className="mb-2 px-1 text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-subtle)]">
-                            {t('cookieConsent.section')}
-                        </h3>
-                        <p className="mb-2 px-1 text-xs text-[var(--text-subtle)]">
-                            {consent === 'accepted'
-                                ? t('cookieConsent.statusAccepted')
-                                : consent === 'declined'
-                                    ? t('cookieConsent.statusDeclined')
-                                    : t('cookieConsent.statusUndecided')}
-                        </p>
-                        {consent === null && (
-                            <div className="flex gap-2 px-1">
-                                <button
-                                    type="button"
-                                    onClick={accept}
-                                    className="flex-1 rounded-xl bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-                                >
-                                    {t('cookieConsent.accept')}
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={decline}
-                                    className="flex-1 rounded-xl border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-subtle)] transition-colors duration-200 hover:text-[var(--text)] cursor-pointer"
-                                >
-                                    {t('cookieConsent.decline')}
-                                </button>
-                            </div>
-                        )}
-                        {consent !== null && (
-                            <button
-                                type="button"
-                                onClick={showBanner}
-                                className="mt-2 w-full px-1 text-left text-xs underline text-[var(--text-subtle)] hover:text-[var(--text)] cursor-pointer"
-                            >
-                                {t('cookieConsent.manage')}
-                            </button>
-                        )}
-                    </section>
+                    <StorageSettings language={i18n.language} onManage={() => setOpen(false)} />
                 </div>
             </div>
         </div>
