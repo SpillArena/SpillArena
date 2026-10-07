@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="EraShuffle poster - four history cards on a timeline from 1492 to an unknown year, with the question: but in what order?">
+  <title>EraShuffle poster - four history cards on a timeline from 1492 to an unknown year, with the question: but in what order?</title>
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f7f5ee"/><stop offset="100%" stop-color="#ece8da"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#dbeba9" stop-opacity="0.75"/><stop offset="100%" stop-color="#dbeba9" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#273d33" flood-opacity="0.10"/></filter>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#base)"/>
+  <circle cx="1010" cy="120" r="360" fill="url(#glow)"/>
+
+  <!-- wordmark -->
+  <g transform="translate(80 118)">
+    <rect width="68" height="68" rx="18" fill="#2d5142"/>
+    <path d="M20 16h28M20 52h28M25 16c0 12 18 12 18 18s-18 6-18 18M43 16c0 12-18 12-18 18s18 6 18 18" fill="none" stroke="#dbeba9" stroke-width="3" stroke-linecap="round"/>
+    <text x="88" y="40" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-size="38" font-weight="700" fill="#273d33" letter-spacing="-1.5">Era<tspan font-weight="400">Shuffle</tspan></text>
+    <text x="90" y="64" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-size="12" font-weight="600" fill="#72796e" letter-spacing="4">SPILLARENA</text>
+  </g>
+
+  <!-- headline -->
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="58" fill="#273d33" letter-spacing="-1">
+    <tspan x="80" y="300">History happened.</tspan>
+    <tspan x="80" y="368" fill="#2d5142" font-style="italic">But in what order?</tspan>
+  </text>
+  <text x="80" y="440" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-size="22" fill="#72796e">Five moments. One timeline. A new shuffle every day.</text>
+  <g transform="translate(80 486)">
+    <rect width="232" height="48" rx="10" fill="#2d5142"/>
+    <circle cx="24" cy="24" r="4" fill="#dbeba9"/>
+    <text x="40" y="30" font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif" font-size="15" font-weight="700" fill="#dbeba9" letter-spacing="2">DAILY TIMELINE</text>
+  </g>
+
+  <!-- timeline -->
+  <line x1="668" y1="96" x2="668" y2="675" stroke="#dcded1" stroke-width="2"/>
+  <g font-family="Inter, 'Segoe UI', Roboto, Arial, sans-serif">
+    <g transform="translate(696 82) rotate(-2.5)" filter="url(#shadow)">
+      <rect width="430" height="104" rx="16" fill="#fcfbf6" stroke="#dcded1" stroke-width="1.5"/>
+      <rect x="20" y="20" width="64" height="64" rx="12" fill="#efe9cf"/>
+      <path d="M68 52a16 16 0 1 1-32 0 16 16 0 0 1 32 0M36 52h32M52 36c9 9 9 23 0 32-9-9-9-23 0-32" fill="none" stroke="#70643f" stroke-width="2.2"/>
+      <text x="104" y="44" font-size="11" font-weight="700" fill="#72796e" letter-spacing="2">WORLD HISTORY</text>
+      <text x="104" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="23" fill="#273d33">Columbus reaches the Caribbean</text>
+    </g>
+    <g transform="translate(708 214) rotate(1.5)" filter="url(#shadow)">
+      <rect width="420" height="104" rx="16" fill="#fcfbf6" stroke="#dcded1" stroke-width="1.5"/>
+      <rect x="20" y="20" width="64" height="64" rx="12" fill="#e5ebd7"/>
+      <path d="M46 36h12M48 36v14l-12 18a2 2 0 0 0 2 3h28a2 2 0 0 0 2-3L56 50V36M41 60h22" fill="none" stroke="#546d46" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="104" y="44" font-size="11" font-weight="700" fill="#72796e" letter-spacing="2">SCIENCE &amp; TECH</text>
+      <text x="104" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#273d33">One giant leap</text>
+    </g>
+    <g transform="translate(696 346) rotate(-1)" filter="url(#shadow)">
+      <rect width="432" height="104" rx="16" fill="#fcfbf6" stroke="#dcded1" stroke-width="1.5"/>
+      <rect x="20" y="20" width="64" height="64" rx="12" fill="#dbe8e6"/>
+      <path d="M30 68 44 40l8 16 6-10 12 22H30Z" fill="none" stroke="#50737a" stroke-width="2.2" stroke-linejoin="round"/>
+      <text x="104" y="44" font-size="11" font-weight="700" fill="#72796e" letter-spacing="2">NORWAY</text>
+      <text x="104" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="23" fill="#273d33">Lillehammer hosts the Olympics</text>
+    </g>
+    <g transform="translate(704 478) rotate(2)" filter="url(#shadow)">
+      <rect width="420" height="104" rx="16" fill="#fcfbf6" stroke="#2d5142" stroke-width="2" stroke-dasharray="7 6"/>
+      <rect x="20" y="20" width="64" height="64" rx="12" fill="#f1e2d6"/>
+      <path d="M34 42l36-8v32H34V42ZM34 50h36M44 58l10 4-10 4v-8Z" fill="none" stroke="#98735a" stroke-width="2.2" stroke-linejoin="round"/>
+      <text x="104" y="44" font-size="11" font-weight="700" fill="#72796e" letter-spacing="2">POP CULTURE</text>
+      <text x="104" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#273d33">Your move…</text>
+    </g>
+    <g font-size="17" font-weight="700" fill="#72796e" text-anchor="end">
+      <text x="642" y="140">1492</text><text x="642" y="272">1969</text><text x="642" y="404">1994</text><text x="642" y="536">?</text>
+    </g>
+    <g fill="#6a8975" stroke="#f5f3eb" stroke-width="3">
+      <circle cx="668" cy="134" r="7"/><circle cx="668" cy="266" r="7"/><circle cx="668" cy="398" r="7"/><circle cx="668" cy="530" r="7" fill="#2d5142"/>
+    </g>
+  </g>
+</svg>

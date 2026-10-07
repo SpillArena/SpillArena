@@ -1,7 +1,7 @@
 // One SpillArena account, shared by every game on the domain.
 //
 // This folder is VENDORED: the same files exist in AtlasMaster, ScribbleBot,
-// HangBot, ProportionPanic, PixelPanic and FleetBot, byte for byte. SpillArena
+// HangBot, ProportionPanic, PixelPanic, FleetBot and EraShuffle, byte for byte. SpillArena
 // is the canonical copy — fix it here, then copy it out. That is why the
 // comments in this folder are English while the rest of this repo is
 // Norwegian: this file also lives in repos that are written in English.
@@ -74,7 +74,7 @@ export type ApiResult<T> = { ok: true; data: T } | AuthFailure
 export type RecoverResult = { ok: true; session: Session; recoveryCode: string } | AuthFailure
 
 /** The path segment the game is served under: spillarena.no/<id>. */
-export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'pixelpanic' | 'fleetbot'
+export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'pixelpanic' | 'fleetbot' | 'erashuffle'
 
 export interface ProfileResponse<T> {
     game: GameId

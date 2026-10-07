@@ -78,7 +78,7 @@
     "logoAlt": "SpillArena-logo"
   },
   "footer": {
-    "tagline": "Seks små nettleserspill. Ingen konto, ingen reklame - bare spill.",
+    "tagline": "Sju små nettleserspill. Ingen konto, ingen reklame - bare spill.",
     "siteFooterAria": "Bunntekst",
     "githubAria": "Se SpillArena på GitHub",
     "portfolioAria": "Besøk Emil Berglunds portefølje",
@@ -106,6 +106,8 @@
   "proportionPanicDescription": "Proportion Panic - gjett hvor store ting egentlig er før tiden renner ut!",
   "pixelPanicTitle": "Pixel Panic",
   "pixelPanicDescription": "Pixel Panic - gjett filmen, spillet, stedet, dyret eller flagget mens bildet blir skarpere, piksel for piksel!",
+  "eraShuffleTitle": "EraShuffle",
+  "eraShuffleDescription": "EraShuffle - sett fem historiske øyeblikk i riktig rekkefølge, og se årstallene og historiene bak dem!",
   "account": {
     "title": "Konto",
     "signIn": "Logg inn",

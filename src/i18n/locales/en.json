@@ -78,7 +78,7 @@
     "logoAlt": "SpillArena logo"
   },
   "footer": {
-    "tagline": "Six small browser games. No accounts, no ads - just play.",
+    "tagline": "Seven small browser games. No accounts, no ads - just play.",
     "siteFooterAria": "Site footer",
     "githubAria": "View SpillArena on GitHub",
     "portfolioAria": "Visit Emil Berglund's portfolio",
@@ -106,6 +106,8 @@
   "proportionPanicDescription": "Proportion Panic - guess how big things really are before the timer runs out!",
   "pixelPanicTitle": "Pixel Panic",
   "pixelPanicDescription": "Pixel Panic - name the film, game, place, animal or flag while the picture sharpens, pixel by pixel!",
+  "eraShuffleTitle": "EraShuffle",
+  "eraShuffleDescription": "EraShuffle - put five moments from history in the right order, then reveal the years and the stories behind them!",
   "account": {
     "title": "Account",
     "signIn": "Sign in",
