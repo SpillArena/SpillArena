@@ -3,23 +3,26 @@
  *
  * POST   /api/account  { action: 'change-pin', pin, newPin }      → 200 { username, token, expiresAt }
  * POST   /api/account  { action: 'rename', pin, newUsername }   → 200 { username, token, expiresAt }
+ * POST   /api/account  { action: 'recovery-code', pin }         → 200 { recoveryCode }
  * DELETE /api/account  { pin }                                  → 200 { deleted: true }
  *
- * Begge krever BÅDE et gyldig tegn og PIN-en på nytt. Tegnet sier hvem du er,
+ * Alle krever BÅDE et gyldig tegn og PIN-en på nytt. Tegnet sier hvem du er,
  * men det ligger i nettleseren i tretti dager — en åpen enhet skal ikke kunne
- * bytte PIN-en eller slette kontoen uten å vite den.
+ * bytte PIN-en, lage seg en gjenopprettingskode eller slette kontoen uten å
+ * vite den.
  *
- * Bytte av PIN gir et nytt tegn tilbake. Det gamle er fortsatt gyldig til det
- * går ut: signaturen dekker navn og utløpstid, ikke PIN-hashen, og et tegn kan
- * ikke trekkes tilbake uten et oppslag i databasen for hvert kall — noe hele
- * poenget med å signere var å slippe. Vurderes det å være for svakt, er stedet
- * å fikse det en `tokens_valid_from`-kolonne som verifiseringen leser, og da
- * koster hvert kall et oppslag.
+ * Bytte av PIN gjør gjenopprettingskoden og en ubrukt engangskode ugyldige,
+ * gir et nytt tegn tilbake, og setter `tokens_valid_from`: alle
+ * tegn utstedt før det avvises av /api/* fra nå (se requireUser). Spillene
+ * verifiserer uten oppslag og merker det ikke — et gammelt tegn kan fortsatt
+ * sende inn resultater til det går ut, men det kommer ikke inn på kontoen.
  */
 
 import {
   PIN_RE,
+  RECOVERY_CODE_LENGTH,
   TOKEN_TTL_MS,
+  codeWithHash,
   hashPin,
   issueToken,
   json,
@@ -124,7 +127,7 @@ export async function onRequestPost(context) {
   } catch {
     return json({ error: 'bad_body' }, 400)
   }
-  if (body?.action !== 'change-pin' && body?.action !== 'rename') {
+  if (body?.action !== 'change-pin' && body?.action !== 'rename' && body?.action !== 'recovery-code') {
     return json({ error: 'bad_action' }, 400)
   }
   if (body.action === 'change-pin' && (typeof body.newPin !== 'string' || !PIN_RE.test(body.newPin))) {
@@ -139,12 +142,34 @@ export async function onRequestPost(context) {
 
     if (body.action === 'rename') return await rename(env, auth.username, body.newUsername)
 
+    /*
+     * En ny gjenopprettingskode erstatter den gamle, som slutter å virke. Den
+     * vises bare her, i svaret — tjeneren har bare hashen etterpå.
+     */
+    if (body.action === 'recovery-code') {
+      const fresh = await codeWithHash(RECOVERY_CODE_LENGTH)
+      await env.DB.prepare(`UPDATE players SET recovery_hash = ?, recovery_salt = ? WHERE username = ?`)
+        .bind(fresh.hash, fresh.salt, auth.username)
+        .run()
+      return json({ recoveryCode: fresh.code })
+    }
+
+    /*
+     * KODENE GÅR UT MED DEN GAMLE PIN-EN. Den som kjente PIN-en kunne lage seg
+     * en gjenopprettingskode; uten dette ville den overlevd byttet, og kontoen
+     * kunne tas tilbake med den etterpå. Eieren blir bedt om en ny kode i
+     * kontomenyen. En ubrukt engangskode fra admin trengs heller ikke lenger.
+     */
     const salt = toBase64Url(crypto.getRandomValues(new Uint8Array(16)))
     const now = Date.now()
     await env.DB.prepare(
-      `UPDATE players SET pin_hash = ?, pin_salt = ?, failed = 0, locked_until = NULL WHERE username = ?`,
+      `UPDATE players SET pin_hash = ?, pin_salt = ?, failed = 0, locked_until = NULL,
+                          tokens_valid_from = ?,
+                          recovery_hash = NULL, recovery_salt = NULL,
+                          reset_hash = NULL, reset_salt = NULL, reset_expires = NULL
+       WHERE username = ?`,
     )
-      .bind(await hashPin(body.newPin, salt), salt, auth.username)
+      .bind(await hashPin(body.newPin, salt), salt, new Date(now).toISOString(), auth.username)
       .run()
 
     return json({

@@ -1,7 +1,7 @@
 // One SpillArena account, shared by every game on the domain.
 //
 // This folder is VENDORED: the same files exist in AtlasMaster, ScribbleBot,
-// HangBot, ProportionPanic, PixelPanic and FleetBot, byte for byte. SpillArena
+// HangBot, ProportionPanic, PixelPanic, FleetBot and EraShuffle, byte for byte. SpillArena
 // is the canonical copy — fix it here, then copy it out. That is why the
 // comments in this folder are English while the rest of this repo is
 // Norwegian: this file also lives in repos that are written in English.
@@ -38,6 +38,8 @@ export type AuthErrorCode =
     | 'name_reserved'
     | 'name_not_allowed'
     | 'bad_pin'
+    /** A recovery or reset code that cannot be one: wrong length or characters. */
+    | 'bad_code_format'
     | 'bad_credentials'
     | 'bad_body'
     | 'bad_action'
@@ -64,8 +66,15 @@ export type AuthResult = { ok: true; session: Session } | AuthFailure
 
 export type ApiResult<T> = { ok: true; data: T } | AuthFailure
 
+/**
+ * A forgotten PIN reset with a code. Signs the player in like any other success,
+ * and carries the NEW recovery code — the old one is spent. Show it once and
+ * make the player keep it: the service only has its hash.
+ */
+export type RecoverResult = { ok: true; session: Session; recoveryCode: string } | AuthFailure
+
 /** The path segment the game is served under: spillarena.no/<id>. */
-export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'pixelpanic' | 'fleetbot'
+export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'pixelpanic' | 'fleetbot' | 'erashuffle'
 
 export interface ProfileResponse<T> {
     game: GameId
@@ -82,5 +91,11 @@ export interface AccountOverview {
      * It opens nothing by itself: every admin call checks the flag again.
      */
     admin?: boolean
+    /**
+     * False when the account has no recovery code yet — every account made
+     * before codes existed, and any made from a game's badge. The front page
+     * asks those players to make one while they still know their PIN.
+     */
+    hasRecoveryCode?: boolean
     games: Partial<Record<GameId, { progress: unknown; updatedAt: string }>>
 }

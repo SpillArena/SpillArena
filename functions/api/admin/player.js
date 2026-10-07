@@ -9,7 +9,7 @@
  *   ban          { reason? }        steng kontoen ute
  *   unban                           slipp den inn igjen
  *   unlock                          nullstill feilforsøk og sperren etter dem
- *   reset-pin    { pin }            ny PIN — for en spiller som har glemt sin
+ *   issue-reset-code                engangskode for en spiller som har glemt PIN-en
  *   rename       { newUsername }    for et navn filteret ikke fanget
  *   make-admin                      gi kontoen admin — se under om å ta det bort
  *   clear-scores { game }           fjern kontoens rader fra én tavle, eller 'all'
@@ -18,12 +18,16 @@
  *
  * GRENSENE.
  *
- * En admin kan ikke utestenge, døpe om, gi ny PIN til eller slette seg selv:
- * det første låser panelet for godt, og resten har kontomenyen, som krever
- * PIN-en.
+ * En admin kan ikke utestenge, døpe om, gi engangskode til eller slette seg
+ * selv: det første låser panelet for godt, og resten har kontomenyen, som
+ * krever PIN-en.
  *
- * En annen admin kan ikke utestenges, få ny PIN, døpes om eller slettes — ny
- * PIN på en annen admin er å overta kontoen deres.
+ * En annen admin kan ikke utestenges, få engangskode, døpes om eller slettes —
+ * en engangskode til en annen admin er å overta kontoen deres.
+ *
+ * ADMIN SETTER IKKE PIN-EN. Engangskoden gir spilleren lov til å velge en ny
+ * selv, i POST /api/auth { action: 'recover' }. Da vet ingen andre enn
+ * spilleren hva PIN-en er, og den har aldri stått i et skjema i panelet.
  *
  * ADMIN KAN GIS HER, MEN IKKE TAS. Alle admins er likestilte, så en knapp for å
  * ta det bort ville latt hvilken som helst admin fjerne alle de andre og sitte
@@ -35,10 +39,10 @@
  */
 
 import {
-  PIN_RE,
-  hashPin,
+  RESET_CODE_LENGTH,
+  RESET_CODE_TTL_MS,
+  codeWithHash,
   json,
-  toBase64Url,
   validateUsername,
 } from '../../../shared/account-server.js'
 import {
@@ -56,9 +60,9 @@ const MAX_REASON = 200
 const LOG_LIMIT = 30
 
 /** Handlinger som ikke kan rettes mot en selv — se toppen av fila. */
-const NOT_ON_SELF = new Set(['ban', 'rename', 'reset-pin'])
+const NOT_ON_SELF = new Set(['ban', 'rename', 'issue-reset-code'])
 /** Handlinger som ikke kan rettes mot en annen admin før rollen er borte. */
-const NOT_ON_ADMIN = new Set(['ban', 'rename', 'reset-pin'])
+const NOT_ON_ADMIN = new Set(['ban', 'rename', 'issue-reset-code'])
 
 /** Kontoraden bak `?u=`, eller et ferdig 400/404-svar. */
 async function loadTarget(env, request) {
@@ -68,13 +72,23 @@ async function loadTarget(env, request) {
     `SELECT username, admin, created_at AS createdAt, last_seen AS lastSeen, failed,
             locked_until AS lockedUntil,
             COALESCE(locked_until > strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), 0) AS locked,
-            banned_at AS bannedAt, ban_reason AS banReason, banned_by AS bannedBy
+            banned_at AS bannedAt, ban_reason AS banReason, banned_by AS bannedBy,
+            recovery_hash IS NOT NULL AS hasRecoveryCode,
+            CASE WHEN reset_expires > strftime('%Y-%m-%dT%H:%M:%fZ', 'now') THEN reset_expires END
+              AS resetCodeExpires
      FROM players WHERE username = ?`,
   )
     .bind(name)
     .first()
   if (!account) return { response: json({ error: 'not_found' }, 404) }
-  return { account: { ...account, admin: account.admin === 1, locked: Boolean(account.locked) } }
+  return {
+    account: {
+      ...account,
+      admin: account.admin === 1,
+      locked: Boolean(account.locked),
+      hasRecoveryCode: account.hasRecoveryCode === 1,
+    },
+  }
 }
 
 const isSelf = (auth, account) => auth.username.toLowerCase() === account.username.toLowerCase()
@@ -183,25 +197,25 @@ export async function onRequestPost(context) {
         return json({ ok: true })
       }
 
-      case 'reset-pin': {
-        if (typeof body.pin !== 'string' || !PIN_RE.test(body.pin)) {
-          return json({ error: 'bad_pin' }, 400)
-        }
+      case 'issue-reset-code': {
         /*
-         * Tegnene spilleren alt har, gjelder fortsatt — signaturen dekker ikke
-         * PIN-en (se functions/api/account/). Dette er for den som har glemt
-         * PIN-en, ikke for å kaste noen ut; til det er utestenging.
+         * Koden vises admin ÉN gang, i dette svaret, og gis videre til
+         * spilleren. Tjeneren har bare hashen. En ny kode erstatter en som
+         * ikke er brukt ennå.
+         *
+         * Ingenting annet endres før spilleren bruker den: PIN-en, sperren og
+         * tegnene de har, står til da. Glemmer de det, går koden bare ut.
          */
-        const salt = toBase64Url(crypto.getRandomValues(new Uint8Array(16)))
+        const { code, hash, salt } = await codeWithHash(RESET_CODE_LENGTH)
+        const expiresAt = new Date(Date.now() + RESET_CODE_TTL_MS).toISOString()
         await env.DB.batch([
           env.DB.prepare(
-            `UPDATE players SET pin_hash = ?, pin_salt = ?, failed = 0, locked_until = NULL
-             WHERE username = ?`,
-          ).bind(await hashPin(body.pin, salt), salt, name),
-          // PIN-en selv havner aldri i loggen
-          log('reset-pin'),
+            `UPDATE players SET reset_hash = ?, reset_salt = ?, reset_expires = ? WHERE username = ?`,
+          ).bind(hash, salt, expiresAt, name),
+          // koden selv havner aldri i loggen
+          log('issue-reset-code', { expiresAt }),
         ])
-        return json({ ok: true })
+        return json({ ok: true, code, expiresAt })
       }
 
       case 'rename': {

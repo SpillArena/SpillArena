@@ -32,6 +32,12 @@ export default function LogList({ entries, onOpenPlayer }: LogListProps) {
                 return d.game === 'all' ? t('admin.log.allBoards') : gameTitle(String(d.game))
             case 'delete':
                 return d.scores ? t('admin.log.withScores') : null
+            case 'issue-reset-code':
+                return typeof d.expiresAt === 'string'
+                    ? t('admin.log.validUntil', { date: formatDateTime(d.expiresAt) })
+                    : null
+            case 'recover':
+                return d.via === 'reset-code' ? t('admin.log.viaResetCode') : t('admin.log.viaRecoveryCode')
             default:
                 return null
         }
@@ -55,7 +61,8 @@ export default function LogList({ entries, onOpenPlayer }: LogListProps) {
                         <span className="min-w-0 flex-1">
                             <span className="font-semibold">{entry.admin}</span>{' '}
                             {t(`admin.log.${entry.action}`)}{' '}
-                            {canOpen ? (
+                            {/* `recover` gjør spilleren selv: navnet står alt først */}
+                            {entry.action === 'recover' ? null : canOpen ? (
                                 <button
                                     type="button"
                                     onClick={() => onOpenPlayer?.(entry.target!)}

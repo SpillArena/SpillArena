@@ -13,7 +13,6 @@ export type AdminErrorCode =
     | 'bad_target'
     | 'bad_body'
     | 'bad_action'
-    | 'bad_pin'
     | 'bad_username'
     | 'name_taken'
     | 'name_reserved'
@@ -31,7 +30,11 @@ export interface LogEntry {
     id: number
     at: string
     admin: string
-    action: AdminAction | 'delete'
+    /**
+     * `recover` skrives av spilleren selv, når en kode er brukt til ny PIN.
+     * `reset-pin` finnes bare i gamle rader, fra før admin laget engangskoder.
+     */
+    action: AdminAction | 'delete' | 'recover' | 'reset-pin'
     target: string | null
     details: Record<string, unknown> | null
 }
@@ -83,6 +86,10 @@ export interface PlayerAccount {
     bannedAt: string | null
     banReason: string | null
     bannedBy: string | null
+    /** spilleren har en egen gjenopprettingskode */
+    hasRecoveryCode: boolean
+    /** når en ubrukt engangskode fra admin går ut, eller null */
+    resetCodeExpires: string | null
 }
 
 export interface BoardSummary {
@@ -103,7 +110,7 @@ export type AdminAction =
     | 'ban'
     | 'unban'
     | 'unlock'
-    | 'reset-pin'
+    | 'issue-reset-code'
     | 'rename'
     | 'make-admin'
     | 'clear-scores'
@@ -112,7 +119,7 @@ export type ActionBody =
     | { action: 'ban'; reason?: string }
     | { action: 'unban' }
     | { action: 'unlock' }
-    | { action: 'reset-pin'; pin: string }
+    | { action: 'issue-reset-code' }
     | { action: 'rename'; newUsername: string }
     | { action: 'make-admin' }
     | { action: 'clear-scores'; game: GameId | 'all' }
@@ -123,4 +130,7 @@ export interface ActionResponse {
     username?: string
     /** satt etter `clear-scores`: hvor mange tavlerader som ble fjernet */
     removed?: number
+    /** satt etter `issue-reset-code`: vises admin én gang, og aldri igjen */
+    code?: string
+    expiresAt?: string
 }

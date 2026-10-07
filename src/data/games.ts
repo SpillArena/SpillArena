@@ -4,6 +4,7 @@ import ScribbleBotShowcase from "../assets/games/ScribbleBot.svg";
 import AtlasMasterShowcase from "../assets/games/AtlasMaster.svg";
 import ProportionPanicShowcase from "../assets/games/ProportionPanic.svg";
 import PixelPanicShowcase from "../assets/games/PixelPanic.svg";
+import EraShuffleShowcase from "../assets/games/EraShuffle.svg";
 import type { GameId } from "../account";
 
 export type Game = {
@@ -80,6 +81,17 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/PixelPanic",
         liveUrl: "https://spillarena.no/pixelpanic",
         beta: true,
+    },
+    {
+        id: 7,
+        title: "EraShuffle",
+        descriptionKey: "eraShuffleDescription",
+        icon: "Hourglass",
+        showcase: EraShuffleShowcase,
+        color: "bg-emerald-700",
+        githubUrl: "https://github.com/SpillArena/EraShuffle",
+        liveUrl: "https://spillarena.no/erashuffle",
+        beta: true,
     }
 ];
 
@@ -91,4 +103,5 @@ export const GAME_TITLES: Record<GameId, string> = {
     proportionpanic: "ProportionPanic",
     pixelpanic: "PixelPanic",
     fleetbot: "FleetBot",
+    erashuffle: "EraShuffle",
 };

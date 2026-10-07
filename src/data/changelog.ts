@@ -7,6 +7,15 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '07-10-2026',
+        title: 'EraShuffle joins the arena',
+        release: '1.4.0',
+        changes: [
+            'Added EraShuffle to the game list - put five moments from history in order, then reveal the years and the stories behind them',
+            'A new daily shuffle every day, and EraShuffle XP now counts towards your SpillArena profile',
+        ],
+    },
+    {
         date: '23-09-2026',
         title: 'Pixel Panic joins the arena',
         release: '1.3.1',

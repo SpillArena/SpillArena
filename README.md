@@ -154,7 +154,7 @@ with it.
 `src/account/` is the canonical copy. Fix it here, then copy it out:
 
 ```bash
-for g in AtlasMaster ScribbleBot ProportionPanic PixelPanic HangBot FleetBot/battleship-frontend; do
+for g in AtlasMaster ScribbleBot ProportionPanic PixelPanic HangBot EraShuffle FleetBot/battleship-frontend; do
   rm -rf ../$g/src/account && cp -R src/account ../$g/src/account
 done
 ```
