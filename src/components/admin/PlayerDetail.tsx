@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, Ban } from 'lucide-react'
+import { ArrowLeft, Ban, Check, Copy } from 'lucide-react'
 import { levelProgress, normalizeProgress } from '../../account'
 import { deletePlayer, fetchPlayer, runAction } from '../../admin/api'
 import { GAME_IDS, errorText, formatNumber, gameTitle } from '../../admin/format'
@@ -18,7 +18,7 @@ interface PlayerDetailProps {
     onDeleted: (username: string) => void
 }
 
-type FormKind = 'ban' | 'reset-pin' | 'rename' | 'delete'
+type FormKind = 'ban' | 'rename' | 'delete'
 type Notice = { kind: 'ok' | 'error'; text: string }
 
 const inputClass = 'w-full rounded-lg border px-2.5 py-1.5 text-sm outline-none focus:border-[color:var(--accent)]'
@@ -38,6 +38,8 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
     const [form, setForm] = useState<FormKind | null>(null)
     const [busy, setBusy] = useState(false)
     const [notice, setNotice] = useState<Notice | null>(null)
+    /** En engangskode som nettopp ble laget. Den vises bare her, og bare nå. */
+    const [issued, setIssued] = useState<{ username: string; code: string; expiresAt: string } | null>(null)
 
     const key = `${username}\u0000${version}`
 
@@ -94,6 +96,9 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
             return
         }
         setForm(null)
+        if (body.action === 'issue-reset-code' && r.data.code && r.data.expiresAt) {
+            setIssued({ username: account.username, code: r.data.code, expiresAt: r.data.expiresAt })
+        }
         const name = r.data.username ?? account.username
         setNotice({ kind: 'ok', text: t(`admin.done.${body.action}`, { name, count: r.data.removed ?? 0 }) })
         // et nytt navn er en ny adresse til kortet; forelderen bytter, og da
@@ -135,6 +140,10 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                         {account.failed > 0 && <span>{t('admin.failed', { count: account.failed })}</span>}
                         {account.locked && (
                             <span>{t('admin.lockedUntil', { date: formatDateTime(account.lockedUntil) })}</span>
+                        )}
+                        {!account.hasRecoveryCode && <span>{t('admin.noRecoveryCode')}</span>}
+                        {account.resetCodeExpires && (
+                            <span>{t('admin.resetCodeActive', { date: formatDateTime(account.resetCodeExpires) })}</span>
                         )}
                     </p>
                 </div>
@@ -194,8 +203,14 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                             )}
                             {!isAdmin && (
                                 <>
-                                    <Button disabled={busy} aria-expanded={form === 'reset-pin'} onClick={() => setForm('reset-pin')}>
-                                        {t('admin.actions.resetPin')}
+                                    <Button
+                                        disabled={busy}
+                                        onClick={() => {
+                                            setForm(null)
+                                            void run({ action: 'issue-reset-code' })
+                                        }}
+                                    >
+                                        {t('admin.actions.issueResetCode')}
                                     </Button>
                                     <Button disabled={busy} aria-expanded={form === 'rename'} onClick={() => setForm('rename')}>
                                         {t('admin.actions.rename')}
@@ -231,16 +246,11 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                                 onSubmit={(reason) => void run({ action: 'ban', reason })}
                             />
                         )}
-                        {form === 'reset-pin' && (
-                            <TextForm
-                                label={t('admin.actions.newPin')}
-                                help={t('admin.actions.resetPinHelp')}
-                                submitLabel={t('admin.actions.resetPin')}
-                                maxLength={6}
-                                digits
-                                busy={busy}
-                                onCancel={() => setForm(null)}
-                                onSubmit={(pin) => void run({ action: 'reset-pin', pin })}
+                        {issued && issued.username === account.username && (
+                            <IssuedCode
+                                code={issued.code}
+                                expiresAt={issued.expiresAt}
+                                onClose={() => setIssued(null)}
                             />
                         )}
                         {form === 'rename' && (
@@ -444,9 +454,48 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
 }
 
 /**
- * Ett felt, en forklaring og to knapper — utestenging, ny PIN og nytt navn er
- * alle den samme formen. Skjemaet forsvinner når det lukkes, og det som var
- * skrevet i det forsvinner med.
+ * Engangskoden admin nettopp laget, med hva spilleren skal gjøre med den.
+ *
+ * Tjeneren har bare hashen, så lukkes denne, er koden borte — da lages en ny,
+ * som erstatter den.
+ */
+function IssuedCode({ code, expiresAt, onClose }: { code: string; expiresAt: string; onClose: () => void }) {
+    const { t } = useTranslation()
+    const [copied, setCopied] = useState(false)
+
+    const copy = async () => {
+        try {
+            await navigator.clipboard.writeText(code)
+            setCopied(true)
+        } catch {
+            // koden står der og kan skrives av
+        }
+    }
+
+    return (
+        <Card className="mt-3 flex max-w-md flex-col gap-2.5">
+            <p className="text-sm font-semibold">{t('admin.actions.resetCodeTitle')}</p>
+            <p className="select-all rounded-lg border-2 border-dashed border-[color:var(--accent)] px-3 py-2.5 text-center font-mono text-xl font-semibold tracking-widest">
+                {code}
+            </p>
+            <Muted className="text-xs leading-snug">
+                {t('admin.actions.resetCodeHelp', { date: formatDateTime(expiresAt) })}
+            </Muted>
+            <div className="flex gap-2">
+                <Button onClick={() => void copy()}>
+                    {copied ? <Check className="h-3.5 w-3.5" aria-hidden="true" /> : <Copy className="h-3.5 w-3.5" aria-hidden="true" />}
+                    {t(copied ? 'admin.actions.copied' : 'admin.actions.copy')}
+                </Button>
+                <Button onClick={onClose}>{t('close')}</Button>
+            </div>
+        </Card>
+    )
+}
+
+/**
+ * Ett felt, en forklaring og to knapper — utestenging og nytt navn er den
+ * samme formen. Skjemaet forsvinner når det lukkes, og det som var skrevet i
+ * det forsvinner med.
  */
 function TextForm({
     label,
@@ -455,7 +504,6 @@ function TextForm({
     maxLength,
     initial = '',
     optional = false,
-    digits = false,
     danger = false,
     busy,
     onCancel,
@@ -467,7 +515,6 @@ function TextForm({
     maxLength: number
     initial?: string
     optional?: boolean
-    digits?: boolean
     danger?: boolean
     busy: boolean
     onCancel: () => void
@@ -488,13 +535,12 @@ function TextForm({
                 {label}
                 <input
                     value={value}
-                    onChange={(event) => setValue(digits ? event.target.value.replace(/\D/g, '') : event.target.value)}
+                    onChange={(event) => setValue(event.target.value)}
                     maxLength={maxLength}
                     required={!optional}
                     autoFocus
                     autoComplete="off"
-                    {...(digits ? { inputMode: 'numeric' as const, pattern: '\\d{4,6}', minLength: 4 } : {})}
-                    className={`${inputClass} ${digits ? 'tracking-[0.3em]' : ''}`}
+                    className={inputClass}
                     style={inputStyle}
                 />
             </label>

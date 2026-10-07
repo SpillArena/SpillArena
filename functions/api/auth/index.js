@@ -5,6 +5,12 @@
  *   → 200 { username, token, expiresAt }
  *   → 4xx { error: <kode> }
  *
+ * POST /api/auth  { action: 'recover', username, code, newPin }
+ *   → 200 { username, token, expiresAt, recoveryCode }
+ *   → 4xx { error: <kode> }
+ *   Glemt PIN. `code` er spillerens gjenopprettingskode eller en engangskode
+ *   fra admin — se migrations/0010_pin_recovery.sql og `recover` under.
+ *
  * GET  /api/auth  (Authorization: Bearer <tegn>)
  *   → 200 { username, admin }       — tegnet er gyldig
  *   → 401 { error: 'unauthorized' } — det er det ikke
@@ -29,19 +35,57 @@
 
 import {
   PIN_RE,
+  RECOVERY_CODE_LENGTH,
+  RESET_CODE_LENGTH,
   TOKEN_TTL_MS,
+  codeWithHash,
+  hashCode,
   hashPin,
   issueToken,
   json,
+  newSalt,
+  normalizeCode,
   requireUser,
   timingSafeEqual,
   toBase64Url,
   validateUsername,
 } from '../../../shared/account-server.js'
+import { logStatement } from '../../../shared/admin-server.js'
 
 /** Feil på rad før kontoen blir stengt, og hvor lenge den er stengt. */
 const MAX_FAILED = 5
 const LOCKOUT_MS = 15 * 60 * 1000
+
+/*
+ * Det samme for koder ved glemt PIN, med egen teller. Kodene har 40–60 bit, så
+ * grensa er ikke det som gjør dem trygge — den er der så ingen kan bruke
+ * endepunktet til å brenne CPU. Den kan derfor være rausere enn for PIN-en.
+ */
+const RECOVER_MAX_FAILED = 10
+const RECOVER_LOCKOUT_MS = 60 * 60 * 1000
+
+/*
+ * Si HVOR LENGE, ikke bare at det er stengt.
+ *
+ * «Prøv igjen senere» gjør at spilleren enten prøver igjen med en gang — og får
+ * samme svar — eller gir opp. Med et tall kan de faktisk vente. Sekunder,
+ * avrundet opp, så klienten kan skrive det på sitt eget språk; en setning
+ * herfra ville bare kunnet vises på norsk.
+ *
+ * Retry-After er standardheaderen for nøyaktig dette, og koster ingenting å
+ * sette i tillegg.
+ */
+function lockedResponse(lockedUntil, now) {
+  const retryAfter = Math.max(1, Math.ceil((new Date(lockedUntil).getTime() - now.getTime()) / 1000))
+  return new Response(JSON.stringify({ error: 'locked', retryAfter }), {
+    status: 429,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'Retry-After': String(retryAfter),
+    },
+  })
+}
 
 function validate(username, pin) {
   // navneregelen bor i shared/account-server.js, fordi navnebytte i
@@ -89,6 +133,13 @@ export async function onRequestPost(context) {
   }
 
   const { action } = body
+  if (action === 'recover') {
+    try {
+      return await recover(env, body, new Date())
+    } catch (error) {
+      return json({ error: 'service_failed', details: String(error) }, 500)
+    }
+  }
   if (action !== 'register' && action !== 'login') return json({ error: 'bad_action' }, 400)
 
   const username = typeof body.username === 'string' ? body.username.trim() : ''
@@ -129,29 +180,7 @@ export async function onRequestPost(context) {
     if (!existing) return json({ error: 'bad_credentials' }, 401)
 
     if (existing.locked_until && existing.locked_until > nowIso) {
-      /*
-       * Si HVOR LENGE, ikke bare at det er stengt.
-       *
-       * «Prøv igjen senere» gjør at spilleren enten prøver igjen med en gang —
-       * og får samme svar — eller gir opp. Med et tall kan de faktisk vente.
-       * Sekunder, avrundet opp, så klienten kan skrive det på sitt eget språk;
-       * en setning herfra ville bare kunnet vises på norsk.
-       *
-       * Retry-After er standardheaderen for nøyaktig dette, og koster
-       * ingenting å sette i tillegg.
-       */
-      const retryAfter = Math.max(
-        1,
-        Math.ceil((new Date(existing.locked_until).getTime() - now.getTime()) / 1000),
-      )
-      return new Response(JSON.stringify({ error: 'locked', retryAfter }), {
-        status: 429,
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'Cache-Control': 'no-store',
-          'Retry-After': String(retryAfter),
-        },
-      })
+      return lockedResponse(existing.locked_until, now)
     }
 
     const attempted = await hashPin(pin, existing.pin_salt)
@@ -189,4 +218,122 @@ export async function onRequestPost(context) {
   } catch (error) {
     return json({ error: 'service_failed', details: String(error) }, 500)
   }
+}
+
+/**
+ * Glemt PIN: ny PIN med en kode i stedet for den gamle.
+ *
+ * Koden er enten spillerens egen gjenopprettingskode (12 tegn) eller en
+ * engangskode fra admin (8 tegn). Lengden avgjør hvilken som prøves.
+ *
+ * ETTER EN VELLYKKET NULLSTILLING
+ *   - PIN-en er ny, og begge sperrene er opphevet.
+ *   - Koden som ble brukt, virker ikke igjen. Spilleren får en NY
+ *     gjenopprettingskode tilbake, også når det var admin sin kode som ble
+ *     brukt — da har de en egen neste gang.
+ *   - Alle tegn utstedt før nå avvises av /api/* (se requireUser). Kom noen
+ *     seg inn på kontoen, er de ute når eieren tar den tilbake.
+ *
+ * Samme svar for «finnes ikke» og «feil kode», av samme grunn som ved
+ * innlogging. Utestengt sjekkes ETTER at koden stemmer.
+ */
+async function recover(env, body, now) {
+  if (!env.AUTH_SECRET) return json({ error: 'not_configured' }, 503)
+
+  const username = typeof body.username === 'string' ? body.username.trim() : ''
+  const invalidName = validateUsername(username)
+  if (invalidName) return json({ error: invalidName }, 400)
+  if (typeof body.newPin !== 'string' || !PIN_RE.test(body.newPin)) {
+    return json({ error: 'bad_pin' }, 400)
+  }
+  const code = normalizeCode(body.code)
+  if (!code) return json({ error: 'bad_code_format' }, 400)
+
+  const nowIso = now.toISOString()
+  // SELECT * av samme grunn som ved innlogging
+  const existing = await env.DB.prepare(`SELECT * FROM players WHERE username = ?`)
+    .bind(username)
+    .first()
+  if (!existing) return json({ error: 'bad_credentials' }, 401)
+
+  if (existing.recover_locked_until && existing.recover_locked_until > nowIso) {
+    return lockedResponse(existing.recover_locked_until, now)
+  }
+
+  const matches = async (hash, salt) =>
+    Boolean(hash && salt) && timingSafeEqual(await hashCode(code, salt), hash)
+
+  /** Kolonnen med hashen som stemte — den som skal være borte etterpå. */
+  let used = null
+  if (code.length === RECOVERY_CODE_LENGTH) {
+    if (await matches(existing.recovery_hash, existing.recovery_salt)) used = 'recovery_hash'
+  } else if (code.length === RESET_CODE_LENGTH) {
+    const live = Boolean(existing.reset_expires && existing.reset_expires > nowIso)
+    if (live && (await matches(existing.reset_hash, existing.reset_salt))) used = 'reset_hash'
+  }
+
+  if (!used) {
+    const failed = (existing.recover_failed ?? 0) + 1
+    const lockedUntil =
+      failed >= RECOVER_MAX_FAILED ? new Date(now.getTime() + RECOVER_LOCKOUT_MS).toISOString() : null
+    await env.DB.prepare(
+      `UPDATE players SET recover_failed = ?, recover_locked_until = ? WHERE username = ?`,
+    )
+      .bind(failed >= RECOVER_MAX_FAILED ? 0 : failed, lockedUntil, existing.username)
+      .run()
+    return json({ error: 'bad_credentials' }, 401)
+  }
+
+  if (existing.banned_at) return json({ error: 'banned' }, 403)
+
+  const fresh = await codeWithHash(RECOVERY_CODE_LENGTH)
+  const pinSalt = newSalt()
+
+  /*
+   * `AND <kolonne> = <hashen som stemte>` gjør koden til en engangskode også
+   * når to forespørsler kommer samtidig: bare den første finner raden slik den
+   * var, den andre endrer ingenting og får nei.
+   */
+  const result = await env.DB.prepare(
+    `UPDATE players
+     SET pin_hash = ?, pin_salt = ?, failed = 0, locked_until = NULL,
+         recover_failed = 0, recover_locked_until = NULL,
+         recovery_hash = ?, recovery_salt = ?,
+         reset_hash = NULL, reset_salt = NULL, reset_expires = NULL,
+         tokens_valid_from = ?, last_seen = ?
+     WHERE username = ? AND ${used} = ?`,
+  )
+    .bind(
+      await hashPin(body.newPin, pinSalt),
+      pinSalt,
+      fresh.hash,
+      fresh.salt,
+      nowIso,
+      nowIso,
+      existing.username,
+      existing[used],
+    )
+    .run()
+  if ((result.meta?.changes ?? 0) !== 1) return json({ error: 'bad_credentials' }, 401)
+
+  /*
+   * I adminloggen, med spilleren selv som den som gjorde det. Da står det i
+   * historikken på spillerkortet, rett under engangskoden admin ga dem. Etter
+   * selve endringen og ikke i samme batch: en logg som feiler skal ikke gjøre
+   * en nullstilling som virket, om til en feil.
+   */
+  try {
+    await logStatement(env, existing.username, 'recover', existing.username, {
+      via: used === 'recovery_hash' ? 'recovery-code' : 'reset-code',
+    }).run()
+  } catch {
+    // se over
+  }
+
+  return json({
+    username: existing.username,
+    token: await issueToken(env.AUTH_SECRET, existing.username, now.getTime()),
+    expiresAt: now.getTime() + TOKEN_TTL_MS,
+    recoveryCode: fresh.code,
+  })
 }

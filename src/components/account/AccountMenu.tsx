@@ -1,13 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { LogOut, Pencil, ShieldCheck, User } from 'lucide-react'
+import { KeyRound, LogOut, Pencil, ShieldCheck, User } from 'lucide-react'
 import { fetchAccount, levelProgress, useAccount } from '../../account'
 import type { AccountOverview, GameId } from '../../account'
 import { GAME_TITLES, games, type Game } from '../../data/games'
 import { formatDate } from '../../lib/formatDate'
-import AuthModal from './AuthModal'
+import AuthModal, { type AuthMode } from './AuthModal'
 import AdminPanel from '../admin/AdminPanel'
 import RenameForm from './RenameForm'
+import RecoveryCodeForm from './RecoveryCodeForm'
+
+/**
+ * «Glemt PIN?» i et spill lenker hit med `?recover=1` (se AccountBadge): det er
+ * forsiden som viser koden, og den skal bare vises ett sted.
+ */
+const RECOVER_PARAM = 'recover'
+const wantsRecover = () => {
+    try {
+        return new URL(window.location.href).searchParams.has(RECOVER_PARAM)
+    } catch {
+        return false
+    }
+}
 
 /** The account server keys profiles by the route slug (see src/account/session.ts),
  * not the display title — "Proportion Panic" has a space the title lacks a
@@ -40,21 +54,33 @@ export default function AccountMenu() {
     const { t } = useTranslation()
     const { username, isSignedIn, signOut } = useAccount()
     const [open, setOpen] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false)
+    const [modalOpen, setModalOpen] = useState(() => !isSignedIn && wantsRecover())
+    const [modalMode, setModalMode] = useState<AuthMode>(() => (!isSignedIn && wantsRecover() ? 'recover' : 'login'))
     const [overview, setOverview] = useState<AccountOverview | null>(null)
     const [renaming, setRenaming] = useState(false)
+    const [recovering, setRecovering] = useState(false)
     const [adminOpen, setAdminOpen] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
+
+    // lenken har gjort jobben sin; en ny sidelast skal ikke åpne skjemaet igjen
+    useEffect(() => {
+        if (!wantsRecover()) return
+        const url = new URL(window.location.href)
+        url.searchParams.delete(RECOVER_PARAM)
+        window.history.replaceState(window.history.state, '', url)
+    }, [])
 
     useEffect(() => {
         if (!open) return
         const onPointerDown = (event: MouseEvent) => {
-            // et halvutfylt navnebytte skal ikke forsvinne av et bomklikk
-            if (renaming) return
+            // et halvutfylt navnebytte skal ikke forsvinne av et bomklikk, og en
+            // gjenopprettingskode som står på skjermen vises aldri igjen
+            if (renaming || recovering) return
             if (!containerRef.current?.contains(event.target as Node)) setOpen(false)
         }
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key !== 'Escape') return
+            if (recovering) return
             if (renaming) setRenaming(false)
             else setOpen(false)
         }
@@ -64,7 +90,7 @@ export default function AccountMenu() {
             window.removeEventListener('mousedown', onPointerDown)
             window.removeEventListener('keydown', onKeyDown)
         }
-    }, [open, renaming])
+    }, [open, renaming, recovering])
 
     // hentes når panelet faktisk åpnes, ikke ved hver sidelast: en konto som
     // aldri åpner panelet skal ikke koste et kall
@@ -90,7 +116,14 @@ export default function AccountMenu() {
                     <User className="h-4 w-4" />
                     {t('account.signIn')}
                 </button>
-                <AuthModal open={modalOpen} onClose={() => setModalOpen(false)} />
+                <AuthModal
+                    open={modalOpen}
+                    initialMode={modalMode}
+                    onClose={() => {
+                        setModalOpen(false)
+                        setModalMode('login')
+                    }}
+                />
             </>
         )
     }
@@ -124,7 +157,7 @@ export default function AccountMenu() {
                                 </p>
                             )}
                         </div>
-                        {!renaming && (
+                        {!renaming && !recovering && (
                             <button
                                 onClick={() => setRenaming(true)}
                                 className="flex shrink-0 cursor-pointer items-center gap-1 rounded-lg border px-2 py-1 text-[11px] font-semibold transition hover:shadow-sm"
@@ -147,8 +180,34 @@ export default function AccountMenu() {
                                 void fetchAccount().then((r) => r.ok && setOverview(r.data))
                             }}
                         />
+                    ) : recovering ? (
+                        <RecoveryCodeForm
+                            username={username ?? ''}
+                            replacing={overview?.hasRecoveryCode === true}
+                            onCancel={() => setRecovering(false)}
+                            onDone={() => {
+                                setRecovering(false)
+                                void fetchAccount().then((r) => r.ok && setOverview(r.data))
+                            }}
+                        />
                     ) : (
                         <>
+                            {/* Uten kode er en glemt PIN en sak for en admin. Best å
+                                be om den nå, mens spilleren fortsatt kan PIN-en. */}
+                            {overview?.hasRecoveryCode === false && (
+                                <div className="mt-3 flex flex-col items-start gap-1.5 rounded-lg bg-amber-100 px-3 py-2 text-xs text-amber-900 dark:bg-amber-900/40 dark:text-amber-100">
+                                    <p>{t('account.recovery.missing')}</p>
+                                    <button
+                                        type="button"
+                                        onClick={() => setRecovering(true)}
+                                        className="flex cursor-pointer items-center gap-1 font-semibold underline underline-offset-2"
+                                    >
+                                        <KeyRound className="h-3 w-3" />
+                                        {t('account.recovery.create')}
+                                    </button>
+                                </div>
+                            )}
+
                             <ul className="mt-3 flex flex-col gap-2.5">
                                 {games.map((game) => {
                                     const id = idOf(game)
@@ -182,6 +241,18 @@ export default function AccountMenu() {
                                     )
                                 })}
                             </ul>
+
+                            {overview?.hasRecoveryCode === true && (
+                                <button
+                                    type="button"
+                                    onClick={() => setRecovering(true)}
+                                    className="mt-4 flex cursor-pointer items-center gap-1 text-[11px] underline-offset-2 hover:underline"
+                                    style={{ color: 'var(--text-subtle)' }}
+                                >
+                                    <KeyRound className="h-3 w-3" />
+                                    {t('account.recovery.replace')}
+                                </button>
+                            )}
 
                             {/* Flagget kommer fra /api/profile. Knappen er bare en snarvei —
                                 hvert kall panelet gjør sjekker det på nytt. */}

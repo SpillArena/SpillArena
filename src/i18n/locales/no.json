@@ -140,7 +140,8 @@
       "username_empty": "Skriv et brukernavn først.",
       "username_too_long": "Brukernavnet er for langt — maks 20 tegn.",
       "username_chars": "Brukernavn kan bare bruke bokstaver, tall, mellomrom og . _ ' -",
-      "locked_wait": "For mange feil forsøk. Prøv igjen om {{wait}}."
+      "locked_wait": "For mange feil forsøk. Prøv igjen om {{wait}}.",
+      "bad_code_format": "Koden ser ikke riktig ut. Den har 8 eller 12 tegn — bokstaver og tall."
     },
     "rename": "Endre",
     "newUsername": "Nytt brukernavn",
@@ -154,6 +155,35 @@
       "seconds": "{{count}} sekunder",
       "minute": "ett minutt",
       "minutes": "{{count}} minutter"
+    },
+    "recovery": {
+      "forgotPin": "Glemt PIN?",
+      "title": "Glemt PIN",
+      "intro": "Skriv inn gjenopprettingskoden din, eller engangskoden du fikk av en admin, og velg en ny PIN.",
+      "code": "Kode",
+      "codeHint": "12 tegn fra da du lagret koden, eller 8 tegn fra en admin. Store eller små bokstaver spiller ingen rolle.",
+      "newPin": "Ny PIN",
+      "submit": "Lagre ny PIN",
+      "noCode": "Har du ingen kode? Be en admin om en engangskode. Den varer i ett døgn.",
+      "backToSignIn": "Tilbake til innlogging",
+      "badCode": "Feil brukernavn eller kode, eller koden er brukt eller utløpt.",
+      "savedTitle": "Gjenopprettingskode",
+      "saveTitle": "Lagre gjenopprettingskoden din",
+      "saveIntro": "Glemmer du PIN-en, er dette koden som slipper deg inn igjen. Den vises bare nå, og virker én gang — da får du en ny.",
+      "codeLabel": "Gjenopprettingskoden din",
+      "copy": "Kopier",
+      "copied": "Kopiert",
+      "download": "Last ned",
+      "fileName": "spillarena-gjenopprettingskode.txt",
+      "fileText": "SpillArena\n\nBrukernavn: {{username}}\nGjenopprettingskode: {{code}}\n\nGlemmer du PIN-en, velg «Glemt PIN?» på spillarena.no og skriv inn koden.\nKoden virker én gang. Etterpå får du en ny.\nIkke del den med noen.\n",
+      "confirmSaved": "Jeg har lagret koden et trygt sted",
+      "continue": "Fortsett",
+      "missing": "Du har ingen gjenopprettingskode. Lag en nå, mens du husker PIN-en — ellers trenger du hjelp fra en admin om du glemmer den.",
+      "create": "Lag gjenopprettingskode",
+      "replace": "Ny gjenopprettingskode",
+      "createIntro": "Med koden kan du velge ny PIN selv hvis du glemmer den.",
+      "createSubmit": "Lag kode",
+      "replaceWarning": "Koden du har fra før, slutter å virke."
     }
   },
   "admin": {
@@ -219,6 +249,8 @@
     "failed_one": "{{count}} feil PIN på rad",
     "failed_other": "{{count}} feil PIN-er på rad",
     "lockedUntil": "Sperret til {{date}}",
+    "noRecoveryCode": "Ingen gjenopprettingskode",
+    "resetCodeActive": "Engangskode gyldig til {{date}}",
     "bannedNotice": "Utestengt {{date}} av {{admin}}",
     "noReason": "Ingen grunn oppgitt.",
     "sections": {
@@ -231,33 +263,35 @@
       "ban": "Steng ute",
       "unban": "Opphev utestenging",
       "unlock": "Opphev sperre",
-      "resetPin": "Ny PIN",
       "rename": "Endre navn",
       "makeAdmin": "Gjør til admin",
       "delete": "Slett konto",
       "confirm": "Trykk igjen for å bekrefte",
       "banReason": "Grunn (valgfri, bare admins ser den)",
       "banHelp": "Spilleren blir logget ut av SpillArena og kan ikke logge inn igjen. Navnet forblir opptatt, så det kan ikke registreres på nytt.",
-      "newPin": "Ny PIN (4–6 siffer)",
-      "resetPinHelp": "Gi spilleren den nye PIN-en selv. Innlogginger de allerede har, virker fortsatt.",
       "newName": "Nytt brukernavn",
       "renameHelp": "Spilleren blir logget ut og logger inn igjen med det nye navnet. Resultater som alt er sendt inn, beholder det gamle navnet.",
       "deleteHelp": "Sletter kontoen og all lagret fremgang. Dette kan ikke angres.",
       "deleteScores": "Fjern også resultatene på ledertavlene",
       "deleteConfirm": "Skriv {{name}} for å bekrefte",
       "selfHint": "Dette er din egen konto. Endre den fra kontomenyen.",
-      "adminHint": "Admins kan ikke stenges ute, døpes om, slettes eller få ny PIN. Admin fjernes i databasen, ikke her."
+      "adminHint": "Admins kan ikke stenges ute, døpes om, slettes eller få engangskode. Admin fjernes i databasen, ikke her.",
+      "issueResetCode": "Lag engangskode",
+      "resetCodeTitle": "Engangskode for ny PIN",
+      "resetCodeHelp": "Gi koden til spilleren. De velger «Glemt PIN?», skriver inn brukernavnet og koden, og velger ny PIN selv. Koden virker én gang og går ut {{date}}. Den vises bare nå — lager du en ny, slutter denne å virke.",
+      "copy": "Kopier",
+      "copied": "Kopiert"
     },
     "done": {
       "ban": "{{name}} er stengt ute.",
       "unban": "{{name}} er ikke lenger utestengt.",
       "unlock": "{{name}} kan logge inn igjen.",
-      "reset-pin": "PIN-en til {{name}} er endret.",
       "rename": "Nytt navn: {{name}}.",
       "make-admin": "{{name}} er nå admin.",
       "clear-scores_one": "Fjernet {{count}} resultat fra ledertavlene.",
       "clear-scores_other": "Fjernet {{count}} resultater fra ledertavlene.",
-      "delete": "{{name}} er slettet."
+      "delete": "{{name}} er slettet.",
+      "issue-reset-code": "Engangskode laget for {{name}}."
     },
     "progress": {
       "none": "Har ikke lagret fremgang i noe spill.",
@@ -294,7 +328,12 @@
       "clear-scores": "fjernet resultatene til",
       "delete": "slettet",
       "allBoards": "alle ledertavler",
-      "withScores": "med resultatene på ledertavlene"
+      "withScores": "med resultatene på ledertavlene",
+      "issue-reset-code": "laget engangskode for",
+      "recover": "satte ny PIN med en kode",
+      "validUntil": "gyldig til {{date}}",
+      "viaResetCode": "engangskode fra admin",
+      "viaRecoveryCode": "egen gjenopprettingskode"
     },
     "errors": {
       "forbidden": "Kontoen din er ikke admin.",

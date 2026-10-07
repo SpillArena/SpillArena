@@ -1,7 +1,7 @@
 /**
  * Hele profilen på tvers av spillene — det forsiden viser fram.
  *
- * GET /api/profile → 200 { username, createdAt, lastSeen, admin, games: { <spill>: { progress, updatedAt } } }
+ * GET /api/profile → 200 { username, createdAt, lastSeen, admin, hasRecoveryCode, games: { <spill>: { progress, updatedAt } } }
  *
  * Ett kall i stedet for ett per spill. Forsiden vet ikke hva som står inni
  * hvert dokument — det gjør bare spillet selv — men den vet hvilke spill kontoen
@@ -18,7 +18,9 @@ export async function onRequestGet(context) {
   try {
     const [account, progress] = await Promise.all([
       env.DB.prepare(
-        `SELECT username, created_at AS createdAt, last_seen AS lastSeen FROM players WHERE username = ?`,
+        `SELECT username, created_at AS createdAt, last_seen AS lastSeen,
+                recovery_hash IS NOT NULL AS hasRecoveryCode
+         FROM players WHERE username = ?`,
       )
         .bind(auth.username)
         .first(),
@@ -48,6 +50,8 @@ export async function onRequestGet(context) {
       // forsiden viser adminpanelet ut fra dette; hvert admin-kall sjekker
       // flagget på nytt, så feltet åpner ingenting i seg selv
       admin: auth.admin,
+      // uten kode ber forsiden spilleren lage en, før PIN-en er glemt
+      hasRecoveryCode: account.hasRecoveryCode === 1,
       games,
     })
   } catch (error) {

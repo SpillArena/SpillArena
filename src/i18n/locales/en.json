@@ -140,7 +140,8 @@
       "username_empty": "Type a username first.",
       "username_too_long": "That username is too long — 20 characters at most.",
       "username_chars": "Usernames can use letters, numbers, spaces and . _ ' - only.",
-      "locked_wait": "Too many wrong attempts. Try again in {{wait}}."
+      "locked_wait": "Too many wrong attempts. Try again in {{wait}}.",
+      "bad_code_format": "That doesn't look like a code. It has 8 or 12 characters — letters and numbers."
     },
     "rename": "Change",
     "newUsername": "New username",
@@ -154,6 +155,35 @@
       "seconds": "{{count}} seconds",
       "minute": "a minute",
       "minutes": "{{count}} minutes"
+    },
+    "recovery": {
+      "forgotPin": "Forgot your PIN?",
+      "title": "Forgot PIN",
+      "intro": "Enter your recovery code, or the one-time code an admin gave you, and choose a new PIN.",
+      "code": "Code",
+      "codeHint": "12 characters from when you saved it, or 8 from an admin. Upper or lower case doesn't matter.",
+      "newPin": "New PIN",
+      "submit": "Save new PIN",
+      "noCode": "No code? Ask an admin for a one-time code. It lasts one day.",
+      "backToSignIn": "Back to sign in",
+      "badCode": "Wrong username or code, or the code has been used or has expired.",
+      "savedTitle": "Recovery code",
+      "saveTitle": "Save your recovery code",
+      "saveIntro": "If you forget your PIN, this is the code that gets you back in. It is only shown now, and works once — then you get a new one.",
+      "codeLabel": "Your recovery code",
+      "copy": "Copy",
+      "copied": "Copied",
+      "download": "Download",
+      "fileName": "spillarena-recovery-code.txt",
+      "fileText": "SpillArena\n\nUsername: {{username}}\nRecovery code: {{code}}\n\nIf you forget your PIN, choose \"Forgot your PIN?\" on spillarena.no and enter the code.\nThe code works once. You get a new one afterwards.\nDon't share it with anyone.\n",
+      "confirmSaved": "I have saved the code somewhere safe",
+      "continue": "Continue",
+      "missing": "You don't have a recovery code. Make one now, while you remember your PIN — otherwise you'll need an admin's help if you forget it.",
+      "create": "Make a recovery code",
+      "replace": "New recovery code",
+      "createIntro": "With the code you can choose a new PIN yourself if you forget it.",
+      "createSubmit": "Make code",
+      "replaceWarning": "The code you already have stops working."
     }
   },
   "admin": {
@@ -219,6 +249,8 @@
     "failed_one": "{{count}} wrong PIN in a row",
     "failed_other": "{{count}} wrong PINs in a row",
     "lockedUntil": "Locked until {{date}}",
+    "noRecoveryCode": "No recovery code",
+    "resetCodeActive": "One-time code valid until {{date}}",
     "bannedNotice": "Banned {{date}} by {{admin}}",
     "noReason": "No reason given.",
     "sections": {
@@ -231,33 +263,35 @@
       "ban": "Ban",
       "unban": "Unban",
       "unlock": "Unlock",
-      "resetPin": "Reset PIN",
       "rename": "Rename",
       "makeAdmin": "Make admin",
       "delete": "Delete account",
       "confirm": "Click again to confirm",
       "banReason": "Reason (optional, only admins see it)",
       "banHelp": "The player is signed out of SpillArena and can't sign in again. The name stays taken, so it can't be registered again.",
-      "newPin": "New PIN (4–6 digits)",
-      "resetPinHelp": "Give the player the new PIN yourself. Sessions they already have keep working.",
       "newName": "New username",
       "renameHelp": "The player is signed out and signs in again with the new name. Scores already posted keep the old name.",
       "deleteHelp": "Deletes the account and all saved progress. This can't be undone.",
       "deleteScores": "Also remove their leaderboard entries",
       "deleteConfirm": "Type {{name}} to confirm",
       "selfHint": "This is your own account. Change it from the account menu.",
-      "adminHint": "Admins can't be banned, renamed, deleted or given a new PIN. Admin rights are removed in the database, not here."
+      "adminHint": "Admins can't be banned, renamed, deleted or given a one-time code. Admin rights are removed in the database, not here.",
+      "issueResetCode": "Make one-time code",
+      "resetCodeTitle": "One-time code for a new PIN",
+      "resetCodeHelp": "Give the code to the player. They choose \"Forgot your PIN?\", enter their username and the code, and pick a new PIN themselves. The code works once and expires {{date}}. It is only shown now — making a new one stops this one working.",
+      "copy": "Copy",
+      "copied": "Copied"
     },
     "done": {
       "ban": "{{name}} is banned.",
       "unban": "{{name}} is no longer banned.",
       "unlock": "{{name}} can sign in again.",
-      "reset-pin": "The PIN for {{name}} was changed.",
       "rename": "Renamed to {{name}}.",
       "make-admin": "{{name}} is now an admin.",
       "clear-scores_one": "Removed {{count}} leaderboard entry.",
       "clear-scores_other": "Removed {{count}} leaderboard entries.",
-      "delete": "{{name}} was deleted."
+      "delete": "{{name}} was deleted.",
+      "issue-reset-code": "One-time code made for {{name}}."
     },
     "progress": {
       "none": "Hasn't saved progress in any game.",
@@ -294,7 +328,12 @@
       "clear-scores": "removed scores for",
       "delete": "deleted",
       "allBoards": "all leaderboards",
-      "withScores": "including leaderboard entries"
+      "withScores": "including leaderboard entries",
+      "issue-reset-code": "made a one-time code for",
+      "recover": "set a new PIN with a code",
+      "validUntil": "valid until {{date}}",
+      "viaResetCode": "one-time code from an admin",
+      "viaRecoveryCode": "own recovery code"
     },
     "errors": {
       "forbidden": "Your account isn't an admin.",

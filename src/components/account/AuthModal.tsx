@@ -2,13 +2,19 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'lucide-react'
-import { authenticate } from '../../account'
+import { authenticate, createRecoveryCode, recoverAccount } from '../../account'
 import type { AuthAction } from '../../account'
 import { useCookieConsent } from '../../context/useCookieConsent'
+import RecoveryCodeNotice from './RecoveryCodeNotice'
+
+/** `recover` er «Glemt PIN?»: ny PIN med en kode i stedet for den gamle. */
+export type AuthMode = AuthAction | 'recover'
 
 interface AuthModalProps {
     open: boolean
     onClose: () => void
+    /** Hvilket skjema vinduet åpner på. Lenken fra spillene ber om `recover`. */
+    initialMode?: AuthMode
 }
 
 /**
@@ -20,17 +26,33 @@ interface AuthModalProps {
  * that sets state during another render. Letting it unmount does both jobs at
  * once: the state is gone because the component is gone.
  */
-function AuthForm({ onClose }: { onClose: () => void }) {
+function AuthForm({ onClose, initialMode }: { onClose: () => void; initialMode: AuthMode }) {
     const { t } = useTranslation()
-    const [action, setAction] = useState<AuthAction>('login')
+    const [action, setAction] = useState<AuthMode>(initialMode)
     const [username, setUsername] = useState('')
     const [pin, setPin] = useState('')
     const [confirm, setConfirm] = useState('')
+    const [code, setCode] = useState('')
+    /**
+     * Gjenopprettingskoden som skal vises, når det er en. Da er skjemaet borte,
+     * og vinduet lukkes bare med «Fortsett» — ikke med Escape eller et klikk
+     * ved siden av, for koden vises aldri igjen.
+     */
+    const [shown, setShown] = useState<{ username: string; code: string } | null>(null)
     const [error, setError] = useState<string | null>(null)
     /** Sekunder igjen av en utestenging, når tjenesten sier det. */
     const [retryAfter, setRetryAfter] = useState<number | undefined>(undefined)
     const [busy, setBusy] = useState(false)
     const { consent, showBanner } = useCookieConsent()
+
+    useEffect(() => {
+        if (shown) return
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') onClose()
+        }
+        window.addEventListener('keydown', onKeyDown)
+        return () => window.removeEventListener('keydown', onKeyDown)
+    }, [shown, onClose])
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -49,7 +71,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
          * samme `account.errors.*` som resten, fordi spilleren ikke bryr seg om
          * hvor feilen ble oppdaget.
          */
-        if (action === 'register' && pin !== confirm) {
+        if (action !== 'login' && pin !== confirm) {
             setError('pin_mismatch')
             setConfirm('')
             return
@@ -58,16 +80,58 @@ function AuthForm({ onClose }: { onClose: () => void }) {
         setBusy(true)
         setError(null)
         setRetryAfter(undefined)
-        const result = await authenticate(action, username, pin)
-        setBusy(false)
-        if (result.ok) {
+
+        if (action === 'recover') {
+            const result = await recoverAccount(username, code, pin)
+            setBusy(false)
+            if (!result.ok) {
+                setError(result.error)
+                setRetryAfter(result.retryAfter)
+                return
+            }
             setPin('')
             setConfirm('')
-            onClose()
+            setCode('')
+            setShown({ username: result.session.username, code: result.recoveryCode })
             return
         }
-        setError(result.error)
-        setRetryAfter(result.retryAfter)
+
+        const result = await authenticate(action, username, pin)
+        if (!result.ok) {
+            setBusy(false)
+            setError(result.error)
+            setRetryAfter(result.retryAfter)
+            return
+        }
+
+        /*
+         * En ny konto får en gjenopprettingskode med en gang, mens PIN-en
+         * fortsatt står i skjemaet. Feiler det, er kontoen likevel laget, og
+         * kontomenyen ber om en kode senere — da er det ikke verdt å stoppe her.
+         */
+        if (action === 'register') {
+            const recovery = await createRecoveryCode(pin)
+            if (recovery.ok) {
+                setBusy(false)
+                setPin('')
+                setConfirm('')
+                setShown({ username: result.session.username, code: recovery.data.recoveryCode })
+                return
+            }
+        }
+
+        setBusy(false)
+        setPin('')
+        setConfirm('')
+        onClose()
+    }
+
+    const switchMode = (next: AuthMode) => {
+        setAction(next)
+        setError(null)
+        setRetryAfter(undefined)
+        setConfirm('')
+        setCode('')
     }
 
     /*
@@ -82,10 +146,28 @@ function AuthForm({ onClose }: { onClose: () => void }) {
               ? t('account.wait.minute')
               : t('account.wait.minutes', { count: Math.ceil(seconds / 60) })
 
-    const errorText = (code: string): string =>
-        code === 'locked' && retryAfter && retryAfter > 0
+    const errorText = (error: string): string =>
+        error === 'locked' && retryAfter && retryAfter > 0
             ? t('account.errors.locked_wait', { wait: waitText(retryAfter) })
-            : t(`account.errors.${code}`, { defaultValue: t('account.errors.service_failed') })
+            : // «feil PIN» er feil beskjed når det var koden som ikke stemte
+              action === 'recover' && error === 'bad_credentials'
+              ? t('account.recovery.badCode')
+              : t(`account.errors.${error}`, { defaultValue: t('account.errors.service_failed') })
+
+    const title = t(
+        shown
+            ? 'account.recovery.savedTitle'
+            : action === 'login'
+              ? 'account.signIn'
+              : action === 'register'
+                ? 'account.register'
+                : 'account.recovery.title',
+    )
+    const submitLabel = t(
+        action === 'login' ? 'account.signIn' : action === 'register' ? 'account.register' : 'account.recovery.submit',
+    )
+    const pinInputClass =
+        'rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm tracking-[0.4em] text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100'
 
     return (
                 <motion.div
@@ -95,7 +177,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    onClick={onClose}
+                    onClick={shown ? undefined : onClose}
                 >
                     <motion.div
                         className="w-full max-w-sm rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/95 shadow-2xl dark:bg-slate-900/95"
@@ -110,20 +192,27 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                     >
                         <div className="flex items-center justify-between border-b border-[color:color-mix(in_srgb,var(--accent)_20%,transparent)] p-6">
                             <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-                                {t(action === 'login' ? 'account.signIn' : 'account.register')}
+                                {title}
                             </h2>
-                            <button
-                                onClick={onClose}
-                                className="cursor-pointer text-slate-500 transition hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
-                                aria-label={t('close')}
-                            >
-                                <X className="h-5 w-5" />
-                            </button>
+                            {!shown && (
+                                <button
+                                    onClick={onClose}
+                                    className="cursor-pointer text-slate-500 transition hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                                    aria-label={t('close')}
+                                >
+                                    <X className="h-5 w-5" />
+                                </button>
+                            )}
                         </div>
 
+                        {shown ? (
+                            <div className="p-6">
+                                <RecoveryCodeNotice username={shown.username} code={shown.code} onDone={onClose} />
+                            </div>
+                        ) : (
                         <form onSubmit={submit} className="flex flex-col gap-4 p-6">
                             <p className="text-sm text-slate-600 dark:text-slate-300">
-                                {t('account.blurb')}
+                                {t(action === 'recover' ? 'account.recovery.intro' : 'account.blurb')}
                             </p>
 
                             <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
@@ -138,8 +227,27 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                                 />
                             </label>
 
+                            {action === 'recover' && (
+                                <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
+                                    {t('account.recovery.code')}
+                                    <input
+                                        value={code}
+                                        onChange={(event) => setCode(event.target.value.toUpperCase())}
+                                        maxLength={20}
+                                        autoComplete="off"
+                                        autoCapitalize="characters"
+                                        spellCheck={false}
+                                        required
+                                        className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm tracking-wider text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                                    />
+                                    <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
+                                        {t('account.recovery.codeHint')}
+                                    </span>
+                                </label>
+                            )}
+
                             <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
-                                {t('account.pin')}
+                                {t(action === 'recover' ? 'account.recovery.newPin' : 'account.pin')}
                                 <input
                                     value={pin}
                                     onChange={(event) => setPin(event.target.value.replace(/\D/g, ''))}
@@ -150,14 +258,14 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                                     autoComplete={action === 'login' ? 'current-password' : 'new-password'}
                                     type="password"
                                     required
-                                    className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm tracking-[0.4em] text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                                    className={pinInputClass}
                                 />
                                 <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
                                     {t('account.pinHint')}
                                 </span>
                             </label>
 
-                            {action === 'register' && (
+                            {action !== 'login' && (
                                 <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
                                     {t('account.repeatPin')}
                                     <input
@@ -170,7 +278,7 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                                         autoComplete="new-password"
                                         type="password"
                                         required
-                                        className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm tracking-[0.4em] text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                                        className={pinInputClass}
                                     />
                                 </label>
                             )}
@@ -202,22 +310,40 @@ function AuthForm({ onClose }: { onClose: () => void }) {
                                 disabled={busy}
                                 className="cursor-pointer rounded-lg bg-gradient-to-r from-fuchsia-500 to-violet-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:shadow-lg disabled:cursor-progress disabled:opacity-60"
                             >
-                                {t(action === 'login' ? 'account.signIn' : 'account.register')}
+                                {submitLabel}
                             </button>
+
+                            {action === 'login' && (
+                                <button
+                                    type="button"
+                                    onClick={() => switchMode('recover')}
+                                    className="cursor-pointer text-sm text-slate-600 underline-offset-2 hover:underline dark:text-slate-300"
+                                >
+                                    {t('account.recovery.forgotPin')}
+                                </button>
+                            )}
+
+                            {action === 'recover' && (
+                                <p className="text-xs leading-snug text-slate-500 dark:text-slate-400">
+                                    {t('account.recovery.noCode')}
+                                </p>
+                            )}
 
                             <button
                                 type="button"
-                                onClick={() => {
-                                    setAction(action === 'login' ? 'register' : 'login')
-                                    setError(null)
-                                    setRetryAfter(undefined)
-                                    setConfirm('')
-                                }}
+                                onClick={() => switchMode(action === 'login' ? 'register' : 'login')}
                                 className="cursor-pointer text-sm text-slate-600 underline-offset-2 hover:underline dark:text-slate-300"
                             >
-                                {t(action === 'login' ? 'account.switchToRegister' : 'account.switchToSignIn')}
+                                {t(
+                                    action === 'login'
+                                        ? 'account.switchToRegister'
+                                        : action === 'register'
+                                          ? 'account.switchToSignIn'
+                                          : 'account.recovery.backToSignIn',
+                                )}
                             </button>
                         </form>
+                        )}
                     </motion.div>
                 </motion.div>
     )
@@ -230,17 +356,9 @@ function AuthForm({ onClose }: { onClose: () => void }) {
  * oversettelsene. Det er derfor spilleren får norsk feilmelding av en Worker
  * som ikke kan norsk.
  */
-export default function AuthModal({ open, onClose }: AuthModalProps) {
-    useEffect(() => {
-        if (!open) return
-        const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') onClose()
-        }
-        window.addEventListener('keydown', onKeyDown)
-        return () => window.removeEventListener('keydown', onKeyDown)
-    }, [open, onClose])
-
+export default function AuthModal({ open, onClose, initialMode = 'login' }: AuthModalProps) {
+    // Escape bor i skjemaet: det er det som vet om en kode står på skjermen
     return (
-        <AnimatePresence>{open && <AuthForm onClose={onClose} />}</AnimatePresence>
+        <AnimatePresence>{open && <AuthForm onClose={onClose} initialMode={initialMode} />}</AnimatePresence>
     )
 }
