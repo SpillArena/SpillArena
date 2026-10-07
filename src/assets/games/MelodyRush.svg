@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="melodyrush-title melodyrush-description">
+<title id="melodyrush-title">MelodyRush – Du kjenner sangen. Men hvor fort?</title>
+<desc id="melodyrush-description">Et retro platecover og en vinylplate. Kjenn igjen musikken fra korte lydklipp i dagens mixtape, øving eller en spilleliste.</desc>
+<rect width="1200" height="675" fill="#f7f4ec"/><g transform="translate(70 64)">
+  
+  <rect width="64" height="64" rx="16" fill="#f7f0df"/>
+  <circle cx="32" cy="32" r="29" fill="#252322"/>
+  <g fill="none" stroke="#f7f0df" stroke-width=".8" opacity=".25">
+    <circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="23.5"/>
+  </g>
+  <path d="M11 22a24 24 0 0 1 10-11M43 53a24 24 0 0 0 10-10" fill="none" stroke="#f7f0df" stroke-width="1.8" stroke-linecap="round" opacity=".7"/>
+  <circle cx="32" cy="32" r="19" fill="#d65333"/>
+  <g fill="none" stroke="#fff6e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 39V25l6 8 6-8v14"/>
+    <path d="M36 39V25h4.5a5.5 5.5 0 0 1 0 11H36m5-1 6 4"/>
+  </g>
+  <circle cx="32" cy="45.5" r="1.7" fill="#252322"/>
+
+</g><text x="154" y="106" font-family="Georgia,serif" font-size="36" fill="#252322">Melody<tspan font-style="italic" fill="#d65333">Rush</tspan></text><text x="72" y="242" font-family="Georgia,serif" font-size="58" letter-spacing="-2" fill="#252322">Du kjenner sangen.</text><text x="72" y="314" font-family="Georgia,serif" font-size="58" font-style="italic" fill="#d65333">Men hvor fort?</text><text x="75" y="377" font-family="Arial,sans-serif" font-size="18" fill="#77716a">Et lite klipp. Et stort aha.</text><rect x="74" y="428" width="325" height="45" fill="#d65333"/><text x="94" y="457" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#fff6e5">LYTT · GJETT · SPILL IGJEN</text><text x="74" y="512" font-family="Arial,sans-serif" font-size="16" fill="#77716a">Dagens mixtape · Øving · Spillelister</text>
+<text x="74" y="565" font-family="Arial,sans-serif" font-size="14" fill="#77716a">En del av SpillArena · spillarena.no/melodyrush</text><g transform="translate(805 148)"><circle cx="150" cy="160" r="176" fill="#252322"/><circle cx="150" cy="160" r="168" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="160" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="152" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="144" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="136" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="128" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="120" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="112" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="104" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="96" fill="none" stroke="#fff6e5" stroke-opacity=".13"/><circle cx="150" cy="160" r="62" fill="#d65333"/><g transform="translate(88 98) scale(1.94)"><path d="M18 39V25l5.5 8 5.5-8v14M36 39V25h4.5a5.5 5.5 0 0 1 0 11H36m5-1 6 4" fill="none" stroke="#fff6e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="1.25" fill="#252322"/></g></g><g transform="translate(680 165) rotate(-8)"><rect width="245" height="293" fill="#d65333"/><text x="26" y="65" font-family="Arial,sans-serif" font-size="35" font-weight="900" letter-spacing="-2" fill="#fff6e5">MELODY</text><text x="26" y="109" font-family="Arial,sans-serif" font-size="35" font-weight="900" letter-spacing="-2" fill="#fff6e5">RUSH.</text><path d="M26 212h192M26 218h192M26 224h192" stroke="#fff6e5" opacity=".6"/><text x="26" y="265" font-family="Arial,sans-serif" font-size="9" letter-spacing="2" fill="#fff6e5">THE POP COLLECTION</text></g></svg>

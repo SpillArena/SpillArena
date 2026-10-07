@@ -638,6 +638,8 @@ export const RESERVED_NAMES: readonly string[] = [
   'here',
   'host',
   'me',
+  'melodyrush',
+  'melody-rush',
   'mod',
   'moderator',
   'moderators',

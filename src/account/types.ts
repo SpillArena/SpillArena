@@ -74,7 +74,7 @@ export type ApiResult<T> = { ok: true; data: T } | AuthFailure
 export type RecoverResult = { ok: true; session: Session; recoveryCode: string } | AuthFailure
 
 /** The path segment the game is served under: spillarena.no/<id>. */
-export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'pixelpanic' | 'fleetbot' | 'erashuffle'
+export type GameId = 'atlasmaster' | 'scribblebot' | 'hangbot' | 'proportionpanic' | 'pixelpanic' | 'fleetbot' | 'erashuffle' | 'melodyrush'
 
 export interface ProfileResponse<T> {
     game: GameId

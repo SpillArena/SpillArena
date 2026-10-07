@@ -357,5 +357,6 @@
       "service_failed": "Tjenesten svarte ikke som den skulle.",
       "unreachable": "Fikk ikke kontakt med tjenesten."
     }
-  }
+  },
+  "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!"
 }
