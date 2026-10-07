@@ -11,7 +11,8 @@
  * bytte PIN-en, lage seg en gjenopprettingskode eller slette kontoen uten å
  * vite den.
  *
- * Bytte av PIN gir et nytt tegn tilbake, og setter `tokens_valid_from`: alle
+ * Bytte av PIN gjør gjenopprettingskoden og en ubrukt engangskode ugyldige,
+ * gir et nytt tegn tilbake, og setter `tokens_valid_from`: alle
  * tegn utstedt før det avvises av /api/* fra nå (se requireUser). Spillene
  * verifiserer uten oppslag og merker det ikke — et gammelt tegn kan fortsatt
  * sende inn resultater til det går ut, men det kommer ikke inn på kontoen.
@@ -153,11 +154,19 @@ export async function onRequestPost(context) {
       return json({ recoveryCode: fresh.code })
     }
 
+    /*
+     * KODENE GÅR UT MED DEN GAMLE PIN-EN. Den som kjente PIN-en kunne lage seg
+     * en gjenopprettingskode; uten dette ville den overlevd byttet, og kontoen
+     * kunne tas tilbake med den etterpå. Eieren blir bedt om en ny kode i
+     * kontomenyen. En ubrukt engangskode fra admin trengs heller ikke lenger.
+     */
     const salt = toBase64Url(crypto.getRandomValues(new Uint8Array(16)))
     const now = Date.now()
     await env.DB.prepare(
       `UPDATE players SET pin_hash = ?, pin_salt = ?, failed = 0, locked_until = NULL,
-                          tokens_valid_from = ?
+                          tokens_valid_from = ?,
+                          recovery_hash = NULL, recovery_salt = NULL,
+                          reset_hash = NULL, reset_salt = NULL, reset_expires = NULL
        WHERE username = ?`,
     )
       .bind(await hashPin(body.newPin, salt), salt, new Date(now).toISOString(), auth.username)
