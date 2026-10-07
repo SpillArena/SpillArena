@@ -24,7 +24,7 @@ export const changelog: ChangelogEntry[] = [
         title: 'MelodyRush preview and Pixel Panic out of beta',
         release: '1.6.0',
         changes: [
-            'Added MelodyRush to the game list with a new record-cover poster and a coming-soon label',
+            'Added MelodyRush to the game list with a new record-cover poster and a beta label',
             'MelodyRush challenges you to recognise pop songs from short audio clips, with a daily mixtape and practice by decade; less listening earns more points',
             'New MelodyRush logo and retro record player, plus a continuously spinning landing-page record that slides out of its sleeve on hover and a cover that flips on click',
             'MelodyRush includes XP, levels, daily streaks and achievement badges',
