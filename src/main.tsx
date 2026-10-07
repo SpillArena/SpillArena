@@ -5,6 +5,7 @@ import './index.css'
 import { CookieConsentProvider } from './context/CookieConsentProvider'
 import { ThemeProvider } from './context/ThemeContext'
 import { AccentProvider } from './context/AccentProvider'
+import './ui/arena.css'
 import App from './App'
 import CookieConsentBanner from './components/CookieConsentBanner'
 

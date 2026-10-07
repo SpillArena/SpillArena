@@ -23,14 +23,14 @@ export default function GamesSection({ onClick }: GamesSectionProps) {
 
     return (
         <section>
-            <motion.h2
+            <motion.h1
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="mb-8 font-[family-name:var(--font-serif)] text-2xl font-medium sm:text-3xl"
             >
                 {t('gamesLabel', 'Spill')}
-            </motion.h2>
+            </motion.h1>
             <motion.div
                 className="grid auto-rows-fr gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
                 variants={containerVariants}
