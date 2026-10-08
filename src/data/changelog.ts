@@ -8,6 +8,18 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '08-10-2026',
+        title: 'New game art',
+        release: '1.8.0',
+        changes: [
+            'Every game has a new banner in one shared style: its own colour, the Fraunces title from the lobby, and an illustration built from the same rounded tiles as the SpillArena logo',
+            'Banners now come in Norwegian and English and switch with the language you choose',
+            'New square game icons in search and on your profile, where the banners were too small to read',
+            'AtlasMaster shows a detailed globe with real country borders and Norway highlighted',
+            'Proportion Panic compares a giraffe and a sailboat against a ruler instead of stacks of tiles',
+        ],
+    },
+    {
+        date: '08-10-2026',
         title: 'Search, a new loading screen and safer accounts',
         release: '1.7.0',
         changes: [
