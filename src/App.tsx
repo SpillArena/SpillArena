@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { games, type Game } from './data/games'
+import { gameBanner, games, type Game } from './data/games'
 import { getSession, useAccount } from './account'
 import HeaderSection from './components/header/HeaderSection'
 import HeroSection from './components/main/HeroSection'
@@ -74,7 +74,7 @@ export default function App() {
     <FooterSection />
     <BetaWarningModal game={betaGame} onClose={() => setBetaGame(null)} onConfirm={() => { if (betaGame) goToGame(betaGame, t('lobby.loadingGame', { title: betaGame.title })) }} />
     <Dialog open={pickedGame !== null} onClose={() => setPickedGame(null)} title={pickedGame?.title ?? ''} eyebrow={t('lobby.pickedLabel')}>
-      {pickedGame && <><img className="picked-art" src={pickedGame.showcase} alt="" /><p>{t(`lobby.descriptions.${pickedGame.id}`)}</p>{pickedGame.beta && <p className="dialog-note">{t('betaWarningMessage', { title: pickedGame.title })}</p>}
+      {pickedGame && <><img className="picked-art" src={gameBanner(pickedGame, i18n.resolvedLanguage)} alt="" /><p>{t(`lobby.descriptions.${pickedGame.id}`)}</p>{pickedGame.beta && <p className="dialog-note">{t('betaWarningMessage', { title: pickedGame.title })}</p>}
         <div className="dialog-actions"><button className="button secondary" type="button" onClick={pickGame}>{t('lobby.pickAgain')}</button><a className="button primary" href={pickedGame.liveUrl}>{t('lobby.play')}<ArrowUpRight size={16} aria-hidden="true" /></a></div></>}
     </Dialog>
   </div>

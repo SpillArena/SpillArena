@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowUpRight, KeyRound, LogOut, Pencil, ShieldCheck } from '
 import { useTranslation } from 'react-i18next'
 import { fetchAccount, levelProgress } from '../../account'
 import type { AccountOverview, GameId } from '../../account'
-import { games, type Game } from '../../data/games'
+import { gameIcon, games, type Game } from '../../data/games'
 import { formatDate } from '../../lib/formatDate'
 import Dialog from '../../ui/Dialog'
 import AdminPanel from '../admin/AdminPanel'
@@ -53,7 +53,7 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
       <div className="section-heading profile-games-heading"><div><p className="eyebrow">{t('profile.yourArena')}</p><h2>{t('profile.gameProgress')}</h2></div><a className="inline-link" href="#games">{t('lobby.explore')} ↗</a></div>
       <ul className="profile-game-grid">{saved.map(({ game, entry, xp }) => {
         const level = xp === null ? null : levelProgress(xp)
-        return <li className="profile-game" key={game.id}><div className="profile-game-top"><img src={game.showcase} alt="" width={1200} height={675} /><div><p className="category-label">{t(`lobby.categories.${game.category}`)}</p><h3>{game.title}</h3></div><a className="icon-button" href={game.liveUrl} aria-label={`${t('lobby.play')}: ${game.title}`} onClick={event => { if (game.beta || !(event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)) { event.preventDefault(); onPlay(game) } }}><ArrowUpRight size={19} /></a></div>
+        return <li className="profile-game" key={game.id}><div className="profile-game-top"><img src={gameIcon(game)} alt="" width={64} height={64} /><div><p className="category-label">{t(`lobby.categories.${game.category}`)}</p><h3>{game.title}</h3></div><a className="icon-button" href={game.liveUrl} aria-label={`${t('lobby.play')}: ${game.title}`} onClick={event => { if (game.beta || !(event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)) { event.preventDefault(); onPlay(game) } }}><ArrowUpRight size={19} /></a></div>
           {level ? <><div className="profile-game-values"><span>{t('profile.gameLevel', { level: level.level })}</span><span>{xp === null ? null : formatNumber(xp)} XP</span></div><progress max={100} value={level.pct} aria-label={`${game.title}: ${t('profile.gameLevel', { level: level.level })}`} /><p className="profile-game-note">{t('profile.lastSaved', { date: formatDate(entry?.updatedAt) })}</p></> : <p className="profile-game-note">{t('account.notPlayed')} · {t('profile.startPlaying')}</p>}
         </li>
       })}</ul>

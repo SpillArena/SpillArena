@@ -3,7 +3,7 @@ import type { KeyboardEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowUpRight, Search } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { games, type Game } from '../../data/games'
+import { gameIcon, games, type Game } from '../../data/games'
 import './spotlight.css'
 
 /*
@@ -158,7 +158,7 @@ export default function SpotlightSearch({ onSelect }: { onSelect: (game: Game) =
       {results.length ? <ul ref={listRef} className="spotlight-results" id={`${id}-list`} role="listbox" aria-label={t('lobby.search.label')}>
         {results.map((game, index) => <li key={game.id} id={optionId(index)} data-index={index} role="option" aria-selected={index === active}
           className="spotlight-result" onMouseMove={() => setActive(index)} onClick={() => choose(game)}>
-          {game.showcase ? <img src={game.showcase} alt="" width={96} height={54} /> : <span className="spotlight-art" />}
+          <img src={gameIcon(game)} alt="" width={44} height={44} />
           <span className="spotlight-copy">
             <span className="spotlight-title">{game.title}{game.beta && <span className="spotlight-badge">{t('betaLabel')}</span>}</span>
             <span className="spotlight-meta">{t(`lobby.categories.${game.category}`)} · {t(`lobby.descriptions.${game.id}`)}</span>

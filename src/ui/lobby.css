@@ -229,7 +229,7 @@ html.dark .form-error { background: #3d202b; border-color: #714051; color: #ffcb
 .profile-game-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 0; margin: 0; list-style: none; }
 .profile-game { padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
 .profile-game-top { display: flex; align-items: center; gap: 15px; }
-.profile-game-top > img { width: 100px; height: auto; aspect-ratio: 16/9; border-radius: 6px; flex-shrink: 0; }
+.profile-game-top > img { width: 56px; height: 56px; border-radius: 14px; flex-shrink: 0; }
 .profile-game-top > div { min-width: 0; }
 .profile-game h3 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -.5px; overflow-wrap: anywhere; }
 .profile-game-top .icon-button { margin-left: auto; }
@@ -262,7 +262,7 @@ html.dark .form-error { background: #3d202b; border-color: #714051; color: #ffcb
   .profile-stats > div { padding: 20px; }
   .profile-stats strong { font-size: 34px; margin-top: 8px; }
   .profile-game-grid { grid-template-columns: 1fr; }
-  .profile-game-top > img { width: 85px; }
+  .profile-game-top > img { width: 52px; height: 52px; }
   .guest-profile { padding-block: 35px; }
   .guest-profile h1 { font-size: 42px; }
 }
@@ -270,7 +270,7 @@ html.dark .form-error { background: #3d202b; border-color: #714051; color: #ffcb
   .account-button { max-width: 115px; }
   .option { gap: 5px; padding-inline: 8px; }
   .profile-game { padding: 17px; }
-  .profile-game-top > img { width: 64px; }
+  .profile-game-top > img { width: 48px; height: 48px; border-radius: 12px; }
   .profile-game h3 { font-size: 16px; }
   .profile-game-top { gap: 10px; }
 }
