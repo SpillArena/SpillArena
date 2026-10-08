@@ -11,6 +11,11 @@
  *   Glemt PIN. `code` er spillerens gjenopprettingskode eller en engangskode
  *   fra admin — se migrations/0010_pin_recovery.sql og `recover` under.
  *
+ * POST /api/auth  { action: 'logout' }  (Authorization: Bearer <tegn>)
+ *   → 200 { signedOut: true }
+ *   Tilbakekaller DETTE tegnet, så det ikke kan brukes på /api/* igjen. Andre
+ *   enheter er fortsatt innlogget. Se `logout` under.
+ *
  * GET  /api/auth  (Authorization: Bearer <tegn>)
  *   → 200 { username, admin }       — tegnet er gyldig
  *   → 401 { error: 'unauthorized' } — det er det ikke
@@ -38,54 +43,34 @@ import {
   RECOVERY_CODE_LENGTH,
   RESET_CODE_LENGTH,
   TOKEN_TTL_MS,
+  bearer,
   codeWithHash,
+  countFailedPin,
   hashCode,
   hashPin,
   issueToken,
   json,
+  lockedResponse,
   newSalt,
   normalizeCode,
   requireUser,
+  serviceFailed,
   timingSafeEqual,
   toBase64Url,
+  tokenHash,
   validateUsername,
+  verifyTokenClaims,
 } from '../../../shared/account-server.js'
 import { logStatement } from '../../../shared/admin-server.js'
 
-/** Feil på rad før kontoen blir stengt, og hvor lenge den er stengt. */
-const MAX_FAILED = 5
-const LOCKOUT_MS = 15 * 60 * 1000
-
 /*
- * Det samme for koder ved glemt PIN, med egen teller. Kodene har 40–60 bit, så
+ * Det samme som for PIN-en (MAX_FAILED i shared/account-server.js) for koder
+ * ved glemt PIN, med egen teller. Kodene har 40–60 bit, så
  * grensa er ikke det som gjør dem trygge — den er der så ingen kan bruke
  * endepunktet til å brenne CPU. Den kan derfor være rausere enn for PIN-en.
  */
 const RECOVER_MAX_FAILED = 10
 const RECOVER_LOCKOUT_MS = 60 * 60 * 1000
-
-/*
- * Si HVOR LENGE, ikke bare at det er stengt.
- *
- * «Prøv igjen senere» gjør at spilleren enten prøver igjen med en gang — og får
- * samme svar — eller gir opp. Med et tall kan de faktisk vente. Sekunder,
- * avrundet opp, så klienten kan skrive det på sitt eget språk; en setning
- * herfra ville bare kunnet vises på norsk.
- *
- * Retry-After er standardheaderen for nøyaktig dette, og koster ingenting å
- * sette i tillegg.
- */
-function lockedResponse(lockedUntil, now) {
-  const retryAfter = Math.max(1, Math.ceil((new Date(lockedUntil).getTime() - now.getTime()) / 1000))
-  return new Response(JSON.stringify({ error: 'locked', retryAfter }), {
-    status: 429,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'no-store',
-      'Retry-After': String(retryAfter),
-    },
-  })
-}
 
 function validate(username, pin) {
   // navneregelen bor i shared/account-server.js, fordi navnebytte i
@@ -133,11 +118,18 @@ export async function onRequestPost(context) {
   }
 
   const { action } = body
+  if (action === 'logout') {
+    try {
+      return await logout(env, request, new Date())
+    } catch (error) {
+      return serviceFailed(error)
+    }
+  }
   if (action === 'recover') {
     try {
       return await recover(env, body, new Date())
     } catch (error) {
-      return json({ error: 'service_failed', details: String(error) }, 500)
+      return serviceFailed(error)
     }
   }
   if (action !== 'register' && action !== 'login') return json({ error: 'bad_action' }, 400)
@@ -185,14 +177,9 @@ export async function onRequestPost(context) {
 
     const attempted = await hashPin(pin, existing.pin_salt)
     if (!timingSafeEqual(attempted, existing.pin_hash)) {
-      const failed = (existing.failed ?? 0) + 1
       // femte feil stenger kontoen et kvarter — det er dette, og ikke
       // rundetallet i PBKDF2, som gjør en PIN på fire siffer verdt noe
-      const lockedUntil =
-        failed >= MAX_FAILED ? new Date(now.getTime() + LOCKOUT_MS).toISOString() : null
-      await env.DB.prepare(`UPDATE players SET failed = ?, locked_until = ? WHERE username = ?`)
-        .bind(failed >= MAX_FAILED ? 0 : failed, lockedUntil, username)
-        .run()
+      await countFailedPin(env, existing, now)
       return json({ error: 'bad_credentials' }, 401)
     }
 
@@ -216,8 +203,42 @@ export async function onRequestPost(context) {
       expiresAt: now.getTime() + TOKEN_TTL_MS,
     })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
+}
+
+/**
+ * Logger ut på tjeneren: dette tegnet slutter å virke på /api/*.
+ *
+ * Tegnet er signert, ikke lagret, så å slette det i nettleseren gjør det ikke
+ * ugyldig. Den som hadde kopiert det — fra en delt maskin, en logg, et
+ * XSS-hull — kunne brukt det i tretti dager til. Nå legges en hash av det i
+ * `revoked_tokens`, og requireUser avviser det.
+ *
+ * BARE DETTE TEGNET. `tokens_valid_from` ville kastet ut alle enheter, og det
+ * er ikke det «Logg ut» på telefonen betyr. Bytte av PIN gjør det fortsatt.
+ *
+ * Spillene verifiserer tegn uten oppslag og ser ikke denne tabellen. Et
+ * tilbakekalt tegn kan derfor fortsatt sende inn resultater til det går ut,
+ * akkurat som etter et PIN-bytte — men det kommer ikke inn på kontoen.
+ *
+ * Alltid 200, også for et tegn som ikke er gyldig: da er det ingenting å
+ * logge ut av, og klienten har allerede glemt økten.
+ */
+async function logout(env, request, now) {
+  const token = bearer(request)
+  const claims = await verifyTokenClaims(env.AUTH_SECRET, token, now.getTime())
+  if (!claims) return json({ signedOut: true })
+
+  // utløpte rader ryddes her, så tabellen aldri blir større enn tegnene som
+  // fortsatt kunne vært brukt
+  await env.DB.batch([
+    env.DB.prepare(`DELETE FROM revoked_tokens WHERE expires_at < ?`).bind(now.toISOString()),
+    env.DB.prepare(
+      `INSERT OR IGNORE INTO revoked_tokens (token_hash, expires_at) VALUES (?, ?)`,
+    ).bind(await tokenHash(token), new Date(claims.expiresAt).toISOString()),
+  ])
+  return json({ signedOut: true })
 }
 
 /**

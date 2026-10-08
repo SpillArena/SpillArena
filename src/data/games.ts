@@ -1,19 +1,14 @@
-import FleetBotShowcase from "../assets/games/FleetBot.svg";
-import HangBotShowcase from "../assets/games/HangBot.svg";
-import ScribbleBotShowcase from "../assets/games/ScribbleBot.svg";
-import AtlasMasterShowcase from "../assets/games/AtlasMaster.svg";
-import ProportionPanicShowcase from "../assets/games/ProportionPanic.svg";
-import PixelPanicShowcase from "../assets/games/PixelPanic.svg";
-import EraShuffleShowcase from "../assets/games/EraShuffle.svg";
-import MelodyRushShowcase from "../assets/games/MelodyRush.svg";
 import type { GameId } from "../account";
+import { gameArt, type ArtLanguage } from "./game-art";
+
+export type GameCategory = 'strategy' | 'words' | 'knowledge' | 'music';
 
 export type Game = {
     id: number;
     title: string;
+    category: GameCategory;
     descriptionKey: string;
     icon: string; // Lucide-ikonnavn (PascalCase)
-    showcase?: string;
     color: string;
     githubUrl: string;
     liveUrl: string;
@@ -21,13 +16,23 @@ export type Game = {
     beta?: boolean;
 };
 
+/** Språket bildene finnes på. Norsk er standard, som resten av siden. */
+export const artLanguage = (language: string | undefined): ArtLanguage => language?.startsWith('en') ? 'en' : 'no'
+
+/** Banneret (1200×675) på valgt språk — teksten i bildet følger språket på siden. */
+export const gameBanner = (game: Game, language: string | undefined): string | undefined =>
+    gameArt[game.id]?.banner[artLanguage(language)]
+
+/** Det kvadratiske ikonet (512×512), uten tekst. Til små flater der banneret blir uleselig. */
+export const gameIcon = (game: Game): string | undefined => gameArt[game.id]?.icon
+
 export const games: Game[] = [
     {
         id: 1,
         title: "FleetBot",
+        category: "strategy",
         descriptionKey: "fleetBotDescription",
         icon: "Anchor",
-        showcase: FleetBotShowcase,
         color: "bg-blue-600",
         githubUrl: "https://github.com/SpillArena/FleetBot",
         liveUrl: "https://spillarena.no/fleetbot",
@@ -35,9 +40,9 @@ export const games: Game[] = [
     {
         id: 2,
         title: "HangBot",
+        category: "words",
         descriptionKey: "hangBotDescription",
         icon: "Type",
-        showcase: HangBotShowcase,
         color: "bg-red-500",
         githubUrl: "https://github.com/SpillArena/HangBot",
         liveUrl: "https://spillarena.no/hangbot",
@@ -45,9 +50,9 @@ export const games: Game[] = [
     {
         id: 3,
         title: "ScribbleBot",
+        category: "words",
         descriptionKey: "scribbleBotDescription",
         icon: "PenTool",
-        showcase: ScribbleBotShowcase,
         color: "bg-green-500",
         githubUrl: "https://github.com/SpillArena/ScribbleBot",
         liveUrl: "https://spillarena.no/scribblebot",
@@ -55,9 +60,9 @@ export const games: Game[] = [
     {
         id: 4,
         title: "AtlasMaster",
+        category: "knowledge",
         descriptionKey: "atlasMasterDescription",
         icon: "Globe",
-        showcase: AtlasMasterShowcase,
         color: "bg-blue-500",
         githubUrl: "https://github.com/SpillArena/AtlasMaster",
         liveUrl: "https://spillarena.no/atlasmaster",
@@ -65,9 +70,9 @@ export const games: Game[] = [
     {
         id: 5,
         title: "Proportion Panic",
+        category: "knowledge",
         descriptionKey: "proportionPanicDescription",
         icon: "Ruler",
-        showcase: ProportionPanicShowcase,
         color: "bg-amber-500",
         githubUrl: "https://github.com/SpillArena/ProportionPanic",
         liveUrl: "https://spillarena.no/proportionpanic",
@@ -75,9 +80,9 @@ export const games: Game[] = [
     {
         id: 6,
         title: "Pixel Panic",
+        category: "words",
         descriptionKey: "pixelPanicDescription",
         icon: "Grid3x3",
-        showcase: PixelPanicShowcase,
         color: "bg-fuchsia-500",
         githubUrl: "https://github.com/SpillArena/PixelPanic",
         liveUrl: "https://spillarena.no/pixelpanic",
@@ -85,9 +90,9 @@ export const games: Game[] = [
     {
         id: 7,
         title: "EraShuffle",
+        category: "knowledge",
         descriptionKey: "eraShuffleDescription",
         icon: "Hourglass",
-        showcase: EraShuffleShowcase,
         color: "bg-emerald-700",
         githubUrl: "https://github.com/SpillArena/EraShuffle",
         liveUrl: "https://spillarena.no/erashuffle",
@@ -96,9 +101,9 @@ export const games: Game[] = [
     {
         id: 8,
         title: "MelodyRush",
+        category: "music",
         descriptionKey: "melodyRushDescription",
         icon: "Music",
-        showcase: MelodyRushShowcase,
         color: "bg-orange-600",
         githubUrl: "https://github.com/SpillArena/MelodyRush",
         liveUrl: "https://spillarena.no/melodyrush/",

@@ -8,7 +8,7 @@
  * enn å holde tellere i sync.
  */
 
-import { json } from '../../../shared/account-server.js'
+import { json, serviceFailed } from '../../../shared/account-server.js'
 import { readLog, requireAdmin } from '../../../shared/admin-server.js'
 import { GAMES } from '../../../shared/games-registry.js'
 
@@ -62,6 +62,6 @@ export async function onRequestGet(context) {
 
     return json({ stats: totals, games, log: readLog(log.results) })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }

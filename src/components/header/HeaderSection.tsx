@@ -1,9 +1,15 @@
 import logo from '../../assets/logo.svg'
-import { useTranslation } from 'react-i18next'
-import { SiteHeader } from '../../ui/SiteShell'
 import SettingsMenu from './SettingsMenu'
 import AccountMenu from '../account/AccountMenu'
-export default function HeaderSection() {
-  const { i18n } = useTranslation()
-  return <SiteHeader name="SpillArena" logo={logo} language={i18n.language}><AccountMenu /><SettingsMenu /></SiteHeader>
+import SpotlightSearch from './SpotlightSearch'
+import type { Game } from '../../data/games'
+
+export default function HeaderSection({ username, onSelectGame }: { username: string | null; onSelectGame: (game: Game) => void }) {
+  return <header className="site-header">
+    <div className="arena-container header-row">
+      <a className="brand" href="#" aria-label="SpillArena"><img src={logo} alt="" width={40} height={40} /><span>SpillArena<span className="brand-dot">.</span></span></a>
+      <div className="header-search" role="search"><SpotlightSearch onSelect={onSelectGame} /></div>
+      <div className="header-actions"><AccountMenu username={username} /><SettingsMenu /></div>
+    </div>
+  </header>
 }

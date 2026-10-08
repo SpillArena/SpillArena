@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { authenticate, verifySession } from './api'
-import { getSession, onSessionChange, signOut } from './session'
+import { authenticate, endSession, verifySession } from './api'
+import { getSession, onSessionChange } from './session'
 import type { AuthAction, AuthResult, Session } from './types'
 
 /**
@@ -45,6 +45,7 @@ export function useAccount() {
         isSignedIn: session !== null,
         checking,
         authenticate: submit,
-        signOut,
+        // revokes the token on the service too — see endSession
+        signOut: endSession,
     }
 }

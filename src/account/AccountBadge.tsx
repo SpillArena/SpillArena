@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { authenticate } from './api'
-import { getSession, onSessionChange, signOut } from './session'
+import { authenticate, endSession } from './api'
+import { getSession, onSessionChange } from './session'
 import { levelProgress } from './progress'
 import { openConsentDialog } from './consent'
 import { detectLanguage } from './language'
@@ -573,7 +573,7 @@ export function AccountBadge({
                                 type="button"
                                 className="sa-panel__signout"
                                 onClick={() => {
-                                    signOut()
+                                    endSession()
                                     setOpen(false)
                                 }}
                             >

@@ -1,7 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import { SiteFooter } from '../../ui/SiteShell'
+import { openConsentDialog } from '../../account'
+import logo from '../../assets/logo.svg'
 import Changelog from './Changelog'
+
 export default function FooterSection() {
-  const { i18n } = useTranslation()
-  return <SiteFooter game="SpillArena" language={i18n.language} note={<Changelog />} />
+  const { t } = useTranslation()
+  return <footer className="site-footer arena-container"><div className="footer-row">
+    <a className="footer-brand" href="#"><img src={logo} alt="" width={24} height={24} /><span>SpillArena</span><span className="footer-tagline">{t('lobby.footerTagline')}</span></a>
+    <div className="footer-links"><Changelog /><button type="button" onClick={openConsentDialog}>{t('lobby.storage')}</button><a href="https://github.com/SpillArena/SpillArena" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+  </div></footer>
 }

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="no">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fant ikke siden | SpillArena</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <!--
+    Cloudflare Pages serves this file, with status 404, for every path that has
+    no file. Without it, Pages falls back to index.html with status 200, and
+    search engines index typos as copies of the front page.
+
+    Standalone on purpose: no bundle, no fonts, no script. It has to work when
+    nothing else did.
+  -->
+  <style>
+    :root {
+      --paper: #f7f5ef;
+      --ink: #292335;
+      --muted: #6c6572;
+      --primary: #613c83;
+      --on-primary: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #18151e;
+        --ink: #f5f0f7;
+        --muted: #b6aebb;
+        --primary: #ceb1ed;
+        --on-primary: #18151e;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px 16px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      text-align: center;
+    }
+
+    main { max-width: 32rem; }
+    img { width: 64px; height: 64px; }
+    .code { margin: 16px 0 0; font-size: 14px; font-weight: 700; letter-spacing: 2px; color: var(--muted); }
+    h1 { margin: 8px 0 12px; font-family: Georgia, serif; font-size: clamp(28px, 6vw, 40px); line-height: 1.15; }
+    p { margin: 0 0 8px; line-height: 1.6; color: var(--muted); }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      margin-top: 20px;
+      padding: 0 22px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    a.button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <img src="/favicon.svg" alt="" />
+    <p class="code">404</p>
+    <h1>Her var det ikke noe spill</h1>
+    <p>Siden finnes ikke, eller den har flyttet. Alle spillene ligger på forsiden.</p>
+    <p lang="en">This page doesn't exist. All the games are on the front page.</p>
+    <a class="button" href="/">Til SpillArena</a>
+  </main>
+</body>
+
+</html>

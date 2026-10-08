@@ -1,0 +1,23 @@
+# Cloudflare Pages: headers for the static files in this project.
+#
+# Only the front page's own files. /api/* responses come from Functions and set
+# their own headers, and the games behind the router are separate projects with
+# their own _headers.
+#
+# The CSP is the second line of defence for the session token in localStorage:
+# without inline or foreign script, an injected <script> has nothing to run.
+# Google Fonts is the only outside origin the page loads from. Add an origin
+# here before adding a script, stylesheet, font or analytics beacon that needs
+# one, or it will be blocked.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000
+
+# Vite puts a content hash in every file name under /assets, so a changed file
+# is a new URL and the old one can be cached for good.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
