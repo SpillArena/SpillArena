@@ -8,9 +8,12 @@ import EraShuffleShowcase from "../assets/games/EraShuffle.svg";
 import MelodyRushShowcase from "../assets/games/MelodyRush.svg";
 import type { GameId } from "../account";
 
+export type GameCategory = 'strategy' | 'words' | 'knowledge' | 'music';
+
 export type Game = {
     id: number;
     title: string;
+    category: GameCategory;
     descriptionKey: string;
     icon: string; // Lucide-ikonnavn (PascalCase)
     showcase?: string;
@@ -25,6 +28,7 @@ export const games: Game[] = [
     {
         id: 1,
         title: "FleetBot",
+        category: "strategy",
         descriptionKey: "fleetBotDescription",
         icon: "Anchor",
         showcase: FleetBotShowcase,
@@ -35,6 +39,7 @@ export const games: Game[] = [
     {
         id: 2,
         title: "HangBot",
+        category: "words",
         descriptionKey: "hangBotDescription",
         icon: "Type",
         showcase: HangBotShowcase,
@@ -45,6 +50,7 @@ export const games: Game[] = [
     {
         id: 3,
         title: "ScribbleBot",
+        category: "words",
         descriptionKey: "scribbleBotDescription",
         icon: "PenTool",
         showcase: ScribbleBotShowcase,
@@ -55,6 +61,7 @@ export const games: Game[] = [
     {
         id: 4,
         title: "AtlasMaster",
+        category: "knowledge",
         descriptionKey: "atlasMasterDescription",
         icon: "Globe",
         showcase: AtlasMasterShowcase,
@@ -65,6 +72,7 @@ export const games: Game[] = [
     {
         id: 5,
         title: "Proportion Panic",
+        category: "knowledge",
         descriptionKey: "proportionPanicDescription",
         icon: "Ruler",
         showcase: ProportionPanicShowcase,
@@ -75,6 +83,7 @@ export const games: Game[] = [
     {
         id: 6,
         title: "Pixel Panic",
+        category: "words",
         descriptionKey: "pixelPanicDescription",
         icon: "Grid3x3",
         showcase: PixelPanicShowcase,
@@ -85,6 +94,7 @@ export const games: Game[] = [
     {
         id: 7,
         title: "EraShuffle",
+        category: "knowledge",
         descriptionKey: "eraShuffleDescription",
         icon: "Hourglass",
         showcase: EraShuffleShowcase,
@@ -96,6 +106,7 @@ export const games: Game[] = [
     {
         id: 8,
         title: "MelodyRush",
+        category: "music",
         descriptionKey: "melodyRushDescription",
         icon: "Music",
         showcase: MelodyRushShowcase,

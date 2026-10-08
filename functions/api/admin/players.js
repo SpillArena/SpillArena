@@ -12,7 +12,7 @@
  * det er det eneste feltet som leses her.
  */
 
-import { json } from '../../../shared/account-server.js'
+import { json, serviceFailed } from '../../../shared/account-server.js'
 import { requireAdmin } from '../../../shared/admin-server.js'
 
 const PAGE = 50
@@ -89,6 +89,6 @@ export async function onRequestGet(context) {
 
     return json({ players, total: count?.total ?? 0, offset, limit: PAGE })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }

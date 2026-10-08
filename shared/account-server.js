@@ -86,6 +86,62 @@ export const json = (data, status = 200) =>
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
   })
 
+/**
+ * 500-svaret når databasen eller noe annet under oss feilet.
+ *
+ * Feilen går til loggen, ikke til klienten. Teksten i en D1-feil sier hvilke
+ * tabeller og kolonner som finnes og hvordan spørringen så ut — nyttig for oss
+ * i `wrangler pages deployment tail`, og like nyttig for den som leter etter
+ * en vei inn. Klienten trenger bare koden; den oversetter den uansett.
+ */
+export function serviceFailed(error) {
+  console.error(error)
+  return json({ error: 'service_failed' }, 500)
+}
+
+/** Feil på rad før kontoen blir stengt, og hvor lenge den er stengt. */
+export const MAX_FAILED = 5
+export const LOCKOUT_MS = 15 * 60 * 1000
+
+/*
+ * Si HVOR LENGE, ikke bare at det er stengt.
+ *
+ * «Prøv igjen senere» gjør at spilleren enten prøver igjen med en gang — og får
+ * samme svar — eller gir opp. Med et tall kan de faktisk vente. Sekunder,
+ * avrundet opp, så klienten kan skrive det på sitt eget språk; en setning
+ * herfra ville bare kunnet vises på norsk.
+ *
+ * Retry-After er standardheaderen for nøyaktig dette, og koster ingenting å
+ * sette i tillegg.
+ */
+export function lockedResponse(lockedUntil, now) {
+  const retryAfter = Math.max(1, Math.ceil((new Date(lockedUntil).getTime() - now.getTime()) / 1000))
+  return new Response(JSON.stringify({ error: 'locked', retryAfter }), {
+    status: 429,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'Retry-After': String(retryAfter),
+    },
+  })
+}
+
+/**
+ * Teller et feil PIN-forsøk, og stenger kontoen når grensa er nådd.
+ *
+ * Brukes BÅDE ved innlogging og når en innlogget spiller bekrefter en endring
+ * med PIN-en. Én teller for begge: hadde kontosidene hatt sin egen, kunne den
+ * som fikk tak i et tegn prøve alle PIN-ene der i stedet — og med PIN-en kan
+ * de bytte den og ta kontoen.
+ */
+export async function countFailedPin(env, row, now) {
+  const failed = (row.failed ?? 0) + 1
+  const lockedUntil = failed >= MAX_FAILED ? new Date(now.getTime() + LOCKOUT_MS).toISOString() : null
+  await env.DB.prepare(`UPDATE players SET failed = ?, locked_until = ? WHERE username = ?`)
+    .bind(failed >= MAX_FAILED ? 0 : failed, lockedUntil, row.username)
+    .run()
+}
+
 const encoder = new TextEncoder()
 
 export const toBase64Url = (bytes) =>
@@ -176,7 +232,7 @@ export async function verifyTokenClaims(secret, token, now = Date.now()) {
   try {
     const { u, e, i } = JSON.parse(new TextDecoder().decode(fromBase64Url(payload)))
     if (typeof u !== 'string' || typeof e !== 'number' || e < now) return null
-    return { username: u, issuedAt: typeof i === 'number' ? i : e - TOKEN_TTL_MS }
+    return { username: u, expiresAt: e, issuedAt: typeof i === 'number' ? i : e - TOKEN_TTL_MS }
   } catch {
     return null
   }
@@ -248,6 +304,16 @@ export async function codeWithHash(length) {
   return { code, salt, hash: await hashCode(normalizeCode(code), salt) }
 }
 
+/**
+ * Det et tilbakekalt tegn lagres som i `revoked_tokens`.
+ *
+ * En hash og ikke tegnet selv: tabellen skal ikke kunne gi et gyldig tegn
+ * tilbake til den som får lese den.
+ */
+export async function tokenHash(token) {
+  return toBase64Url(await crypto.subtle.digest('SHA-256', encoder.encode(token)))
+}
+
 /** Tegnet i `Authorization: Bearer …`, eller tom streng. */
 export function bearer(request) {
   const header = request.headers.get('Authorization') ?? ''
@@ -278,14 +344,32 @@ export async function requireUser(env, request) {
 
   let row
   try {
-    // SELECT * og ikke en kolonneliste: kjører koden før migrasjon 0009, finnes
-    // ikke `admin` og `banned_at` ennå, og en navngitt kolonne ville felt hvert
-    // eneste kall. Uten kolonnene er ingen admin og ingen utestengt.
-    row = await env.DB.prepare(`SELECT * FROM players WHERE username = ?`).bind(username).first()
+    /*
+     * SELECT * og ikke en kolonneliste: kjører koden før migrasjon 0009, finnes
+     * ikke `admin` og `banned_at` ennå, og en navngitt kolonne ville felt hvert
+     * eneste kall. Uten kolonnene er ingen admin og ingen utestengt.
+     *
+     * Utloggingen ligger i samme spørring, så den koster ingen ekstra rundtur.
+     * Før migrasjon 0011 finnes ikke tabellen; da faller vi tilbake til
+     * spørringen uten, og ingen tegn er tilbakekalt.
+     */
+    try {
+      row = await env.DB.prepare(
+        `SELECT *, EXISTS (SELECT 1 FROM revoked_tokens WHERE token_hash = ?2) AS _revoked
+         FROM players WHERE username = ?1`,
+      )
+        .bind(username, await tokenHash(bearer(request)))
+        .first()
+    } catch (error) {
+      if (!String(error).includes('no such table')) throw error
+      row = await env.DB.prepare(`SELECT * FROM players WHERE username = ?`).bind(username).first()
+    }
   } catch (error) {
-    return { response: json({ error: 'service_failed', details: String(error) }, 500) }
+    return { response: serviceFailed(error) }
   }
   if (!row) return { response: json({ error: 'unauthorized' }, 401) }
+  // logget ut på tjeneren — se `logout` i functions/api/auth/
+  if (row._revoked) return { response: json({ error: 'unauthorized' }, 401) }
   if (row.banned_at) return { response: json({ error: 'banned' }, 401) }
   /*
    * Et tegn fra før PIN-en sist ble byttet. Spillene sjekker ikke dette — de

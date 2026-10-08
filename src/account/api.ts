@@ -167,6 +167,39 @@ export function createRecoveryCode(pin: string): Promise<ApiResult<{ recoveryCod
 }
 
 /**
+ * Signs out here AND on the service, so the token stops working on /api/*.
+ *
+ * `signOut` in session.ts only forgets the token in this browser. The token
+ * is signed, not stored, so a copy of it — from a shared computer, a log, an
+ * XSS hole — would keep working for the rest of its thirty days. This tells
+ * the service to refuse it.
+ *
+ * The local sign-out happens first and does not wait: the player pressed the
+ * button and should see the result at once, online or not. `keepalive` lets
+ * the request finish even when the click navigates away. A failed request is
+ * not retried; the token still expires on its own.
+ *
+ * Only this device is signed out. Changing the PIN signs out every device.
+ * Games verify tokens without a lookup and do not see the revocation, so a
+ * revoked token can still submit results until it expires — but it no longer
+ * reaches the account.
+ */
+export function endSession(): void {
+    const token = getToken()
+    signOut()
+    if (!token) return
+    void fetch(`${API_BASE}/auth`, {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ action: 'logout' }),
+    }).catch(() => {
+        // offline or unreachable: the session is gone here, which is what the
+        // player asked for
+    })
+}
+
+/**
  * Asks the service whether the stored token is still good.
  *
  * Worth one call at startup: the token is verified by signature alone, so

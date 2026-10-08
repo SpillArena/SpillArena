@@ -43,6 +43,7 @@ import {
   RESET_CODE_TTL_MS,
   codeWithHash,
   json,
+  serviceFailed,
   validateUsername,
 } from '../../../shared/account-server.js'
 import {
@@ -133,7 +134,7 @@ export async function onRequestGet(context) {
 
     return json({ account, games, boards, log: readLog(log.results) })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }
 
@@ -289,7 +290,7 @@ export async function onRequestPost(context) {
         return json({ error: 'bad_action' }, 400)
     }
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }
 
@@ -325,6 +326,6 @@ export async function onRequestDelete(context) {
     ])
     return json({ deleted: true })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }

@@ -1,35 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  color-scheme: light;
   --font-sans: 'Space Grotesk', 'Avenir Next', 'Segoe UI', sans-serif;
   --font-serif: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', serif;
-  --color-surface: #f1f3ec;
-  --color-ink: #20241d;
-
-  /* Switcher design tokens (light) */
-  --surface: #f1f3ec;
-  --surface-card: #fbfcf8;
-  --border: #dce1d2;
-  --border-hover: #c4cbb6;
-  --text: #20241d;
-  --text-subtle: #5c6354;
-  --accent: #d946ef;
+  --surface: #f7f5ef;
+  --surface-card: #fffdf9;
+  --border: #ddd8df;
+  --border-hover: #beb2ca;
+  --text: #292335;
+  --text-subtle: #6c6572;
+  --accent: #613c83;
+  --on-accent: #fff;
+  --accent-ink: color-mix(in srgb, var(--accent) 80%, #292335);
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  --feature: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  --color-surface: var(--surface);
+  --color-ink: var(--text);
+  --paper: var(--surface);
+  --card: var(--surface-card);
+  --ink: var(--text);
+  --muted: var(--text-subtle);
+  --line: var(--border);
+  --focus: var(--accent-ink);
+  --serif: var(--font-serif);
+  --sans: var(--font-sans);
 }
-
 html.dark {
-  --color-surface: #14140f;
-  --color-ink: #edefe4;
-
-  /* Switcher design tokens (dark) */
-  --surface: #14140f;
-  --surface-card: #1d1e17;
-  --border: #33362a;
-  --border-hover: #454935;
-  --text: #edefe4;
-  --text-subtle: #9aa08c;
-  --accent: #e879f9;
+  color-scheme: dark;
+  --surface: #18151e;
+  --surface-card: #211d29;
+  --border: #3e3649;
+  --border-hover: #675477;
+  --text: #f5f0f7;
+  --text-subtle: #b6aebb;
+  --accent: #ceb1ed;
+  --accent-ink: var(--accent);
+  --on-accent: #24172f;
 }
 
 html,

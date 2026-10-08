@@ -22,7 +22,7 @@
  * spørringsledd. Se shared/account-server.js.
  */
 
-import { json, requireUser } from '../../../shared/account-server.js'
+import { json, requireUser, serviceFailed } from '../../../shared/account-server.js'
 import { MAX_BODY_BYTES, isGame, validateDocument } from '../../../shared/games-registry.js'
 
 /** Spillet i ruta, eller et ferdig 404-svar. Ukjent navn er ikke en tom profil. */
@@ -48,7 +48,7 @@ export async function onRequestGet(context) {
     if (!row) return json({ game: target.game, progress: null, updatedAt: null })
     return json({ game: target.game, progress: JSON.parse(row.data), updatedAt: row.updatedAt })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }
 
@@ -87,7 +87,7 @@ export async function onRequestPost(context) {
       .run()
     return json({ game: target.game, updatedAt })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }
 
@@ -108,6 +108,6 @@ export async function onRequestDelete(context) {
       .run()
     return json({ game: target.game, deleted: (result.meta?.changes ?? 0) > 0 })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }

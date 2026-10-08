@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { AnimatePresence, motion } from 'framer-motion'
-import { X } from 'lucide-react'
+import Dialog from '../../ui/Dialog'
+import logo from '../../assets/logo.svg'
+import { ArrowLeft, ArrowUpRight, Check } from 'lucide-react'
 import { authenticate, createRecoveryCode, recoverAccount } from '../../account'
 import type { AuthAction } from '../../account'
 import { useCookieConsent } from '../../context/useCookieConsent'
@@ -15,6 +16,7 @@ interface AuthModalProps {
     onClose: () => void
     /** Hvilket skjema vinduet åpner på. Lenken fra spillene ber om `recover`. */
     initialMode?: AuthMode
+    presentation?: 'page' | 'modal'
 }
 
 /**
@@ -26,7 +28,7 @@ interface AuthModalProps {
  * that sets state during another render. Letting it unmount does both jobs at
  * once: the state is gone because the component is gone.
  */
-function AuthForm({ onClose, initialMode }: { onClose: () => void; initialMode: AuthMode }) {
+function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void; initialMode: AuthMode; presentation: 'page' | 'modal' }) {
     const { t } = useTranslation()
     const [action, setAction] = useState<AuthMode>(initialMode)
     const [username, setUsername] = useState('')
@@ -44,15 +46,6 @@ function AuthForm({ onClose, initialMode }: { onClose: () => void; initialMode: 
     const [retryAfter, setRetryAfter] = useState<number | undefined>(undefined)
     const [busy, setBusy] = useState(false)
     const { consent, showBanner } = useCookieConsent()
-
-    useEffect(() => {
-        if (shown) return
-        const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') onClose()
-        }
-        window.addEventListener('keydown', onKeyDown)
-        return () => window.removeEventListener('keydown', onKeyDown)
-    }, [shown, onClose])
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -166,199 +159,47 @@ function AuthForm({ onClose, initialMode }: { onClose: () => void; initialMode: 
     const submitLabel = t(
         action === 'login' ? 'account.signIn' : action === 'register' ? 'account.register' : 'account.recovery.submit',
     )
-    const pinInputClass =
-        'rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm tracking-[0.4em] text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100'
-
-    return (
-                <motion.div
-                    key="auth-overlay"
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    onClick={shown ? undefined : onClose}
-                >
-                    <motion.div
-                        className="w-full max-w-sm rounded-2xl border border-[color:color-mix(in_srgb,var(--accent)_35%,transparent)] bg-white/95 shadow-2xl dark:bg-slate-900/95"
-                        initial={{ opacity: 0, scale: 0.92, y: 16 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.92, y: 16 }}
-                        transition={{ duration: 0.22, ease: 'easeOut' }}
-                        onClick={(event) => event.stopPropagation()}
-                        role="dialog"
-                        aria-modal="true"
-                        aria-label={t('account.title')}
-                    >
-                        <div className="flex items-center justify-between border-b border-[color:color-mix(in_srgb,var(--accent)_20%,transparent)] p-6">
-                            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-                                {title}
-                            </h2>
-                            {!shown && (
-                                <button
-                                    onClick={onClose}
-                                    className="cursor-pointer text-slate-500 transition hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
-                                    aria-label={t('close')}
-                                >
-                                    <X className="h-5 w-5" />
-                                </button>
-                            )}
-                        </div>
-
-                        {shown ? (
-                            <div className="p-6">
-                                <RecoveryCodeNotice username={shown.username} code={shown.code} onDone={onClose} />
-                            </div>
-                        ) : (
-                        <form onSubmit={submit} className="flex flex-col gap-4 p-6">
-                            <p className="text-sm text-slate-600 dark:text-slate-300">
-                                {t(action === 'recover' ? 'account.recovery.intro' : 'account.blurb')}
-                            </p>
-
-                            <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
-                                {t('account.username')}
-                                <input
-                                    value={username}
-                                    onChange={(event) => setUsername(event.target.value)}
-                                    maxLength={20}
-                                    autoComplete="username"
-                                    required
-                                    className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
-                                />
-                            </label>
-
-                            {action === 'recover' && (
-                                <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
-                                    {t('account.recovery.code')}
-                                    <input
-                                        value={code}
-                                        onChange={(event) => setCode(event.target.value.toUpperCase())}
-                                        maxLength={20}
-                                        autoComplete="off"
-                                        autoCapitalize="characters"
-                                        spellCheck={false}
-                                        required
-                                        className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm tracking-wider text-slate-900 outline-none focus:border-[color:var(--accent)] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
-                                    />
-                                    <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
-                                        {t('account.recovery.codeHint')}
-                                    </span>
-                                </label>
-                            )}
-
-                            <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
-                                {t(action === 'recover' ? 'account.recovery.newPin' : 'account.pin')}
-                                <input
-                                    value={pin}
-                                    onChange={(event) => setPin(event.target.value.replace(/\D/g, ''))}
-                                    inputMode="numeric"
-                                    pattern="\d{4,6}"
-                                    minLength={4}
-                                    maxLength={6}
-                                    autoComplete={action === 'login' ? 'current-password' : 'new-password'}
-                                    type="password"
-                                    required
-                                    className={pinInputClass}
-                                />
-                                <span className="text-xs font-normal text-slate-500 dark:text-slate-400">
-                                    {t('account.pinHint')}
-                                </span>
-                            </label>
-
-                            {action !== 'login' && (
-                                <label className="flex flex-col gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">
-                                    {t('account.repeatPin')}
-                                    <input
-                                        value={confirm}
-                                        onChange={(event) => setConfirm(event.target.value.replace(/\D/g, ''))}
-                                        inputMode="numeric"
-                                        pattern="\d{4,6}"
-                                        minLength={4}
-                                        maxLength={6}
-                                        autoComplete="new-password"
-                                        type="password"
-                                        required
-                                        className={pinInputClass}
-                                    />
-                                </label>
-                            )}
-
-                            {/* Uten samtykke blir ingenting lagret, og økten dør når fanen gjør
-                                det — spillene ser en utlogget spiller. Bedre å si det før
-                                innlogging enn å la den forsvinne, og å la det rettes her. */}
-                            {consent !== 'accepted' && (
-                                <div className="flex flex-col items-start gap-1.5 rounded-lg bg-amber-100 px-3 py-2 text-xs text-amber-900 dark:bg-amber-900/40 dark:text-amber-100">
-                                    <p>{t('account.noConsent')}</p>
-                                    <button
-                                        type="button"
-                                        onClick={showBanner}
-                                        className="cursor-pointer font-semibold underline underline-offset-2"
-                                    >
-                                        {t('account.enableStorage')}
-                                    </button>
-                                </div>
-                            )}
-
-                            {error && (
-                                <p role="alert" className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-800 dark:bg-red-900/40 dark:text-red-100">
-                                    {errorText(error)}
-                                </p>
-                            )}
-
-                            <button
-                                type="submit"
-                                disabled={busy}
-                                className="cursor-pointer rounded-lg bg-gradient-to-r from-fuchsia-500 to-violet-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:shadow-lg disabled:cursor-progress disabled:opacity-60"
-                            >
-                                {submitLabel}
-                            </button>
-
-                            {action === 'login' && (
-                                <button
-                                    type="button"
-                                    onClick={() => switchMode('recover')}
-                                    className="cursor-pointer text-sm text-slate-600 underline-offset-2 hover:underline dark:text-slate-300"
-                                >
-                                    {t('account.recovery.forgotPin')}
-                                </button>
-                            )}
-
-                            {action === 'recover' && (
-                                <p className="text-xs leading-snug text-slate-500 dark:text-slate-400">
-                                    {t('account.recovery.noCode')}
-                                </p>
-                            )}
-
-                            <button
-                                type="button"
-                                onClick={() => switchMode(action === 'login' ? 'register' : 'login')}
-                                className="cursor-pointer text-sm text-slate-600 underline-offset-2 hover:underline dark:text-slate-300"
-                            >
-                                {t(
-                                    action === 'login'
-                                        ? 'account.switchToRegister'
-                                        : action === 'register'
-                                          ? 'account.switchToSignIn'
-                                          : 'account.recovery.backToSignIn',
-                                )}
-                            </button>
-                        </form>
-                        )}
-                    </motion.div>
-                </motion.div>
+    const content = shown ? <RecoveryCodeNotice username={shown.username} code={shown.code} onDone={onClose} /> : (
+      <>
+        {action !== 'recover' && <div className="option-row auth-tabs" role="group" aria-label={t('account.title')}>
+          <button className="option" type="button" disabled={busy} aria-pressed={action === 'login'} onClick={() => switchMode('login')}>{t('account.signIn')}</button>
+          <button className="option" type="button" disabled={busy} aria-pressed={action === 'register'} onClick={() => switchMode('register')}>{t('account.register')}</button>
+        </div>}
+        <form onSubmit={submit} className="sa-form">
+          <p className="form-intro">{t(action === 'recover' ? 'account.recovery.intro' : 'account.blurb')}</p>
+          <label>{t('account.username')}<input value={username} onChange={event => setUsername(event.target.value)} maxLength={20} autoComplete="username" autoFocus required disabled={busy} /></label>
+          {action === 'recover' && <label>{t('account.recovery.code')}
+            <input className="code-input" value={code} onChange={event => setCode(event.target.value.toUpperCase())} maxLength={20} autoComplete="off" autoCapitalize="characters" spellCheck={false} required disabled={busy} />
+            <span className="field-hint">{t('account.recovery.codeHint')}</span>
+          </label>}
+          <label>{t(action === 'recover' ? 'account.recovery.newPin' : 'account.pin')}
+            <input className="pin-input" value={pin} onChange={event => setPin(event.target.value.replace(/\D/g, ''))} inputMode="numeric" pattern="\d{4,6}" minLength={4} maxLength={6} autoComplete={action === 'login' ? 'current-password' : 'new-password'} type="password" required disabled={busy} />
+            <span className="field-hint">{t('account.pinHint')}</span>
+          </label>
+          {action !== 'login' && <label>{t('account.repeatPin')}
+            <input className="pin-input" value={confirm} onChange={event => setConfirm(event.target.value.replace(/\D/g, ''))} inputMode="numeric" pattern="\d{4,6}" minLength={4} maxLength={6} autoComplete="new-password" type="password" required disabled={busy} />
+          </label>}
+          {consent !== 'accepted' && <div className="form-warning"><p>{t('account.noConsent')}</p><button type="button" className="inline-link" onClick={showBanner}>{t('account.enableStorage')}</button></div>}
+          {error && <p role="alert" className="form-error">{errorText(error)}</p>}
+          <button type="submit" disabled={busy} className="button primary full-width">{busy ? t('profile.working') : submitLabel}<ArrowUpRight size={17} aria-hidden="true" /></button>
+          {action === 'login' && <button type="button" disabled={busy} className="inline-link" onClick={() => switchMode('recover')}>{t('account.recovery.forgotPin')}</button>}
+          {action === 'recover' && <><p className="field-hint">{t('account.recovery.noCode')}</p><button type="button" disabled={busy} className="inline-link" onClick={() => switchMode('login')}>{t('account.recovery.backToSignIn')}</button></>}
+        </form>
+      </>
     )
+    if (presentation === 'modal') return <Dialog open onClose={onClose} title={title} dismissible={!shown}>{content}</Dialog>
+    return <div className="account-page-layout">
+      <aside className="auth-story">
+        {!shown && <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>}
+        <img src={logo} alt="" className="auth-logo" width={58} height={58} />
+        <p className="eyebrow">SpillArena</p><h1>{t('lobby.accountTitle')}</h1><p className="hero-description">{t('lobby.accountDescription')}</p>
+        <ul className="auth-benefits"><li><Check size={16} aria-hidden="true" />{t('profile.benefitProgress')}</li><li><Check size={16} aria-hidden="true" />{t('profile.benefitGames')}</li><li><Check size={16} aria-hidden="true" />{t('profile.benefitGuest')}</li></ul>
+        {!shown && <a className="button secondary" href="#">{t('profile.guestPlay')}<ArrowUpRight size={16} aria-hidden="true" /></a>}
+      </aside>
+      <section className="auth-panel" aria-labelledby="auth-title"><p className="eyebrow">{t('account.title')}</p><h2 id="auth-title">{title}</h2>{shown ? <><p className="field-hint">{t('account.recovery.saveIntro')}</p><Dialog open onClose={onClose} title={title} dismissible={false}>{content}</Dialog></> : content}</section>
+    </div>
 }
 
-/**
- * Registrering og innlogging for hele SpillArena.
- *
- * Feilen fra tjeneren er en kode, ikke en setning — `account.errors.<kode>` i
- * oversettelsene. Det er derfor spilleren får norsk feilmelding av en Worker
- * som ikke kan norsk.
- */
-export default function AuthModal({ open, onClose, initialMode = 'login' }: AuthModalProps) {
-    // Escape bor i skjemaet: det er det som vet om en kode står på skjermen
-    return (
-        <AnimatePresence>{open && <AuthForm onClose={onClose} initialMode={initialMode} />}</AnimatePresence>
-    )
+export default function AuthModal({ open, onClose, initialMode = 'login', presentation = 'modal' }: AuthModalProps) {
+  return open ? <AuthForm onClose={onClose} initialMode={initialMode} presentation={presentation} /> : null
 }

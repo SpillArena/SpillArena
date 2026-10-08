@@ -8,7 +8,7 @@
  * har spilt og når, og det er nok til en profilside.
  */
 
-import { json, requireUser } from '../../../shared/account-server.js'
+import { json, requireUser, serviceFailed } from '../../../shared/account-server.js'
 
 export async function onRequestGet(context) {
   const { env, request } = context
@@ -55,6 +55,6 @@ export async function onRequestGet(context) {
       games,
     })
   } catch (error) {
-    return json({ error: 'service_failed', details: String(error) }, 500)
+    return serviceFailed(error)
   }
 }

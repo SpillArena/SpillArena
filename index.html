@@ -40,8 +40,105 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Fonts: here and not as @import in CSS, so the browser finds them before the bundle -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" />
+
+  <!--
+    SpillArena-lasteren. Inline og ikke i pakken: den skal vises mens pakken
+    lastes. Brikkene er de 13 i logoen, i samme rekkefølge som S-en tegnes.
+    src/ui/loader.ts skrur den av og på.
+  -->
+  <style>
+    /*
+     * Egne farger, ikke --paper fra pakken: temaet settes av JavaScript, og før
+     * det har kjørt ville en mørk enhet fått en lys laster. Systemvalget gjelder
+     * til html får .light eller .dark.
+     */
+    :root { --loader-paper: #f7f5ef; --loader-ink: #292335; --loader-card: #fffdf9; }
+    @media (prefers-color-scheme: dark) { :root:not(.light) { --loader-paper: #18151e; --loader-ink: #f5f0f7; --loader-card: #211d29; } }
+    html.dark { --loader-paper: #18151e; --loader-ink: #f5f0f7; --loader-card: #211d29; }
+
+    /* uskarp og tonet, ikke dekket: siden skimtes bak brikkene */
+    .arena-loader {
+      position: fixed; inset: 0; z-index: 2147483000;
+      display: grid; place-content: center; justify-items: center; gap: 16px;
+      background: color-mix(in srgb, var(--loader-paper) 52%, transparent);
+      -webkit-backdrop-filter: blur(14px) saturate(1.15); backdrop-filter: blur(14px) saturate(1.15);
+      color: var(--loader-ink);
+      font: 600 13px/1.4 'Space Grotesk', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+      letter-spacing: .2px;
+      opacity: 1; visibility: visible;
+      transition: opacity 360ms ease, -webkit-backdrop-filter 360ms ease, backdrop-filter 360ms ease, visibility 0s linear 0s;
+    }
+    /* første lasting: ingenting å gjøre uskarpt ennå, så sidefargen i stedet */
+    .arena-loader.is-boot { background: var(--loader-paper); }
+    .arena-loader.is-hidden {
+      opacity: 0; visibility: hidden; pointer-events: none;
+      -webkit-backdrop-filter: blur(0) saturate(1); backdrop-filter: blur(0) saturate(1);
+      transition: opacity 360ms ease, -webkit-backdrop-filter 360ms ease, backdrop-filter 360ms ease, visibility 0s linear 360ms;
+    }
+    .arena-loader .arena-loader-board, .arena-loader .arena-loader-label { transition: transform 360ms cubic-bezier(.2, .9, .3, 1.2); }
+    .arena-loader.is-hidden .arena-loader-board { transform: scale(.9); }
+    .arena-loader.is-hidden .arena-loader-label { transform: translateY(6px); }
+
+    .arena-loader-board {
+      --cell: 15px; --gap: 4px;
+      display: grid; grid-template-columns: repeat(5, var(--cell)); grid-template-rows: repeat(5, var(--cell)); gap: var(--gap);
+      padding: 16px; border-radius: 26px;
+      background: radial-gradient(circle at 50% 42%, #e879f938, #e879f900 62%), linear-gradient(#211c33, #0e0b18);
+      box-shadow: inset 0 0 0 1.5px #ffffff14, 0 18px 40px -18px #1a102a80;
+    }
+    .arena-loader-board i {
+      grid-column: var(--x); grid-row: var(--y);
+      border-radius: 5px; background: var(--c);
+      /* sokkelen og glansen fra logoen: brikkene skal se ut som brikker */
+      box-shadow: 0 2px 0 color-mix(in srgb, var(--c) 45%, #1a1030), inset 0 3px 0 #ffffff38;
+      animation: arena-tile 2.6s cubic-bezier(.3, 1.4, .5, 1) calc(var(--i) * 75ms) infinite both;
+    }
+    .arena-loader-board i:nth-child(1)  { --x: 5; --y: 1; --i: 0;  --c: #f472b6; }
+    .arena-loader-board i:nth-child(2)  { --x: 4; --y: 1; --i: 1;  --c: #e879f9; }
+    .arena-loader-board i:nth-child(3)  { --x: 3; --y: 1; --i: 2;  --c: #c084fc; }
+    .arena-loader-board i:nth-child(4)  { --x: 2; --y: 1; --i: 3;  --c: #a78bfa; }
+    .arena-loader-board i:nth-child(5)  { --x: 1; --y: 2; --i: 4;  --c: #818cf8; }
+    .arena-loader-board i:nth-child(6)  { --x: 2; --y: 3; --i: 5;  --c: #60a5fa; }
+    .arena-loader-board i:nth-child(7)  { --x: 3; --y: 3; --i: 6;  --c: #38bdf8; }
+    .arena-loader-board i:nth-child(8)  { --x: 4; --y: 3; --i: 7;  --c: #22d3ee; }
+    .arena-loader-board i:nth-child(9)  { --x: 5; --y: 4; --i: 8;  --c: #2dd4bf; }
+    .arena-loader-board i:nth-child(10) { --x: 4; --y: 5; --i: 9;  --c: #4ade80; }
+    .arena-loader-board i:nth-child(11) { --x: 3; --y: 5; --i: 10; --c: #bef264; }
+    .arena-loader-board i:nth-child(12) { --x: 2; --y: 5; --i: 11; --c: #fbbf24; }
+    .arena-loader-board i:nth-child(13) { --x: 1; --y: 5; --i: 12; --c: #f97316; }
+    /*
+     * Lyset går langs S-en: hver brikke spretter opp i full farge, blir
+     * liggende, og dimmes tilbake i samme rekkefølge. Dimmet, ikke borte —
+     * S-en skimtes hele tiden, så brettet aldri står tomt.
+     */
+    @keyframes arena-tile {
+      0%   { opacity: .16; transform: scale(.72); }
+      12%  { opacity: 1;   transform: scale(1); }
+      58%  { opacity: 1;   transform: scale(1); }
+      72%  { opacity: .16; transform: scale(.72); }
+      100% { opacity: .16; transform: scale(.72); }
+    }
+    .arena-loader-label {
+      margin: 0; min-height: 1.4em; padding: 6px 14px; border-radius: 999px;
+      background: color-mix(in srgb, var(--loader-card) 80%, transparent);
+      box-shadow: 0 6px 18px -10px #1a102a66;
+    }
+    .arena-loader-label:empty::before { content: 'SpillArena'; }
+    @media (prefers-reduced-motion: reduce) {
+      /* hele logoen står stille og puster i stedet */
+      .arena-loader-board i { animation: none !important; }
+      .arena-loader-board { animation: arena-breathe 1.8s ease-in-out infinite alternate !important; }
+      @keyframes arena-breathe { from { opacity: .55; } to { opacity: 1; } }
+    }
+  </style>
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -57,11 +154,6 @@
         "@type": "Person",
         "name": "Emil Berglund",
         "url": "https://emilb.no"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://spillarena.no/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     }
     </script>
@@ -119,6 +211,13 @@
           "url": "https://spillarena.no/erashuffle",
           "name": "EraShuffle",
           "description": "Sett fem historiske øyeblikk i riktig rekkefølge, og avslør årstallene."
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "url": "https://spillarena.no/melodyrush/",
+          "name": "MelodyRush",
+          "description": "Kjenn igjen musikken fra korte lydklipp. Jo mindre du hører, desto flere poeng."
         }
       ]
     }
@@ -127,6 +226,10 @@
 
 <body>
   <div id="root"></div>
+  <div id="arena-loader" class="arena-loader is-boot" role="status" aria-live="polite">
+    <div class="arena-loader-board" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <p class="arena-loader-label"></p>
+  </div>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

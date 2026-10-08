@@ -43,15 +43,15 @@ export default function RecoveryCodeNotice({ username, code, onDone }: RecoveryC
     }
 
     const buttonClass =
-        'flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 transition hover:shadow-sm dark:border-slate-700 dark:text-slate-200'
+        'button secondary flex-1'
 
     return (
-        <div className="flex flex-col gap-3">
-            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t('account.recovery.saveTitle')}</p>
-            <p className="text-xs leading-snug text-slate-600 dark:text-slate-300">{t('account.recovery.saveIntro')}</p>
+        <div className="recovery-notice">
+            <p className="recovery-title">{t('account.recovery.saveTitle')}</p>
+            <p className="field-hint">{t('account.recovery.saveIntro')}</p>
 
             <p
-                className="select-all rounded-lg border-2 border-dashed border-[color:var(--accent)] px-3 py-3 text-center font-mono text-lg font-semibold tracking-wider text-slate-900 dark:text-slate-100"
+                className="select-all recovery-code"
                 aria-label={t('account.recovery.codeLabel')}
             >
                 {code}
@@ -68,7 +68,7 @@ export default function RecoveryCodeNotice({ username, code, onDone }: RecoveryC
                 </button>
             </div>
 
-            <label className="flex cursor-pointer items-start gap-2 text-xs text-slate-700 dark:text-slate-200">
+            <label className="recovery-confirm">
                 <input
                     type="checkbox"
                     checked={saved}
@@ -82,7 +82,7 @@ export default function RecoveryCodeNotice({ username, code, onDone }: RecoveryC
                 type="button"
                 onClick={onDone}
                 disabled={!saved}
-                className="cursor-pointer rounded-lg bg-gradient-to-r from-fuchsia-500 to-violet-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50"
+                className="button primary full-width"
             >
                 {t('account.recovery.continue')}
             </button>

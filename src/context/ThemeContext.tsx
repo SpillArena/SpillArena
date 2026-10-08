@@ -27,12 +27,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const currentTheme: CurrentTheme = theme === 'system' ? systemTheme : theme
 
   useEffect(() => {
-    if (theme !== 'system') return
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = (e: MediaQueryListEvent) => setSystemTheme(e.matches ? 'dark' : 'light')
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
-  }, [theme])
+  }, [])
 
   useEffect(() => {
     const html = document.documentElement

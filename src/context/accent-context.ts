@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 
 export type AccentColor =
+    | 'plum'
     | 'rose'
     | 'pink'
     | 'fuchsia'
@@ -22,6 +23,7 @@ export interface AccentDefinition {
 }
 
 export const ACCENT_PRESETS: Record<AccentColor, AccentDefinition> = {
+    plum: { label: 'Plum', light: '#613c83', dark: '#ceb1ed' },
     rose: { label: 'Rose', light: '#e11d48', dark: '#f1376e' },
     pink: { label: 'Pink', light: '#db2777', dark: '#f472b6' },
     fuchsia: { label: 'Fuchsia', light: '#c026d3', dark: '#e879f9' },
@@ -37,7 +39,7 @@ export const ACCENT_PRESETS: Record<AccentColor, AccentDefinition> = {
     orange: { label: 'Orange', light: '#ea580c', dark: '#fb923c' },
 }
 
-export const DEFAULT_ACCENT: AccentColor = 'fuchsia'
+export const DEFAULT_ACCENT: AccentColor = 'plum'
 export const ACCENT_STORAGE_KEY = 'accent'
 
 export interface AccentContextValue {

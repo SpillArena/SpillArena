@@ -49,7 +49,7 @@ export default function RecoveryCodeForm({ username, replacing, onCancel, onDone
     }
 
     return (
-        <form onSubmit={submit} className="mt-3 flex flex-col gap-2.5">
+        <form onSubmit={submit} className="account-edit-form sa-form">
             <p className="text-xs leading-snug" style={{ color: 'var(--text-subtle)' }}>
                 {t('account.recovery.createIntro')}
             </p>
@@ -72,13 +72,13 @@ export default function RecoveryCodeForm({ username, replacing, onCancel, onDone
             </label>
 
             {replacing && (
-                <p className="rounded-lg bg-amber-100 px-2.5 py-1.5 text-[11px] leading-snug text-amber-900 dark:bg-amber-900/40 dark:text-amber-100">
+                <p className="form-warning">
                     {t('account.recovery.replaceWarning')}
                 </p>
             )}
 
             {error && (
-                <p role="alert" className="rounded-lg bg-red-100 px-2.5 py-1.5 text-xs text-red-800 dark:bg-red-900/40 dark:text-red-100">
+                <p role="alert" className="form-error">
                     {t(`account.errors.${error}`, { defaultValue: t('account.errors.service_failed') })}
                 </p>
             )}
@@ -87,7 +87,7 @@ export default function RecoveryCodeForm({ username, replacing, onCancel, onDone
                 <button
                     type="button"
                     onClick={onCancel}
-                    className="flex-1 cursor-pointer rounded-lg border px-3 py-1.5 text-xs font-semibold"
+                    className="button secondary flex-1"
                     style={{ borderColor: 'var(--border)' }}
                 >
                     {t('cancel')}
@@ -95,7 +95,7 @@ export default function RecoveryCodeForm({ username, replacing, onCancel, onDone
                 <button
                     type="submit"
                     disabled={busy}
-                    className="flex-1 cursor-pointer rounded-lg bg-gradient-to-r from-fuchsia-500 to-violet-500 px-3 py-1.5 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                    className="button primary flex-1"
                 >
                     {t('account.recovery.createSubmit')}
                 </button>

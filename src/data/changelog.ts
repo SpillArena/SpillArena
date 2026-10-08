@@ -7,6 +7,22 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '08-10-2026',
+        title: 'Search, a new loading screen and safer accounts',
+        release: '1.7.0',
+        changes: [
+            'Search every game from the header: click the search field or press Ctrl K / ⌘K or /, then browse with the arrow keys and press Enter to play',
+            'Search finds games by name, category or topic in both Norwegian and English, so "hangman", "geografi" or "quiz" all lead somewhere',
+            'New loading screen: the tiles of the SpillArena logo light up one by one along the S while the page or a game loads',
+            'Starting a game now fades in the loading screen over a softly blurred lobby, instead of a blank page while the game loads',
+            'Signing out now also ends the session on the server, so a copied sign-in key stops working on your account',
+            'Confirming account changes with your PIN now has the same limit on wrong attempts as signing in',
+            'Added a proper "page not found" page, and tightened the security headers on the site',
+            'Faster first load: smaller favicon, fonts requested earlier, and unused images and libraries removed',
+            'MelodyRush is now listed in the sitemap and search engine data',
+        ],
+    },
+    {
         date: '07-10-2026',
         title: 'MelodyRush: playlists and a better listening experience',
         release: '1.6.1',

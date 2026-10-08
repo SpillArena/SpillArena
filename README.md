@@ -271,3 +271,7 @@ player without one takes anyway.
 ## Shared site shell
 
 The site follows the 1760px SpillArena shell, with consistent navigation, a slim footer, shared storage controls and game-specific link previews. See [site shell and branding](docs/SITE_SHELL.md).
+
+## Lobby and account design
+
+The lobby uses the cream/plum arcade design with a featured game, category filters, a game picker, and visible Changelog/version. Sign-in and profile have matching full-page views at `/#login` and `/#profile`, with registration and PIN recovery available from sign-in. See [implemented design and validation](docs/design/IMPLEMENTATION.md).

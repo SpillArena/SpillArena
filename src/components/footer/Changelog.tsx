@@ -1,9 +1,19 @@
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { changelog } from '../../data/changelog'
+import { version } from '../../../package.json'
+import Dialog from '../../ui/Dialog'
+
 export default function Changelog() {
-  return <details><summary>Changelog · v{changelog[0]?.release}</summary>
-    <ol className="mt-3 max-h-72 overflow-y-auto">{changelog.map((entry) => <li key={entry.release} className="mb-4">
-      <strong>{entry.title} · v{entry.release}</strong><span> · {entry.date}</span>
-      <ul>{entry.changes.map((change) => <li key={change}>{change}</li>)}</ul>
-    </li>)}</ol>
-  </details>
+  const [open, setOpen] = useState(false)
+  const { t } = useTranslation()
+  return <>
+    <button type="button" onClick={() => setOpen(true)}>Changelog</button><span className="version-label" aria-label={`${t('lobby.versionLabel')} ${version}`}>v{version}</span>
+    <Dialog open={open} onClose={() => setOpen(false)} title="Changelog" eyebrow={`SpillArena · v${version}`} className="changelog-dialog">
+      <p>{t('lobby.changelogIntro')}</p><ol className="release-list">{changelog.map(entry => <li key={entry.release}>
+        <div className="release-meta"><strong>v{entry.release}</strong><time dateTime={entry.date.split('-').reverse().join('-')}>{entry.date.replaceAll('-', '.')}</time></div>
+        <h3>{entry.title}</h3><ul>{entry.changes.map(change => <li key={change}>{change}</li>)}</ul>
+      </li>)}</ol>
+    </Dialog>
+  </>
 }
