@@ -636,6 +636,7 @@ export const RESERVED_NAMES: readonly string[] = [
   'hangbot',
   'helpdesk',
   'here',
+  'hitline',
   'host',
   'me',
   'melodyrush',

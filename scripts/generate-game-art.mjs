@@ -273,6 +273,14 @@ const GAMES = [
     art: () => melodyArt(),
     glyph: () => melodyGlyph(),
   },
+  {
+    id: 9, file: 'Hitline', title: ['Hit', 'line'],
+    bg: '#176b64', deep: '#082f2b', accent: '#d3f46b',
+    genre: { no: 'Musikktidslinje', en: 'Music timeline' },
+    tagline: { no: 'Kjenn igjen låten. Finn plassen i tiden.', en: 'Know the song. Find its place in time.' },
+    art: () => hitlineArt(),
+    glyph: () => g('transform="translate(46 30) scale(0.84)"', hitlineArt()),
+  },
 ]
 
 // ---- FleetBot: et brett med to skip, to treff, bom og et sikte
@@ -762,6 +770,30 @@ function melodyArt() {
 
 function melodyGlyph() {
   return vinyl(300, 220, 150, '#ea580c') + equalizer(84, 430, 46, 8, [3, 5, 4])
+}
+
+// ---- Hitline: en ukjent plate skal inn mellom to årstall
+
+function songSleeve(x, y, year, color) {
+  return tile(x, y, 128, 148, color, { r: 20, depth: 8 })
+    + vinyl(x + 64, y + 57, 42, '#176b64')
+    + text(year, FONTS.sansBold, 28, x + 64, y + 121, { fill: '#082f2b', anchor: 'middle', middle: true })
+}
+
+function hitlineArt() {
+  let out = g('transform="rotate(-8 250 160)"',
+    tile(148, 38, 204, 236, '#ff8b77', { r: 28, depth: 14 }),
+    vinyl(250, 131, 76, '#d3f46b'),
+    text('?', FONTS.serif, 57, 250, 232, { fill: '#082f2b', anchor: 'middle', middle: true }))
+  // Pil fra den ukjente platen til den ledige plassen på tidslinjen.
+  out += '<path d="M250 296V340m-12-12 12 12 12-12" fill="none" stroke="#d3f46b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>'
+  out += songSleeve(4, 356, '1976', '#fff8ed')
+  out += songSleeve(368, 356, '2013', '#d3f46b')
+  out += '<rect x="186" y="356" width="128" height="148" rx="20" fill="#fff8ed" fill-opacity="0.07" stroke="#fff8ed" stroke-opacity="0.65" stroke-width="3" stroke-dasharray="8 9"/>'
+  out += '<path d="M234 421h32m-16-16v32" stroke="#fff8ed" stroke-width="5" stroke-linecap="round"/>'
+  out += '<path d="M68 536H432" stroke="#fff8ed" stroke-opacity="0.4" stroke-width="4" stroke-linecap="round"/>'
+  for (const x of [68, 250, 432]) out += `<circle cx="${x}" cy="536" r="7" fill="#d3f46b"/>`
+  return out
 }
 
 // ---------------------------------------------------------------- bilder
