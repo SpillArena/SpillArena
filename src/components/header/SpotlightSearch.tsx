@@ -32,6 +32,7 @@ const KEYWORDS: Record<number, string> = {
   6: 'quiz bilde bildequiz film filmer spill sted dyr flagg piksler picture',
   7: 'quiz historie tidslinje årstall hendelser history timeline',
   8: 'quiz musikk sang sanger låt låter lydklipp spilleliste tiår music song',
+  9: 'hitster quiz musikk sang sanger låt låter tidslinje årstall utgivelsesår rekkefølge flerspiller music song timeline release year chronological multiplayer party solo',
 }
 
 /** Små bokstaver uten aksenter, så «ERA» finner «Era» og «e» finner «é». */

@@ -81,6 +81,8 @@ src/
 
 Games are defined in src/data/games.ts.
 
+Hitline is listed as a beta music timeline game at `/hitline/`. Its Norwegian and English posters and square icon follow the shared game artwork style. Edit `scripts/generate-game-art.mjs` and run `npm run art` to regenerate the artwork and its manifest.
+
 Each game supports:
 
 - id: number

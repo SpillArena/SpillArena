@@ -7,6 +7,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '11-10-2026',
+        title: 'Hitline joins the arena',
+        release: '1.9.0',
+        changes: [
+            'Added Hitline to the game list with a beta label - recognise the song and place it on your timeline by release year',
+            'Play solo, take turns with up to 8 players on one screen, or invite friends to an online room with a link or a six-character code',
+            'Choose all hits, classics from 1970-1999 or modern favourites from 2000-2025, and earn bonus points for naming the song and the artist',
+            'Hitline has its own Norwegian and English poster and a square game icon in the shared game art style',
+            'Search finds Hitline by words like "musikk", "tidslinje", "release year" or "party"',
+        ],
+    },
+    {
         date: '08-10-2026',
         title: 'New game art',
         release: '1.8.0',

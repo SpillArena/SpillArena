@@ -359,6 +359,7 @@
     }
   },
   "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
+  "hitlineDescription": "Hitline – kjenn igjen låten og plasser den på tidslinjen etter utgivelsesår. Spill alene, del en skjerm eller inviter venner til et rom på nett.",
   "lobby": {
     "skip": "Hopp til spillene",
     "search": {
@@ -428,7 +429,8 @@
       "5": "Hvor stort er det egentlig? Stol på øyemålet og slå klokka.",
       "6": "Bildet blir skarpere. Ser du svaret før resten av pikslene?",
       "7": "Fem historiske øyeblikk. Én riktig rekkefølge. Sett tiden på plass.",
-      "8": "Gjett poplåten fra korte lydklipp. Jo mindre du hører, jo flere poeng."
+      "8": "Gjett poplåten fra korte lydklipp. Jo mindre du hører, jo flere poeng.",
+      "9": "Kjenner du låten? Finn riktig plass etter utgivelsesår. Spill alene eller med venner."
     },
     "gameCount_one": "{{count}} spill å utforske",
     "gameCount_other": "{{count}} spill å utforske"
@@ -436,7 +438,7 @@
   "profile": {
     "backToGames": "Tilbake til spillene",
     "benefitProgress": "Fremgangen følger kontoen din",
-    "benefitGames": "Én innlogging for alle åtte spill",
+    "benefitGames": "Én innlogging i hele arenaen",
     "benefitGuest": "Du kan alltid spille som gjest",
     "guestPlay": "Spill som gjest",
     "working": "Jobber …",

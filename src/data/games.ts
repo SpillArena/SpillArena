@@ -108,6 +108,17 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/MelodyRush",
         liveUrl: "https://spillarena.no/melodyrush/",
         beta: true,
+    },
+    {
+        id: 9,
+        title: "Hitline",
+        category: "music",
+        descriptionKey: "hitlineDescription",
+        icon: "Music",
+        color: "bg-teal-700",
+        githubUrl: "https://github.com/SpillArena/Hitline",
+        liveUrl: "https://spillarena.no/hitline/",
+        beta: true,
     }
 ];
 
@@ -121,4 +132,5 @@ export const GAME_TITLES: Record<GameId, string> = {
     fleetbot: "FleetBot",
     erashuffle: "EraShuffle",
     melodyrush: "MelodyRush",
+    hitline: "Hitline",
 };

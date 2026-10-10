@@ -23,6 +23,9 @@ import EraShuffleIcon from '../assets/games/icons/EraShuffle.svg'
 import MelodyRushNo from '../assets/games/MelodyRush.no.svg'
 import MelodyRushEn from '../assets/games/MelodyRush.en.svg'
 import MelodyRushIcon from '../assets/games/icons/MelodyRush.svg'
+import HitlineNo from '../assets/games/Hitline.no.svg'
+import HitlineEn from '../assets/games/Hitline.en.svg'
+import HitlineIcon from '../assets/games/icons/Hitline.svg'
 
 export type ArtLanguage = 'no' | 'en'
 
@@ -43,4 +46,5 @@ export const gameArt: Record<number, GameArt> = {
     6: { banner: { no: PixelPanicNo, en: PixelPanicEn }, icon: PixelPanicIcon },
     7: { banner: { no: EraShuffleNo, en: EraShuffleEn }, icon: EraShuffleIcon },
     8: { banner: { no: MelodyRushNo, en: MelodyRushEn }, icon: MelodyRushIcon },
+    9: { banner: { no: HitlineNo, en: HitlineEn }, icon: HitlineIcon },
 }

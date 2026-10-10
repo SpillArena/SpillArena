@@ -359,6 +359,7 @@
     }
   },
   "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
+  "hitlineDescription": "Hitline – recognise the song and place it on your timeline by release year. Play solo, share a screen or invite friends to an online room.",
   "lobby": {
     "skip": "Skip to games",
     "search": {
@@ -428,7 +429,8 @@
       "5": "How big is it, really? Trust your eye and beat the clock.",
       "6": "The picture gets sharper. Can you see the answer before the pixels reveal it?",
       "7": "Five moments in history. One right order. Put time in its place.",
-      "8": "Guess the pop song from short clips. Less listening earns more points."
+      "8": "Guess the pop song from short clips. Less listening earns more points.",
+      "9": "Know the song? Put it in release-year order. Play solo or with friends."
     },
     "gameCount_one": "{{count}} game to explore",
     "gameCount_other": "{{count}} games to explore"
@@ -436,7 +438,7 @@
   "profile": {
     "backToGames": "Back to games",
     "benefitProgress": "Your progress follows your account",
-    "benefitGames": "One sign-in for all eight games",
+    "benefitGames": "One sign-in across the arena",
     "benefitGuest": "Guest play is always available",
     "guestPlay": "Play as a guest",
     "working": "Working …",
