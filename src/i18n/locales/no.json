@@ -427,6 +427,8 @@
     "surprise": "Overrask meg",
     "guestNote": "Gratis å spille. Ingen konto nødvendig.",
     "featured": "I rampelyset",
+    "featuredPopularity": "Mest besøkt siste 24 timer",
+    "featuredFallback": "Oppdag et spill",
     "featuredDescription": "Verden ligger for dine føtter. Hvor godt kjenner du den?",
     "play": "Spill nå",
     "loadingGame": "Starter {{title}} …",

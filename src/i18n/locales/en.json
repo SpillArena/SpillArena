@@ -427,6 +427,8 @@
     "surprise": "Surprise me",
     "guestNote": "Free to play. No account needed.",
     "featured": "In the spotlight",
+    "featuredPopularity": "Most visited in 24 hours",
+    "featuredFallback": "Discover a game",
     "featuredDescription": "The world is at your feet. How well do you know it?",
     "play": "Play now",
     "loadingGame": "Starting {{title}}…",
