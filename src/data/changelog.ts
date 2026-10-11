@@ -8,6 +8,16 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '11-10-2026',
+        title: 'FleetBot: refreshed naval artwork',
+        release: '1.9.2',
+        changes: [
+            'Updated the Norwegian and English FleetBot posters with the game\'s own ship silhouettes, a naval grid, hit markers and a targeting reticle',
+            'Refreshed the FleetBot icon with a battleship and yellow targeting ring in the game\'s dark blue naval palette',
+            'Matched the lobby artwork to FleetBot\'s latest game artwork and link preview images',
+        ],
+    },
+    {
+        date: '11-10-2026',
         title: 'Hitline cover refresh',
         release: '1.9.1',
         changes: [
