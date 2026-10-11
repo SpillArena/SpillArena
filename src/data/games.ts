@@ -7,6 +7,7 @@ export type Game = {
     id: number;
     title: string;
     category: GameCategory;
+    multiplayer?: boolean;
     descriptionKey: string;
     icon: string; // Lucide-ikonnavn (PascalCase)
     color: string;
@@ -31,6 +32,7 @@ export const games: Game[] = [
         id: 1,
         title: "FleetBot",
         category: "strategy",
+        multiplayer: true,
         descriptionKey: "fleetBotDescription",
         icon: "Anchor",
         color: "bg-blue-600",
@@ -41,6 +43,7 @@ export const games: Game[] = [
         id: 2,
         title: "HangBot",
         category: "words",
+        multiplayer: true,
         descriptionKey: "hangBotDescription",
         icon: "Type",
         color: "bg-red-500",
@@ -102,6 +105,7 @@ export const games: Game[] = [
         id: 8,
         title: "MelodyRush",
         category: "music",
+        multiplayer: true,
         descriptionKey: "melodyRushDescription",
         icon: "Music",
         color: "bg-orange-600",
@@ -113,6 +117,7 @@ export const games: Game[] = [
         id: 9,
         title: "Hitline",
         category: "music",
+        multiplayer: true,
         descriptionKey: "hitlineDescription",
         icon: "Music",
         color: "bg-teal-700",
