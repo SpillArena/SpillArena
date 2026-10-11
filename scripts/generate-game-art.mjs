@@ -212,10 +212,10 @@ const GAMES = [
   },
   {
     id: 2, file: 'HangBot', title: ['Hang', 'Bot'],
-    bg: '#dc2626', deep: '#450a0a', accent: '#fde68a',
-    genre: { no: 'Ordspill', en: 'Word game' },
-    tagline: { no: 'Knekk ordet før gjetningene tar slutt.', en: 'Crack the word before your guesses run out.' },
-    word: { no: ['S', 'P', '?', 'L', 'L'], en: ['G', 'A', '?', 'E', 'S'] },
+    bg: '#20262e', deep: '#101419', accent: '#b9ee64', ink: '#f5f7f0',
+    genre: { no: 'Ordspill · alene / venner', en: 'Word game · solo / friends' },
+    tagline: { no: 'Gjett ordet før tegningen er ferdig.', en: 'Guess the word before the drawing is done.' },
+    word: { no: ['S', 'P', '?', 'L', 'L'], en: ['W', 'O', '?', 'D', 'S'] },
     art: (lang, game) => hangArt(game.word[lang], game),
     glyph: (game) => hangGlyph(game),
   },
@@ -287,49 +287,74 @@ const GAMES = [
   },
 ]
 
-// ---- HangBot: boten, livene, ordet og brukte bokstaver
+// ---- HangBot: håndtegnet galge, en liten bot og bokstavbrikker
 
-function botFace(x, y, w, h, face, eye) {
-  return tile(x, y, w, h, face, { r: w * 0.22 })
-    + `<path d="M${r1(x + w / 2)} ${r1(y)}V${r1(y - h * 0.18)}" stroke="${face}" stroke-width="${r1(w * 0.04)}" stroke-linecap="round"/>`
-    + `<circle cx="${r1(x + w / 2)}" cy="${r1(y - h * 0.22)}" r="${r1(w * 0.06)}" fill="#fde68a"/>`
-    + tile(x + w * 0.2, y + h * 0.3, w * 0.18, w * 0.18, eye, { depth: 0, gloss: false })
-    + tile(x + w * 0.62, y + h * 0.3, w * 0.18, w * 0.18, eye, { depth: 0, gloss: false })
-    + `<rect x="${r1(x + w * 0.3)}" y="${r1(y + h * 0.7)}" width="${r1(w * 0.4)}" height="${r1(h * 0.08)}" rx="${r1(h * 0.04)}" fill="${eye}"/>`
+/** Static counterpart of HangBot's current BotMascot: keep its face and proportions. */
+function hangHead() {
+  return `<path d="M120 46V25" stroke="#b9ee64" stroke-width="7" stroke-linecap="round"/>
+<circle cx="120" cy="20" r="9" fill="#b9ee64"/>
+<rect x="28" y="81" width="20" height="42" rx="9" fill="#b9ee64"/>
+<rect x="192" y="81" width="20" height="42" rx="9" fill="#b9ee64"/>
+<rect x="42" y="45" width="156" height="116" rx="37" fill="#2c353b" stroke="#b9ee64" stroke-width="3"/>
+<rect x="57" y="63" width="126" height="74" rx="24" fill="#141c21"/>
+<g stroke="#b9ee64" stroke-width="7" stroke-linecap="round" fill="none"><path d="M78 98q8-16 17 0M145 98q8-16 17 0"/><path d="M107 113q13 13 26 0" stroke-width="4"/></g>
+<path d="M66 53h38" stroke="#fff" stroke-opacity=".18" stroke-width="3" stroke-linecap="round"/>`
+}
+
+function hangMascot() {
+  return `<ellipse cx="120" cy="238" rx="65" ry="9" fill="#000" opacity=".24"/>`
+    + hangHead()
+    + `<path d="M91 160v12h58v-12" fill="#b9ee64" opacity=".7"/>
+<rect x="72" y="171" width="96" height="48" rx="20" fill="#2c353b" stroke="#b9ee64" stroke-width="3"/>
+<g stroke="#b9ee64" stroke-width="12" stroke-linecap="round" fill="none"><path d="M90 219v9m60-9v9"/><path d="M169 184q24 5 30-15M71 186q-20 8-26-2"/></g>
+<path d="M115 185h10l-6 10h8l-13 13 4-12h-8z" fill="#b9ee64"/>`
+}
+
+/** Same hand-drawn paths as HangBot's Gallows; one stroke left, like the reference. */
+function hangDrawing() {
+  const frame = [
+    'M10 208Q58 205 106 208.5',
+    'M38 208Q35.5 112 38 18',
+    'M38 18Q84 15.5 130 18.5',
+    'M38 48Q51 33 65 20',
+    'M130 18.5Q131.5 34 130 50',
+  ]
+  const body = [
+    'M130 50C138.5 50 146 56.5 146 64.5C146 73 139 79.5 130 79.5C121 79.5 114 72.5 114 64.5C114 56 121.5 50 130 50',
+    'M130 79.5Q127.5 108 130 136',
+    'M130 93Q117 105 105 119',
+    'M130 93Q143 105 155 118',
+    'M130 136Q118 156 107 176',
+  ]
+  return `<g fill="none" stroke-linecap="round" stroke-linejoin="round">`
+    + frame.map((d) => `<path d="${d}" stroke="#81909a" stroke-width="3.5"/>`).join('')
+    + body.map((d) => `<path d="${d}" stroke="#b9ee64" stroke-width="4.5"/>`).join('')
+    + '</g>'
 }
 
 function hangArt(word, game) {
-  const ink = shade(game.bg, 0.55)
-  let out = botFace(165, 40, 170, 140, '#fff1f2', ink)
-  // seks liv, to brukt
-  for (let i = 0; i < 6; i++) out += tile(130 + i * 42, 212, 30, 30, i < 4 ? game.accent : '#ffffff', { opacity: i < 4 ? 1 : 0.22, depth: 3 })
-  // ordet
+  let out = g('transform="translate(50 -8) scale(1.48)"', hangDrawing())
+  // The mascot cheers from the side, leaving the drawing as the main illustration.
+  out += g('transform="translate(330 151) scale(.55)"', hangMascot())
   const w = 84, gap = 14, start = (500 - (5 * w + 4 * gap)) / 2
   word.forEach((letter, i) => {
-    const x = start + i * (w + gap)
-    const blank = letter === '?'
-    out += tile(x, 282, w, 98, blank ? tint(game.bg, 0.25) : '#fff7ed')
-    out += text(letter, FONTS.serif, 56, x + w / 2, 282 + 49, { fill: blank ? game.accent : ink, anchor: 'middle', middle: true })
+    const x = start + i * (w + gap), blank = letter === '?'
+    out += tile(x, 346, w, 90, blank ? '#2c353b' : game.accent, { r: 20, depth: 7, gloss: !blank })
+    if (blank) out += `<path d="M${x + 24} 406h36" stroke="${game.accent}" stroke-width="4" stroke-linecap="round"/>`
+    else out += text(letter, FONTS.sansBold, 52, x + w / 2, 391, { fill: '#152006', anchor: 'middle', middle: true })
   })
-  // brukte bokstaver
   const rack = ['A', 'E', 'I', 'O', 'R', 'T', 'N']
   rack.forEach((letter, i) => {
-    const x = 37 + i * 62, used = i % 3 === 1
-    out += tile(x, 430, 50, 50, '#ffffff', { opacity: used ? 0.12 : 0.24, depth: 0, gloss: false })
-    out += text(letter, FONTS.sansBold, 22, x + 25, 455, { fill: '#fff', anchor: 'middle', middle: true, opacity: used ? 0.35 : 0.9 })
+    const x = 37 + i * 62, missed = i === 0 || i === 1, hit = word.includes(letter)
+    out += tile(x, 476, 50, 44, missed ? '#533239' : hit ? game.accent : '#303840', { r: 12, depth: 4, gloss: false })
+    out += text(letter, FONTS.sansBold, 19, x + 25, 498, { fill: missed ? '#f59391' : hit ? '#152006' : '#b1b8c2', anchor: 'middle', middle: true })
+    if (missed) out += `<path d="M${x + 13} 506l24-16" stroke="#f59391" stroke-width="2" stroke-linecap="round"/>`
   })
   return out
 }
 
-function hangGlyph(game) {
-  const ink = shade(game.bg, 0.55)
-  let out = botFace(161, 96, 190, 156, '#fff1f2', ink)
-  ;['A', '?', 'E'].forEach((letter, i) => {
-    const x = 96 + i * 112, blank = letter === '?'
-    out += tile(x, 300, 96, 112, blank ? tint(game.bg, 0.25) : '#fff7ed')
-    out += text(letter, FONTS.serif, 66, x + 48, 356, { fill: blank ? game.accent : ink, anchor: 'middle', middle: true })
-  })
-  return out
+function hangGlyph() {
+  return g('transform="translate(85 30) scale(1.9)"', hangDrawing())
 }
 
 // ---- ScribbleBot: et ark med en krusedull, en blyant og en gjetning
@@ -861,8 +886,12 @@ ${game.glyph(game)}
 // ---------------------------------------------------------------- skriv
 
 mkdirSync(join(OUT, 'icons'), { recursive: true })
+const filterIndex = process.argv.indexOf('--game')
+const onlyGame = filterIndex === -1 ? null : process.argv[filterIndex + 1]
+if (filterIndex !== -1 && !GAMES.some((game) => game.file === onlyGame)) throw new Error('Unknown --game name')
+const selected = onlyGame ? GAMES.filter((game) => game.file === onlyGame) : GAMES
 const manifest = []
-for (const game of GAMES) {
+for (const game of selected) {
   // Keep FleetBot's current posters exactly as exported by its own repository.
   for (const lang of LANGS) writeFileSync(join(OUT, `${game.file}.${lang}.svg`),
     game.file === 'FleetBot'
@@ -878,7 +907,7 @@ const imports = manifest.flatMap((game) => [
 ])
 const entries = manifest.map((game) => `    ${game.id}: { banner: { no: ${game.file}No, en: ${game.file}En }, icon: ${game.file}Icon },`)
 
-writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs — kjør \`npm run art\` i stedet for å endre her.
+if (!onlyGame) writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs — kjør \`npm run art\` i stedet for å endre her.
 ${imports.join('\n')}
 
 export type ArtLanguage = 'no' | 'en'
@@ -896,4 +925,4 @@ ${entries.join('\n')}
 }
 `)
 
-console.log(`Skrev ${manifest.length * 3} bilder og src/data/game-art.ts`)
+console.log(`Skrev ${manifest.length * 3} bilder${onlyGame ? ` for ${onlyGame}` : ' og src/data/game-art.ts'}`)

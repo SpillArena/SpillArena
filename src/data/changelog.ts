@@ -8,6 +8,18 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '11-10-2026',
+        title: 'HangBot: a new look and choose-a-word challenges',
+        release: '1.9.3',
+        changes: [
+            'Redesigned HangBot with a charcoal and lime palette, a hand-drawn hangman figure, a talking bot companion and smooth transitions',
+            'Added a multiplayer mode where one player chooses a secret word and an optional hint while the others race to guess it',
+            'Moved the XP overview to the bottom of the start screen',
+            'Updated the Norwegian and English posters with the hangman drawing as the main illustration, a small bot beside it and letter tiles in the shared SpillArena style',
+            'Refreshed the square game icon with the same gallows illustration and removed remaining-chance ticks from the artwork',
+        ],
+    },
+    {
+        date: '11-10-2026',
         title: 'FleetBot: a new naval look',
         release: '1.9.2',
         changes: [
