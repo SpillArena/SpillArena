@@ -7,6 +7,17 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '12-10-2026',
+        title: 'The lobby spotlights the most visited game',
+        release: '1.10.0',
+        changes: [
+            'The "In the spotlight" card now shows the most visited game of the last 24 hours, with its own poster, description and beta label',
+            'The lobby checks the ranking once a minute while open and again when you return to the tab',
+            'If popularity data is missing or unavailable, the card shows a neutral "Discover a game" label instead of claiming a most popular game',
+            'Popularity counts game page loads only - no extra tracking, and no visitor details are shared',
+        ],
+    },
+    {
         date: '11-10-2026',
         title: 'HangBot: a new look and choose-a-word challenges',
         release: '1.9.3',
