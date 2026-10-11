@@ -23,8 +23,36 @@ export type AdminErrorCode =
     | 'unknown_game'
     | 'service_failed'
     | 'unreachable'
+    | 'bad_period'
+    | 'analytics_denied'
+    | 'analytics_rate_limited'
+    | 'analytics_failed'
 
 export type AdminResult<T> = { ok: true; data: T } | { ok: false; error: AdminErrorCode }
+
+export type TrafficDays = 1 | 7 | 30
+export type TrafficResponse = { configured: false } | TrafficData
+export interface TrafficData {
+    configured: true
+    source: 'cloudflare-zone'
+    days: TrafficDays
+    from: string
+    to: string
+    fetchedAt: string
+    totals: {
+        visitors: number
+        requests: number
+        pageViews: number
+        bytes: number
+        cachedRequests: number
+        threats: number
+        clientErrors: number
+        serverErrors: number
+    }
+    daily: { date: string; requests: number; visitors: number }[]
+    countries: { country: string; requests: number }[]
+    statuses: { status: number; requests: number }[]
+}
 
 export interface LogEntry {
     id: number

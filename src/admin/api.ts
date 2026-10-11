@@ -9,6 +9,8 @@ import type {
     PlayerFilter,
     PlayerPage,
     PlayerSort,
+    TrafficDays,
+    TrafficResponse,
 } from './types'
 
 /**
@@ -63,6 +65,10 @@ const playerPath = (username: string) => `/admin/player?u=${encodeURIComponent(u
 
 export function fetchOverview(): Promise<AdminResult<AdminOverview>> {
     return call<AdminOverview>('/admin')
+}
+
+export function fetchTraffic(days: TrafficDays): Promise<AdminResult<TrafficResponse>> {
+    return call<TrafficResponse>(`/admin/traffic?days=${days}`)
 }
 
 export function fetchPlayers(options: {

@@ -195,7 +195,8 @@
     "tabs": {
       "overview": "Overview",
       "players": "Players",
-      "log": "Log"
+      "log": "Log",
+      "traffic": "Traffic"
     },
     "loading": "Loading…",
     "retry": "Try again",
@@ -317,7 +318,6 @@
       "remove": "Remove",
       "removeAll": "Remove all",
       "none": "No leaderboard entries.",
-      "fleetbot": "FleetBot keeps its leaderboard in its own database and isn't included.",
       "dailyNote": "Removing today's row in Proportion Panic or Pixel Panic lets the player play today again."
     },
     "log": {
@@ -355,7 +355,50 @@
       "target_banned": "Unban the player first.",
       "unknown_game": "Unknown game.",
       "service_failed": "The service did not answer as expected.",
-      "unreachable": "Could not reach the service."
+      "unreachable": "Could not reach the service.",
+      "bad_period": "Invalid time period.",
+      "analytics_denied": "Cloudflare access was denied. Check the server API token permissions and zone ID.",
+      "analytics_rate_limited": "Cloudflare is limiting requests. Wait a moment and try again.",
+      "analytics_failed": "Could not fetch Cloudflare analytics. Check the connection, token permissions and available history."
+    },
+    "traffic": {
+      "title": "Traffic on spillarena.no",
+      "source": "Cloudflare · the entire domain, including games and subdomains",
+      "period": "Time period",
+      "periods": {
+        "1": "Today",
+        "7": "7 days",
+        "30": "30 days"
+      },
+      "updated": "Fetched {{time}} · refreshes every minute",
+      "refresh": "Refresh",
+      "stale": "Showing the last fetched figures.",
+      "setupTitle": "Connect Cloudflare analytics",
+      "setupBody": "The traffic panel is ready, but the server connection needs configuring. See “Admin traffic analytics” in the README.",
+      "openCloudflare": "Open Cloudflare",
+      "metrics": {
+        "visitors": "Unique IPs",
+        "requests": "Requests",
+        "pageViews": "Page views",
+        "bytes": "Data transfer",
+        "cache": "Requests from cache",
+        "threats": "Threats recorded",
+        "clientErrors": "Client errors (4xx)",
+        "serverErrors": "Server errors (5xx)"
+      },
+      "measurementNote": "Cloudflare measures traffic through the domain, including bots, API calls and files. Unique IPs are an estimate, not a count of people or signed-in players.",
+      "chartTitle": "Requests per day",
+      "chartLabel": "Requests per day, {{count}} total",
+      "empty": "No traffic recorded in this period.",
+      "periodNote": "UTC calendar days, including today. Today is incomplete, and Cloudflare data may be delayed.",
+      "showDaily": "Show daily figures",
+      "date": "Date",
+      "countries": "Top 10 countries",
+      "byRequests": "Ranked by request count",
+      "health": "Cache and errors",
+      "showStatuses": "Show HTTP status codes",
+      "tor": "Tor network",
+      "unknownCountry": "Unknown country"
     }
   },
   "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
