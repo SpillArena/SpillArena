@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test:admin": "node --test tests/admin-traffic.test.mjs",
     "preview": "vite preview",
     "art": "node scripts/generate-game-art.mjs"
   },

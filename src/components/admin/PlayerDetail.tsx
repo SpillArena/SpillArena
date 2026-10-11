@@ -441,7 +441,7 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                     </table>
                 )}
                 <Muted className="mt-3 text-xs">
-                    {t('admin.boards.fleetbot')} {t('admin.boards.dailyNote')}
+                    {t('admin.boards.dailyNote')}
                 </Muted>
             </section>
 

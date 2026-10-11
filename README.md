@@ -57,6 +57,33 @@ npm run preview
 - npm run lint: Run ESLint
 - npm run preview: Preview production build locally
 
+## Admin traffic analytics
+
+The admin panel's **Traffic** tab reads existing Cloudflare zone analytics via
+`GET /api/admin/traffic?days=1|7|30`. Every request verifies the signed-in account
+and its current admin flag. The Cloudflare credential never reaches the browser.
+The report refreshes once per minute while the tab is visible, and includes
+unique IP estimates, requests, page views, bytes, daily traffic, countries,
+cache usage and HTTP errors. Periods are UTC calendar days including today.
+Period-wide unique IPs are queried separately rather than summed across days.
+Zone traffic includes bots, API calls, files and proxied subdomains; it is not a
+count of human players. No additional tracking script is installed.
+
+`CLOUDFLARE_ZONE_ID` is configured in `wrangler.toml`. Create a dedicated read-only
+Analytics API token scoped to SpillArena's zone/account, following
+[Cloudflare's Analytics token instructions](https://developers.cloudflare.com/analytics/graphql-api/getting-started/authentication/api-token-auth/).
+Add it as the **CLOUDFLARE_ANALYTICS_TOKEN** secret in the `spillarena` Pages
+project (Settings → Variables and Secrets). Apply it to production and any
+preview environment that needs the report. Redeploy after configuring it.
+Do not use a `VITE_` variable for the token. Available history depends on the
+zone's Cloudflare plan; provider failures are displayed instead of fabricated
+zeroes. The 1/7/30-day queries were verified against SpillArena's Free zone.
+
+For local Pages Functions development, put `CLOUDFLARE_ANALYTICS_TOKEN` and
+`AUTH_SECRET` in the ignored `.dev.vars` file, use the local D1 migrations,
+and serve the build with Pages Functions. Plain `npm run dev` serves the frontend
+only. Without the analytics secret, the Traffic tab shows setup instructions.
+
 ## Project Structure
 
 ```text

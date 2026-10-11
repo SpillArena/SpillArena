@@ -64,8 +64,9 @@ export function targetOf(request) {
  * Ledertavlene som ligger i denne databasen, og hvordan en konto kjennes igjen
  * i hver av dem.
  *
- * FleetBot er ikke med: den har sin egen database (se wrangler.toml), og
- * herfra kan den verken leses eller ryddes.
+ * FleetBot er med fra migrasjon 0012. Tavla skrives av Workeren
+ * `fleetbot-rooms`, ikke av nettleseren, men den ligger her og ryddes herfra
+ * som de andre.
  *
  * `match` tar kontonavnet som ?1. De tre første tavlene har navnet i en
  * kolonne; de to daglige har `account:<navn>` i client_id, mens en gjest har
@@ -93,6 +94,13 @@ export const BOARDS = [
   {
     game: 'hangbot',
     table: 'hangbot_leaderboard',
+    match: 'username = ?1 COLLATE NOCASE',
+    score: 'score',
+    at: 'timestamp',
+  },
+  {
+    game: 'fleetbot',
+    table: 'fleetbot_leaderboard',
     match: 'username = ?1 COLLATE NOCASE',
     score: 'score',
     at: 'timestamp',

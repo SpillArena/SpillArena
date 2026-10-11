@@ -1,13 +1,104 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="FleetBot">
-<title>FleetBot</title>
-<defs>
-<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#326cec"/><stop offset="1" stop-color="#1c3d8d"/></linearGradient>
-<radialGradient id="glow" cx="0.72" cy="0.42" r="0.55"><stop offset="0" stop-color="#fff" stop-opacity="0.2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2" fill="#ffffff" fill-opacity="0.12"/></pattern>
-</defs>
-<rect width="512" height="512" rx="112" fill="url(#bg)"/>
-<rect width="512" height="512" rx="112" fill="url(#glow)"/>
-<rect width="512" height="512" rx="112" fill="url(#dots)"/>
-<rect x="3" y="3" width="506" height="506" rx="109" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="6"/>
-<g transform="translate(76 76)"><rect x="0" y="0" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="122" y="0" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="244" y="0" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="0" y="122" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="122" y="122" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="244" y="122" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="0" y="244" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="122" y="244" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><rect x="244" y="244" width="104" height="104" rx="28.1" fill="#fff" fill-opacity="0.1"/><g><rect x="0" y="132.4" width="104" height="104" rx="28.1" fill="#6f7f93"/><rect x="0" y="122" width="104" height="104" rx="28.1" fill="#bfdbfe"/><rect x="10.4" y="129.3" width="83.2" height="31.2" rx="15.6" fill="#fff" fill-opacity="0.22"/></g><g><rect x="122" y="132.4" width="104" height="104" rx="28.1" fill="#925523"/><rect x="122" y="122" width="104" height="104" rx="28.1" fill="#fb923c"/><rect x="132.4" y="129.3" width="83.2" height="31.2" rx="15.6" fill="#fff" fill-opacity="0.22"/></g><path d="M153.2 153.2L194.8 194.8M194.8 153.2L153.2 194.8" stroke="#fff" stroke-width="11.4" stroke-linecap="round"/><circle cx="296" cy="52" r="18.7" fill="none" stroke="#fff" stroke-opacity="0.55" stroke-width="7.3"/><g stroke="#fde047" stroke-width="8.3" stroke-linecap="round" fill="none"><circle cx="296" cy="296" r="74.9"/><path d="M296 195.1V241.9M296 350.1V396.9M195.1 296H241.9M350.1 296H396.9"/></g></g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="FleetBot"><title>FleetBot</title><style>.ship-hull {
+  fill: #8e999f;
+  stroke: #232b31;
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+.ship-flightdeck {
+  fill: #4a5258;
+}
+.ship-teak {
+  fill: #b49b74;
+}
+.ship-tower {
+  fill: #a9b3b9;
+  stroke: #232b31;
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+.ship-mast {
+  fill: #5c666c;
+}
+.ship-funnel {
+  fill: #5c666c;
+  stroke: #1d2328;
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+.ship-turret {
+  fill: #8e999f;
+  stroke: #232b31;
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+.ship-gun {
+  fill: #5c666c;
+}
+.ship-vls {
+  fill: #4a5258;
+}
+.ship-hatch {
+  fill: #5c666c;
+}
+.ship-helideck {
+  fill: #4a5258;
+}
+.ship-elevator {
+  fill: #353c42;
+}
+.ship-mark {
+  fill: none;
+  stroke: #eef2f4;
+  vector-effect: non-scaling-stroke;
+}
+.ship-mark-dash {
+  stroke-width: 1.2;
+  stroke-dasharray: 6 5;
+}
+.ship-mark-thin {
+  stroke-width: 0.7;
+  opacity: 0.8;
+}
+.ship-mark-cat {
+  stroke: #e9c84a;
+  stroke-width: 0.9;
+}
+.ship-jet {
+  fill: #9aa4ab;
+  stroke: #2a3137;
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+}
+.ship-jet-line {
+  fill: none;
+  stroke: #4b545b;
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+.ship-canopy {
+  fill: #c9a43c;
+}
+.ship-dome {
+  fill: #d3d9dd;
+  stroke: #2a3137;
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+}
+.ship-sub,
+.ship-sub-rudder {
+  fill: #1b2024;
+  stroke: #000;
+}
+.ship-sub-ridge {
+  stroke: #3b444b;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.ship-sail {
+  fill: #2a3238;
+  stroke: #000;
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
+</style><rect width="512" height="512" rx="112" fill="#06121e"/><rect x="20" y="20" width="472" height="472" rx="94" fill="#0c3753" stroke="#2a5878" stroke-width="3"/><path d="M128 35v442M35 128h442" stroke="#8ba5b9" stroke-opacity=".16" fill="none"/><path d="M256 35v442M35 256h442" stroke="#8ba5b9" stroke-opacity=".16" fill="none"/><path d="M384 35v442M35 384h442" stroke="#8ba5b9" stroke-opacity=".16" fill="none"/><circle cx="256" cy="256" r="160" fill="none" stroke="#ffb703" stroke-width="10"/><path d="M256 69v58M256 385v58M69 256h58M385 256h58" stroke="#ffb703" stroke-width="10"/><svg x="96" y="215" width="320" height="80" viewBox="0 0 400 100" aria-hidden="true"><g class="ship ship-battleship"><path d="M14 50Q14 31 42 28L292 25Q362 29 396 50Q362 71 292 75L42 72Q14 69 14 50Z" class="ship-hull"></path><path d="M24 50Q24 36 46 34L290 32Q350 35 380 50Q350 65 290 68L46 66Q24 64 24 50Z" class="ship-teak"></path><path d="M150 38L232 36L240 50L232 64L150 62Z" class="ship-tower"></path><ellipse cx="172" cy="50" rx="11" ry="8" class="ship-funnel"></ellipse><ellipse cx="208" cy="50" rx="10" ry="7.5" class="ship-funnel"></ellipse><circle cx="246" cy="50" r="7" class="ship-mast"></circle><g transform="translate(150 32) scale(1 1)"><rect x="2.6999999999999997" y="-2.6100000000000003" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><rect x="2.6999999999999997" y="1.3499999999999999" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><path d="M4.95 -3.78L4.95 3.78L-3.15 4.5Q-5.58 0 -3.15 -4.5Z" class="ship-turret"></path></g><g transform="translate(150 68) scale(1 1)"><rect x="2.6999999999999997" y="-2.6100000000000003" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><rect x="2.6999999999999997" y="1.3499999999999999" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><path d="M4.95 -3.78L4.95 3.78L-3.15 4.5Q-5.58 0 -3.15 -4.5Z" class="ship-turret"></path></g><g transform="translate(182 32) scale(1 1)"><rect x="2.6999999999999997" y="-2.6100000000000003" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><rect x="2.6999999999999997" y="1.3499999999999999" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><path d="M4.95 -3.78L4.95 3.78L-3.15 4.5Q-5.58 0 -3.15 -4.5Z" class="ship-turret"></path></g><g transform="translate(182 68) scale(1 1)"><rect x="2.6999999999999997" y="-2.6100000000000003" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><rect x="2.6999999999999997" y="1.3499999999999999" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><path d="M4.95 -3.78L4.95 3.78L-3.15 4.5Q-5.58 0 -3.15 -4.5Z" class="ship-turret"></path></g><g transform="translate(214 32) scale(1 1)"><rect x="2.6999999999999997" y="-2.6100000000000003" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><rect x="2.6999999999999997" y="1.3499999999999999" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><path d="M4.95 -3.78L4.95 3.78L-3.15 4.5Q-5.58 0 -3.15 -4.5Z" class="ship-turret"></path></g><g transform="translate(214 68) scale(1 1)"><rect x="2.6999999999999997" y="-2.6100000000000003" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><rect x="2.6999999999999997" y="1.3499999999999999" width="11.25" height="1.2600000000000002" rx="0.45" class="ship-gun"></rect><path d="M4.95 -3.78L4.95 3.78L-3.15 4.5Q-5.58 0 -3.15 -4.5Z" class="ship-turret"></path></g><g transform="translate(318 50) scale(1 1)"><rect x="7.199999999999999" y="-8.879999999999999" width="30" height="3.3600000000000003" rx="1.2000000000000002" class="ship-gun"></rect><rect x="7.199999999999999" y="-1.6800000000000002" width="30" height="3.3600000000000003" rx="1.2000000000000002" class="ship-gun"></rect><rect x="7.199999999999999" y="5.52" width="30" height="3.3600000000000003" rx="1.2000000000000002" class="ship-gun"></rect><path d="M13.200000000000001 -10.08L13.200000000000001 10.08L-8.399999999999999 12Q-14.879999999999999 0 -8.399999999999999 -12Z" class="ship-turret"></path></g><g transform="translate(276 50) scale(1 1)"><rect x="7.5" y="-9.25" width="31.25" height="3.5000000000000004" rx="1.25" class="ship-gun"></rect><rect x="7.5" y="-1.7500000000000002" width="31.25" height="3.5000000000000004" rx="1.25" class="ship-gun"></rect><rect x="7.5" y="5.75" width="31.25" height="3.5000000000000004" rx="1.25" class="ship-gun"></rect><path d="M13.750000000000002 -10.5L13.750000000000002 10.5L-8.75 12.5Q-15.5 0 -8.75 -12.5Z" class="ship-turret"></path></g><g transform="translate(100 50) scale(-1 1)"><rect x="7.5" y="-9.25" width="31.25" height="3.5000000000000004" rx="1.25" class="ship-gun"></rect><rect x="7.5" y="-1.7500000000000002" width="31.25" height="3.5000000000000004" rx="1.25" class="ship-gun"></rect><rect x="7.5" y="5.75" width="31.25" height="3.5000000000000004" rx="1.25" class="ship-gun"></rect><path d="M13.750000000000002 -10.5L13.750000000000002 10.5L-8.75 12.5Q-15.5 0 -8.75 -12.5Z" class="ship-turret"></path></g></g></svg></svg>

@@ -14,7 +14,8 @@
  *
  * FORMSPRÅKET er brikkene fra logoen: avrundede kvadrater med en mørkere sokkel
  * under og en lys glans øverst. Hvert spill har sin egen farge; illustrasjonen
- * til høyre bygges av de samme brikkene.
+ * til høyre bygges av de samme brikkene. FleetBot bruker skipene fra spillet,
+ * men beholder samme banneroppsett og typografi som de andre spillene.
  */
 
 import opentype from 'opentype.js'
@@ -201,11 +202,13 @@ function logoMark(x, y, size) {
 const GAMES = [
   {
     id: 1, file: 'FleetBot', title: ['Fleet', 'Bot'],
-    bg: '#2563eb', deep: '#172554', accent: '#fde047',
-    genre: { no: 'Strategi · mot bot', en: 'Strategy · vs bot' },
-    tagline: { no: 'Plasser flåten. Les boten. Senk alt.', en: 'Place your fleet. Read the bot. Sink it all.' },
-    art: () => fleetBoard(6, 62, 12, true),
-    glyph: () => g('transform="translate(76 76)"', fleetBoard(3, 104, 18, false)),
+    bg: '#0c3753', deep: '#06121e', accent: '#ffb703',
+    genre: { no: 'Strategi · bot / online', en: 'Strategy · bot / online' },
+    tagline: { no: 'Finn flåten deres før de finner din.', en: 'Find their fleet before they find yours.' },
+    // Exported by FleetBot's npm run art -- --spillarena ../../SpillArena.
+    // Local copies keep this repository's art build independent of FleetBot.
+    art: () => readFileSync(join(ROOT, 'scripts/art/fleetbot-board.svg'), 'utf8'),
+    icon: () => readFileSync(join(ROOT, 'scripts/art/fleetbot-icon.svg'), 'utf8'),
   },
   {
     id: 2, file: 'HangBot', title: ['Hang', 'Bot'],
@@ -283,39 +286,6 @@ const GAMES = [
     glyph: () => hitlineGlyph(),
   },
 ]
-
-// ---- FleetBot: et brett med to skip, to treff, bom og et sikte
-
-function fleetBoard(n, cell, gap, full) {
-  const step = cell + gap
-  const at = (c) => c * step
-  let out = ''
-  for (let row = 0; row < n; row++) for (let col = 0; col < n; col++) out += slot(at(col), at(row), cell)
-  const ship = '#bfdbfe'
-  const hit = '#fb923c'
-  const cross = (col, row) => {
-    const cx = at(col) + cell / 2, cy = at(row) + cell / 2, k = cell * 0.2
-    return `<path d="M${r1(cx - k)} ${r1(cy - k)}L${r1(cx + k)} ${r1(cy + k)}M${r1(cx + k)} ${r1(cy - k)}L${r1(cx - k)} ${r1(cy + k)}" stroke="#fff" stroke-width="${r1(cell * 0.11)}" stroke-linecap="round"/>`
-  }
-  const miss = (col, row) => `<circle cx="${r1(at(col) + cell / 2)}" cy="${r1(at(row) + cell / 2)}" r="${r1(cell * 0.18)}" fill="none" stroke="#fff" stroke-opacity="0.55" stroke-width="${r1(cell * 0.07)}"/>`
-  const sight = (col, row) => {
-    const cx = at(col) + cell / 2, cy = at(row) + cell / 2, rr = cell * 0.72, w = r1(cell * 0.08)
-    return `<g stroke="#fde047" stroke-width="${w}" stroke-linecap="round" fill="none"><circle cx="${r1(cx)}" cy="${r1(cy)}" r="${r1(rr)}"/><path d="M${r1(cx)} ${r1(cy - rr - cell * 0.25)}V${r1(cy - rr + cell * 0.2)}M${r1(cx)} ${r1(cy + rr - cell * 0.2)}V${r1(cy + rr + cell * 0.25)}M${r1(cx - rr - cell * 0.25)} ${r1(cy)}H${r1(cx - rr + cell * 0.2)}M${r1(cx + rr - cell * 0.2)} ${r1(cy)}H${r1(cx + rr + cell * 0.25)}"/></g>`
-  }
-  if (full) {
-    // langt skip på rad 1, kort skip loddrett i kolonne 4
-    for (const col of [1, 2, 3, 4]) out += tile(at(col), at(1), cell, cell, col === 2 ? hit : ship)
-    out += cross(2, 1)
-    for (const row of [3, 4, 5]) out += tile(at(4), at(row), cell, cell, row === 4 ? hit : ship)
-    out += cross(4, 4)
-    out += miss(0, 4) + miss(2, 3) + miss(5, 0) + miss(1, 5)
-    out += sight(2, 4)
-    return g(`transform="translate(34 44) rotate(-5 ${r1(at(n) / 2)} ${r1(at(n) / 2)})"`, out)
-  }
-  out += tile(at(0), at(1), cell, cell, ship) + tile(at(1), at(1), cell, cell, hit) + cross(1, 1)
-  out += miss(2, 0) + sight(2, 2)
-  return out
-}
 
 // ---- HangBot: boten, livene, ordet og brukte bokstaver
 
@@ -877,6 +847,7 @@ ${body}
 }
 
 function icon(game) {
+  if (game.icon) return game.icon()
   const S = 512
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${S} ${S}" width="${S}" height="${S}" role="img" aria-label="${game.title.join('')}">
 <title>${game.title.join('')}</title>
@@ -892,7 +863,11 @@ ${game.glyph(game)}
 mkdirSync(join(OUT, 'icons'), { recursive: true })
 const manifest = []
 for (const game of GAMES) {
-  for (const lang of LANGS) writeFileSync(join(OUT, `${game.file}.${lang}.svg`), banner(game, lang))
+  // Keep FleetBot's current posters exactly as exported by its own repository.
+  for (const lang of LANGS) writeFileSync(join(OUT, `${game.file}.${lang}.svg`),
+    game.file === 'FleetBot'
+      ? readFileSync(join(ROOT, `scripts/art/fleetbot-poster.${lang}.svg`), 'utf8')
+      : banner(game, lang))
   writeFileSync(join(OUT, 'icons', `${game.file}.svg`), icon(game))
   manifest.push(game)
 }

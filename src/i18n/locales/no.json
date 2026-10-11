@@ -195,7 +195,8 @@
     "tabs": {
       "overview": "Oversikt",
       "players": "Spillere",
-      "log": "Logg"
+      "log": "Logg",
+      "traffic": "Trafikk"
     },
     "loading": "Laster …",
     "retry": "Prøv igjen",
@@ -317,7 +318,6 @@
       "remove": "Fjern",
       "removeAll": "Fjern alle",
       "none": "Ingen resultater på ledertavlene.",
-      "fleetbot": "FleetBot har ledertavla i sin egen database og er ikke med her.",
       "dailyNote": "Fjernes dagens rad i Proportion Panic eller Pixel Panic, kan spilleren spille dagen på nytt."
     },
     "log": {
@@ -355,7 +355,50 @@
       "target_banned": "Opphev utestengingen først.",
       "unknown_game": "Ukjent spill.",
       "service_failed": "Tjenesten svarte ikke som den skulle.",
-      "unreachable": "Fikk ikke kontakt med tjenesten."
+      "unreachable": "Fikk ikke kontakt med tjenesten.",
+      "bad_period": "Ugyldig tidsperiode.",
+      "analytics_denied": "Cloudflare-tilgangen ble avvist. Kontroller API-tokenets lesetilgang og sone-ID på serveren.",
+      "analytics_rate_limited": "Cloudflare begrenser antall kall. Vent litt og prøv igjen.",
+      "analytics_failed": "Kunne ikke hente Cloudflare-statistikken. Kontroller tilkobling, tokenets tilganger og tilgjengelig historikk."
+    },
+    "traffic": {
+      "title": "Trafikk på spillarena.no",
+      "source": "Cloudflare · hele domenet, inkludert spill og underdomener",
+      "period": "Tidsperiode",
+      "periods": {
+        "1": "I dag",
+        "7": "7 dager",
+        "30": "30 dager"
+      },
+      "updated": "Hentet {{time}} · oppdateres hvert minutt",
+      "refresh": "Oppdater",
+      "stale": "Viser sist hentede tall.",
+      "setupTitle": "Koble til Cloudflare-statistikken",
+      "setupBody": "Trafikkpanelet er klart, men tilkoblingen må settes opp på serveren. Se oppsettet i README under «Admin traffic analytics».",
+      "openCloudflare": "Åpne Cloudflare",
+      "metrics": {
+        "visitors": "Unike IP-er",
+        "requests": "Forespørsler",
+        "pageViews": "Sidevisninger",
+        "bytes": "Databruk",
+        "cache": "Forespørsler fra cache",
+        "threats": "Trusler registrert",
+        "clientErrors": "Klientfeil (4xx)",
+        "serverErrors": "Serverfeil (5xx)"
+      },
+      "measurementNote": "Cloudflare måler trafikk gjennom domenet, inkludert roboter, API-kall og filer. Unike IP-er er et estimat og er ikke det samme som personer eller innloggede spillere.",
+      "chartTitle": "Forespørsler per dag",
+      "chartLabel": "Forespørsler per dag, totalt {{count}}",
+      "empty": "Ingen trafikk registrert i perioden.",
+      "periodNote": "Kalenderdager i UTC, inkludert i dag. Dagens tall er ufullstendige, og Cloudflare kan ha forsinkelse.",
+      "showDaily": "Vis daglige tall",
+      "date": "Dato",
+      "countries": "Topp 10 land",
+      "byRequests": "Sortert etter antall forespørsler",
+      "health": "Cache og feil",
+      "showStatuses": "Vis HTTP-statuskoder",
+      "tor": "Tor-nettverket",
+      "unknownCountry": "Ukjent land"
     }
   },
   "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
