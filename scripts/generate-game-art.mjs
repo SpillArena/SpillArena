@@ -275,11 +275,12 @@ const GAMES = [
   },
   {
     id: 9, file: 'Hitline', title: ['Hit', 'line'],
-    bg: '#176b64', deep: '#082f2b', accent: '#d3f46b',
+    bg: '#252c4a', deep: '#10142a', accent: '#ffb52e',
+    bannerOffsetY: -18, // Gi Beta-merket plass under slagordet på små spillkort.
     genre: { no: 'Musikktidslinje', en: 'Music timeline' },
     tagline: { no: 'Kjenn igjen låten. Finn plassen i tiden.', en: 'Know the song. Find its place in time.' },
     art: () => hitlineArt(),
-    glyph: () => g('transform="translate(46 30) scale(0.84)"', hitlineArt()),
+    glyph: () => hitlineGlyph(),
   },
 ]
 
@@ -772,27 +773,51 @@ function melodyGlyph() {
   return vinyl(300, 220, 150, '#ea580c') + equalizer(84, 430, 46, 8, [3, 5, 4])
 }
 
-// ---- Hitline: en ukjent plate skal inn mellom to årstall
-
-function songSleeve(x, y, year, color) {
-  return tile(x, y, 128, 148, color, { r: 20, depth: 8 })
-    + vinyl(x + 64, y + 57, 42, '#176b64')
-    + text(year, FONTS.sansBold, 28, x + 64, y + 121, { fill: '#082f2b', anchor: 'middle', middle: true })
+// ---- Hitline: årsskala, utgitte låter og nålen for den ukjente sangen
+function hitlineArt() {
+  const cream = '#eef1f5', amber = '#ffb52e', red = '#ff563e'
+  const yearX = year => 22 + (year - 1970) * 456 / 55
+  let out = tile(0, 160, 500, 345, '#10142a', { r: 32, depth: 12, gloss: false })
+  // Hvert merke svarer til ett år; tiårene er større og merket med hele årstall.
+  for (let year = 1970; year <= 2025; year++) {
+    const x = r1(yearX(year)), decade = year % 10 === 0
+    out += `<path d="M${x} ${decade ? 429 : 442}V457" stroke="${amber}" stroke-opacity="${decade ? 1 : 0.35}" stroke-width="${decade ? 2 : 1}"/>`
+    if (decade) out += text(String(year), FONTS.sansBold, 16, x, 483, { fill: amber, anchor: 'middle' })
+  }
+  const songs = [
+    { year: 1976, title: 'Dancing Queen', artist: 'ABBA', color: amber, top: 186 },
+    { year: 1985, title: 'Take on Me', artist: 'a-ha', color: '#ee7a9b', top: 293 },
+    { year: 2013, title: 'Get Lucky', artist: 'Daft Punk', color: '#3fb8a8', top: 219 },
+  ]
+  for (const song of songs) {
+    const x = r1(yearX(song.year))
+    out += `<path d="M${x} ${song.top}V${song.top + 93}" stroke="${song.color}" stroke-width="2"/>`
+    out += `<path d="M${x} ${song.top + 93}V424" stroke="${song.color}" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="3 5"/>`
+    out += text(String(song.year), FONTS.sansBold, 30, x + 11, song.top + 29, { fill: song.color })
+    out += text(song.title, FONTS.sansBold, 17, x + 11, song.top + 56, { fill: cream })
+    out += text(song.artist, FONTS.sans, 16, x + 11, song.top + 79, { fill: '#a3abc9' })
+  }
+  const needle = r1(yearX(1998))
+  out += `<defs><linearGradient id="needle-glow"><stop stop-color="${red}" stop-opacity="0"/><stop offset="0.5" stop-color="${red}" stop-opacity="0.15"/><stop offset="1" stop-color="${red}" stop-opacity="0"/></linearGradient></defs>`
+  out += `<rect x="${needle - 34}" y="119" width="68" height="348" fill="url(#needle-glow)"/>`
+  out += `<path d="M${needle} 119V467" stroke="${red}" stroke-width="4" stroke-linecap="round"/>`
+  out += tile(needle - 27, 65, 54, 54, red, { r: 27, depth: 4 })
+  out += text('?', FONTS.sansBold, 33, needle, 92, { fill: cream, anchor: 'middle', middle: true })
+  return out
 }
 
-function hitlineArt() {
-  let out = g('transform="rotate(-8 250 160)"',
-    tile(148, 38, 204, 236, '#ff8b77', { r: 28, depth: 14 }),
-    vinyl(250, 131, 76, '#d3f46b'),
-    text('?', FONTS.serif, 57, 250, 232, { fill: '#082f2b', anchor: 'middle', middle: true }))
-  // Pil fra den ukjente platen til den ledige plassen på tidslinjen.
-  out += '<path d="M250 296V340m-12-12 12 12 12-12" fill="none" stroke="#d3f46b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>'
-  out += songSleeve(4, 356, '1976', '#fff8ed')
-  out += songSleeve(368, 356, '2013', '#d3f46b')
-  out += '<rect x="186" y="356" width="128" height="148" rx="20" fill="#fff8ed" fill-opacity="0.07" stroke="#fff8ed" stroke-opacity="0.65" stroke-width="3" stroke-dasharray="8 9"/>'
-  out += '<path d="M234 421h32m-16-16v32" stroke="#fff8ed" stroke-width="5" stroke-linecap="round"/>'
-  out += '<path d="M68 536H432" stroke="#fff8ed" stroke-opacity="0.4" stroke-width="4" stroke-linecap="round"/>'
-  for (const x of [68, 250, 432]) out += `<circle cx="${x}" cy="536" r="7" fill="#d3f46b"/>`
+function hitlineGlyph() {
+  const amber = '#ffb52e'
+  let out = '<rect x="48" y="64" width="416" height="384" rx="44" fill="#080c1b"/>'
+  for (let i = 0; i <= 16; i++) out += `<path d="M${80 + i * 22} ${i % 4 === 0 ? 355 : 369}V394" stroke="${amber}" stroke-opacity="${i % 4 === 0 ? 1 : 0.4}" stroke-width="${i % 4 === 0 ? 4 : 2}"/>`
+  for (const [x, top, color] of [[128, 257, amber], [202, 289, '#ee7a9b'], [366, 257, '#3fb8a8']]) {
+    out += `<path d="M${x} ${top}V339" stroke="${color}" stroke-width="4"/>`
+    out += `<path d="M${x + 13} ${top + 12}H${x + 52}" stroke="${color}" stroke-width="9" stroke-linecap="round"/>`
+    out += `<path d="M${x + 13} ${top + 34}H${x + 56}M${x + 13} ${top + 51}H${x + 43}" stroke="#a3abc9" stroke-width="5" stroke-linecap="round"/>`
+  }
+  out += '<path d="M282 160V408" stroke="#ff563e" stroke-width="6" stroke-linecap="round"/>'
+  out += '<circle cx="282" cy="136" r="31" fill="#ff563e"/>'
+  out += text('?', FONTS.sansBold, 38, 282, 136, { fill: '#eef1f5', anchor: 'middle', middle: true })
   return out
 }
 
@@ -823,7 +848,7 @@ function banner(game, lang) {
 
   const chipW = measure(genre, FONTS.sansBold, 14, 2.4) + 40
   const blockH = 48 + 26 + size * 0.95 * 2 + 26 + tagLines.length * tagSize * 1.4
-  let y = Math.max(150, (H - blockH) / 2 + 26)
+  let y = Math.max(150, (H - blockH) / 2 + 26) + (game.bannerOffsetY ?? 0)
 
   let body = ''
   body += `<rect x="${left}" y="${r1(y)}" width="${r1(chipW)}" height="40" rx="20" fill="none" stroke="${ink}" stroke-opacity="0.4" stroke-width="2"/>`

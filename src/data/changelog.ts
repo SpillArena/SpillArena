@@ -8,6 +8,16 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '11-10-2026',
+        title: 'Hitline cover refresh',
+        release: '1.9.1',
+        changes: [
+            'Updated the Norwegian and English Hitline posters with a release-year timeline, coloured song markers and a red needle for the unknown song',
+            'Matched the posters to the other games with Fraunces titles, a dotted background and the shared layout; removed the header divider',
+            'Updated the Hitline icon with the timeline motif and kept the poster tagline clear of the beta badge on small screens',
+        ],
+    },
+    {
+        date: '11-10-2026',
         title: 'Hitline joins the arena',
         release: '1.9.0',
         changes: [
