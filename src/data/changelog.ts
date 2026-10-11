@@ -7,6 +7,29 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '12-10-2026',
+        title: 'The lobby spotlights the most visited game',
+        release: '1.10.0',
+        changes: [
+            'The "In the spotlight" card now shows the most visited game of the last 24 hours, with its own poster, description and beta label',
+            'The lobby checks the ranking once a minute while open and again when you return to the tab',
+            'If popularity data is missing or unavailable, the card shows a neutral "Discover a game" label instead of claiming a most popular game',
+            'Popularity counts game page loads only - no extra tracking, and no visitor details are shared',
+        ],
+    },
+    {
+        date: '11-10-2026',
+        title: 'HangBot: a new look and choose-a-word challenges',
+        release: '1.9.3',
+        changes: [
+            'Redesigned HangBot with a charcoal and lime palette, a hand-drawn hangman figure, a talking bot companion and smooth transitions',
+            'Added a multiplayer mode where one player chooses a secret word and an optional hint while the others race to guess it',
+            'Moved the XP overview to the bottom of the start screen',
+            'Updated the Norwegian and English posters with the hangman drawing as the main illustration, a small bot beside it and letter tiles in the shared SpillArena style',
+            'Refreshed the square game icon with the same gallows illustration and removed remaining-chance ticks from the artwork',
+        ],
+    },
+    {
         date: '11-10-2026',
         title: 'FleetBot: a new naval look',
         release: '1.9.2',

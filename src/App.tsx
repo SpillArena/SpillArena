@@ -65,7 +65,7 @@ export default function App() {
     <HeaderSection username={username} onSelectGame={handleGameClick} />
     <main className="arena-container lobby-content" id="main-content" tabIndex={-1}>
       {page === 'home' ? <>
-        <HeroSection onSurprise={pickGame} />
+        <HeroSection onSurprise={pickGame} onPlay={handleGameClick} />
         <GamesSection onClick={handleGameClick} />
         <aside className="account-strip" aria-labelledby="account-strip-title"><div className="account-symbol" aria-hidden="true"><ArrowUpRight size={28} /></div><div><h2 id="account-strip-title">{t('lobby.accountTitle')}</h2><p>{t('lobby.accountDescription')}</p></div><a className="button secondary" href={isSignedIn ? '#profile' : '#login'}>{t(isSignedIn ? 'account.yourProfile' : 'lobby.accountMore')}<ArrowUpRight size={16} aria-hidden="true" /></a></aside>
       </> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => { signOut(); window.location.hash = '' }} onPlay={handleGameClick} /> :

@@ -57,7 +57,35 @@ npm run preview
 - npm run lint: Run ESLint
 - npm run preview: Preview production build locally
 
-## Admin traffic analytics
+## Traffic analytics and game popularity
+
+### Popular game in the spotlight
+
+The lobby checks `GET /api/popular-games` for the most visited playable game
+over a rolling 24-hour window. It reads the same Cloudflare analytics credential
+as the admin traffic panel. Only successful `GET` requests (200 or 304) to the
+known game entry paths on `spillarena.no` are counted. Both trailing-slash
+variants are combined; assets, API calls, redirects and other hostnames are
+excluded. Equal counts use a stable game-name order.
+
+The public endpoint returns aggregate game counts and timestamps, never the
+analytics token or visitor identities. Provider results are cached at the edge
+for five minutes. The lobby checks once per minute while visible and when the
+visitor returns to the tab. Missing configuration, empty traffic, stale data and
+provider failures show a neutral “Discover a game” fallback without claiming
+that it is the most popular. The selected game's own poster, description and
+beta warning follow the current ranking.
+
+Popularity here means game-page loads, not completed rounds or unique players.
+Cloudflare's [HTTP analytics](https://developers.cloudflare.com/analytics/graphql-api/tutorials/end-customer-analytics/)
+can include bots and [sampled estimates](https://developers.cloudflare.com/analytics/graphql-api/sampling/).
+No additional browser tracking or database migration is needed.
+Run `npm run test:popularity` to check ranking, freshness, scope, caching and
+provider-failure behavior. To exercise the endpoint locally, serve the build
+with Pages Functions and the existing ignored `.dev.vars`; plain Vite serves
+only the frontend and will show the neutral fallback.
+
+### Admin-only traffic report
 
 The admin panel's **Traffic** tab reads existing Cloudflare zone analytics via
 `GET /api/admin/traffic?days=1|7|30`. Every request verifies the signed-in account
