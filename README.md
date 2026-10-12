@@ -26,7 +26,7 @@ A browser arcade for quick challenges, friendly competition, and one shared play
 SpillArena brings independent web games together in a responsive lobby. Browse by category, search for a favourite, or let the game picker choose your next challenge. Play as a guest, or sign in to keep supported game progress and scores connected to one account.
 
 - **Find your game.** Category filters, search, bilingual posters, and a spotlight based on recent game-page visits.
-- **Make it yours.** Shared profiles, XP and levels from saved game progress, and optional DiceBear pictures with a first-letter default.
+- **Make it yours.** Shared profiles, XP and levels from saved game progress, and DiceBear pictures with customizable features and colors, plus a first-letter default.
 - **Play comfortably.** Norwegian and English, light and dark themes, responsive layouts, and storage controls.
 - **Stay informed.** Clear beta prompts, a changelog, FAQ suggestions in the contact form, and account recovery.
 - **Run the arena.** An authenticated admin panel for players, saved progress, moderation, messages, audit history, and traffic per game.

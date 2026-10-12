@@ -61,11 +61,12 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
       })}</ul>
     </>}
     <section className="profile-account" aria-labelledby="profile-account-title"><div><p className="eyebrow">{t('account.title')}</p><h2 id="profile-account-title">{t('profile.accountSettings')}</h2><p>{t('profile.recoveryDescription')}</p></div><div className="profile-account-actions">
+      <button type="button" className="button secondary" onClick={() => setEditing('avatar')} disabled={!overview || loading || !!error}><Pencil size={16} aria-hidden="true" />{t('profile.avatar.customize')}</button>
       {overview?.hasRecoveryCode !== undefined && <button type="button" className="button secondary" onClick={() => setEditing('recovery')}><KeyRound size={16} aria-hidden="true" />{t(overview.hasRecoveryCode ? 'account.recovery.replace' : 'account.recovery.create')}</button>}
       <button type="button" className="button danger" onClick={onSignOut}><LogOut size={16} aria-hidden="true" />{t('account.signOut')}</button>
     </div></section>
     {overview?.hasRecoveryCode === false && <div className="form-warning"><p>{t('account.recovery.missing')}</p></div>}
-    <Dialog open={editing !== null} onClose={() => setEditing(null)} dismissible={false} title={t(editing === 'avatar' ? 'profile.avatar.title' : editing === 'rename' ? 'profile.renameTitle' : 'account.recovery.savedTitle')}>
+    <Dialog open={editing !== null} onClose={() => setEditing(null)} dismissible={false} className={editing === 'avatar' ? 'avatar-dialog' : ''} title={t(editing === 'avatar' ? 'profile.avatar.title' : editing === 'rename' ? 'profile.renameTitle' : 'account.recovery.savedTitle')}>
       {editing === 'avatar' ? <AvatarForm username={username} current={overview?.avatar} onCancel={() => setEditing(null)} onDone={avatar => { setEditing(null); setOverview(value => value ? { ...value, avatar } : value) }} /> : editing === 'rename' ? <RenameForm current={username} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} /> : <RecoveryCodeForm username={username} replacing={overview?.hasRecoveryCode === true} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} />}
     </Dialog>
     <AdminPanel open={adminOpen} onClose={() => setAdminOpen(false)} username={username} />
