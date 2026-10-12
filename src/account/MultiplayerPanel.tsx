@@ -1,6 +1,7 @@
 import { useId, useState, type ReactNode } from 'react'
 import { openAccountPanel } from './panel'
 import { useIdentity } from './identity'
+import { PlayerAvatar } from './avatar'
 
 /**
  * One multiplayer chooser for every game.
@@ -14,6 +15,10 @@ import { useIdentity } from './identity'
  * The game supplies only what differs: its modes, any extra settings
  * (`createExtra`), and what happens next. Colors come from the surrounding
  * text and `--sa-mp-accent`, so it takes on each game's own look.
+ *
+ * Signed in, it opens with who the player will be in the room (picture and
+ * account name) and, under Create, the three steps from room to match — so a
+ * first-time player knows a code is coming and that a friend needs it.
  */
 
 export interface MultiplayerMode {
@@ -56,6 +61,8 @@ const copy = {
         signInText: 'Flerspiller krever en gratis SpillArena-konto.',
         invited: 'Du er invitert til et rom. Logg inn for å bli med.',
         busy: 'Kobler til …',
+        playingAs: 'Du spiller som',
+        steps: ['Lag et rom og få en kode', 'Del koden med vennene dine', 'Start når alle er inne'],
     },
     en: {
         label: 'Multiplayer',
@@ -71,6 +78,8 @@ const copy = {
         signInText: 'Multiplayer needs a free SpillArena account.',
         invited: 'You are invited to a room. Sign in to join.',
         busy: 'Connecting …',
+        playingAs: 'Playing as',
+        steps: ['Create a room and get a code', 'Share the code with friends', 'Start when everyone is in'],
     },
 } as const
 
@@ -102,15 +111,24 @@ const STYLE = `
 .sa-mp__hint[data-bad="true"] { color: var(--sa-mp-error, #c93f4c); }
 .sa-mp__notice { margin: 0; padding: 12px 14px; border: 1px solid var(--sa-mp-border, transparent); border-radius: var(--sa-mp-radius, 12px); font-size: var(--sa-mp-detail-size, 13px); line-height: 1.6; color: var(--sa-mp-text, inherit); background: var(--sa-mp-selected, color-mix(in srgb, var(--sa-mp-accent, #7c5cd6) 12%, transparent)); }
 .sa-mp__notice button { appearance: none; border: 0; padding: 0; background: none; color: inherit; font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.sa-mp__me { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.sa-mp__avatar { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; overflow: hidden; border-radius: var(--sa-mp-tab-radius, 10px); border: 1px solid var(--sa-mp-border, color-mix(in srgb, currentColor 22%, transparent)); background: var(--sa-mp-sunken, color-mix(in srgb, currentColor 8%, transparent)); color: var(--sa-mp-accent, #7c5cd6); font-weight: 700; font-size: 16px; text-transform: uppercase; }
+.sa-mp__me-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sa-mp__me-name { font-weight: 700; font-size: 15px; line-height: 1.3; color: var(--sa-mp-text, inherit); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sa-mp__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; counter-reset: sa-mp-step; }
+.sa-mp__steps li { display: flex; align-items: flex-start; gap: 10px; min-width: 0; padding: 12px; border: 1px solid var(--sa-mp-border, color-mix(in srgb, currentColor 18%, transparent)); border-radius: var(--sa-mp-radius, 12px); background: var(--sa-mp-sunken, color-mix(in srgb, currentColor 5%, transparent)); font-size: var(--sa-mp-detail-size, 13px); line-height: 1.45; color: var(--sa-mp-muted, inherit); counter-increment: sa-mp-step; }
+.sa-mp__steps li::before { content: counter(sa-mp-step); display: grid; place-items: center; flex-shrink: 0; width: 22px; height: 22px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--sa-mp-accent, #7c5cd6); box-shadow: inset 0 0 0 1.5px var(--sa-mp-accent, #7c5cd6); font-variant-numeric: tabular-nums; }
 .sa-mp__error { margin: 0; color: var(--sa-mp-error, #c93f4c); font-size: var(--sa-mp-detail-size, 13px); line-height: 1.6; }
 .sa-mp :is(button, input):focus-visible { outline: 2px solid var(--sa-mp-focus, var(--sa-mp-accent, #7c5cd6)); outline-offset: 3px; }
 @container (max-width: 420px) { .sa-mp__modes > [role="radiogroup"] { grid-template-columns: 1fr; } }
+@container (max-width: 520px) { .sa-mp__steps { grid-template-columns: 1fr; } .sa-mp__steps li { align-items: center; padding: 10px 12px; } }
 @media (prefers-reduced-motion: reduce) { .sa-mp :is(button, input) { transition: none; } }
 `
 
 export function MultiplayerPanel({ language, modes = [], invite = '', busy = false, error, createExtra, onCreate, onJoin }: MultiplayerPanelProps) {
     const t = copy[language]
-    const signedIn = useIdentity().locked
+    const identity = useIdentity()
+    const signedIn = identity.locked
     const id = useId()
     const [tab, setTab] = useState<'create' | 'join'>(invite ? 'join' : 'create')
     const [mode, setMode] = useState<string | undefined>(modes[0]?.id)
@@ -129,7 +147,17 @@ export function MultiplayerPanel({ language, modes = [], invite = '', busy = fal
     return (
         <div className="sa-mp" aria-label={t.label}>
             <style>{STYLE}</style>
-            {!signedIn && (
+            {signedIn ? (
+                <div className="sa-mp__me">
+                    <span className="sa-mp__avatar">
+                        <PlayerAvatar fallback={identity.name.charAt(0)} />
+                    </span>
+                    <span className="sa-mp__me-text">
+                        <span className="sa-mp__label">{t.playingAs}</span>
+                        <span className="sa-mp__me-name">{identity.name}</span>
+                    </span>
+                </div>
+            ) : (
                 <p className="sa-mp__notice" role="status">
                     {invite ? t.invited : t.signInText}{' '}
                     <button type="button" onClick={openAccountPanel}>
@@ -182,6 +210,11 @@ export function MultiplayerPanel({ language, modes = [], invite = '', busy = fal
                             </fieldset>
                         )}
                         {createExtra}
+                        <ol className="sa-mp__steps">
+                            {t.steps.map((step) => (
+                                <li key={step}>{step}</li>
+                            ))}
+                        </ol>
                         <button type="button" className="sa-mp__action" disabled={busy} onClick={create}>
                             {busy ? t.busy : `${t.createAction} →`}
                         </button>

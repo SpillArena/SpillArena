@@ -7,6 +7,30 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '13-10-2026',
+        title: 'FleetBot: meet the captains',
+        release: '1.13.1',
+        changes: [
+            'FleetBot now plays as a captain in four ranks - Cadet, Captain, Commander and Admiral FleetBot - each with their own look, from a rubber duck on the cadet\'s cap to the admiral\'s bicorne and monocle',
+            'The captains replace the difficulty buttons on FleetBot\'s home screen, and the chosen captain greets you with a new line every few seconds',
+            'During a game FleetBot reacts to every hit, miss and sinking with his own lines and expressions, in Norwegian and English',
+            'Fleet lists grow into the free space beside the boards on large screens, and selected buttons now use an amber ring instead of an underline',
+            'New Norwegian and English FleetBot posters with Admiral FleetBot leaning over the board, used in the lobby and for link previews',
+        ],
+    },
+    {
+        date: '13-10-2026',
+        title: 'Your profile picture and one way to play together',
+        release: '1.13.0',
+        changes: [
+            'Your SpillArena profile picture now follows you into every game: in the account badge, where the game shows who you play as, and next to every player in multiplayer rooms',
+            'The account badge is smaller: just your picture, name and level, now written out as "Nivå"',
+            'Every game has a clearer "Back to the Arena" button in the top bar',
+            'All games with multiplayer share one chooser: Create room or Join room, with the game\'s modes picked when you create a room',
+            'Invite links in Hitline and ScribbleBot now join the room automatically once you are signed in, like the other games',
+        ],
+    },
+    {
         date: '12-10-2026',
         title: 'Personal profiles and game traffic',
         release: '1.12.0',
