@@ -1,4 +1,4 @@
-import { getToken } from '../account'
+import { getToken, signOut } from '../account'
 
 export const TOPICS = ['question', 'bug', 'account', 'privacy', 'other'] as const
 export type Topic = (typeof TOPICS)[number]
@@ -23,7 +23,7 @@ const EMAIL_RE = /^[^\s@<>]{1,64}@[^\s@<>]+\.[^\s@<>]{2,}$/
 
 /** The same checks as the server, so most mistakes never cost a round trip. */
 export function checkContact(input: Pick<ContactInput, 'email' | 'message' | 'name'>): string | null {
-    if (input.name.trim().length > CONTACT_LIMITS.name) return 'bad_name'
+    if (!input.name.trim() || input.name.trim().length > CONTACT_LIMITS.name) return 'bad_name'
     const email = input.email.trim()
     if (email.length > CONTACT_LIMITS.email || !EMAIL_RE.test(email)) return 'bad_email'
     const length = input.message.trim().length
@@ -45,9 +45,18 @@ export async function sendContact(input: ContactInput): Promise<ContactResult> {
             headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
             body: JSON.stringify(input),
         })
-        if (response.ok) return { ok: true }
-        const body = (await response.json().catch(() => null)) as { error?: unknown } | null
-        return { ok: false, error: typeof body?.error === 'string' ? body.error : 'service_failed' }
+        const body = (await response.json().catch(() => null)) as { error?: unknown; sent?: unknown } | null
+        if (response.ok && body?.sent === true) return { ok: true }
+        if (response.status === 401) {
+            signOut()
+            return { ok: false, error: 'unauthorized' }
+        }
+        const retryAfter = Number(response.headers.get('Retry-After'))
+        return {
+            ok: false,
+            error: typeof body?.error === 'string' ? body.error : 'service_failed',
+            ...(retryAfter > 0 && Number.isFinite(retryAfter) ? { retryAfter } : {}),
+        }
     } catch {
         return { ok: false, error: 'network' }
     } finally {

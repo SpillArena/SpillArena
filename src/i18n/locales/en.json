@@ -403,6 +403,10 @@
       "unknownCountry": "Unknown country"
     },
     "messages": {
+      "accountCreated": "Account created",
+      "accountLastSeen": "Last active",
+      "notification": "Email notification",
+      "notificationStatus": {"unknown": "Not tracked", "pending": "Pending — check again shortly", "sent": "Accepted by email provider", "failed": "Failed — message is saved here", "not_configured": "Not configured — message is saved here"},
       "empty": "No messages yet.",
       "from": "From",
       "topic": "Topic",
@@ -544,7 +548,7 @@
           "p": [
             "Only if you create an account: your username, a salted hash of your PIN (never the PIN itself), a hash of your recovery code, the dates you registered and were last seen, your XP and per-game progress, and the scores you post to leaderboards.",
             "We do not ask for or store an email address, real name, phone number or location for accounts or games, and we do not store IP addresses in our own database.",
-"If you use the contact form we store your message, your email address, the name you enter (optional), the topic, your username if you are signed in, and a one-way hash of your IP address that changes every day and cannot be turned back into the address. It is used only to limit how many messages one sender can post per hour. Messages are kept for at most a year, and we can delete yours on request."
+"If you use the contact form we store your message, your email address, the name you enter, the topic, your username, account creation date and last activity time if you are signed in, and a one-way hash of your IP address that changes every day and cannot be turned back into the address. It is used only to limit how many messages one sender can post per hour. Messages are kept for at most a year, and we can delete yours on request."
           ]
         },
         {
@@ -716,9 +720,11 @@
       "privacy": "Privacy or my data",
       "other": "Something else"
     },
-    "name": "Your name (optional)",
+    "name": "Your name",
     "email": "Your email",
     "emailHint": "Only used to reply to you.",
+    "accountHint": "Your username, account creation date and last activity time are included automatically so we can help you.",
+    "accountTitle": "Signed-in account",
     "message": "Your message",
     "messageHint": "{{count}} / {{max}}",
     "suggestTitle": "This might already answer it",
@@ -728,22 +734,23 @@
     "helpedBody": "No need to send anything. If something else comes up, we are here.",
     "backToForm": "Write a message anyway",
     "allFaq": "See all questions",
-    "privacy": "We use your name, email and message only to answer you, and keep them for at most a year. See the <link>privacy policy</link>.",
+    "privacy": "We use your name, email, message and any attached account details only to answer you, and keep them for at most a year. See the <link>privacy policy</link>.",
     "send": "Send message",
     "sending": "Sending…",
-    "sentTitle": "Message sent",
-    "sentBody": "Thanks. We will reply to {{email}} as soon as we can.",
+    "sentTitle": "Message received",
+    "sentBody": "Your message is saved in our support inbox. We will reply to {{email}} as soon as we can.",
     "sendAnother": "Send another",
     "errors": {
       "bad_email": "That email address does not look right.",
       "message_short": "Write a little more, at least {{min}} characters.",
       "message_long": "The message is too long. Keep it under {{max}} characters.",
       "bad_topic": "Choose what the message is about.",
-      "bad_name": "That name is too long.",
+      "bad_name": "Enter your name (up to 60 characters).",
       "bad_body": "Something was wrong with the form. Reload and try again.",
       "too_large": "The message is too large.",
       "rate_limited": "You have sent several messages already. Try again in a while.",
       "service_failed": "Something went wrong on our side. Try again, or email us.",
+      "unauthorized": "Your sign-in has expired. Sign in again to include your account, or send again as a guest.",
       "network": "Could not reach the server. Check your connection and try again."
     }
   }

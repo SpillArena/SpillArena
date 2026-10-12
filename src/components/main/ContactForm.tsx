@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle2, ChevronDown, Lightbulb, Send } from 'lucide-re
 import { Trans, useTranslation } from 'react-i18next'
 import { CONTACT_LIMITS, TOPICS, checkContact, sendContact, type Topic } from '../../lib/contact'
 import { matchFaq, type FaqItem } from '../../lib/faqMatch'
+import { useAccount } from '../../account'
 
 type Phase = 'writing' | 'sending' | 'sent' | 'helped'
 
@@ -11,6 +12,7 @@ const SUGGEST_AFTER = 12
 
 export default function ContactForm() {
   const { t, i18n } = useTranslation()
+  const { username } = useAccount()
   const ids = { topic: useId(), name: useId(), email: useId(), message: useId() }
   const shownAt = useRef(0)
 
@@ -86,13 +88,17 @@ export default function ContactForm() {
     <p className="legal-lead">{t('contact.intro')}</p>
 
     <form className="sa-form contact-form" onSubmit={submit} noValidate>
-      <label htmlFor={ids.topic}>{t('contact.topic')}
-        <select id={ids.topic} value={topic} onChange={event => setTopic(event.target.value as Topic)} disabled={busy}>
+      {username && <section className="contact-account" aria-label={t('contact.accountTitle')}>
+        <strong>{t('contact.accountTitle')}: {username}</strong>
+        <p className="field-hint">{t('contact.accountHint')}</p>
+      </section>}
+      <label htmlFor={ids.topic}><span>{t('contact.topic')} <span aria-hidden="true">*</span></span>
+        <select required id={ids.topic} value={topic} onChange={event => setTopic(event.target.value as Topic)} disabled={busy}>
           {TOPICS.map(value => <option key={value} value={value}>{t(`contact.topics.${value}`)}</option>)}
         </select>
       </label>
 
-      <label htmlFor={ids.message}>{t('contact.message')}
+      <label htmlFor={ids.message}><span>{t('contact.message')} <span aria-hidden="true">*</span></span>
         <textarea id={ids.message} value={message} onChange={event => setMessage(event.target.value)} rows={7}
           maxLength={CONTACT_LIMITS.message + 200} required disabled={busy}
           aria-invalid={errorField === ids.message} aria-describedby={`${ids.message}-hint`} />
@@ -121,16 +127,16 @@ export default function ContactForm() {
         <a className="inline-link" href="#faq">{t('contact.allFaq')}</a>
       </section>}
 
-      <label htmlFor={ids.email}>{t('contact.email')}
+      <label htmlFor={ids.email}><span>{t('contact.email')} <span aria-hidden="true">*</span></span>
         <input id={ids.email} type="email" value={email} onChange={event => setEmail(event.target.value)}
           maxLength={CONTACT_LIMITS.email} autoComplete="email" required disabled={busy}
           aria-invalid={errorField === ids.email} aria-describedby={`${ids.email}-hint`} />
         <span id={`${ids.email}-hint`} className="field-hint">{t('contact.emailHint')}</span>
       </label>
 
-      <label htmlFor={ids.name}>{t('contact.name')}
+      <label htmlFor={ids.name}><span>{t('contact.name')} <span aria-hidden="true">*</span></span>
         <input id={ids.name} value={name} onChange={event => setName(event.target.value)}
-          maxLength={CONTACT_LIMITS.name + 20} autoComplete="name" disabled={busy}
+          maxLength={CONTACT_LIMITS.name + 20} autoComplete="name" required disabled={busy}
           aria-invalid={errorField === ids.name} />
       </label>
 

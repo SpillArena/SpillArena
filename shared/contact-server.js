@@ -5,7 +5,8 @@
  * ligger der blir en rute.
  */
 
-import { toBase64Url } from './account-server.js'
+import { bearer, requireUser, toBase64Url } from './account-server.js'
+import nodemailer from 'nodemailer'
 
 export const TOPICS = ['question', 'bug', 'account', 'privacy', 'other']
 export const LIMITS = { name: 60, email: 120, message: 2000, minMessage: 10 }
@@ -41,7 +42,7 @@ export function validateContact(body) {
   if (!TOPICS.includes(body.topic)) return { error: 'bad_topic' }
 
   const name = body.name == null || body.name === '' ? '' : typeof body.name === 'string' ? clean(body.name) : null
-  if (name === null || name.length > LIMITS.name) return { error: 'bad_name' }
+  if (!name || name.length > LIMITS.name) return { error: 'bad_name' }
 
   const email = typeof body.email === 'string' ? clean(body.email) : ''
   if (email.length > LIMITS.email || !EMAIL_RE.test(email)) return { error: 'bad_email' }
@@ -64,38 +65,122 @@ export async function senderHash(secret, ip, now = new Date()) {
   return toBase64Url(await crypto.subtle.digest('SHA-256', bytes))
 }
 
-/**
- * Varsler support på e-post, når RESEND_API_KEY er satt. Uten nøkkel gjør den
- * ingenting: meldingen ligger uansett i databasen og i adminpanelet.
- *
- * Feil her skal aldri velte innsendingen — spilleren har allerede fått meldingen
- * lagret — så de går til loggen og ikke til klienten.
- */
-export async function notifySupport(env, message) {
-  if (!env.RESEND_API_KEY) return
+/** Only verified, current accounts may be attached to a support request. */
+export async function contactAccount(env, request) {
+  if (!bearer(request)) return { account: null }
+  const auth = await requireUser(env, request)
+  if (auth.response) return auth
+  const account = await env.DB.prepare(
+    `SELECT username, created_at AS createdAt, last_seen AS lastSeen FROM players WHERE username = ?`,
+  ).bind(auth.username).first()
+  return { account }
+}
+
+export function mailConfigured(env) {
+  return Boolean(env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASSWORD) || Boolean(env.RESEND_API_KEY)
+}
+
+/** Fixed recipients and authenticated sender; replies go to the form's email. */
+export function supportMail(env, message) {
   const subject = `[SpillArena] ${message.topic}: ${message.message.replace(/\s+/g, ' ').slice(0, 60)}`
   const lines = [
     `Fra: ${message.name || '(uten navn)'} <${message.email}>`,
     `Emne: ${message.topic}`,
     `Konto: ${message.username ?? '(ikke innlogget)'}`,
+    ...(message.account ? [
+      `Konto opprettet: ${message.account.createdAt}`,
+      `Sist aktiv: ${message.account.lastSeen}`,
+    ] : []),
+    `Meldingsnummer: ${message.id}`,
     `Språk: ${message.lang}`,
     '',
     message.message,
   ]
+  return {
+    from: env.CONTACT_FROM || 'SpillArena <support@spillarena.no>',
+    to: [env.CONTACT_TO || 'support@spillarena.no'],
+    replyTo: message.email,
+    subject,
+    text: lines.join('\n'),
+    messageId: `<contact-${message.id}@spillarena.no>`,
+  }
+}
+
+/** SMTP uses implicit TLS on 465, with normal certificate verification. */
+export function smtpOptions(env) {
+  return {
+    host: env.SMTP_HOST,
+    port: 465,
+    secure: true,
+    name: 'spillarena.no',
+    auth: { user: env.SMTP_USER, pass: env.SMTP_PASSWORD },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+    logger: false,
+    debug: false,
+    disableFileAccess: true,
+    disableUrlAccess: true,
+  }
+}
+
+/** A notification failure never discards the message stored in the inbox. */
+export async function notifySupport(env, message) {
+  if (!mailConfigured(env)) return 'not_configured'
+  const mail = supportMail(env, message)
+  let transport
+  let deadline
   try {
+    if (env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASSWORD) {
+      transport = nodemailer.createTransport(smtpOptions(env))
+      const result = await Promise.race([
+        transport.sendMail(mail),
+        new Promise((_, reject) => {
+          deadline = setTimeout(() => {
+            transport.close()
+            reject(new Error('smtp_timeout'))
+          }, 20000)
+        }),
+      ])
+      return result.accepted?.length === mail.to.length ? 'sent' : 'failed'
+    }
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(10000),
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+        'Idempotency-Key': `contact/${message.id}`,
+      },
       body: JSON.stringify({
-        from: env.CONTACT_FROM || 'SpillArena <no-reply@spillarena.no>',
-        to: [env.CONTACT_TO || 'support@spillarena.no'],
-        reply_to: message.email,
-        subject,
-        text: lines.join('\n'),
+        from: mail.from,
+        to: mail.to,
+        reply_to: mail.replyTo,
+        subject: mail.subject,
+        text: mail.text,
       }),
     })
-    if (!response.ok) console.error('contact mail failed', response.status)
+    const result = await response.json().catch(() => null)
+    if (response.ok && typeof result?.id === 'string' && result.id) return 'sent'
+    console.error('contact mail failed', { id: message.id, status: response.status })
   } catch (error) {
-    console.error('contact mail failed', error)
+    const reason = ['EAUTH', 'ECONNECTION', 'ETIMEDOUT', 'ESOCKET', 'EDNS', 'ETLS'].includes(error?.code)
+      ? error.code : 'transport_failed'
+    console.error('contact mail failed', { id: message.id, reason })
+  } finally {
+    clearTimeout(deadline)
+    transport?.close()
+  }
+  return 'failed'
+}
+
+/** Keep a saved support request successful even if notification delivery fails. */
+export async function notifyStoredContact(env, message) {
+  try {
+    const status = await notifySupport(env, message)
+    await env.DB.prepare(`UPDATE contact_messages SET notification_status = ? WHERE id = ?`)
+      .bind(status, message.id).run()
+  } catch {
+    console.error('contact notification status failed', { id: message.id })
   }
 }

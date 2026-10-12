@@ -1,8 +1,14 @@
 name = "spillarena"
 compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "./dist"
 
 [vars]
+SMTP_HOST = "ymirsgren.domene.no"
+SMTP_USER = "support@spillarena.no"
+CONTACT_FROM = "SpillArena <support@spillarena.no>"
+CONTACT_TO = "support@spillarena.no"
+# SMTP_PASSWORD is a Pages secret / local .dev.vars value, never a VITE_ variable.
 # Zone analytics covers the proxied spillarena.no domain and its subdomains.
 CLOUDFLARE_ZONE_ID = "6f25392856334fce2113901f1b78bb60"
 # CLOUDFLARE_ANALYTICS_TOKEN belongs in Pages secrets / local .dev.vars.
