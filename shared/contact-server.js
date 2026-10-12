@@ -131,6 +131,28 @@ export async function notifySupport(env, message) {
   let transport
   let deadline
   try {
+    if (env.RESEND_API_KEY) {
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        signal: AbortSignal.timeout(10000),
+        headers: {
+          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+          'Idempotency-Key': `contact/${message.id}`,
+        },
+        body: JSON.stringify({
+          from: mail.from,
+          to: mail.to,
+          reply_to: mail.replyTo,
+          subject: mail.subject,
+          text: mail.text,
+        }),
+      })
+      const result = await response.json().catch(() => null)
+      if (response.ok && typeof result?.id === 'string' && result.id) return 'sent'
+      console.error('contact mail failed', { id: message.id, status: response.status })
+      return 'failed'
+    }
     if (env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASSWORD) {
       transport = nodemailer.createTransport(smtpOptions(env))
       const result = await Promise.race([
@@ -144,25 +166,6 @@ export async function notifySupport(env, message) {
       ])
       return result.accepted?.length === mail.to.length ? 'sent' : 'failed'
     }
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      signal: AbortSignal.timeout(10000),
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-        'Idempotency-Key': `contact/${message.id}`,
-      },
-      body: JSON.stringify({
-        from: mail.from,
-        to: mail.to,
-        reply_to: mail.replyTo,
-        subject: mail.subject,
-        text: mail.text,
-      }),
-    })
-    const result = await response.json().catch(() => null)
-    if (response.ok && typeof result?.id === 'string' && result.id) return 'sent'
-    console.error('contact mail failed', { id: message.id, status: response.status })
   } catch (error) {
     const reason = ['EAUTH', 'ECONNECTION', 'ETIMEDOUT', 'ESOCKET', 'EDNS', 'ETLS'].includes(error?.code)
       ? error.code : 'transport_failed'
