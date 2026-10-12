@@ -376,7 +376,7 @@
       "refresh": "Oppdater",
       "stale": "Viser sist hentede tall.",
       "setupTitle": "Koble til Cloudflare-statistikken",
-      "setupBody": "Trafikkpanelet er klart, men tilkoblingen må settes opp på serveren. Se oppsettet i README under «Admin traffic analytics».",
+      "setupBody": "Trafikkpanelet er klart, men tilkoblingen må settes opp på serveren. Se «Traffic analytics» i docs/OPERATIONS.md.",
       "openCloudflare": "Åpne Cloudflare",
       "metrics": {
         "visitors": "Unike IP-er",
@@ -400,7 +400,12 @@
       "health": "Cache og feil",
       "showStatuses": "Vis HTTP-statuskoder",
       "tor": "Tor-nettverket",
-      "unknownCountry": "Ukjent land"
+      "unknownCountry": "Ukjent land",
+      "gamesTitle": "Trafikk per spill",
+      "gamesNote": "Vellykkede sidelastinger for spill (GET, HTTP 200/304) på spillarena.no. Inkluderer roboter og estimerte tall; utelater filer, API-kall og omdirigeringer. Andelen gjelder spillbesøk i denne perioden.",
+      "game": "Spill",
+      "gameVisits": "Sidebesøk",
+      "gameShare": "Andel"
     },
     "messages": {
       "accountCreated": "Konto opprettet",
@@ -532,7 +537,23 @@
     "recoveryDescription": "En gjenopprettingskode hjelper deg tilbake hvis du glemmer PIN-koden.",
     "renameTitle": "Bytt brukernavn",
     "signInIntro": "Logg inn for å se fremgangen din i alle spillene. Du kan også fortsette å spille som gjest.",
-    "skipContent": "Hopp til innholdet"
+    "skipContent": "Hopp til innholdet",
+    "avatar": {
+      "title": "Profilbilde",
+      "intro": "Velg en stil og trekk nye bilder til du finner ditt uttrykk. Bildet lagres på kontoen din.",
+      "style": "Bildestil",
+      "initial": "Første bokstav",
+      "styles": {
+        "bottts": "Roboter",
+        "fun-emoji": "Emoji",
+        "pixel-art": "Pikselkunst"
+      },
+      "shuffle": "Trekk nytt bilde",
+      "save": "Lagre bilde",
+      "saving": "Lagrer…",
+      "cancel": "Avbryt",
+      "credit": "Avatarer fra"
+    }
   },
   "legal": {
     "back": "Tilbake til spillene",
@@ -546,9 +567,9 @@
         {
           "h": "Hva vi lagrer på tjenerne våre",
           "p": [
-            "Bare hvis du lager en konto: brukernavnet ditt, en saltet hash av PIN-koden (aldri selve PIN-koden), en hash av gjenopprettingskoden, datoene du registrerte deg og sist var innom, XP og fremgang per spill, og poengsummene du sender til ledertavlene.",
+            "Bare hvis du lager en konto: brukernavnet ditt, en saltet hash av PIN-koden (aldri selve PIN-koden), en hash av gjenopprettingskoden, datoene du registrerte deg og sist var innom, XP og fremgang per spill, og poengsummene du sender til ledertavlene. Hvis du velger et profilbilde, lagrer vi også DiceBear-stilen og en tilfeldig nøkkel; bildet genereres lokalt i nettleseren din.",
             "Vi ber ikke om og lagrer ikke e-postadresse, fullt navn, telefonnummer eller posisjon for kontoer eller spill, og vi lagrer ikke IP-adresser i vår egen database.",
-"Bruker du kontaktskjemaet, lagrer vi meldingen din, e-postadressen din, navnet du skriver inn, emnet, brukernavnet ditt, datoen kontoen ble opprettet og tidspunktet for siste aktivitet hvis du er innlogget, og en enveis-hash av IP-adressen din som skifter hver dag og ikke kan gjøres om til adressen. Den brukes bare til å begrense hvor mange meldinger én avsender kan sende i timen. Meldinger beholdes i høyst ett år, og vi kan slette din på forespørsel."
+            "Bruker du kontaktskjemaet, lagrer vi meldingen din, e-postadressen din, navnet du skriver inn, emnet, brukernavnet ditt, datoen kontoen ble opprettet og tidspunktet for siste aktivitet hvis du er innlogget, og en enveis-hash av IP-adressen din som skifter hver dag og ikke kan gjøres om til adressen. Den brukes bare til å begrense hvor mange meldinger én avsender kan sende i timen. Meldinger beholdes i høyst ett år, og vi kan slette din på forespørsel."
           ]
         },
         {

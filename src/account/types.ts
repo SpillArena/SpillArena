@@ -84,6 +84,8 @@ export interface ProfileResponse<T> {
 
 export interface AccountOverview {
     username: string
+    /** Optional account picture, currently rendered by the lobby only. */
+    avatar?: { style: 'bottts' | 'fun-emoji' | 'pixel-art'; seed: string } | null
     createdAt: string
     lastSeen: string
     /**

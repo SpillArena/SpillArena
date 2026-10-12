@@ -1,5 +1,8 @@
+import { GAMES } from './games-registry.js'
+import { popularityFilter, normalizePopularity } from './popularity-server.js'
+
 /** Cloudflare zone analytics. No beacon or extra visitor tracking is needed. */
-export const TRAFFIC_QUERY = `query Traffic($zone: string, $from: string, $to: string, $limit: int) {
+export const TRAFFIC_QUERY = `query Traffic($zone: string, $from: string, $to: string, $limit: int, $gameFilter: ZoneHttpRequestsAdaptiveGroupsFilter_InputObject) {
   viewer { zones(filter: {zoneTag: $zone}) {
     totals: httpRequests1dGroups(limit: 1, filter: {date_geq: $from, date_leq: $to}) {
       sum { requests bytes cachedRequests pageViews threats
@@ -13,10 +16,18 @@ export const TRAFFIC_QUERY = `query Traffic($zone: string, $from: string, $to: s
       sum { requests bytes pageViews }
       uniq { uniques }
     }
+    games: httpRequestsAdaptiveGroups(limit: 100, filter: $gameFilter) {
+      count
+      dimensions { clientRequestPath }
+    }
   } }
 }`
 
 const DAY_MS = 86400000
+
+export function gameTrafficFilter(period, now = new Date()) {
+  return { ...popularityFilter(now), datetime_geq: `${period.from}T00:00:00.000Z` }
+}
 
 export function trafficPeriod(days, now = new Date()) {
   const to = now.toISOString().slice(0, 10)
@@ -31,6 +42,8 @@ function number(value) {
 
 /** Uniques must come from the period aggregate, never by adding daily uniques. */
 export function normalizeTraffic(zone, days, period, now = new Date()) {
+  const ranking = normalizePopularity(zone, gameTrafficFilter(period, now), now)
+  const gameCounts = new Map(ranking.games.map(row => [row.game, row.requests]))
   if (!Array.isArray(zone?.totals) || !Array.isArray(zone?.daily)) throw new Error('Missing analytics dataset')
   const total = zone.totals[0]
   if (!total && zone.daily.length) throw new Error('Missing analytics totals')
@@ -48,6 +61,8 @@ export function normalizeTraffic(zone, days, period, now = new Date()) {
     from: period.from,
     to: period.to,
     fetchedAt: now.toISOString(),
+    games: GAMES.map(game => ({ game, requests: gameCounts.get(game) ?? 0 }))
+      .sort((a, b) => b.requests - a.requests || a.game.localeCompare(b.game)),
     totals: {
       requests,
       visitors: total ? number(total.uniq?.uniques) : 0,

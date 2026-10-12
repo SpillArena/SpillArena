@@ -376,7 +376,7 @@
       "refresh": "Refresh",
       "stale": "Showing the last fetched figures.",
       "setupTitle": "Connect Cloudflare analytics",
-      "setupBody": "The traffic panel is ready, but the server connection needs configuring. See “Admin traffic analytics” in the README.",
+      "setupBody": "The traffic panel is ready, but the server connection needs configuring. See “Traffic analytics” in docs/OPERATIONS.md.",
       "openCloudflare": "Open Cloudflare",
       "metrics": {
         "visitors": "Unique IPs",
@@ -400,7 +400,12 @@
       "health": "Cache and errors",
       "showStatuses": "Show HTTP status codes",
       "tor": "Tor network",
-      "unknownCountry": "Unknown country"
+      "unknownCountry": "Unknown country",
+      "gamesTitle": "Traffic per game",
+      "gamesNote": "Successful game page loads (GET, HTTP 200/304) on spillarena.no. Includes bots and sampled estimates; excludes assets, API calls and redirects. Share is of game visits in this period.",
+      "game": "Game",
+      "gameVisits": "Page visits",
+      "gameShare": "Share"
     },
     "messages": {
       "accountCreated": "Account created",
@@ -532,7 +537,23 @@
     "recoveryDescription": "A recovery code gets you back in if you forget your PIN.",
     "renameTitle": "Change username",
     "signInIntro": "Sign in to see your progress across every game. You can also keep playing as a guest.",
-    "skipContent": "Skip to content"
+    "skipContent": "Skip to content",
+    "avatar": {
+      "title": "Profile picture",
+      "intro": "Pick a style and shuffle until you find your look. Your picture is saved to your account.",
+      "style": "Picture style",
+      "initial": "First letter",
+      "styles": {
+        "bottts": "Robots",
+        "fun-emoji": "Emoji",
+        "pixel-art": "Pixel art"
+      },
+      "shuffle": "Shuffle picture",
+      "save": "Save picture",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "credit": "Avatars by"
+    }
   },
   "legal": {
     "back": "Back to games",
@@ -546,9 +567,9 @@
         {
           "h": "What we store on our servers",
           "p": [
-            "Only if you create an account: your username, a salted hash of your PIN (never the PIN itself), a hash of your recovery code, the dates you registered and were last seen, your XP and per-game progress, and the scores you post to leaderboards.",
+            "Only if you create an account: your username, a salted hash of your PIN (never the PIN itself), a hash of your recovery code, the dates you registered and were last seen, your XP and per-game progress, and the scores you post to leaderboards. If you choose a profile picture, we also store its DiceBear style and random seed; the picture is generated locally in your browser.",
             "We do not ask for or store an email address, real name, phone number or location for accounts or games, and we do not store IP addresses in our own database.",
-"If you use the contact form we store your message, your email address, the name you enter, the topic, your username, account creation date and last activity time if you are signed in, and a one-way hash of your IP address that changes every day and cannot be turned back into the address. It is used only to limit how many messages one sender can post per hour. Messages are kept for at most a year, and we can delete yours on request."
+            "If you use the contact form we store your message, your email address, the name you enter, the topic, your username, account creation date and last activity time if you are signed in, and a one-way hash of your IP address that changes every day and cannot be turned back into the address. It is used only to limit how many messages one sender can post per hour. Messages are kept for at most a year, and we can delete yours on request."
           ]
         },
         {

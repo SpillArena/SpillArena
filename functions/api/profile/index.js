@@ -9,6 +9,7 @@
  */
 
 import { json, requireUser, serviceFailed } from '../../../shared/account-server.js'
+import { readAvatar } from '../../../shared/avatar.js'
 
 export async function onRequestGet(context) {
   const { env, request } = context
@@ -18,7 +19,7 @@ export async function onRequestGet(context) {
   try {
     const [account, progress] = await Promise.all([
       env.DB.prepare(
-        `SELECT username, created_at AS createdAt, last_seen AS lastSeen,
+        `SELECT username, avatar, created_at AS createdAt, last_seen AS lastSeen,
                 recovery_hash IS NOT NULL AS hasRecoveryCode
          FROM players WHERE username = ?`,
       )
@@ -45,6 +46,7 @@ export async function onRequestGet(context) {
 
     return json({
       username: account.username,
+      avatar: readAvatar(account.avatar),
       createdAt: account.createdAt,
       lastSeen: account.lastSeen,
       // forsiden viser adminpanelet ut fra dette; hvert admin-kall sjekker

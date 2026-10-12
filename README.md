@@ -1,334 +1,104 @@
-# SpillArena
+<p align="center">
+  <img src="src/assets/logo.svg" width="88" alt="SpillArena logo" />
+</p>
 
-SpillArena is a lightweight game hub that presents game cards with live links, beta gating, language switching (Norwegian/English), and theme switching (dark/light).
+<h1 align="center">SpillArena</h1>
 
-## Features
+<p align="center"><strong>Your next game starts here.</strong><br />
+A browser arcade for quick challenges, friendly competition, and one shared player profile.</p>
 
-- Modern card-based game overview
-- Beta flow with confirmation modal before entering beta games
-- Dark and light mode with persisted user preference
-- Language selector with persisted user preference
-- Automatic default language:
-  - Norwegian system language -> Norwegian (no)
-  - Any other system language -> English (en)
-- Footer links for repository and portfolio
-- App version displayed from package metadata
+<p align="center">
+  <a href="https://spillarena.no">Play now</a> ·
+  <a href="https://spillarena.no/#faq">FAQ</a> ·
+  <a href="https://spillarena.no/#contact">Contact</a> ·
+  <a href="docs/OPERATIONS.md">Developer docs</a>
+</p>
 
-## Tech Stack
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Cloudflare-Pages-F38020?logo=cloudflare&logoColor=white" alt="Cloudflare Pages" />
+  <img src="https://img.shields.io/badge/Languages-NO%20%2F%20EN-785A85" alt="Norwegian and English" />
+</p>
 
-- React 19
-- TypeScript
-- Vite
-- Tailwind CSS v4
-- i18next + react-i18next
-- lucide-react icons
-- ESLint 9
+## Step into the arena
 
-## Getting Started
+SpillArena brings independent web games together in a responsive lobby. Browse by category, search for a favourite, or let the game picker choose your next challenge. Play as a guest, or sign in to keep supported game progress and scores connected to one account.
 
-### 1. Install dependencies
+- **Find your game.** Category filters, search, bilingual posters, and a spotlight based on recent game-page visits.
+- **Make it yours.** Shared profiles, XP and levels from saved game progress, and optional DiceBear pictures with a first-letter default.
+- **Play comfortably.** Norwegian and English, light and dark themes, responsive layouts, and storage controls.
+- **Stay informed.** Clear beta prompts, a changelog, FAQ suggestions in the contact form, and account recovery.
+- **Run the arena.** An authenticated admin panel for players, saved progress, moderation, messages, audit history, and traffic per game.
+
+## Pick a challenge
+
+| Game | The challenge |
+| --- | --- |
+| [FleetBot](https://github.com/SpillArena/FleetBot) | Battleship strategy and friendly naval duels |
+| [HangBot](https://github.com/SpillArena/HangBot) | Guess the word before the drawing is complete |
+| [ScribbleBot](https://github.com/SpillArena/ScribbleBot) | Recognise drawings as they come to life |
+| [AtlasMaster](https://github.com/SpillArena/AtlasMaster) | Explore geography and test your map knowledge |
+| [ProportionPanic](https://github.com/SpillArena/ProportionPanic) | Judge proportions and sharpen your estimation skills |
+| [PixelPanic](https://github.com/SpillArena/PixelPanic) | Identify pictures through their pixels |
+| [EraShuffle](https://github.com/SpillArena/EraShuffle) | Put historical events in chronological order |
+| [MelodyRush](https://github.com/SpillArena/MelodyRush) | Recognise music from short previews |
+| [Hitline](https://github.com/SpillArena/Hitline) | Place songs on a musical timeline |
+
+Game availability and beta status are maintained in [`src/data/games.ts`](src/data/games.ts). Each game has its own repository; this one owns the lobby and shared account service.
+
+## Run locally
+
+Use Node.js 22.12+ and npm.
 
 ```bash
-npm install
-```
-
-### 2. Start development server
-
-```bash
+npm ci
 npm run dev
 ```
 
-### 3. Build for production
+Vite serves the frontend. Accounts, contact messages, and analytics need Cloudflare Pages Functions, a local D1 database, and an ignored `.dev.vars` file. Follow the [operations guide](docs/OPERATIONS.md) for full-stack setup and production configuration. Keep credentials out of `VITE_` variables and Git.
+
+## Check a change
 
 ```bash
+npm run lint
+npm run test:admin
+npm run test:avatar
+npm run test:popularity
+npm run test:contact
 npm run build
 ```
 
-### 4. Preview production build
+`npm run preview` serves the production frontend build. `npm run art` regenerates the shared game artwork.
 
-```bash
-npm run preview
-```
+## Built with
 
-## Available Scripts
-
-- npm run dev: Run Vite in development mode
-- npm run build: Type-check and build production bundle
-- npm run lint: Run ESLint
-- npm run preview: Preview production build locally
-
-## Traffic analytics and game popularity
-
-### Popular game in the spotlight
-
-The lobby checks `GET /api/popular-games` for the most visited playable game
-over a rolling 24-hour window. It reads the same Cloudflare analytics credential
-as the admin traffic panel. Only successful `GET` requests (200 or 304) to the
-known game entry paths on `spillarena.no` are counted. Both trailing-slash
-variants are combined; assets, API calls, redirects and other hostnames are
-excluded. Equal counts use a stable game-name order.
-
-The public endpoint returns aggregate game counts and timestamps, never the
-analytics token or visitor identities. Provider results are cached at the edge
-for five minutes. The lobby checks once per minute while visible and when the
-visitor returns to the tab. Missing configuration, empty traffic, stale data and
-provider failures show a neutral “Discover a game” fallback without claiming
-that it is the most popular. The selected game's own poster, description and
-beta warning follow the current ranking.
-
-Popularity here means game-page loads, not completed rounds or unique players.
-Cloudflare's [HTTP analytics](https://developers.cloudflare.com/analytics/graphql-api/tutorials/end-customer-analytics/)
-can include bots and [sampled estimates](https://developers.cloudflare.com/analytics/graphql-api/sampling/).
-No additional browser tracking or database migration is needed.
-Run `npm run test:popularity` to check ranking, freshness, scope, caching and
-provider-failure behavior. To exercise the endpoint locally, serve the build
-with Pages Functions and the existing ignored `.dev.vars`; plain Vite serves
-only the frontend and will show the neutral fallback.
-
-### Admin-only traffic report
-
-The admin panel's **Traffic** tab reads existing Cloudflare zone analytics via
-`GET /api/admin/traffic?days=1|7|30`. Every request verifies the signed-in account
-and its current admin flag. The Cloudflare credential never reaches the browser.
-The report refreshes once per minute while the tab is visible, and includes
-unique IP estimates, requests, page views, bytes, daily traffic, countries,
-cache usage and HTTP errors. Periods are UTC calendar days including today.
-Period-wide unique IPs are queried separately rather than summed across days.
-Zone traffic includes bots, API calls, files and proxied subdomains; it is not a
-count of human players. No additional tracking script is installed.
-
-`CLOUDFLARE_ZONE_ID` is configured in `wrangler.toml`. Create a dedicated read-only
-Analytics API token scoped to SpillArena's zone/account, following
-[Cloudflare's Analytics token instructions](https://developers.cloudflare.com/analytics/graphql-api/getting-started/authentication/api-token-auth/).
-Add it as the **CLOUDFLARE_ANALYTICS_TOKEN** secret in the `spillarena` Pages
-project (Settings → Variables and Secrets). Apply it to production and any
-preview environment that needs the report. Redeploy after configuring it.
-Do not use a `VITE_` variable for the token. Available history depends on the
-zone's Cloudflare plan; provider failures are displayed instead of fabricated
-zeroes. The 1/7/30-day queries were verified against SpillArena's Free zone.
-
-For local Pages Functions development, put `CLOUDFLARE_ANALYTICS_TOKEN` and
-`AUTH_SECRET` in the ignored `.dev.vars` file, use the local D1 migrations,
-and serve the build with Pages Functions. Plain `npm run dev` serves the frontend
-only. Without the analytics secret, the Traffic tab shows setup instructions.
-
-## Project Structure
+React · TypeScript · Vite · Tailwind CSS · Framer Motion · i18next · Lucide · DiceBear · Cloudflare Pages Functions · D1
 
 ```text
-src/
-  App.tsx
-  i18n.ts
-  index.css
-  assets/
-    games/
-    icons/
-  components/
-    HeaderSection.tsx
-    GamesSection.tsx
-    GameCard.tsx
-    BetaWarningModal.tsx
-    FooterSection.tsx
-  data/
-    games.ts
+src/          Lobby, profiles, admin UI, translations, and game artwork
+functions/    Account, progress, contact, and analytics API routes
+shared/       Server authentication, game registry, and analytics helpers
+migrations/   Shared account and leaderboard database schema
+tests/        API and analytics regression checks
+scripts/      Artwork generation and maintenance tools
+docs/         Architecture, operations, branding, and design notes
 ```
 
-## Game Configuration
+## Architecture and documentation
 
-Games are defined in src/data/games.ts.
+Games are routed under `spillarena.no/<game>` and share the same origin. The hub issues signed sessions and owns the account APIs; games keep their own gameplay and interfaces. The admin panel checks the current account permissions on every request. Analytics are supplied by Cloudflare without an added browser beacon.
 
-Hitline is listed as a beta music timeline game at `/hitline/`. Its Norwegian and English posters and square icon follow the shared game artwork style. Edit `scripts/generate-game-art.mjs` and run `npm run art` to regenerate the artwork and its manifest.
-
-Each game supports:
-
-- id: number
-- title: string
-- descriptionKey: i18n key for description
-- icon: lucide icon key
-- showcase: optional image
-- color: badge color class
-- githubUrl: repository URL
-- liveUrl: game URL
-- disabled: optional, marks a non-clickable game
-- beta: optional, shows beta badge and requires modal confirmation
-
-## Localization
-
-Translations are configured in src/i18n.ts.
-
-- Supported languages: no, en
-- User language is stored in localStorage key language
-- On first visit, language falls back to system language rules described above
-
-## Theme Behavior
-
-- Theme is toggled in the header
-- Current theme is stored in localStorage key theme
-- Dark mode class is applied to html and body
-
-## Notes
-
-- Footer version label is pulled from package.json version
-- Portfolio icon automatically switches between light/dark variants based on current theme
+- [Account architecture, analytics, and deployment](docs/OPERATIONS.md)
+- [Shared shell and branding](docs/SITE_SHELL.md)
+- [Lobby and account design](docs/design/IMPLEMENTATION.md)
+- [Avatar credits and licences](docs/AVATAR_CREDITS.md)
+- [GitHub About text and topics](docs/GITHUB_ABOUT.md)
 
 ## Contributing
 
-1. Create a branch from development
-2. Make your changes
-3. Run lint and build locally
-4. Open a pull request
+Create a branch from `development`, keep changes focused, and run the checks above. Include screenshots for visible UI changes and document any migrations or configuration requirements in your pull request.
 
-## The SpillArena account
+---
 
-One account, every game. The front page is the only service on the domain that
-issues a sign-in; every game trusts it and none of them ask again.
-
-### Why it is this simple
-
-Every game is served from `https://spillarena.no`. The router strips `/<game>`
-before it proxies on to that game's Pages project, so the browser never leaves
-the origin. One origin means one `localStorage`. The token the front page
-writes is already sitting in the browser when the player clicks into a game.
-No cross-domain handshake, because there is no second domain.
-
-The token is signed rather than encrypted: `base64url({username,
-expiry}).signature`, HMAC-SHA256 with `AUTH_SECRET`. A game verifies it by
-recomputing the signature. So a game learns who the player is without a
-database lookup, without calling the front page, and without sharing a database
-with it.
-
-### The pieces
-
-| Path | What it is |
-|---|---|
-| `functions/api/auth/` | Register, sign in, and check a token. The only issuer. |
-| `functions/api/profile/[game].js` | One JSON document per (account, game). The game owns its shape. |
-| `functions/api/profile/` | Every game in one call, for the header panel. |
-| `functions/api/account/` | Change PIN, delete the account and its profiles. |
-| `shared/account-server.js` | PBKDF2, HMAC, token issue and verify. |
-| `shared/games-registry.js` | Which game ids exist, and the size limits on a profile. |
-| `src/account/` | The client. **Vendored**: identical copies live in every game repo. |
-
-`src/account/` is the canonical copy. Fix it here, then copy it out:
-
-```bash
-for g in AtlasMaster ScribbleBot ProportionPanic PixelPanic HangBot EraShuffle FleetBot/battleship-frontend; do
-  rm -rf ../$g/src/account && cp -R src/account ../$g/src/account
-done
-```
-
-Each game verifies tokens with its own copy of `shared/verify-token.{js,ts}`,
-which mirrors the computation in `shared/account-server.js`.
-
-### What a PIN protects
-
-Four to six digits is ten thousand to a million values, and no key derivation
-makes that number big. The attempt limit is what stops someone guessing: five
-wrong in a row locks the account for fifteen minutes. PBKDF2 covers the other
-case. If the database leaks, nobody should be able to read a PIN straight out
-of it. You need both. This guards a game account on a scoreboard, which is the
-level I picked on purpose.
-
-### Setting it up
-
-```bash
-# 1. the account database, once
-npx wrangler d1 create spillarena-accounts
-#    paste the id into wrangler.toml, then
-npx wrangler d1 migrations apply spillarena-accounts --remote
-
-# 2. the signing key, once. The SAME string on every project below
-npx wrangler pages secret put AUTH_SECRET            # in SpillArena/
-#    AtlasMaster/, ScribbleBot/, FleetBot/battleship-frontend/  (pages secret put)
-#    ProportionPanic/worker/                                    (wrangler secret put)
-
-# 3. move the accounts that already exist in AtlasMaster
-node scripts/migrate-atlasmaster-accounts.mjs          # writes the SQL
-node scripts/migrate-atlasmaster-accounts.mjs --apply  # and runs it
-```
-
-Use **AtlasMaster's existing `AUTH_SECRET`** as the domain-wide one. The PIN
-hashes are copied across verbatim, so players sign in with the PIN they already
-have. Reusing the secret also keeps the tokens sitting in their browsers valid
-through the switch.
-
-One thing lives outside these repos: the router has to send `/api/*` to this
-Pages project. Everything else is already on this origin, but if `/api/auth`
-404s in production, that rule is why.
-
-### The admin panel
-
-Accounts with `players.admin = 1` get an **Admin panel** button in the
-account menu. It shows sign-up and activity numbers, every player's saved
-progress and leaderboard rows, and a log of what admins have done. From a
-player's card an admin can ban and unban, lift a PIN lockout, set a new PIN,
-rename, remove leaderboard rows, make another player admin, and delete the
-account.
-
-| Path | What it is |
-|---|---|
-| `functions/api/admin/` | Overview, player list, and one player (read and act). |
-| `shared/admin-server.js` | The admin check, the audit log, and which leaderboards live in the hub database. |
-| `src/admin/`, `src/components/admin/` | The panel. Front page only; not vendored. |
-
-`admin` is a 0/1 column on the `players` row, read on every call and never from
-the token, so clearing it takes effect on the next click. Migration 0009 sets it
-for `Emil`; if that account does not exist yet, create it and run
-`UPDATE players SET admin = 1 WHERE username = 'Emil'` by hand.
-
-The panel can make someone admin but cannot take it away, and admins cannot
-ban, rename, reset or delete each other. All admins are equal, so a remove
-button would let any one of them remove the rest. Removing admin is done in the
-database: `UPDATE players SET admin = 0 WHERE username = '<name>'`.
-
-**A ban reaches the games only partly.** Every `/api/*` call here looks up the
-row, so a banned player is signed out on the front page and in every game the
-next time that game syncs a profile, and cannot sign in again. The games'
-leaderboard endpoints verify the token by signature alone, though, so a token
-issued before the ban can still post scores until it expires (30 days). Closing
-that gap means each game checking `players.banned_at`, which the shared database
-now allows.
-
-Apply the migration **before** deploying this code:
-
-```bash
-npx wrangler d1 migrations apply spillarena-hub --remote
-```
-
-The account endpoints read the row with `SELECT *` so they keep working either
-way, but the panel needs the new columns.
-
-### Local development
-
-The router does not exist locally, so each game proxies `/api/auth`,
-`/api/profile` and `/api/account` to port 8789 (see each `vite.config`). Run the
-account service beside the game:
-
-```bash
-cd SpillArena && npx wrangler pages dev --port 8789
-```
-
-With nothing on 8789 the games still run, without accounts. That is the path a
-player without one takes anyway.
-
-### What changed in the games
-
-- **AtlasMaster** had its own accounts; they moved here. `src/game/auth.ts` is
-  now a thin shim, and its `functions/api/auth` and `functions/api/profile` are
-  gone. Sessions stored under the old `auth` key are adopted on first load.
-- **ScribbleBot, HangBot, FleetBot** took a name from a text field. Posting to
-  the shared board now requires an account, and the name on a row comes from the
-  token. Playing without one still works. The score stays on the device, the
-  way it always did when the API was unreachable.
-- **HangBot and FleetBot** also let anyone delete any row by id. Deleting now
-  requires a token and only touches your own rows.
-- **ProportionPanic** identified a player by a random per-device `clientId`.
-  Signed in, the daily row is keyed to the account instead, so today's result
-  follows the player between devices and still collapses to one row per day.
-
-## Shared site shell
-
-The site follows the 1760px SpillArena shell, with consistent navigation, a slim footer, shared storage controls and game-specific link previews. See [site shell and branding](docs/SITE_SHELL.md).
-
-## Lobby and account design
-
-The lobby uses the cream/plum arcade design with a featured game, category filters, a game picker, and visible Changelog/version. Sign-in and profile have matching full-page views at `/#login` and `/#profile`, with registration and PIN recovery available from sign-in. See [implemented design and validation](docs/design/IMPLEMENTATION.md).
+Created and maintained by [Emil Berglund](https://github.com/EmilB04) · [emilb.no](https://emilb.no)

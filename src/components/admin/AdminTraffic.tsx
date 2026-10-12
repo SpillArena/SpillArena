@@ -5,6 +5,7 @@ import { fetchTraffic } from '../../admin/api'
 import { errorText, formatNumber } from '../../admin/format'
 import type { AdminErrorCode, TrafficData, TrafficDays, TrafficResponse } from '../../admin/types'
 import { Button, Card, ErrorNotice, Muted, SectionHeading } from './ui'
+import { gameIcon, games } from '../../data/games'
 
 const PERIODS: TrafficDays[] = [1, 7, 30]
 
@@ -98,6 +99,8 @@ function TrafficReport({ data }: { data: TrafficData }) {
     const { t, i18n } = useTranslation()
     const locale = i18n.language === 'no' ? 'nb-NO' : 'en-GB'
     const n = (value: number) => formatNumber(value, i18n.language)
+    const gameTotal = data.games.reduce((sum, row) => sum + row.requests, 0)
+    const gameMax = Math.max(1, ...data.games.map(row => row.requests))
     const pct = (value: number) => new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 1 }).format(value)
     const date = (value: string) => new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`))
     const displayNames = new Intl.DisplayNames([locale], { type: 'region' })
@@ -130,6 +133,21 @@ function TrafficReport({ data }: { data: TrafficData }) {
                 ))}
             </ul>
             <Muted className="text-xs">{t('admin.traffic.measurementNote')}</Muted>
+            <Card>
+                <SectionHeading>{t('admin.traffic.gamesTitle')}</SectionHeading>
+                <Muted className="mb-4 text-xs">{t('admin.traffic.gamesNote')}</Muted>
+                <div className="overflow-x-auto"><table className="w-full text-left text-sm">
+                    <thead><tr><th scope="col" className="pb-3">{t('admin.traffic.game')}</th><th scope="col" className="pb-3 text-right">{t('admin.traffic.gameVisits')}</th><th scope="col" className="pb-3 pl-4 text-right">{t('admin.traffic.gameShare')}</th></tr></thead>
+                    <tbody>{data.games.map(row => {
+                        const game = games.find(item => new URL(item.liveUrl).pathname.split('/')[1] === row.game)
+                        return <tr key={row.game}>
+                            <th scope="row" className="py-3 pr-4 font-normal"><div className="flex items-center gap-3">{game && <img src={gameIcon(game)} alt="" width={32} height={32} className="rounded-lg" />}<span>{game?.title ?? row.game}</span></div><div className="mt-2 h-1 overflow-hidden rounded-full" style={{ background: 'var(--border)' }}><div className="h-full rounded-full" style={{ width: `${row.requests / gameMax * 100}%`, background: 'var(--accent)' }} /></div></th>
+                            <td className="text-right tabular-nums">{n(row.requests)}</td><td className="pl-4 text-right tabular-nums">{pct(gameTotal ? row.requests / gameTotal : 0)}</td>
+                        </tr>
+                    })}</tbody>
+                </table></div>
+                {gameTotal === 0 && <Muted className="mt-3 text-xs">{t('admin.traffic.empty')}</Muted>}
+            </Card>
             <Card>
                 <SectionHeading aside={<span className="text-xs" style={{ color: 'var(--text-subtle)' }}>{date(data.from)} – {date(data.to)} · UTC</span>}>
                     {t('admin.traffic.chartTitle')}
