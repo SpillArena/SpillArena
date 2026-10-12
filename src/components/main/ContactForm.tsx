@@ -1,9 +1,10 @@
 import { useDeferredValue, useEffect, useId, useMemo, useRef, useState } from 'react'
-import { ArrowLeft, CheckCircle2, ChevronDown, Lightbulb, Send } from 'lucide-react'
+import { ArrowLeft, CheckCircle2, ChevronDown, Lightbulb, Mail, MessageSquareText, Send, Tag, UserRound } from 'lucide-react'
 import { Trans, useTranslation } from 'react-i18next'
-import { CONTACT_LIMITS, TOPICS, checkContact, sendContact, type Topic } from '../../lib/contact'
+import { CONTACT_LIMITS, TOPICS, checkContact, sendContact, type ContactReceipt, type Topic } from '../../lib/contact'
 import { matchFaq, type FaqItem } from '../../lib/faqMatch'
 import { useAccount } from '../../account'
+import logoUrl from '../../assets/logo.svg'
 
 type Phase = 'writing' | 'sending' | 'sent' | 'helped'
 
@@ -22,6 +23,7 @@ export default function ContactForm() {
   const [message, setMessage] = useState('')
   const [website, setWebsite] = useState('')
   const [phase, setPhase] = useState<Phase>('writing')
+  const [receipt, setReceipt] = useState<ContactReceipt | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [open, setOpen] = useState<number | null>(null)
 
@@ -38,6 +40,7 @@ export default function ContactForm() {
   const reset = () => {
     setMessage('')
     setError(null)
+    setReceipt(null)
     setPhase('writing')
     shownAt.current = Date.now()
   }
@@ -53,19 +56,70 @@ export default function ContactForm() {
       topic, name: name.trim(), email: email.trim(), message: message.trim(),
       lang: i18n.resolvedLanguage === 'en' ? 'en' : 'no', website, t: Date.now() - shownAt.current,
     })
-    if (result.ok) setPhase('sent')
+    if (result.ok) { setReceipt(result.receipt ?? null); setPhase('sent') }
     else { setError(result.error); setPhase('writing') }
   }
 
-  if (phase === 'sent') return <article className="legal-page contact-page" aria-live="polite">
-    <CheckCircle2 size={36} aria-hidden="true" className="contact-ok" />
-    <h1>{t('contact.sentTitle')}</h1>
-    <p className="legal-lead">{t('contact.sentBody', { email: email.trim() })}</p>
-    <div className="contact-actions">
-      <a className="button secondary" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('legal.back')}</a>
-      <button className="button secondary" type="button" onClick={reset}>{t('contact.sendAnother')}</button>
-    </div>
-  </article>
+  if (phase === 'sent') {
+    const subject = receipt?.subject ?? `[SpillArena] ${topic}: ${message.trim().replace(/\s+/g, ' ').slice(0, 60)}`
+    const recipient = receipt?.to ?? 'support@spillarena.no'
+    const receiptName = receipt?.name ?? name.trim()
+    const receiptEmail = receipt?.email ?? email.trim()
+    const receiptTopic = receipt?.topic ?? topic
+    const receiptMessage = receipt?.message ?? message.trim()
+    const receiptAccount = receipt?.account
+    const dateLocale = i18n.resolvedLanguage === 'en' ? 'en-GB' : 'nb-NO'
+    const formatAccountDate = (value: string) => {
+      const date = new Date(value)
+      return Number.isNaN(date.getTime()) ? value : date.toLocaleString(dateLocale, { dateStyle: 'medium', timeStyle: 'short' })
+    }
+    return <article className="contact-success" aria-live="polite">
+      <section className="contact-success-copy">
+        <div className="contact-success-mark" aria-hidden="true"><CheckCircle2 size={30} /></div>
+        <p className="contact-success-eyebrow">{t('contact.receiptEyebrow')}</p>
+        <h1>{t('contact.sentTitle')}</h1>
+        <p className="contact-success-lead">{t('contact.sentBody', { email: email.trim() })}</p>
+
+        <dl className="contact-receipt-details">
+          <div><dt><Mail size={16} aria-hidden="true" />{t('contact.receiptTo')}</dt><dd>{recipient}</dd></div>
+          <div><dt><UserRound size={16} aria-hidden="true" />{t('contact.receiptFrom')}</dt><dd>{receiptName} &lt;{receiptEmail}&gt;</dd></div>
+          <div><dt><Tag size={16} aria-hidden="true" />{t('contact.receiptTopic')}</dt><dd>{t(`contact.topics.${receiptTopic}`)}</dd></div>
+          {receipt?.username && <div><dt><UserRound size={16} aria-hidden="true" />{t('contact.receiptAccount')}</dt><dd>{receipt.username}</dd></div>}
+          {receiptAccount?.createdAt && <div><dt>{t('contact.receiptCreated')}</dt><dd>{formatAccountDate(receiptAccount.createdAt)}</dd></div>}
+          {receiptAccount?.lastSeen && <div><dt>{t('contact.receiptLastActive')}</dt><dd>{formatAccountDate(receiptAccount.lastSeen)}</dd></div>}
+        </dl>
+
+        <div className="contact-success-actions">
+          <a className="button primary" href="#"><ArrowLeft size={17} aria-hidden="true" />{t('contact.backToGames')}</a>
+          <button className="button secondary" type="button" onClick={reset}>{t('contact.sendAnother')}</button>
+        </div>
+      </section>
+
+      <section className="contact-email-preview" aria-label={t('contact.receiptPreview')}>
+        <div className="contact-email-topline"><span>{t('contact.receiptPreview')}</span><span>{t('contact.receiptSent')}</span></div>
+        <div className="contact-email-card">
+          <header className="contact-email-brand">
+            <img src={logoUrl} alt="" />
+            <strong>SpillArena</strong>
+            <span>{t('contact.receiptEmailLabel')}</span>
+          </header>
+          <div className="contact-email-content">
+            <h2>{subject}</h2>
+            <dl className="contact-email-meta">
+              <div><dt>{t('contact.receiptFrom')}</dt><dd>{receiptName} &lt;{receiptEmail}&gt;</dd></div>
+              <div><dt>{t('contact.receiptTo')}</dt><dd>{recipient}</dd></div>
+              {receipt?.username && <div><dt>{t('contact.receiptAccount')}</dt><dd>{receipt.username}</dd></div>}
+              {receiptAccount?.createdAt && <div><dt>{t('contact.receiptCreated')}</dt><dd>{formatAccountDate(receiptAccount.createdAt)}</dd></div>}
+              {receiptAccount?.lastSeen && <div><dt>{t('contact.receiptLastActive')}</dt><dd>{formatAccountDate(receiptAccount.lastSeen)}</dd></div>}
+            </dl>
+            <div className="contact-email-message"><MessageSquareText size={16} aria-hidden="true" /><p>{receiptMessage}</p></div>
+            <span className="contact-email-reply">{t('contact.replyTo', { name: receiptName })}</span>
+            <footer>{t('contact.receiptFooter', { id: receipt?.id ?? '—' })}</footer>
+          </div>
+        </div>
+      </section>
+    </article>
+  }
 
   if (phase === 'helped') return <article className="legal-page contact-page" aria-live="polite">
     <Lightbulb size={36} aria-hidden="true" className="contact-ok" />

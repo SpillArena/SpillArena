@@ -25,6 +25,10 @@ const CONTROL = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g
 
 const clean = (value) => String(value).replace(CONTROL, '').trim()
 
+const escapeHtml = (value) => String(value).replace(/[&<>\"']/g, character => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+}[character]))
+
 /**
  * Kroppen som en ren verdi, eller en feilkode.
  *
@@ -82,26 +86,72 @@ export function mailConfigured(env) {
 
 /** Fixed recipients and authenticated sender; replies go to the form's email. */
 export function supportMail(env, message) {
+  const english = message.lang === 'en'
+  const labels = english ? {
+    from: 'From', subject: 'Topic', account: 'Account', created: 'Account created', lastActive: 'Last active',
+    number: 'Message number', language: 'Language', guest: '(not signed in)', anonymous: '(no name)', reply: 'Reply to the message',
+    support: 'SUPPORT MESSAGE', footer: 'SpillArena support', languageName: 'English',
+  } : {
+    from: 'Fra', subject: 'Emne', account: 'Konto', created: 'Konto opprettet', lastActive: 'Sist aktiv',
+    number: 'Meldingsnummer', language: 'Språk', guest: '(ikke innlogget)', anonymous: '(uten navn)', reply: 'Svar på meldingen',
+    support: 'SUPPORTMELDING', footer: 'SpillArena support', languageName: 'Norsk',
+  }
   const subject = `[SpillArena] ${message.topic}: ${message.message.replace(/\s+/g, ' ').slice(0, 60)}`
   const lines = [
-    `Fra: ${message.name || '(uten navn)'} <${message.email}>`,
-    `Emne: ${message.topic}`,
-    `Konto: ${message.username ?? '(ikke innlogget)'}`,
+    `${labels.from}: ${message.name || labels.anonymous} <${message.email}>`,
+    `${labels.subject}: ${message.topic}`,
+    `${labels.account}: ${message.username ?? labels.guest}`,
     ...(message.account ? [
-      `Konto opprettet: ${message.account.createdAt}`,
-      `Sist aktiv: ${message.account.lastSeen}`,
+      `${labels.created}: ${message.account.createdAt}`,
+      `${labels.lastActive}: ${message.account.lastSeen}`,
     ] : []),
-    `Meldingsnummer: ${message.id}`,
-    `Språk: ${message.lang}`,
+    `${labels.number}: ${message.id}`,
+    `${labels.language}: ${message.lang}`,
     '',
     message.message,
   ]
+  const rows = [
+    [labels.from, `${message.name || labels.anonymous} <${message.email}>`],
+    [labels.subject, message.topic],
+    [labels.account, message.username ?? labels.guest],
+    ...(message.account ? [
+      [labels.created, message.account.createdAt],
+      [labels.lastActive, message.account.lastSeen],
+    ] : []),
+    [labels.number, message.id],
+    [labels.language, message.lang],
+  ]
+  const details = rows.map(([label, value]) => `<tr>
+    <td style="padding:6px 12px 6px 0;color:#675f70;font-size:14px;vertical-align:top;white-space:nowrap">${escapeHtml(label)}</td>
+    <td style="padding:6px 0;color:#211c2b;font-size:14px;overflow-wrap:anywhere">${escapeHtml(value)}</td>
+  </tr>`).join('')
+  const html = `<!doctype html>
+<html lang="${english ? 'en' : 'nb'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:32px 16px;background:#f3f0f6;font-family:Arial,Helvetica,sans-serif;color:#211c2b">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;margin:0 auto;background:#fff;border:1px solid #e4dfea;border-radius:16px;overflow:hidden">
+    <tr><td style="padding:24px 28px;background:#211229;color:#fff">
+      <table role="presentation" cellspacing="0" cellpadding="0"><tr>
+        <td><img src="https://spillarena.no/logo.png" width="48" height="48" alt="" style="display:block;border:0;border-radius:12px"></td>
+        <td style="padding-left:14px;font-size:23px;font-weight:700;letter-spacing:-.5px">SpillArena</td>
+        <td style="padding-left:24px;color:#e9c9f6;font-size:11px;font-weight:700;letter-spacing:2px;white-space:nowrap">${labels.support}</td>
+      </tr></table>
+    </td></tr>
+    <tr><td style="padding:30px 32px 14px"><h1 style="margin:0;color:#211c2b;font-size:24px;line-height:1.35">${escapeHtml(subject)}</h1></td></tr>
+    <tr><td style="padding:8px 32px 20px">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:14px 18px;background:#f5f3f8;border-radius:12px">${details}</table>
+    </td></tr>
+    <tr><td style="padding:0 32px 26px"><div style="padding:18px 20px;background:#fff1f7;border-radius:12px;color:#211c2b;font-size:16px;line-height:1.7;overflow-wrap:anywhere">${escapeHtml(message.message).replace(/\r\n|\r|\n/g, '<br>')}</div></td></tr>
+    <tr><td style="padding:0 32px 30px"><a href="mailto:${escapeHtml(message.email)}" style="display:inline-block;padding:13px 20px;background:#f02f70;border-radius:9px;color:#fff;text-decoration:none;font-size:14px;font-weight:700">${labels.reply}</a></td></tr>
+    <tr><td style="padding:18px 32px;border-top:1px solid #e8e3ec;color:#746b7d;font-size:12px;line-height:1.6">${labels.footer} · ${labels.number} ${escapeHtml(message.id)} · ${labels.languageName}</td></tr>
+  </table>
+</body></html>`
   return {
     from: env.CONTACT_FROM || 'SpillArena <support@spillarena.no>',
     to: [env.CONTACT_TO || 'support@spillarena.no'],
     replyTo: message.email,
     subject,
     text: lines.join('\n'),
+    html,
     messageId: `<contact-${message.id}@spillarena.no>`,
   }
 }
@@ -146,6 +196,7 @@ export async function notifySupport(env, message) {
           reply_to: mail.replyTo,
           subject: mail.subject,
           text: mail.text,
+          html: mail.html,
         }),
       })
       const result = await response.json().catch(() => null)
