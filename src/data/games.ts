@@ -56,7 +56,7 @@ export const games: Game[] = [
         category: "words",
         descriptionKey: "scribbleBotDescription",
         icon: "PenTool",
-        color: "bg-green-500",
+        color: "bg-violet-500",
         githubUrl: "https://github.com/SpillArena/ScribbleBot",
         liveUrl: "https://spillarena.no/scribblebot",
     },
