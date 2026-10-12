@@ -207,8 +207,8 @@ const GAMES = [
     tagline: { no: 'Finn flåten deres før de finner din.', en: 'Find their fleet before they find yours.' },
     // Exported by FleetBot's npm run art -- --spillarena ../../SpillArena.
     // Local copies keep this repository's art build independent of FleetBot.
-    art: () => readFileSync(join(ROOT, 'scripts/art/fleetbot-board.svg'), 'utf8'),
-    icon: () => readFileSync(join(ROOT, 'scripts/art/fleetbot-icon.svg'), 'utf8'),
+    art: () => readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-board.svg'), 'utf8'),
+    icon: () => readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-icon.svg'), 'utf8'),
   },
   {
     id: 2, file: 'HangBot', title: ['Hang', 'Bot'],
@@ -221,11 +221,12 @@ const GAMES = [
   },
   {
     id: 3, file: 'ScribbleBot', title: ['Scribble', 'Bot'],
-    bg: '#16a34a', deep: '#052e16', accent: '#d9f99d',
-    genre: { no: 'Tegn og gjett', en: 'Draw and guess' },
-    tagline: { no: 'Boten tegner. Du gjetter hva det er.', en: 'The bot draws. You guess what it is.' },
-    guess: { no: 'Et hus?', en: 'A house?' },
-    art: (lang, game) => scribbleArt(game.guess[lang], game),
+    bg: '#2d3050', deep: '#141728', accent: '#b79bff', ink: '#f4f2ff',
+    genre: { no: 'Tegnespill · alene / venner', en: 'Drawing game · solo / friends' },
+    tagline: { no: 'Gjett tegningen før tiden renner ut.', en: 'Guess the doodle before the clock runs out.' },
+    hint: { no: '_ _ _ _ b _ _', en: '_ _ _ _ b _ _ _' },
+    guesses: { no: ['skip', 'seilbat', 'seilbåt'], en: ['ship', 'sailbot', 'sailboat'] },
+    art: (lang, game) => scribbleArt(lang, game),
     glyph: (game) => scribbleGlyph(game),
   },
   {
@@ -357,71 +358,88 @@ function hangGlyph() {
   return g('transform="translate(85 30) scale(1.9)"', hangDrawing())
 }
 
-// ---- ScribbleBot: et ark med en krusedull, en blyant og en gjetning
+// ---- ScribbleBot: et lerret fra spillet, gjetninger i farger og maskoten med blyanten
 
-/** En hånd-tegnet strek: punktene får litt slingring, deterministisk. */
-function scribble(points, wobble = 3) {
-  let seed = 7
-  const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280 - 0.5) * 2 * wobble
-  return points.map(([x, y], i) => `${i ? 'L' : 'M'}${r1(x + rnd())} ${r1(y + rnd())}`).join('')
+/*
+ * Tegningen på lerretet er ekte spillkunst: seilbåten fra ScribbleBot sin
+ * shared/art.ts, eksportert med spillets egen strekrenderer. Maskoten er den
+ * samme som i ScribbleBot sin logo. Fargene følger spillets lilla og marine.
+ */
+const SCRIBBLE = { ink: '#25304b', purple: '#9271d9', lilac: '#bda5f2', paper: '#ffffff', orange: '#ffad42', blush: '#f4a5b8' }
+
+const sailboatDrawing = () => readFileSync(join(ROOT, 'src/assets/games/art/scribblebot-sailboat.svg'), 'utf8')
+  .replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '').replace(/<!--[\s\S]*?-->/g, '')
+
+/** ScribbleBot sin maskot (logoen), 140×140, med en blyant i hånda. */
+function scribbleMascot(x, y, size) {
+  const c = SCRIBBLE
+  return g(`transform="translate(${x} ${y}) scale(${r1(size / 140 * 1000) / 1000})"`,
+    `<ellipse cx="70" cy="134" rx="44" ry="6" fill="#000" opacity=".22"/>`,
+    `<path d="M69 27V15" stroke="${c.ink}" stroke-width="5" stroke-linecap="round"/><circle cx="69" cy="12" r="7" fill="${c.orange}"/>`,
+    `<rect x="22" y="31" width="96" height="82" rx="29" fill="${c.purple}"/>`,
+    `<path d="M26 58V85M114 58V85" stroke="${c.lilac}" stroke-width="12" stroke-linecap="round"/>`,
+    `<rect x="33" y="43" width="74" height="52" rx="19" fill="#f6f4ff"/>`,
+    `<rect x="46" y="60" width="9" height="16" rx="4.5" fill="${c.ink}"/><rect x="85" y="60" width="9" height="16" rx="4.5" fill="${c.ink}"/>`,
+    `<path d="M62 79Q70 87 79 79" fill="none" stroke="${c.ink}" stroke-width="3" stroke-linecap="round"/>`,
+    `<circle cx="41" cy="78" r="4" fill="${c.blush}"/><circle cx="101" cy="78" r="4" fill="${c.blush}"/>`,
+    `<path d="M42 114L32 128M98 114L108 128" stroke="${c.purple}" stroke-width="10" stroke-linecap="round"/>`,
+    `<path d="M109 110L128 78" stroke="${c.orange}" stroke-width="10" stroke-linecap="round"/><path d="M129 75L133 67L134 79Z" fill="${c.ink}"/>`)
 }
 
-function drawing(scale, stroke) {
-  const s = (pts) => pts.map(([x, y]) => [x * scale, y * scale])
-  const lines = [
-    s([[30, 252], [100, 248], [180, 254], [260, 249], [330, 253]]),
-    s([[90, 250], [92, 172], [150, 112], [208, 170], [210, 251]]),
-    s([[80, 182], [150, 106], [222, 180]]),
-    s([[135, 251], [136, 205], [165, 204], [166, 250]]),
-  ]
-  let out = lines.map((pts) => `<path d="${scribble(pts, 2.4 * scale)}" fill="none" stroke="${stroke}" stroke-width="${r1(7 * scale)}" stroke-linecap="round" stroke-linejoin="round"/>`).join('')
-  // sola, med stråler
-  const cx = 280 * scale, cy = 80 * scale, rr = 26 * scale
-  out += `<circle cx="${r1(cx)}" cy="${r1(cy)}" r="${r1(rr)}" fill="none" stroke="${stroke}" stroke-width="${r1(7 * scale)}"/>`
-  for (let k = 0; k < 8; k++) {
-    const a = (k / 8) * Math.PI * 2
-    out += `<path d="M${r1(cx + Math.cos(a) * rr * 1.45)} ${r1(cy + Math.sin(a) * rr * 1.45)}L${r1(cx + Math.cos(a) * rr * 1.9)} ${r1(cy + Math.sin(a) * rr * 1.9)}" stroke="${stroke}" stroke-width="${r1(6 * scale)}" stroke-linecap="round"/>`
-  }
+/** En malingsklatt bak lerretet. */
+function paintSplat(x, y, size, color) {
+  return g(`transform="translate(${x} ${y}) scale(${r1(size / 200 * 1000) / 1000})"`,
+    `<path fill="${color}" d="M104 18c18 2 22 22 38 26s34-6 40 10-14 26-10 42 26 24 18 40-30 8-40 20-6 34-24 36-20-22-36-26-34 12-44-2 8-30 0-44-30-16-26-34 28-12 38-24 14-46 46-44Z"/>`,
+    `<circle cx="178" cy="26" r="7" fill="${color}"/><circle cx="20" cy="174" r="9" fill="${color}"/>`)
+}
+
+/** Lerretet: topplinje med bot og klokke, ordhint, og tegningen. */
+function scribbleCanvas(x, y, w, hint) {
+  const c = SCRIBBLE, h = w * 0.86, head = 50
+  const drawH = h - head - 40, drawW = drawH * 4 / 3
+  let out = cardShadow(x, y, w, h, 22, 14, 0.3)
+  out += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="22" fill="${c.paper}"/>`
+  out += `<path d="M${x} ${y + 22}a22 22 0 0 1 22 -22h${w - 44}a22 22 0 0 1 22 22v${head - 22}h${-w}Z" fill="#eef0f7"/>`
+  out += scribbleMascot(x + 14, y + 7, 36)
+  out += text('ScribbleBot', FONTS.sansBold, 16, x + 58, y + head / 2, { fill: c.ink, middle: true })
+  out += `<rect x="${x + w - 72}" y="${y + 11}" width="58" height="28" rx="10" fill="#fff"/>`
+  out += text('42s', FONTS.sansBold, 15, x + w - 43, y + 25, { fill: c.ink, middle: true, anchor: 'middle' })
+  out += text(hint, FONTS.sansBold, 22, x + w / 2, y + head + 24, { fill: c.ink, middle: true, anchor: 'middle', tracking: 6, opacity: 0.85 })
+  out += `<svg x="${r1(x + (w - drawW) / 2)}" y="${r1(y + head + 36)}" width="${r1(drawW)}" height="${r1(drawH)}" viewBox="140 90 720 540">${sailboatDrawing()}</svg>`
   return out
 }
 
-function pencil(x, y, length, width, angle) {
-  return g(`transform="translate(${x} ${y}) rotate(${angle})"`,
-    `<rect x="0" y="${r1(-width / 2 + width * 0.18)}" width="${length}" height="${width}" rx="${r1(width * 0.3)}" fill="#a16207"/>`,
-    `<rect x="0" y="${r1(-width / 2)}" width="${length}" height="${width}" rx="${r1(width * 0.3)}" fill="#fde047"/>`,
-    `<rect x="${r1(length * 0.05)}" y="${r1(-width / 2 + width * 0.12)}" width="${r1(length * 0.85)}" height="${r1(width * 0.22)}" rx="${r1(width * 0.1)}" fill="#fff" fill-opacity="0.35"/>`,
-    `<rect x="${r1(length - width * 0.2)}" y="${r1(-width / 2)}" width="${r1(width * 0.9)}" height="${width}" rx="${r1(width * 0.3)}" fill="#f9a8d4"/>`,
-    `<path d="M0 ${r1(-width / 2)}L${r1(-width * 1.1)} 0L0 ${r1(width / 2)}Z" fill="#fde7c3"/>`,
-    `<path d="M${r1(-width * 0.66)} ${r1(-width * 0.2)}L${r1(-width * 1.1)} 0L${r1(-width * 0.66)} ${r1(width * 0.2)}Z" fill="#1f2937"/>`)
-}
-
-function scribbleArt(guess, game) {
-  const ink = shade(game.bg, 0.6)
-  const paper = '#fffbeb'
-  let out = g('transform="rotate(-4 220 290)"',
-    cardShadow(40, 150, 360, 290, 22, 14),
-    `<rect x="40" y="150" width="360" height="290" rx="22" fill="${paper}"/>`,
-    g('transform="translate(40 150)"', drawing(1, ink)))
-  out += pencil(372, 418, 150, 34, -38)
-  // gjetningen i en snakkeboble
-  const size = 32, w = measure(guess, FONTS.serifItalic, size) + 96
-  const bx = 470 - w, by = 46
-  out += cardShadow(bx, by, w, 70, 22, 8, 0.18)
-  out += `<rect x="${r1(bx)}" y="${by}" width="${r1(w)}" height="70" rx="22" fill="#fff"/>`
-  out += `<path d="M${r1(bx + 40)} ${by + 66}L${r1(bx + 28)} ${by + 96}L${r1(bx + 70)} ${by + 66}Z" fill="#fff"/>`
-  out += text(guess, FONTS.serifItalic, size, bx + 26, by + 35, { fill: ink, middle: true })
-  out += tile(bx + w - 58, by + 15, 40, 40, '#4ade80', { depth: 3 })
-  out += `<path d="M${r1(bx + w - 48)} ${by + 36}l8 8l14 -16" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`
+/** En gjetning som en flis: rød = feil, oransje = nesten, grønn = riktig. */
+function guessChip(x, y, label, kind) {
+  const colors = { wrong: '#f45b69', close: '#ffad42', right: '#48b99a' }
+  const color = colors[kind], w = measure(label, FONTS.sansBold, 19) + 74
+  let out = tile(x - w, y, w, 46, color, { r: 15, depth: 5 })
+  out += text(label, FONTS.sansBold, 19, x - w + 20, y + 24, { fill: kind === 'close' ? '#3b2405' : '#fff', middle: true })
+  const ix = x - 30, iy = y + 23, stroke = kind === 'close' ? '#3b2405' : '#fff'
+  out += kind === 'right'
+    ? `<path d="M${ix - 8} ${iy}l6 6l11 -13" fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`
+    : kind === 'wrong'
+      ? `<path d="M${ix - 7} ${iy - 7}l14 14M${ix + 7} ${iy - 7}l-14 14" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>`
+      : `<circle cx="${ix}" cy="${iy}" r="7" fill="none" stroke="${stroke}" stroke-width="4"/>`
   return out
 }
 
-function scribbleGlyph(game) {
-  const ink = shade(game.bg, 0.6)
-  return g('transform="rotate(-5 256 256)"',
-    cardShadow(86, 106, 340, 290, 30, 16),
-    `<rect x="86" y="106" width="340" height="290" rx="30" fill="#fffbeb"/>`,
-    g('transform="translate(96 116) scale(0.9)"', drawing(1, ink)))
-    + pencil(372, 400, 120, 34, -38)
+function scribbleArt(lang, game) {
+  const g1 = game.guesses[lang]
+  let out = paintSplat(-10, 10, 190, '#9271d9') + paintSplat(370, 70, 150, '#ffad42')
+  out += g('transform="rotate(-3 250 230)"', scribbleCanvas(30, 40, 430, game.hint[lang]))
+  out += guessChip(510, 352, g1[0], 'wrong') + guessChip(510, 410, g1[1], 'close') + guessChip(510, 468, g1[2], 'right')
+  out += scribbleMascot(-20, 330, 170)
+  return out
+}
+
+function scribbleGlyph() {
+  let out = paintSplat(40, 40, 170, '#9271d9') + paintSplat(330, 300, 150, '#ffad42')
+  out += g('transform="rotate(-5 230 220)"', cardShadow(70, 90, 330, 250, 26, 14, 0.3),
+    `<rect x="70" y="90" width="330" height="250" rx="26" fill="#fff"/>`,
+    `<svg x="85" y="102" width="300" height="225" viewBox="140 90 720 540">${sailboatDrawing()}</svg>`)
+  out += scribbleMascot(250, 230, 230)
+  return out
 }
 
 // ---- AtlasMaster: en ekte jordklode med Norge uthevet, en nål og et spørsmål
@@ -895,7 +913,7 @@ for (const game of selected) {
   // Keep FleetBot's current posters exactly as exported by its own repository.
   for (const lang of LANGS) writeFileSync(join(OUT, `${game.file}.${lang}.svg`),
     game.file === 'FleetBot'
-      ? readFileSync(join(ROOT, `scripts/art/fleetbot-poster.${lang}.svg`), 'utf8')
+      ? readFileSync(join(ROOT, `src/assets/games/art/fleetbot-poster.${lang}.svg`), 'utf8')
       : banner(game, lang))
   writeFileSync(join(OUT, 'icons', `${game.file}.svg`), icon(game))
   manifest.push(game)

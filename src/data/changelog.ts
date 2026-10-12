@@ -8,6 +8,17 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '12-10-2026',
+        title: 'ScribbleBot: new posters and icon',
+        release: '1.10.1',
+        changes: [
+            'Updated the Norwegian and English ScribbleBot posters to the game\'s new navy and purple look, with a canvas showing a real drawing from the game, red, orange and green guess tiles and the ScribbleBot mascot holding its pencil',
+            'Refreshed the square ScribbleBot icon with the same canvas, paint splashes and mascot',
+            'Gave ScribbleBot a purple accent in the lobby to match the game',
+            'Moved the source artwork used to build the posters from scripts/art to src/assets/games/art, next to the other game images',
+        ],
+    },
+    {
+        date: '12-10-2026',
         title: 'The lobby spotlights the most visited game',
         release: '1.10.0',
         changes: [
