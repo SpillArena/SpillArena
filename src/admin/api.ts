@@ -5,6 +5,7 @@ import type {
     AdminErrorCode,
     AdminOverview,
     AdminResult,
+    ContactMessage,
     PlayerDetail,
     PlayerFilter,
     PlayerPage,
@@ -99,4 +100,16 @@ export function deletePlayer(
     scores: boolean,
 ): Promise<AdminResult<{ deleted: true }>> {
     return call(playerPath(username), { method: 'DELETE', body: JSON.stringify({ scores }) })
+}
+
+export function fetchMessages(): Promise<AdminResult<{ messages: ContactMessage[]; open: number }>> {
+    return call('/admin/messages')
+}
+
+export function setMessageStatus(id: number, status: 'new' | 'done'): Promise<AdminResult<{ ok: true }>> {
+    return call('/admin/messages', { method: 'POST', body: JSON.stringify({ id, status }) })
+}
+
+export function deleteMessage(id: number): Promise<AdminResult<{ ok: true }>> {
+    return call(`/admin/messages?id=${id}`, { method: 'DELETE' })
 }

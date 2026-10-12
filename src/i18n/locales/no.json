@@ -197,7 +197,8 @@
       "overview": "Oversikt",
       "players": "Spillere",
       "log": "Logg",
-      "traffic": "Trafikk"
+      "traffic": "Trafikk",
+      "messages": "Meldinger"
     },
     "loading": "Laster …",
     "retry": "Prøv igjen",
@@ -400,6 +401,23 @@
       "showStatuses": "Vis HTTP-statuskoder",
       "tor": "Tor-nettverket",
       "unknownCountry": "Ukjent land"
+    },
+    "messages": {
+      "empty": "Ingen meldinger ennå.",
+      "from": "Fra",
+      "topic": "Emne",
+      "account": "Konto",
+      "reply": "Svar på e-post",
+      "markDone": "Merk som ferdig",
+      "reopen": "Åpne igjen",
+      "delete": "Slett",
+      "confirmDelete": "Slette meldingen for godt?",
+      "open_one": "{{count}} åpen",
+      "open_other": "{{count}} åpne",
+      "status": {
+        "new": "Ny",
+        "done": "Ferdig"
+      }
     }
   },
   "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
@@ -483,7 +501,8 @@
     "gameCount_other": "{{count}} spill å utforske",
     "privacyLink": "Personvern",
     "termsLink": "Vilkår",
-    "faqLink": "Spørsmål"
+    "faqLink": "Spørsmål",
+    "contactLink": "Kontakt"
   },
   "profile": {
     "backToGames": "Tilbake til spillene",
@@ -515,7 +534,7 @@
     "back": "Tilbake til spillene",
     "updated": "Sist oppdatert 12. oktober 2026",
     "contactLabel": "Kontakt",
-    "contact": "Spørsmål, feil eller innsynsforespørsler: opprett en sak på github.com/SpillArena/SpillArena/issues.",
+    "contact": "Spørsmål, feil, sletting av konto eller innsynsforespørsler:",
     "privacy": {
       "title": "Personvernerklæring",
       "intro": "SpillArena er et gratis hobbyprosjekt drevet av Emil Berglund i Norge. Denne siden forklarer hva som lagres, hvorfor, og hvordan du fjerner det.",
@@ -524,7 +543,8 @@
           "h": "Hva vi lagrer på tjenerne våre",
           "p": [
             "Bare hvis du lager en konto: brukernavnet ditt, en saltet hash av PIN-koden (aldri selve PIN-koden), en hash av gjenopprettingskoden, datoene du registrerte deg og sist var innom, XP og fremgang per spill, og poengsummene du sender til ledertavlene.",
-            "Vi ber ikke om og lagrer ikke e-postadresse, fullt navn, telefonnummer eller posisjon, og vi lagrer ikke IP-adresser i vår egen database."
+            "Vi ber ikke om og lagrer ikke e-postadresse, fullt navn, telefonnummer eller posisjon for kontoer eller spill, og vi lagrer ikke IP-adresser i vår egen database.",
+"Bruker du kontaktskjemaet, lagrer vi meldingen din, e-postadressen din, navnet du skriver inn (valgfritt), emnet, brukernavnet ditt hvis du er innlogget, og en enveis-hash av IP-adressen din som skifter hver dag og ikke kan gjøres om til adressen. Den brukes bare til å begrense hvor mange meldinger én avsender kan sende i timen. Meldinger beholdes i høyst ett år, og vi kan slette din på forespørsel."
           ]
         },
         {
@@ -549,7 +569,7 @@
         {
           "h": "Hvorfor vi behandler det (behandlingsgrunnlag)",
           "p": [
-            "Kontodata behandles for å levere kontoen og ledertavlene du ba om (avtale). Lagring i nettleseren skjer bare med samtykke. Sikkerhetslogging er berettiget interesse."
+            "Kontodata behandles for å levere kontoen og ledertavlene du ba om (avtale). Kontaktmeldinger behandles for å svare deg (din henvendelse). Lagring i nettleseren skjer bare med samtykke. Søppelfilter og sikkerhetslogging er berettiget interesse."
           ]
         },
         {
@@ -650,13 +670,81 @@
         },
         {
           "q": "Hvordan sletter jeg kontoen?",
-          "a": "Spør via kontaktlenken under. Vi sletter kontoen, fremgangen og, på forespørsel, ledertavleoppføringene."
+          "a": "Send e-post til support@spillarena.no. Vi sletter kontoen, fremgangen og, på forespørsel, ledertavleoppføringene."
         },
         {
           "q": "Jeg fant en feil eller et upassende brukernavn.",
-          "a": "Opprett en sak på github.com/SpillArena/SpillArena/issues."
+          "a": "Send e-post til support@spillarena.no."
+        },
+        {
+          "q": "Kontoen min er låst.",
+          "a": "Etter fem feil PIN-koder låses kontoen i 15 minutter. Vent, eller bruk gjenopprettingskoden på siden «Glemt PIN»."
+        },
+        {
+          "q": "Hvordan endrer jeg brukernavn?",
+          "a": "Åpne profilen din og velg endre navn. Du bekrefter med PIN-koden. Poeng som alt står på en ledertavle blir stående under det gamle navnet."
+        },
+        {
+          "q": "Hvorfor mangler poengene mine på ledertavlen?",
+          "a": "Bare resultater du spiller innlogget står under navnet ditt. Gjesteresultater blir i nettleseren."
+        },
+        {
+          "q": "Fungerer det på mobilen?",
+          "a": "Ja, i alle moderne mobilnettlesere. Det er ingen app å laste ned."
+        },
+        {
+          "q": "Kan jeg bytte språk?",
+          "a": "Ja. Bruk innstillingsmenyen øverst på siden. Valget huskes hvis du godtar lagring."
+        },
+        {
+          "q": "Hvem lager SpillArena?",
+          "a": "SpillArena er et hobbyprosjekt av Emil Berglund i Norge. Koden er åpen på GitHub."
         }
       ]
+    }
+  },
+  "contact": {
+    "title": "Kontakt oss",
+    "intro": "Spørsmål, feil, hjelp med kontoen eller innsynsforespørsler. Begynn å skrive, så viser vi svar fra «Vanlige spørsmål» som kanskje allerede hjelper.",
+    "openForm": "Kontaktskjema",
+    "orEmail": "eller send e-post til",
+    "topic": "Hva gjelder det?",
+    "topics": {
+      "question": "Et spørsmål",
+      "bug": "En feil eller noe som ikke virker",
+      "account": "Kontoen eller PIN-koden min",
+      "privacy": "Personvern eller dataene mine",
+      "other": "Noe annet"
+    },
+    "name": "Navn (valgfritt)",
+    "email": "E-postadressen din",
+    "emailHint": "Brukes bare til å svare deg.",
+    "message": "Meldingen din",
+    "messageHint": "{{count}} / {{max}}",
+    "suggestTitle": "Dette kan allerede svare på det",
+    "suggestIntro": "Fra «Vanlige spørsmål». Åpne en for å lese svaret.",
+    "helped": "Det svarte på spørsmålet",
+    "helpedTitle": "Fint at det hjalp",
+    "helpedBody": "Du trenger ikke sende noe. Dukker det opp noe annet, er vi her.",
+    "backToForm": "Skriv en melding likevel",
+    "allFaq": "Se alle spørsmålene",
+    "privacy": "Vi bruker navn, e-post og melding bare til å svare deg, og beholder dem i høyst ett år. Se <link>personvernerklæringen</link>.",
+    "send": "Send melding",
+    "sending": "Sender …",
+    "sentTitle": "Meldingen er sendt",
+    "sentBody": "Takk. Vi svarer til {{email}} så fort vi kan.",
+    "sendAnother": "Send en til",
+    "errors": {
+      "bad_email": "E-postadressen ser ikke riktig ut.",
+      "message_short": "Skriv litt mer, minst {{min}} tegn.",
+      "message_long": "Meldingen er for lang. Hold den under {{max}} tegn.",
+      "bad_topic": "Velg hva meldingen gjelder.",
+      "bad_name": "Navnet er for langt.",
+      "bad_body": "Noe var galt med skjemaet. Last siden på nytt og prøv igjen.",
+      "too_large": "Meldingen er for stor.",
+      "rate_limited": "Du har allerede sendt flere meldinger. Prøv igjen om en stund.",
+      "service_failed": "Noe gikk galt hos oss. Prøv igjen, eller send e-post.",
+      "network": "Fikk ikke kontakt med tjeneren. Sjekk tilkoblingen og prøv igjen."
     }
   }
 }

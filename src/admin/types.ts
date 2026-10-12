@@ -162,3 +162,15 @@ export interface ActionResponse {
     code?: string
     expiresAt?: string
 }
+
+export interface ContactMessage {
+    id: number
+    createdAt: string
+    topic: string
+    name: string | null
+    email: string
+    message: string
+    lang: string | null
+    username: string | null
+    status: 'new' | 'done'
+}
