@@ -403,6 +403,10 @@
       "unknownCountry": "Ukjent land"
     },
     "messages": {
+      "accountCreated": "Konto opprettet",
+      "accountLastSeen": "Sist aktiv",
+      "notification": "E-postvarsel",
+      "notificationStatus": {"unknown": "Ikke registrert", "pending": "Venter — sjekk igjen om litt", "sent": "Godtatt av e-postleverandøren", "failed": "Mislyktes — meldingen er lagret her", "not_configured": "Ikke satt opp — meldingen er lagret her"},
       "empty": "Ingen meldinger ennå.",
       "from": "Fra",
       "topic": "Emne",
@@ -544,7 +548,7 @@
           "p": [
             "Bare hvis du lager en konto: brukernavnet ditt, en saltet hash av PIN-koden (aldri selve PIN-koden), en hash av gjenopprettingskoden, datoene du registrerte deg og sist var innom, XP og fremgang per spill, og poengsummene du sender til ledertavlene.",
             "Vi ber ikke om og lagrer ikke e-postadresse, fullt navn, telefonnummer eller posisjon for kontoer eller spill, og vi lagrer ikke IP-adresser i vår egen database.",
-"Bruker du kontaktskjemaet, lagrer vi meldingen din, e-postadressen din, navnet du skriver inn (valgfritt), emnet, brukernavnet ditt hvis du er innlogget, og en enveis-hash av IP-adressen din som skifter hver dag og ikke kan gjøres om til adressen. Den brukes bare til å begrense hvor mange meldinger én avsender kan sende i timen. Meldinger beholdes i høyst ett år, og vi kan slette din på forespørsel."
+"Bruker du kontaktskjemaet, lagrer vi meldingen din, e-postadressen din, navnet du skriver inn, emnet, brukernavnet ditt, datoen kontoen ble opprettet og tidspunktet for siste aktivitet hvis du er innlogget, og en enveis-hash av IP-adressen din som skifter hver dag og ikke kan gjøres om til adressen. Den brukes bare til å begrense hvor mange meldinger én avsender kan sende i timen. Meldinger beholdes i høyst ett år, og vi kan slette din på forespørsel."
           ]
         },
         {
@@ -716,9 +720,11 @@
       "privacy": "Personvern eller dataene mine",
       "other": "Noe annet"
     },
-    "name": "Navn (valgfritt)",
+    "name": "Navn",
     "email": "E-postadressen din",
     "emailHint": "Brukes bare til å svare deg.",
+    "accountHint": "Brukernavn, datoen kontoen ble opprettet og tidspunktet for siste aktivitet legges ved automatisk, slik at vi kan hjelpe deg.",
+    "accountTitle": "Innlogget konto",
     "message": "Meldingen din",
     "messageHint": "{{count}} / {{max}}",
     "suggestTitle": "Dette kan allerede svare på det",
@@ -728,22 +734,23 @@
     "helpedBody": "Du trenger ikke sende noe. Dukker det opp noe annet, er vi her.",
     "backToForm": "Skriv en melding likevel",
     "allFaq": "Se alle spørsmålene",
-    "privacy": "Vi bruker navn, e-post og melding bare til å svare deg, og beholder dem i høyst ett år. Se <link>personvernerklæringen</link>.",
+    "privacy": "Vi bruker navn, e-post, melding og eventuelle vedlagte kontoopplysninger bare til å svare deg, og beholder dem i høyst ett år. Se <link>personvernerklæringen</link>.",
     "send": "Send melding",
     "sending": "Sender …",
-    "sentTitle": "Meldingen er sendt",
-    "sentBody": "Takk. Vi svarer til {{email}} så fort vi kan.",
+    "sentTitle": "Meldingen er mottatt",
+    "sentBody": "Meldingen din er lagret i innboksen vår. Vi svarer til {{email}} så snart vi kan.",
     "sendAnother": "Send en til",
     "errors": {
       "bad_email": "E-postadressen ser ikke riktig ut.",
       "message_short": "Skriv litt mer, minst {{min}} tegn.",
       "message_long": "Meldingen er for lang. Hold den under {{max}} tegn.",
       "bad_topic": "Velg hva meldingen gjelder.",
-      "bad_name": "Navnet er for langt.",
+      "bad_name": "Skriv inn navnet ditt (maks 60 tegn).",
       "bad_body": "Noe var galt med skjemaet. Last siden på nytt og prøv igjen.",
       "too_large": "Meldingen er for stor.",
       "rate_limited": "Du har allerede sendt flere meldinger. Prøv igjen om en stund.",
       "service_failed": "Noe gikk galt hos oss. Prøv igjen, eller send e-post.",
+      "unauthorized": "Innloggingen din har utløpt. Logg inn igjen for å legge ved kontoen, eller send på nytt som gjest.",
       "network": "Fikk ikke kontakt med tjeneren. Sjekk tilkoblingen og prøv igjen."
     }
   }

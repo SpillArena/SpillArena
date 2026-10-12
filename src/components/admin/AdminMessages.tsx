@@ -52,6 +52,13 @@ export default function AdminMessages() {
                     <p className="mt-1 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-subtle)' }}>
                         {t(`contact.topics.${message.topic}`, { defaultValue: message.topic })} · {t(`admin.messages.status.${message.status}`)}
                     </p>
+                    {message.account && <p className="mt-2 text-xs" style={{ color: 'var(--text-subtle)' }}>
+                        {t('admin.messages.accountCreated')}: {formatDateTime(message.account.createdAt)}
+                        {' · '}{t('admin.messages.accountLastSeen')}: {formatDateTime(message.account.lastSeen)}
+                    </p>}
+                    <p className="mt-2 text-xs" style={{ color: 'var(--text-subtle)' }}>
+                        {t('admin.messages.notification')}: {t(`admin.messages.notificationStatus.${message.notificationStatus ?? 'unknown'}`)}
+                    </p>
                     {/* the message is plain text from a stranger: rendered as text, never as HTML */}
                     <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-relaxed">{message.message}</p>
                     <div className="mt-3 flex flex-wrap gap-2">

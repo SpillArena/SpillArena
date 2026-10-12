@@ -292,6 +292,9 @@ html.dark .form-error { background: #3d202b; border-color: #714051; color: #ffcb
 
 /* contact form */
 .contact-page .contact-form { margin-top: 28px; }
+.contact-account { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); overflow-wrap: anywhere; }
+.contact-account strong { font-size: 14px; }
+.contact-account .field-hint { margin: 6px 0 0; }
 .sa-form textarea, .sa-form select { font-weight: 400; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); padding: 12px; font: inherit; width: 100%; }
 .sa-form textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
 .sa-form select { min-height: 46px; }

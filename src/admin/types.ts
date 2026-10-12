@@ -173,4 +173,6 @@ export interface ContactMessage {
     lang: string | null
     username: string | null
     status: 'new' | 'done'
+    account?: { username: string; createdAt: string; lastSeen: string } | null
+    notificationStatus?: 'unknown' | 'pending' | 'sent' | 'failed' | 'not_configured'
 }

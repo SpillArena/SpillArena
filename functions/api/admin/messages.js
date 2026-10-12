@@ -20,14 +20,19 @@ export async function onRequestGet(context) {
   try {
     const [rows, open] = await Promise.all([
       env.DB.prepare(
-        `SELECT id, created_at AS createdAt, topic, name, email, message, lang, username, status
+        `SELECT id, created_at AS createdAt, topic, name, email, message, lang, username, status,
+                account_info AS accountInfo, notification_status AS notificationStatus
          FROM contact_messages ORDER BY id DESC LIMIT ?`,
       )
         .bind(LIMIT)
         .all(),
       env.DB.prepare(`SELECT COUNT(*) AS n FROM contact_messages WHERE status = 'new'`).first(),
     ])
-    return json({ messages: rows.results ?? [], open: open?.n ?? 0 })
+    const messages = (rows.results ?? []).map(({ accountInfo, ...message }) => ({
+      ...message,
+      account: accountInfo ? JSON.parse(accountInfo) : null,
+    }))
+    return json({ messages, open: open?.n ?? 0 })
   } catch (error) {
     return serviceFailed(error)
   }
