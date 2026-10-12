@@ -110,7 +110,20 @@ test('POST /api/contact stores a valid message and takes the username from the t
   const token = await issueToken('secret', 'Kari')
   const response = await run(post({ ...good, username: 'Admin' }, { Authorization: `Bearer ${token}`, 'CF-Connecting-IP': '9.9.9.9' }), env)
   assert.equal(response.status, 200)
-  assert.deepEqual(await response.json(), { sent: true })
+  const result = await response.json()
+  assert.equal(result.sent, true)
+  assert.deepEqual(result.receipt, {
+    id: 1,
+    to: 'support@spillarena.no',
+    subject: `[SpillArena] ${good.topic}: ${good.message.slice(0, 60)}`,
+    name: good.name,
+    email: good.email,
+    topic: good.topic,
+    message: good.message,
+    lang: 'no',
+    username: 'Kari',
+    account: { createdAt: '2026-01-01T00:00:00Z', lastSeen: '2026-10-12T00:00:00Z' },
+  })
   const insert = db.calls.find((c) => c.sql.includes('INSERT INTO contact_messages'))
   assert.ok(insert.args.includes('Kari'))
   assert.ok(!insert.args.includes('Admin'))
@@ -250,6 +263,9 @@ test('Resend request uses fixed recipient, Reply-To and stable idempotency key',
   assert.equal(sent.reply_to, good.email)
   assert.match(sent.text, /Konto: Kari/)
   assert.match(sent.text, /Konto opprettet: 2026-01-01/)
+  assert.match(sent.html, /https:\/\/spillarena\.no\/logo\.png/)
+  assert.match(sent.html, /Konto opprettet/)
+  assert.match(sent.html, /Svar på meldingen/)
 })
 
 test('SMTP uses implicit TLS and passes only the intended message fields', async t => {
@@ -271,6 +287,7 @@ test('SMTP uses implicit TLS and passes only the intended message fields', async
   assert.equal(sent.replyTo, good.email)
   assert.equal(sent.messageId, '<contact-1@spillarena.no>')
   assert.match(sent.text, /Konto: \(ikke innlogget\)/)
+  assert.match(sent.html, /Konto/)
   assert.ok(closed)
   assert.doesNotMatch(JSON.stringify(sent), /test-password/)
 })
@@ -287,6 +304,8 @@ test('signed-in SMTP messages include verified account details', async t => {
   assert.match(sent.text, /Konto: Kari/)
   assert.match(sent.text, /Konto opprettet: 2026-01-01T00:00:00Z/)
   assert.match(sent.text, /Sist aktiv: 2026-10-12T10:00:00Z/)
+  assert.match(sent.html, /Sist aktiv/)
+  assert.match(sent.html, /Konto opprettet/)
   assert.doesNotMatch(JSON.stringify(sent), /forged|never-mail-this|test-password/)
   assert.ok(!sent.text.includes(token))
 })
@@ -311,4 +330,20 @@ test('mail composition keeps multiline user content in the body', () => {
   assert.doesNotMatch(mail.subject, /[\r\n]/)
   assert.equal(mail.bcc, undefined)
   assert.deepEqual(mail.to, ['support@spillarena.no'])
+  assert.match(mail.html, /Hello<br>Bcc: outsider@example\.com<br>\.more content/)
+})
+
+test('HTML email escapes user-controlled names, addresses and message content', () => {
+  const mail = supportMail({}, { ...good, id: 6, name: '<img src=x>', email: 'emil@example.com', message: '<script>alert(1)</script>' })
+  assert.match(mail.html, /&lt;img src=x&gt;/)
+  assert.match(mail.html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/)
+  assert.doesNotMatch(mail.html, /<script>|<img src=x>/)
+})
+
+test('English contact emails use English labels in both formats', () => {
+  const mail = supportMail({}, { ...good, id: 7, lang: 'en' })
+  assert.match(mail.text, /From:/)
+  assert.match(mail.html, /Account/)
+  assert.match(mail.html, /Reply to the message/)
+  assert.match(mail.html, /English/)
 })

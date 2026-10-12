@@ -110,7 +110,22 @@ export async function onRequestPost(context) {
       else await mail
     }
 
-    return json({ sent: true })
+    const savedId = stored.meta.last_row_id
+    return json({
+      sent: true,
+      receipt: {
+        id: savedId,
+        to: env.CONTACT_TO || 'support@spillarena.no',
+        subject: `[SpillArena] ${message.topic}: ${message.message.replace(/\s+/g, ' ').slice(0, 60)}`,
+        name: message.name,
+        email: message.email,
+        topic: message.topic,
+        message: message.message,
+        lang: message.lang,
+        username,
+        account: account ? { createdAt: account.createdAt, lastSeen: account.lastSeen } : null,
+      },
+    })
   } catch (error) {
     return serviceFailed(error)
   }

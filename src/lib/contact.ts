@@ -17,7 +17,20 @@ export interface ContactInput {
     t: number
 }
 
-export type ContactResult = { ok: true } | { ok: false; error: string; retryAfter?: number }
+export interface ContactReceipt {
+    id: number
+    to: string
+    subject: string
+    name: string
+    email: string
+    topic: Topic
+    message: string
+    lang: string
+    username: string | null
+    account: { createdAt: string; lastSeen: string } | null
+}
+
+export type ContactResult = { ok: true; receipt?: ContactReceipt } | { ok: false; error: string; retryAfter?: number }
 
 const EMAIL_RE = /^[^\s@<>]{1,64}@[^\s@<>]+\.[^\s@<>]{2,}$/
 
@@ -45,8 +58,8 @@ export async function sendContact(input: ContactInput): Promise<ContactResult> {
             headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
             body: JSON.stringify(input),
         })
-        const body = (await response.json().catch(() => null)) as { error?: unknown; sent?: unknown } | null
-        if (response.ok && body?.sent === true) return { ok: true }
+        const body = (await response.json().catch(() => null)) as { error?: unknown; sent?: unknown; receipt?: ContactReceipt } | null
+        if (response.ok && body?.sent === true) return { ok: true, ...(body.receipt ? { receipt: body.receipt } : {}) }
         if (response.status === 401) {
             signOut()
             return { ok: false, error: 'unauthorized' }

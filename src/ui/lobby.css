@@ -303,6 +303,43 @@ html.dark .form-error { background: #3d202b; border-color: #714051; color: #ffcb
 .contact-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
 .contact-ok { color: var(--accent-ink); margin-top: 28px; }
 .contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.contact-success { width: min(100%, 1220px); margin: 0 auto; padding: clamp(42px, 7vw, 92px) 0 72px; display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); align-items: center; gap: clamp(32px, 5vw, 76px); }
+.contact-success-copy { min-width: 0; }
+.contact-success-mark { display: grid; place-items: center; width: 58px; height: 58px; border: 1px solid color-mix(in srgb, #f43676 48%, var(--line)); border-radius: 50%; color: #f43676; background: color-mix(in srgb, #f43676 12%, var(--surface-card)); box-shadow: 0 0 34px color-mix(in srgb, #f43676 20%, transparent); }
+.contact-success-eyebrow { margin: 26px 0 8px !important; color: var(--accent-ink) !important; font-size: 11px !important; font-weight: 700; letter-spacing: 1.55px; text-transform: uppercase; }
+.contact-success h1 { margin: 0 0 14px; font-size: clamp(38px, 5vw, 64px); line-height: 1.05; letter-spacing: -1.8px; }
+.contact-success .contact-success-lead { max-width: 58ch; margin: 0; color: var(--muted); font-size: clamp(15px, 1.55vw, 18px); line-height: 1.7; overflow-wrap: anywhere; }
+.contact-receipt-details { margin: 28px 0 0; padding: 10px 18px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--card) 76%, transparent); box-shadow: 0 16px 46px #11091c0b; }
+.contact-receipt-details > div { display: grid; grid-template-columns: minmax(130px, .42fr) minmax(0, 1fr); align-items: center; gap: 10px; min-height: 45px; padding-block: 7px; border-bottom: 1px solid color-mix(in srgb, var(--line) 66%, transparent); }
+.contact-receipt-details > div:last-child { border-bottom: 0; }
+.contact-receipt-details dt { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 13px; }
+.contact-receipt-details dt svg { flex: 0 0 auto; color: var(--accent-ink); }
+.contact-receipt-details dd { min-width: 0; margin: 0; color: var(--ink); font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.contact-success-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.contact-success-actions .button { min-height: 52px; }
+.contact-success-actions .primary { background: #f43676; color: #180b14; }
+.contact-success-actions .primary:hover { background: #ff568c; }
+.contact-email-preview { min-width: 0; padding: clamp(14px, 2vw, 24px); border: 1px solid color-mix(in srgb, var(--line) 78%, transparent); border-radius: 20px; background: color-mix(in srgb, var(--card) 66%, transparent); box-shadow: 0 28px 80px #09061026, inset 0 1px 0 #ffffff12; }
+.contact-email-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 3px 14px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; }
+.contact-email-topline span:last-child { color: #178c69; letter-spacing: .8px; }
+.contact-email-card { overflow: hidden; border: 1px solid #e8e3ec; border-radius: 13px; background: #fff; box-shadow: 0 16px 38px #11091c1c; color: #211c2b; }
+.contact-email-brand { display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 14px 20px; background: linear-gradient(110deg, #211229, #32183b); color: #fff; }
+.contact-email-brand img { display: block; width: 43px; height: 43px; border-radius: 11px; }
+.contact-email-brand strong { font-size: 19px; letter-spacing: -.45px; }
+.contact-email-brand > span { margin-left: auto; padding-left: 14px; border-left: 1px solid #ffffff45; color: #e8c9f2; font-size: 9px; font-weight: 700; letter-spacing: 1.6px; }
+.contact-email-content { padding: clamp(19px, 3vw, 30px); }
+.contact-email-content h2 { margin: 0 0 19px; color: #211c2b; font-family: var(--sans); font-size: clamp(17px, 2vw, 23px); font-weight: 700; letter-spacing: -.55px; line-height: 1.35; overflow-wrap: anywhere; }
+.contact-email-meta { margin: 0; padding: 13px 16px; border-radius: 10px; background: #f5f3f8; }
+.contact-email-meta > div { display: grid; grid-template-columns: minmax(80px, .36fr) minmax(0, 1fr); gap: 10px; padding-block: 4px; }
+.contact-email-meta dt { color: #71697d; font-size: 12px; }
+.contact-email-meta dd { min-width: 0; margin: 0; color: #211c2b; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
+.contact-email-message { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; padding: 15px 16px; border-radius: 10px; background: #fff0f6; color: #211c2b; }
+.contact-email-message svg { flex: 0 0 auto; margin-top: 3px; color: #d62764; }
+.contact-email-message p { margin: 0; color: inherit; font-size: 13px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+.contact-email-reply { display: inline-flex; align-items: center; margin-top: 17px; padding: 10px 15px; border-radius: 8px; background: #f43676; color: #fff; font-size: 12px; font-weight: 700; }
+.contact-email-content footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #e8e3ec; color: #756d7e; font-size: 10px; line-height: 1.5; text-align: center; }
+@media (max-width: 900px) { .contact-success { grid-template-columns: minmax(0, 1fr); max-width: 700px; gap: 32px; padding-top: 48px; } }
+@media (max-width: 560px) { .contact-success { padding: 32px 0 48px; gap: 25px; } .contact-success-mark { width: 50px; height: 50px; } .contact-success-eyebrow { margin-top: 20px !important; } .contact-success h1 { font-size: clamp(36px, 11vw, 48px); letter-spacing: -1.2px; } .contact-receipt-details { padding-inline: 12px; } .contact-receipt-details > div { grid-template-columns: minmax(105px, .38fr) minmax(0, 1fr); } .contact-success-actions { align-items: stretch; } .contact-success-actions .button { flex: 1 1 auto; } .contact-email-preview { padding: 12px; border-radius: 15px; } .contact-email-brand { gap: 9px; padding-inline: 13px; } .contact-email-brand img { width: 38px; height: 38px; } .contact-email-brand strong { font-size: 17px; } .contact-email-brand > span { font-size: 8px; letter-spacing: 1px; } .contact-email-meta { padding-inline: 12px; } }
 .faq-suggest { border: 1px solid var(--line); border-radius: 12px; background: var(--card); padding: 16px 18px; }
 .faq-suggest h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 2px; font-size: 16px; }
 .faq-suggest ul { list-style: none; margin: 10px 0 8px; padding: 0; }

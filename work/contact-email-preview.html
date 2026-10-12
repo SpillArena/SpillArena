@@ -1,0 +1,59 @@
+<div id="contact-email-preview" aria-label="Preview of the redesigned SpillArena support email">
+  <style>
+    #contact-email-preview { color: var(--foreground); font: 400 var(--font-size-base)/1.5 system-ui, sans-serif; }
+    #contact-email-preview .mail-frame { max-width: 680px; margin: 0 auto; }
+    #contact-email-preview .mail-top { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 18px; }
+    #contact-email-preview .mail-client { color:var(--muted-foreground); font-size:var(--font-size-base); }
+    #contact-email-preview .mail-client strong { color:var(--foreground); font-weight:500; }
+    #contact-email-preview .brandbar { display:flex; align-items:center; gap:12px; padding:22px 28px; background:#17131f; color:#fff; }
+    #contact-email-preview .brandmark { display:grid; grid-template-columns:repeat(3,8px); gap:3px; padding:7px; border:1px solid #59466b; border-radius:10px; background:#241b30; }
+    #contact-email-preview .brandmark i { width:8px; height:8px; border-radius:3px; background:#ec2d70; }
+    #contact-email-preview .brandmark i:nth-child(2), #contact-email-preview .brandmark i:nth-child(4), #contact-email-preview .brandmark i:nth-child(8) { background:#a78bfa; }
+    #contact-email-preview .brandmark i:nth-child(3), #contact-email-preview .brandmark i:nth-child(6) { background:#60a5fa; }
+    #contact-email-preview .brandname { font-size:18px; font-weight:500; letter-spacing:.01em; }
+    #contact-email-preview .mail-label { margin-left:auto; padding:5px 10px; border:1px solid #554456; border-radius:999px; color:#f6bbd0; font-size:12px; }
+    #contact-email-preview .email-content { padding:28px; }
+    #contact-email-preview .eyebrow { margin:0 0 8px; color:var(--muted-foreground); font-size:12px; letter-spacing:.08em; text-transform:uppercase; }
+    #contact-email-preview h2 { margin:0 0 22px; font-size:24px; font-weight:500; line-height:1.25; }
+    #contact-email-preview .summary { display:grid; grid-template-columns:1fr 1fr; gap:14px 24px; padding:17px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    #contact-email-preview .summary div { min-width:0; }
+    #contact-email-preview .key { display:block; margin-bottom:3px; color:var(--muted-foreground); font-size:12px; }
+    #contact-email-preview .value { overflow-wrap:anywhere; font-size:14px; font-weight:500; }
+    #contact-email-preview .message { margin:22px 0 24px; padding:18px 20px; border-left:3px solid #ec2d70; border-radius:0 10px 10px 0; background:var(--muted); white-space:pre-wrap; }
+    #contact-email-preview .reply { display:inline-block; padding:12px 18px; border-radius:9px; background:#ec2d70; color:#160a10; font-weight:500; text-decoration:none; }
+    #contact-email-preview .reply-note { margin:12px 0 0; color:var(--muted-foreground); font-size:12px; }
+    #contact-email-preview .email-footer { padding:16px 28px; border-top:1px solid var(--border); color:var(--muted-foreground); font-size:12px; }
+    #contact-email-preview .mail-foot { margin:16px 0 0; color:var(--muted-foreground); font-size:12px; }
+    @media (max-width:520px) {
+      #contact-email-preview .email-content { padding:22px 18px; }
+      #contact-email-preview .brandbar { padding:18px; }
+      #contact-email-preview .summary { grid-template-columns:1fr; gap:12px; }
+      #contact-email-preview h2 { font-size:21px; }
+      #contact-email-preview .mail-label { display:none; }
+    }
+  </style>
+  <div class="mail-frame">
+    <div class="mail-top"><span class="mail-client"><strong>Inbox</strong> · Support</span><span class="mail-client">New message</span></div>
+    <article class="card email-card">
+      <header class="brandbar">
+        <span class="brandmark" role="img" aria-label="SpillArena logo"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="brandname">SpillArena</span>
+        <span class="mail-label">SUPPORT MESSAGE</span>
+      </header>
+      <div class="email-content">
+        <p class="eyebrow">Contact form · Question</p>
+        <h2>Heihei test med resend</h2>
+        <div class="summary">
+          <div><span class="key">From</span><span class="value">Emil Berglund &lt;emil.berglund@live.no&gt;</span></div>
+          <div><span class="key">Account</span><span class="value">Emil</span></div>
+          <div><span class="key">Created</span><span class="value">11 Sep 2026</span></div>
+          <div><span class="key">Last active</span><span class="value">12 Oct 2026, 16:13</span></div>
+        </div>
+        <div class="message">Heihei test med resend</div>
+        <a class="reply" href="mailto:emil.berglund@live.no">Reply to Emil</a>
+        <p class="reply-note">Replies go directly to the sender.</p>
+      </div>
+      <footer class="email-footer">SpillArena support · Message #4 · Norsk</footer>
+    </article>
+  </div>
+</div>
