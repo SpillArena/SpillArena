@@ -9,6 +9,7 @@ import type { AdminErrorCode, LogEntry } from '../../admin/types'
 import AdminOverview from './AdminOverview'
 import AdminTraffic from './AdminTraffic'
 import LogList from './LogList'
+import AdminMessages from './AdminMessages'
 import PlayerDetail from './PlayerDetail'
 import PlayerList, { type ListState } from './PlayerList'
 import { ErrorNotice, Muted } from './ui'
@@ -20,8 +21,8 @@ interface AdminPanelProps {
     username: string
 }
 
-type Tab = 'overview' | 'traffic' | 'players' | 'log'
-const TABS: Tab[] = ['overview', 'traffic', 'players', 'log']
+type Tab = 'overview' | 'traffic' | 'players' | 'messages' | 'log'
+const TABS: Tab[] = ['overview', 'traffic', 'players', 'messages', 'log']
 
 /**
  * Adminpanelet — bare for kontoer med `players.admin = 1`.
@@ -126,7 +127,7 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                         <div
                             role="tablist"
                             aria-label={t('admin.title')}
-                            className="grid flex-1 grid-cols-4 gap-1 rounded-xl p-1 sm:flex-none"
+                            className="grid flex-1 grid-cols-5 gap-1 rounded-xl p-1 sm:flex-none"
                             style={{ background: 'color-mix(in srgb, var(--surface) 92%, #000 8%)' }}
                         >
                             {TABS.map((value) => (
@@ -186,6 +187,8 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                         ) : (
                             <PlayerList state={list} onChange={setList} onOpen={openPlayer} />
                         ))}
+
+                    {tab === 'messages' && <AdminMessages />}
 
                     {tab === 'log' && <LogTab onOpenPlayer={openPlayer} />}
                 </div>

@@ -288,3 +288,24 @@ html.dark .form-error { background: #3d202b; border-color: #714051; color: #ffcb
 .legal-page .legal-lead { font-size: 16px; color: var(--ink); }
 .legal-page .legal-updated { font-size: 12px; }
 .legal-page .legal-contact { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); }
+.legal-page a:not(.button) { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+/* contact form */
+.contact-page .contact-form { margin-top: 28px; }
+.sa-form textarea, .sa-form select { font-weight: 400; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); padding: 12px; font: inherit; width: 100%; }
+.sa-form textarea { min-height: 150px; resize: vertical; line-height: 1.6; }
+.sa-form select { min-height: 46px; }
+.sa-form textarea:focus, .sa-form select:focus { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+.sa-form [aria-invalid="true"] { border-color: #c2354f; }
+.contact-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+.contact-ok { color: var(--accent-ink); margin-top: 28px; }
+.contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.faq-suggest { border: 1px solid var(--line); border-radius: 12px; background: var(--card); padding: 16px 18px; }
+.faq-suggest h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 2px; font-size: 16px; }
+.faq-suggest ul { list-style: none; margin: 10px 0 8px; padding: 0; }
+.faq-suggest li { border-top: 1px solid var(--line); }
+.faq-suggest-q { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 8px 0; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; text-align: left; cursor: pointer; }
+.faq-suggest-q[aria-expanded="true"] svg { transform: rotate(180deg); }
+.faq-suggest-a { padding: 0 0 14px; }
+.faq-suggest-a p { margin: 0 0 12px; font-size: 14px; line-height: 1.7; }
+@media (prefers-reduced-motion: no-preference) { .faq-suggest-q svg { transition: transform 150ms; } }

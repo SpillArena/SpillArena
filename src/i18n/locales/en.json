@@ -197,7 +197,8 @@
       "overview": "Overview",
       "players": "Players",
       "log": "Log",
-      "traffic": "Traffic"
+      "traffic": "Traffic",
+      "messages": "Messages"
     },
     "loading": "Loading…",
     "retry": "Try again",
@@ -400,6 +401,23 @@
       "showStatuses": "Show HTTP status codes",
       "tor": "Tor network",
       "unknownCountry": "Unknown country"
+    },
+    "messages": {
+      "empty": "No messages yet.",
+      "from": "From",
+      "topic": "Topic",
+      "account": "Account",
+      "reply": "Reply by email",
+      "markDone": "Mark done",
+      "reopen": "Reopen",
+      "delete": "Delete",
+      "confirmDelete": "Delete this message for good?",
+      "open_one": "{{count}} open",
+      "open_other": "{{count}} open",
+      "status": {
+        "new": "New",
+        "done": "Done"
+      }
     }
   },
   "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
@@ -483,7 +501,8 @@
     "gameCount_other": "{{count}} games to explore",
     "privacyLink": "Privacy",
     "termsLink": "Terms",
-    "faqLink": "FAQ"
+    "faqLink": "FAQ",
+    "contactLink": "Contact"
   },
   "profile": {
     "backToGames": "Back to games",
@@ -515,7 +534,7 @@
     "back": "Back to games",
     "updated": "Last updated 12 October 2026",
     "contactLabel": "Contact",
-    "contact": "Questions, bugs or data requests: open an issue at github.com/SpillArena/SpillArena/issues.",
+    "contact": "Questions, bugs, account deletion or data requests:",
     "privacy": {
       "title": "Privacy policy",
       "intro": "SpillArena is a free hobby project run by Emil Berglund in Norway. This page says what is stored, why, and how to remove it.",
@@ -524,7 +543,8 @@
           "h": "What we store on our servers",
           "p": [
             "Only if you create an account: your username, a salted hash of your PIN (never the PIN itself), a hash of your recovery code, the dates you registered and were last seen, your XP and per-game progress, and the scores you post to leaderboards.",
-            "We do not ask for or store your email address, real name, phone number or location, and we do not store IP addresses in our own database."
+            "We do not ask for or store an email address, real name, phone number or location for accounts or games, and we do not store IP addresses in our own database.",
+"If you use the contact form we store your message, your email address, the name you enter (optional), the topic, your username if you are signed in, and a one-way hash of your IP address that changes every day and cannot be turned back into the address. It is used only to limit how many messages one sender can post per hour. Messages are kept for at most a year, and we can delete yours on request."
           ]
         },
         {
@@ -549,7 +569,7 @@
         {
           "h": "Why we process it (legal basis)",
           "p": [
-            "Account data is processed to provide the account and leaderboards you asked for (contract). Browser storage is kept only with your consent. Security logging is a legitimate interest."
+            "Account data is processed to provide the account and leaderboards you asked for (contract). Contact messages are processed to answer you (your request). Browser storage is kept only with your consent. Spam protection and security logging are a legitimate interest."
           ]
         },
         {
@@ -650,13 +670,81 @@
         },
         {
           "q": "How do I delete my account?",
-          "a": "Ask via the contact link below. We delete the account, its progress and, on request, its leaderboard entries."
+          "a": "Email support@spillarena.no. We delete the account, its progress and, on request, its leaderboard entries."
         },
         {
           "q": "I found a bug or a bad username.",
-          "a": "Open an issue at github.com/SpillArena/SpillArena/issues."
+          "a": "Email support@spillarena.no."
+        },
+        {
+          "q": "My account is locked.",
+          "a": "After five wrong PINs an account locks for 15 minutes. Wait it out, or use your recovery code on the “Forgot PIN” page."
+        },
+        {
+          "q": "How do I change my username?",
+          "a": "Open your profile and choose rename. You confirm with your PIN. Scores already on a leaderboard stay under the old name."
+        },
+        {
+          "q": "Why is my score missing from the leaderboard?",
+          "a": "Only results played while signed in are listed under your name. Guest results stay in your browser."
+        },
+        {
+          "q": "Does it work on my phone?",
+          "a": "Yes, in any modern mobile browser. There is no app to install."
+        },
+        {
+          "q": "Can I change the language?",
+          "a": "Yes. Use the settings menu in the header. The choice is remembered if you accept storage."
+        },
+        {
+          "q": "Who makes SpillArena?",
+          "a": "SpillArena is a hobby project by Emil Berglund in Norway. The code is open on GitHub."
         }
       ]
+    }
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "Questions, bugs, account help or data requests. Start typing and we will show answers from the FAQ that might already help.",
+    "openForm": "Contact form",
+    "orEmail": "or email",
+    "topic": "What is it about?",
+    "topics": {
+      "question": "A question",
+      "bug": "A bug or something broken",
+      "account": "My account or PIN",
+      "privacy": "Privacy or my data",
+      "other": "Something else"
+    },
+    "name": "Your name (optional)",
+    "email": "Your email",
+    "emailHint": "Only used to reply to you.",
+    "message": "Your message",
+    "messageHint": "{{count}} / {{max}}",
+    "suggestTitle": "This might already answer it",
+    "suggestIntro": "From our FAQ. Open one to read the answer.",
+    "helped": "That answered it",
+    "helpedTitle": "Glad that helped",
+    "helpedBody": "No need to send anything. If something else comes up, we are here.",
+    "backToForm": "Write a message anyway",
+    "allFaq": "See all questions",
+    "privacy": "We use your name, email and message only to answer you, and keep them for at most a year. See the <link>privacy policy</link>.",
+    "send": "Send message",
+    "sending": "Sending…",
+    "sentTitle": "Message sent",
+    "sentBody": "Thanks. We will reply to {{email}} as soon as we can.",
+    "sendAnother": "Send another",
+    "errors": {
+      "bad_email": "That email address does not look right.",
+      "message_short": "Write a little more, at least {{min}} characters.",
+      "message_long": "The message is too long. Keep it under {{max}} characters.",
+      "bad_topic": "Choose what the message is about.",
+      "bad_name": "That name is too long.",
+      "bad_body": "Something was wrong with the form. Reload and try again.",
+      "too_large": "The message is too large.",
+      "rate_limited": "You have sent several messages already. Try again in a while.",
+      "service_failed": "Something went wrong on our side. Try again, or email us.",
+      "network": "Could not reach the server. Check your connection and try again."
     }
   }
 }

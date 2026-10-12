@@ -8,6 +8,18 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '12-10-2026',
+        title: 'Contact form that reads the FAQ',
+        release: '1.11.0',
+        changes: [
+            'Added a contact form at #contact with a topic, message and reply email, linked from the footer and the FAQ',
+            'While you type, the form suggests FAQ answers that match your message in Norwegian or English, so many questions are answered before you send anything',
+            'Messages are stored with spam protection (hidden trap field, speed check and a per-hour limit using a daily one-way hash of the sender, never the address) and kept for at most a year',
+            'Added a Messages tab to the admin panel to read, answer by email, mark done and delete messages; setting RESEND_API_KEY also forwards each message to support@spillarena.no',
+            'Added six more FAQ answers and updated the privacy policy to cover contact messages',
+        ],
+    },
+    {
+        date: '12-10-2026',
         title: 'ScribbleBot: new posters and icon',
         release: '1.10.1',
         changes: [

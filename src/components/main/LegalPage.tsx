@@ -21,6 +21,6 @@ export default function LegalPage({ kind }: { kind: LegalKind }) {
       {section.p.map(text => <p key={text}>{text}</p>)}
     </section>)}
     {items.map(item => <section key={item.q}><h2>{item.q}</h2><p>{item.a}</p></section>)}
-    <p className="legal-contact"><strong>{t('legal.contactLabel')}.</strong> {t('legal.contact')}</p>
+    <p className="legal-contact"><strong>{t('legal.contactLabel')}.</strong> {t('legal.contact')} <a href="#contact">{t('contact.openForm')}</a> · <a href="mailto:support@spillarena.no">support@spillarena.no</a></p>
   </article>
 }
