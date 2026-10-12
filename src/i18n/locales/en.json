@@ -540,7 +540,7 @@
     "skipContent": "Skip to content",
     "avatar": {
       "title": "Profile picture",
-      "intro": "Pick a style and shuffle until you find your look. Your picture is saved to your account.",
+      "intro": "Make it yours with details and colors. Your picture is saved to your account.",
       "style": "Picture style",
       "initial": "First letter",
       "styles": {
@@ -552,7 +552,27 @@
       "save": "Save picture",
       "saving": "Saving…",
       "cancel": "Cancel",
-      "credit": "Avatars by"
+      "credit": "Avatars by",
+      "customize": "Customize picture",
+      "automatic": "Automatic",
+      "variant": "Variant {{count}}",
+      "colorValue": "Color {{color}}",
+      "customColor": "Custom color",
+      "reset": "Reset details",
+      "freeUse": "Free use",
+      "parts": {
+        "eyesVariant": "Eyes",
+        "mouthVariant": "Mouth",
+        "headVariant": "Head",
+        "topVariant": "Antenna",
+        "hairVariant": "Hair",
+        "clothesVariant": "Clothes",
+        "backgroundColor": "Background",
+        "baseColor": "Robot color",
+        "hairColor": "Hair color",
+        "skinColor": "Skin color",
+        "clothingColor": "Clothing color"
+      }
     }
   },
   "legal": {
@@ -567,7 +587,7 @@
         {
           "h": "What we store on our servers",
           "p": [
-            "Only if you create an account: your username, a salted hash of your PIN (never the PIN itself), a hash of your recovery code, the dates you registered and were last seen, your XP and per-game progress, and the scores you post to leaderboards. If you choose a profile picture, we also store its DiceBear style and random seed; the picture is generated locally in your browser.",
+            "Only if you create an account: your username, a salted hash of your PIN (never the PIN itself), a hash of your recovery code, the dates you registered and were last seen, your XP and per-game progress, and the scores you post to leaderboards. If you choose a profile picture, we also store its DiceBear style, random seed and any selected details and colors; the picture is generated locally in your browser.",
             "We do not ask for or store an email address, real name, phone number or location for accounts or games, and we do not store IP addresses in our own database.",
             "If you use the contact form we store your message, your email address, the name you enter, the topic, your username, account creation date and last activity time if you are signed in, and a one-way hash of your IP address that changes every day and cannot be turned back into the address. It is used only to limit how many messages one sender can post per hour. Messages are kept for at most a year, and we can delete yours on request."
           ]

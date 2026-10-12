@@ -217,9 +217,15 @@ npx wrangler d1 migrations apply spillarena-hub --local
 npx wrangler d1 migrations apply spillarena-hub --remote
 ```
 
-`GET /api/profile` returns an optional `avatar` with a DiceBear style and seed.
+`GET /api/profile` returns an optional `avatar` with a DiceBear style, seed, and optional `options`.
 Authenticated `PUT /api/account/avatar` saves `{ "avatar": { "style": "bottts", "seed": "random-id" } }`; `{ "avatar": null }` restores the first-letter picture.
-The endpoint accepts only `bottts`, `fun-emoji`, and `pixel-art`, plus a bounded alphanumeric seed. It uses the same banned-account and token-revocation checks as other account routes.
+The endpoint accepts only `bottts`, `fun-emoji`, and `pixel-art`, plus a bounded alphanumeric seed. Optional `options` select eyes and mouth, robot head/antenna, or pixel hair/clothes, plus colors. For example:
+
+```json
+{ "avatar": { "style": "bottts", "seed": "random-id", "options": { "eyesVariant": "happy", "mouthVariant": "smile01", "baseColor": "#448ef4", "backgroundColor": "#e8dff5" } } }
+```
+
+The editor and server share the allowlist in `shared/avatar-options.js`. Only supported variants for the selected style and six-digit hex colors are accepted; arbitrary DiceBear options are rejected. The endpoint uses the same banned-account and token-revocation checks as other account routes. Customization reuses the existing JSON column, so no further migration is needed after `0015`. Old pictures without `options` retain their original appearance.
 Avatar generation runs locally through the DiceBear JavaScript library. Seeds are random, so renaming preserves a picture. No uploads or requests to a third-party avatar service are required.
 
 ## Game traffic breakdown

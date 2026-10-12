@@ -11,7 +11,7 @@ export const changelog: ChangelogEntry[] = [
         title: 'Personal profiles and game traffic',
         release: '1.12.0',
         changes: [
-            'Added a DiceBear profile picture picker with robot, emoji and pixel art styles, saved to the account; profiles without a picture show the first letter of the name',
+            'Added a DiceBear profile picture editor with robot, emoji and pixel art styles, customizable features and colors saved to the account; profiles without a picture show the first letter of the name',
             'Moved the admin button to the top of the profile and gave logout a red button',
             'Added traffic per game and share of game visits to the admin Traffic tab for the selected period',
             'Moved the version number to the left of the footer and refreshed the GitHub README and developer guides',

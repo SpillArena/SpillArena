@@ -1,5 +1,15 @@
 import { json, requireUser, serviceFailed } from '../../../shared/account-server.js'
-import { validAvatar } from '../../../shared/avatar.js'
+import { readAvatar, validAvatar } from '../../../shared/avatar.js'
+
+/** The signed-in player's picture choice — what the games draw next to the name. */
+export async function onRequestGet({ env, request }) {
+  const auth = await requireUser(env, request)
+  if (auth.response) return auth.response
+  try {
+    const row = await env.DB.prepare('SELECT avatar FROM players WHERE username = ?').bind(auth.username).first()
+    return json({ avatar: readAvatar(row?.avatar) })
+  } catch (error) { return serviceFailed(error) }
+}
 
 export async function onRequestPut({ env, request }) {
   const auth = await requireUser(env, request)
@@ -24,7 +34,10 @@ export async function onRequestPut({ env, request }) {
     if (!body || !Object.hasOwn(body, 'avatar') || (body.avatar !== null && !validAvatar(body.avatar))) {
       return json({ error: 'bad_body' }, 400)
     }
-    const avatar = body.avatar === null ? null : { style: body.avatar.style, seed: body.avatar.seed }
+    const avatar = body.avatar === null ? null : {
+      style: body.avatar.style, seed: body.avatar.seed,
+      ...(body.avatar.options ? { options: { ...body.avatar.options } } : {}),
+    }
     await env.DB.prepare('UPDATE players SET avatar = ? WHERE username = ?')
       .bind(avatar === null ? null : JSON.stringify(avatar), auth.username).run()
     return json({ avatar })
