@@ -10,14 +10,15 @@ import BetaWarningModal from './components/main/BetaWarningModal'
 import FooterSection from './components/footer/FooterSection'
 import AuthModal from './components/account/AuthModal'
 import ProfilePage from './components/account/ProfilePage'
+import LegalPage from './components/main/LegalPage'
 import Dialog from './ui/Dialog'
 import { goToGame } from './ui/loader'
 
-type Page = 'home' | 'login' | 'register' | 'recover' | 'profile'
+type Page = 'home' | 'login' | 'register' | 'recover' | 'profile' | 'privacy' | 'terms' | 'faq'
 function currentPage(): Page {
   if (new URL(window.location.href).searchParams.has('recover')) return 'recover'
   const hash = window.location.hash.slice(1)
-  return ['login', 'register', 'recover', 'profile'].includes(hash) ? hash as Page : 'home'
+  return ['login', 'register', 'recover', 'profile', 'privacy', 'terms', 'faq'].includes(hash) ? hash as Page : 'home'
 }
 
 export default function App() {
@@ -47,7 +48,7 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.lang = i18n.resolvedLanguage === 'no' ? 'nb' : 'en'
-    document.title = page === 'home' ? 'SpillArena · ' + t('headerTitle') : t(page === 'profile' ? 'account.yourProfile' : page === 'register' ? 'account.register' : page === 'recover' ? 'account.recovery.title' : 'account.signIn') + ' · SpillArena'
+    document.title = page === 'home' ? t('seoTitle') : page === 'privacy' || page === 'terms' || page === 'faq' ? t(`legal.${page}.title`) + ' · SpillArena' : t(page === 'profile' ? 'account.yourProfile' : page === 'register' ? 'account.register' : page === 'recover' ? 'account.recovery.title' : 'account.signIn') + ' · SpillArena'
   }, [page, i18n.resolvedLanguage, t])
 
   const handleGameClick = (game: Game) => {
@@ -68,7 +69,7 @@ export default function App() {
         <HeroSection onSurprise={pickGame} onPlay={handleGameClick} />
         <GamesSection onClick={handleGameClick} />
         <aside className="account-strip" aria-labelledby="account-strip-title"><div className="account-symbol" aria-hidden="true"><ArrowUpRight size={28} /></div><div><h2 id="account-strip-title">{t('lobby.accountTitle')}</h2><p>{t('lobby.accountDescription')}</p></div><a className="button secondary" href={isSignedIn ? '#profile' : '#login'}>{t(isSignedIn ? 'account.yourProfile' : 'lobby.accountMore')}<ArrowUpRight size={16} aria-hidden="true" /></a></aside>
-      </> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => { signOut(); window.location.hash = '' }} onPlay={handleGameClick} /> :
+      </> : page === 'privacy' || page === 'terms' || page === 'faq' ? <LegalPage kind={page} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => { signOut(); window.location.hash = '' }} onPlay={handleGameClick} /> :
         <AuthModal key={page} open presentation="page" initialMode={page} onClose={() => { window.location.hash = getSession() ? 'profile' : '' }} />}
     </main>
     <FooterSection />
