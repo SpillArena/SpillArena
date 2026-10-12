@@ -8,6 +8,16 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '13-10-2026',
+        title: 'ProportionPanic: new look and multiplayer',
+        release: '1.14.0',
+        changes: [
+            'ProportionPanic now has multiplayer: create a room or join one with a code or invite link, and play together with your SpillArena profile',
+            'New bold, high-contrast design with a clearer menu, mode selection, game board and round results, built to be easier to read and use',
+            'Singleplayer and multiplayer sit side by side on the mode screen, using the same room chooser as the other games',
+        ],
+    },
+    {
+        date: '13-10-2026',
         title: 'FleetBot: meet the captains',
         release: '1.13.1',
         changes: [
