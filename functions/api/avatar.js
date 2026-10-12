@@ -15,13 +15,11 @@
  */
 
 import { Avatar, Style } from '@dicebear/core'
-import bottts from '@dicebear/styles/bottts.json' with { type: 'json' }
-import funEmoji from '@dicebear/styles/fun-emoji.json' with { type: 'json' }
-import pixelArt from '@dicebear/styles/pixel-art.json' with { type: 'json' }
+import definitions from '../../shared/avatar-styles.cjs'
 import { readAvatar, validAvatar } from '../../shared/avatar.js'
 import { validateUsername } from '../../shared/account-server.js'
 
-const styles = { bottts: new Style(bottts), 'fun-emoji': new Style(funEmoji), 'pixel-art': new Style(pixelArt) }
+const styles = Object.fromEntries(Object.entries(definitions).map(([name, definition]) => [name, new Style(definition)]))
 
 async function byUsername({ env }, username) {
   if (validateUsername(username) !== null || !env.DB) return new Response('no avatar', { status: 404 })
