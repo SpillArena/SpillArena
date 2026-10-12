@@ -1,6 +1,6 @@
 import { json } from '../../../shared/account-server.js'
 import { requireAdmin } from '../../../shared/admin-server.js'
-import { normalizeTraffic, trafficPeriod, TRAFFIC_QUERY } from '../../../shared/traffic-server.js'
+import { gameTrafficFilter, normalizeTraffic, trafficPeriod, TRAFFIC_QUERY } from '../../../shared/traffic-server.js'
 
 export async function onRequestGet({ env, request }) {
   const auth = await requireAdmin(env, request)
@@ -22,6 +22,7 @@ export async function onRequestGet({ env, request }) {
       headers: { Authorization: `Bearer ${env.CLOUDFLARE_ANALYTICS_TOKEN}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: TRAFFIC_QUERY, variables: {
         zone: env.CLOUDFLARE_ZONE_ID, from: period.from, to: period.to, limit: days,
+        gameFilter: gameTrafficFilter(period, now),
       } }),
       signal: controller.signal,
     })

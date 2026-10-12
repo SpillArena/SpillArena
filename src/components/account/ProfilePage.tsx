@@ -9,6 +9,8 @@ import Dialog from '../../ui/Dialog'
 import AdminPanel from '../admin/AdminPanel'
 import RenameForm from './RenameForm'
 import RecoveryCodeForm from './RecoveryCodeForm'
+import Avatar from './Avatar'
+import AvatarForm from './AvatarForm'
 
 // Game-specific profile documents only share their XP field.
 function xpOf(progress: unknown): number | null {
@@ -24,7 +26,7 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [attempt, setAttempt] = useState(0)
-  const [editing, setEditing] = useState<'rename' | 'recovery' | null>(null)
+  const [editing, setEditing] = useState<'rename' | 'recovery' | 'avatar' | null>(null)
   const [adminOpen, setAdminOpen] = useState(false)
 
   useEffect(() => {
@@ -45,8 +47,8 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
   const formatNumber = (value: number) => value.toLocaleString(i18n.resolvedLanguage === 'no' ? 'nb-NO' : 'en-US')
 
   return <section className="profile-page" aria-labelledby="profile-title">
-    <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>
-    <div className="profile-heading"><div className="profile-avatar" aria-hidden="true">{[...username].slice(0, 2).join('').toUpperCase()}</div><div className="profile-identity"><p className="eyebrow">{t('account.yourProfile')}</p><h1 id="profile-title">{username}</h1>{overview?.createdAt && <p className="profile-member">{t('account.memberSince', { date: formatDate(overview.createdAt) })}</p>}</div><button type="button" className="button secondary" onClick={() => setEditing('rename')}><Pencil size={16} aria-hidden="true" />{t('account.rename')}</button></div>
+    <div className="profile-topbar"><a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>{overview?.admin && <button type="button" className="button secondary" onClick={() => setAdminOpen(true)}><ShieldCheck size={16} aria-hidden="true" />{t('admin.open')}</button>}</div>
+    <div className="profile-heading"><button type="button" className="avatar-edit-button" onClick={() => setEditing('avatar')} disabled={!overview || loading || !!error} aria-label={t('profile.avatar.title')}><Avatar username={username} avatar={overview?.avatar} /><span className="avatar-edit-mark"><Pencil size={12} aria-hidden="true" /></span></button><div className="profile-identity"><p className="eyebrow">{t('account.yourProfile')}</p><h1 id="profile-title">{username}</h1>{overview?.createdAt && <p className="profile-member">{t('account.memberSince', { date: formatDate(overview.createdAt) })}</p>}</div><button type="button" className="button secondary" onClick={() => setEditing('rename')}><Pencil size={16} aria-hidden="true" />{t('account.rename')}</button></div>
     <p className="profile-lead">{t('profile.intro')}</p>
     {loading ? <p className="profile-state" role="status">{t('profile.loading')}</p> : error ? <div className="form-error" role="alert"><p>{t(`account.errors.${error}`, { defaultValue: t('account.errors.service_failed') })}</p><button type="button" className="button secondary" onClick={refresh}>{t('profile.retry')}</button></div> : <>
       <div className="profile-stats"><div><span>{t('profile.totalXp')}</span><strong>{formatNumber(totalXp)} <small>XP</small></strong></div><div><span>{t('profile.arenaLevel')}</span><strong>{globalLevel.level}</strong><progress max={100} value={globalLevel.pct} aria-label={t('profile.arenaLevel')} /><p>{t('profile.nextLevel', { count: globalLevel.need - globalLevel.into, level: globalLevel.level + 1 })}</p></div><div><span>{t('profile.gamesWithProgress')}</span><strong>{saved.filter(item => item.xp !== null).length}<small> / {games.length}</small></strong></div></div>
@@ -60,12 +62,11 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
     </>}
     <section className="profile-account" aria-labelledby="profile-account-title"><div><p className="eyebrow">{t('account.title')}</p><h2 id="profile-account-title">{t('profile.accountSettings')}</h2><p>{t('profile.recoveryDescription')}</p></div><div className="profile-account-actions">
       {overview?.hasRecoveryCode !== undefined && <button type="button" className="button secondary" onClick={() => setEditing('recovery')}><KeyRound size={16} aria-hidden="true" />{t(overview.hasRecoveryCode ? 'account.recovery.replace' : 'account.recovery.create')}</button>}
-      {overview?.admin && <button type="button" className="button secondary" onClick={() => setAdminOpen(true)}><ShieldCheck size={16} aria-hidden="true" />{t('admin.open')}</button>}
-      <button type="button" className="button text-button" onClick={onSignOut}><LogOut size={16} aria-hidden="true" />{t('account.signOut')}</button>
+      <button type="button" className="button danger" onClick={onSignOut}><LogOut size={16} aria-hidden="true" />{t('account.signOut')}</button>
     </div></section>
     {overview?.hasRecoveryCode === false && <div className="form-warning"><p>{t('account.recovery.missing')}</p></div>}
-    <Dialog open={editing !== null} onClose={() => setEditing(null)} dismissible={false} title={t(editing === 'rename' ? 'profile.renameTitle' : 'account.recovery.savedTitle')}>
-      {editing === 'rename' ? <RenameForm current={username} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} /> : <RecoveryCodeForm username={username} replacing={overview?.hasRecoveryCode === true} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} />}
+    <Dialog open={editing !== null} onClose={() => setEditing(null)} dismissible={false} title={t(editing === 'avatar' ? 'profile.avatar.title' : editing === 'rename' ? 'profile.renameTitle' : 'account.recovery.savedTitle')}>
+      {editing === 'avatar' ? <AvatarForm username={username} current={overview?.avatar} onCancel={() => setEditing(null)} onDone={avatar => { setEditing(null); setOverview(value => value ? { ...value, avatar } : value) }} /> : editing === 'rename' ? <RenameForm current={username} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} /> : <RecoveryCodeForm username={username} replacing={overview?.hasRecoveryCode === true} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} />}
     </Dialog>
     <AdminPanel open={adminOpen} onClose={() => setAdminOpen(false)} username={username} />
   </section>

@@ -8,7 +8,7 @@ export default function Changelog() {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
   return <>
-    <button type="button" onClick={() => setOpen(true)}>Changelog</button><span className="version-label" aria-label={`${t('lobby.versionLabel')} ${version}`}>v{version}</span>
+    <button type="button" onClick={() => setOpen(true)}>Changelog</button>
     <Dialog open={open} onClose={() => setOpen(false)} title="Changelog" eyebrow={`SpillArena · v${version}`} className="changelog-dialog">
       <p>{t('lobby.changelogIntro')}</p><ol className="release-list">{changelog.map(entry => <li key={entry.release}>
         <div className="release-meta"><strong>v{entry.release}</strong><time dateTime={entry.date.split('-').reverse().join('-')}>{entry.date.replaceAll('-', '.')}</time></div>

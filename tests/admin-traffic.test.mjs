@@ -2,11 +2,12 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { issueToken } from '../shared/account-server.js'
 import { onRequestGet } from '../functions/api/admin/traffic.js'
-import { normalizeTraffic, trafficPeriod } from '../shared/traffic-server.js'
+import { gameTrafficFilter, normalizeTraffic, trafficPeriod } from '../shared/traffic-server.js'
 
 const now = new Date('2026-01-02T12:00:00Z')
 const period = trafficPeriod(7, now)
 const zone = {
+  games: [{ dimensions: { clientRequestPath: '/hangbot' }, count: 5 }, { dimensions: { clientRequestPath: '/hangbot/' }, count: 3 }, { dimensions: { clientRequestPath: '/fleetbot/' }, count: 2 }],
   totals: [{ sum: {
     requests: 20, bytes: 1000, cachedRequests: 5, pageViews: 8, threats: 2,
     countryMap: [{ clientCountryName: 'NO', requests: 15 }, { clientCountryName: 'US', requests: 5 }],
@@ -55,7 +56,7 @@ test('period visitors are deduplicated; absent days are filled; HTTP errors are 
 })
 
 test('empty datasets produce an empty report; malformed metrics do not become zero', () => {
-  assert.equal(normalizeTraffic({ totals: [], daily: [] }, 7, period).totals.requests, 0)
+  assert.equal(normalizeTraffic({ totals: [], daily: [], games: [] }, 7, period).totals.requests, 0)
   assert.throws(() => normalizeTraffic({}, 7, period))
   assert.throws(() => normalizeTraffic({ ...zone, totals: [{ ...zone.totals[0], uniq: {} }] }, 7, period))
 })
@@ -81,6 +82,11 @@ test('provider query has fixed scope and returns no secrets with no-store header
     assert.equal(init.headers.Authorization, 'Bearer test-provider-token')
     assert.equal(JSON.parse(init.body).variables.zone, 'test-zone')
     assert.equal(JSON.parse(init.body).variables.limit, 7)
+    const filter = JSON.parse(init.body).variables.gameFilter
+    assert.equal(filter.clientRequestHTTPHost, 'spillarena.no')
+    assert.equal(filter.clientRequestHTTPMethodName, 'GET')
+    assert.deepEqual(filter.edgeResponseStatus_in, [200, 304])
+    assert.equal(filter.requestSource, 'eyeball')
     assert.ok(init.signal instanceof AbortSignal)
     return Response.json({ data: { viewer: { zones: [zone] } }, errors: null })
   }, async () => {
@@ -91,6 +97,27 @@ test('provider query has fixed scope and returns no secrets with no-store header
     assert.equal(JSON.parse(body).totals.requests, 20)
     assert.ok(!body.includes('test-provider-token'))
   })
+})
+
+test('game counts combine trailing slash variants, rank games and include zero visits', () => {
+  const data = normalizeTraffic(zone, 7, period, now)
+  assert.deepEqual(data.games[0], { game: 'hangbot', requests: 8 })
+  assert.deepEqual(data.games[1], { game: 'fleetbot', requests: 2 })
+  assert.equal(data.games.find(row => row.game === 'atlasmaster').requests, 0)
+  assert.throws(() => normalizeTraffic({ ...zone, games: undefined }, 7, period, now))
+  for (const path of ['/hangbot/assets/a.js', '/api/auth', '/unknown/', '/hangbot/?q=1']) {
+    assert.throws(() => normalizeTraffic({ ...zone, games: [{ dimensions: { clientRequestPath: path }, count: 1 }] }, 7, period, now))
+  }
+})
+
+test('game traffic matches each UTC period, ending at the current instant', () => {
+  for (const days of [1, 7, 30]) {
+    const chosen = trafficPeriod(days, now)
+    const filter = gameTrafficFilter(chosen, now)
+    assert.equal(filter.datetime_geq, `${chosen.from}T00:00:00.000Z`)
+    assert.equal(filter.datetime_lt, now.toISOString())
+    assert.ok(filter.clientRequestPath_in.includes('/hangbot/'))
+  }
 })
 
 test('HTTP 200 GraphQL errors and inaccessible zones do not produce successful reports', async () => {

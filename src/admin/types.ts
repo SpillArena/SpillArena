@@ -52,6 +52,7 @@ export interface TrafficData {
     daily: { date: string; requests: number; visitors: number }[]
     countries: { country: string; requests: number }[]
     statuses: { status: number; requests: number }[]
+    games: { game: GameId; requests: number }[]
 }
 
 export interface LogEntry {

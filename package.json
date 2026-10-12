@@ -1,7 +1,7 @@
 {
   "name": "spillarena",
   "private": true,
-  "version": "1.11.0",
+  "version": "1.12.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,9 +11,12 @@
     "test:popularity": "node --test tests/popularity.test.mjs",
     "preview": "vite preview",
     "art": "node scripts/generate-game-art.mjs",
-    "test:contact": "node --test tests/contact.test.mjs"
+    "test:contact": "node --test tests/contact.test.mjs",
+    "test:avatar": "node --test tests/avatar.test.mjs"
   },
   "dependencies": {
+    "@dicebear/core": "^10.7.0",
+    "@dicebear/styles": "^10.6.0",
     "framer-motion": "^12.38.0",
     "i18next": "^26.4.2",
     "lucide-react": "^1.48.0",
