@@ -1,5 +1,6 @@
 {
   "appName": "SpillArena",
+  "seoTitle": "SpillArena: Everything's at stake | Free browser games",
   "headerTitle": "Everything's at stake.",
   "switchToLight": "Switch to Light",
   "switchToDark": "Switch to Dark",
@@ -59,7 +60,7 @@
     },
     "alwaysStored": "Always stored",
     "server": "Only if you create an account, this is also saved on our server: your username, a protected version of your PIN that nobody can read, and your progress in each game.",
-    "noTracking": "No ads, no tracking, and nothing is shared with third parties.",
+    "noTracking": "No ads, no tracking, and your data is never sold or shared for advertising. See the privacy policy for details.",
     "accept": "Accept and save",
     "decline": "Decline",
     "current": "Your current choice: {{choice}}",
@@ -479,7 +480,10 @@
       "9": "Know the song? Put it in release-year order. Play solo or with friends."
     },
     "gameCount_one": "{{count}} game to explore",
-    "gameCount_other": "{{count}} games to explore"
+    "gameCount_other": "{{count}} games to explore",
+    "privacyLink": "Privacy",
+    "termsLink": "Terms",
+    "faqLink": "FAQ"
   },
   "profile": {
     "backToGames": "Back to games",
@@ -506,5 +510,153 @@
     "renameTitle": "Change username",
     "signInIntro": "Sign in to see your progress across every game. You can also keep playing as a guest.",
     "skipContent": "Skip to content"
+  },
+  "legal": {
+    "back": "Back to games",
+    "updated": "Last updated 12 October 2026",
+    "contactLabel": "Contact",
+    "contact": "Questions, bugs or data requests: open an issue at github.com/SpillArena/SpillArena/issues.",
+    "privacy": {
+      "title": "Privacy policy",
+      "intro": "SpillArena is a free hobby project run by Emil Berglund in Norway. This page says what is stored, why, and how to remove it.",
+      "sections": [
+        {
+          "h": "What we store on our servers",
+          "p": [
+            "Only if you create an account: your username, a salted hash of your PIN (never the PIN itself), a hash of your recovery code, the dates you registered and were last seen, your XP and per-game progress, and the scores you post to leaderboards.",
+            "We do not ask for or store your email address, real name, phone number or location, and we do not store IP addresses in our own database."
+          ]
+        },
+        {
+          "h": "What we store in your browser",
+          "p": [
+            "If you accept storage: a sign-in token that lasts up to 30 days, and your theme, accent colour and language. If you decline, these are not kept and you start fresh on every visit. You can change your answer any time under “Storage & privacy” in the footer."
+          ]
+        },
+        {
+          "h": "Playing without an account",
+          "p": [
+            "Every game works without an account. Guest results stay in your browser and never reach a leaderboard under your name."
+          ]
+        },
+        {
+          "h": "Third parties",
+          "p": [
+            "Cloudflare hosts the site and our database and sees ordinary request data (such as IP address) to deliver the pages and protect against abuse. We use Cloudflare’s own traffic statistics, which do not use cookies.",
+            "Fonts are loaded from Google Fonts, so your browser contacts Google when the page loads. We use no advertising, tracking pixels or social-media widgets."
+          ]
+        },
+        {
+          "h": "Why we process it (legal basis)",
+          "p": [
+            "Account data is processed to provide the account and leaderboards you asked for (contract). Browser storage is kept only with your consent. Security logging is a legitimate interest."
+          ]
+        },
+        {
+          "h": "Your rights",
+          "p": [
+            "You can rename your account on your profile page. To have your account and progress deleted, or to get access to or correct your data, contact us (see below); we will also remove your leaderboard entries on request. You may complain to Datatilsynet, the Norwegian Data Protection Authority."
+          ]
+        },
+        {
+          "h": "Children",
+          "p": [
+            "The site is not aimed at children under 13 and we do not knowingly collect their data. Choose a username that does not reveal your real name."
+          ]
+        },
+        {
+          "h": "Changes",
+          "p": [
+            "If this policy changes, the date at the top changes too."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of use",
+      "intro": "By using SpillArena you agree to the following. It is short on purpose.",
+      "sections": [
+        {
+          "h": "The service",
+          "p": [
+            "SpillArena is a free collection of browser games, provided as is, without warranty. Games may change, break or disappear, and progress or scores may be reset."
+          ]
+        },
+        {
+          "h": "Your account",
+          "p": [
+            "You are responsible for keeping your PIN and recovery code safe. Anyone who has them can act as you. Do not share them."
+          ]
+        },
+        {
+          "h": "Usernames and conduct",
+          "p": [
+            "Usernames appear publicly on leaderboards and in multiplayer rooms. No offensive, hateful or impersonating names, no cheating, automated play, or attempts to attack, overload or probe the service."
+          ]
+        },
+        {
+          "h": "Enforcement",
+          "p": [
+            "We may rename, remove or ban accounts and remove scores that break these terms, without notice."
+          ]
+        },
+        {
+          "h": "Content",
+          "p": [
+            "Drawings and words you submit in multiplayer games are visible to other players in that room. Do not submit anything unlawful or that you do not have the right to share."
+          ]
+        },
+        {
+          "h": "Liability",
+          "p": [
+            "To the extent the law allows, we are not liable for losses from using or being unable to use the service."
+          ]
+        },
+        {
+          "h": "Law",
+          "p": [
+            "Norwegian law applies."
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "intro": "Quick answers about SpillArena.",
+      "items": [
+        {
+          "q": "Is it free?",
+          "a": "Yes. No payments, no ads, no downloads."
+        },
+        {
+          "q": "Do I need an account?",
+          "a": "No. An account only saves your XP and progress and puts your name on leaderboards."
+        },
+        {
+          "q": "How do I sign in?",
+          "a": "Pick a username and a 4–6 digit PIN. One account works in every game."
+        },
+        {
+          "q": "I forgot my PIN.",
+          "a": "Use your recovery code on the “Forgot PIN” page. Keep the code somewhere safe; it is shown when you create your account."
+        },
+        {
+          "q": "Why does it ask about storage?",
+          "a": "To remember your sign-in and settings on this device. Say no and the games still work, but nothing is remembered. See the privacy policy."
+        },
+        {
+          "q": "Can I play against other people?",
+          "a": "Some games have online multiplayer rooms. Others are played against bots or solo."
+        },
+        {
+          "q": "How do I delete my account?",
+          "a": "Ask via the contact link below. We delete the account, its progress and, on request, its leaderboard entries."
+        },
+        {
+          "q": "I found a bug or a bad username.",
+          "a": "Open an issue at github.com/SpillArena/SpillArena/issues."
+        }
+      ]
+    }
   }
 }

@@ -11,6 +11,8 @@ export const SUPPORTED_LANGUAGES = [
 
 function detectBrowserLanguage(): string {
     if (typeof navigator === 'undefined') return 'en'
+    // search crawlers render as English; the site is Norwegian first, so index it that way
+    if (/bot|crawl|spider|slurp|lighthouse|prerender/i.test(navigator.userAgent)) return 'no'
     const supported = new Set(SUPPORTED_LANGUAGES.map((l) => l.code as string))
     const candidates = navigator.languages?.length ? navigator.languages : [navigator.language]
     for (const raw of candidates) {

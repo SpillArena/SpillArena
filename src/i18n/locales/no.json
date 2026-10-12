@@ -1,5 +1,6 @@
 {
   "appName": "SpillArena",
+  "seoTitle": "SpillArena: Alt står på spill | Gratis nettleserspill på norsk",
   "headerTitle": "Alt står på spill.",
   "switchToLight": "Bytt til lys",
   "switchToDark": "Bytt til mørk",
@@ -59,7 +60,7 @@
     },
     "alwaysStored": "Lagres alltid",
     "server": "Bare hvis du lager en konto, lagres dette også på serveren vår: brukernavnet ditt, en beskyttet utgave av PIN-koden som ingen kan lese, og fremgangen din i hvert spill.",
-    "noTracking": "Ingen reklame, ingen sporing, og ingenting deles med tredjeparter.",
+    "noTracking": "Ingen reklame, ingen sporing, og dataene dine selges eller deles aldri til reklame. Se personvernerklæringen for detaljer.",
     "accept": "Godta og lagre",
     "decline": "Avslå",
     "current": "Valget ditt nå: {{choice}}",
@@ -479,7 +480,10 @@
       "9": "Kjenner du låten? Finn riktig plass etter utgivelsesår. Spill alene eller med venner."
     },
     "gameCount_one": "{{count}} spill å utforske",
-    "gameCount_other": "{{count}} spill å utforske"
+    "gameCount_other": "{{count}} spill å utforske",
+    "privacyLink": "Personvern",
+    "termsLink": "Vilkår",
+    "faqLink": "Spørsmål"
   },
   "profile": {
     "backToGames": "Tilbake til spillene",
@@ -506,5 +510,153 @@
     "renameTitle": "Bytt brukernavn",
     "signInIntro": "Logg inn for å se fremgangen din i alle spillene. Du kan også fortsette å spille som gjest.",
     "skipContent": "Hopp til innholdet"
+  },
+  "legal": {
+    "back": "Tilbake til spillene",
+    "updated": "Sist oppdatert 12. oktober 2026",
+    "contactLabel": "Kontakt",
+    "contact": "Spørsmål, feil eller innsynsforespørsler: opprett en sak på github.com/SpillArena/SpillArena/issues.",
+    "privacy": {
+      "title": "Personvernerklæring",
+      "intro": "SpillArena er et gratis hobbyprosjekt drevet av Emil Berglund i Norge. Denne siden forklarer hva som lagres, hvorfor, og hvordan du fjerner det.",
+      "sections": [
+        {
+          "h": "Hva vi lagrer på tjenerne våre",
+          "p": [
+            "Bare hvis du lager en konto: brukernavnet ditt, en saltet hash av PIN-koden (aldri selve PIN-koden), en hash av gjenopprettingskoden, datoene du registrerte deg og sist var innom, XP og fremgang per spill, og poengsummene du sender til ledertavlene.",
+            "Vi ber ikke om og lagrer ikke e-postadresse, fullt navn, telefonnummer eller posisjon, og vi lagrer ikke IP-adresser i vår egen database."
+          ]
+        },
+        {
+          "h": "Hva vi lagrer i nettleseren din",
+          "p": [
+            "Hvis du godtar lagring: en innloggingsnøkkel som varer i opptil 30 dager, samt tema, aksentfarge og språk. Avslår du, beholdes ikke dette og du starter på nytt hver gang. Du kan endre svaret når som helst under «Lagring & personvern» i bunnen av siden."
+          ]
+        },
+        {
+          "h": "Spille uten konto",
+          "p": [
+            "Alle spillene fungerer uten konto. Gjesteresultater blir i nettleseren din og havner aldri på en ledertavle under navnet ditt."
+          ]
+        },
+        {
+          "h": "Tredjeparter",
+          "p": [
+            "Cloudflare drifter nettstedet og databasen vår og ser vanlige forespørselsdata (som IP-adresse) for å levere sidene og beskytte mot misbruk. Vi bruker Cloudflares egen trafikkstatistikk, som ikke bruker informasjonskapsler.",
+            "Skrifter lastes fra Google Fonts, så nettleseren din kontakter Google når siden lastes. Vi bruker ingen annonser, sporingspiksler eller sosiale widgets."
+          ]
+        },
+        {
+          "h": "Hvorfor vi behandler det (behandlingsgrunnlag)",
+          "p": [
+            "Kontodata behandles for å levere kontoen og ledertavlene du ba om (avtale). Lagring i nettleseren skjer bare med samtykke. Sikkerhetslogging er berettiget interesse."
+          ]
+        },
+        {
+          "h": "Dine rettigheter",
+          "p": [
+            "Du kan endre navn på kontoen på profilsiden. For å få kontoen og fremgangen slettet, eller for innsyn i eller retting av opplysninger, kontakt oss (se under); vi fjerner også ledertavleoppføringene dine på forespørsel. Du kan klage til Datatilsynet."
+          ]
+        },
+        {
+          "h": "Barn",
+          "p": [
+            "Nettstedet er ikke rettet mot barn under 13 år, og vi samler ikke bevisst inn data om dem. Velg et brukernavn som ikke avslører ditt virkelige navn."
+          ]
+        },
+        {
+          "h": "Endringer",
+          "p": [
+            "Endres erklæringen, endres datoen øverst."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Vilkår for bruk",
+      "intro": "Ved å bruke SpillArena godtar du følgende. Det er kort med vilje.",
+      "sections": [
+        {
+          "h": "Tjenesten",
+          "p": [
+            "SpillArena er en gratis samling nettleserspill, levert som den er, uten garanti. Spill kan endres, slutte å virke eller forsvinne, og fremgang og poeng kan nullstilles."
+          ]
+        },
+        {
+          "h": "Kontoen din",
+          "p": [
+            "Du er ansvarlig for å ta vare på PIN-koden og gjenopprettingskoden. Den som har dem kan handle som deg. Ikke del dem."
+          ]
+        },
+        {
+          "h": "Brukernavn og oppførsel",
+          "p": [
+            "Brukernavn vises offentlig på ledertavler og i flerspillerrom. Ingen støtende, hatefulle eller etterlignende navn, ingen juks, automatisert spilling eller forsøk på å angripe, overbelaste eller teste tjenesten."
+          ]
+        },
+        {
+          "h": "Håndheving",
+          "p": [
+            "Vi kan endre navn på, fjerne eller utestenge kontoer og fjerne poeng som bryter vilkårene, uten varsel."
+          ]
+        },
+        {
+          "h": "Innhold",
+          "p": [
+            "Tegninger og ord du sender i flerspillerspill er synlige for andre spillere i rommet. Ikke send noe ulovlig eller noe du ikke har rett til å dele."
+          ]
+        },
+        {
+          "h": "Ansvar",
+          "p": [
+            "I den grad loven tillater det, er vi ikke ansvarlige for tap ved bruk av, eller manglende tilgang til, tjenesten."
+          ]
+        },
+        {
+          "h": "Lovvalg",
+          "p": [
+            "Norsk rett gjelder."
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "title": "Vanlige spørsmål",
+      "intro": "Raske svar om SpillArena.",
+      "items": [
+        {
+          "q": "Er det gratis?",
+          "a": "Ja. Ingen betaling, ingen reklame, ingen nedlasting."
+        },
+        {
+          "q": "Trenger jeg konto?",
+          "a": "Nei. En konto lagrer bare XP og fremgang og setter navnet ditt på ledertavlene."
+        },
+        {
+          "q": "Hvordan logger jeg inn?",
+          "a": "Velg et brukernavn og en PIN på 4–6 siffer. Én konto fungerer i alle spillene."
+        },
+        {
+          "q": "Jeg har glemt PIN-koden.",
+          "a": "Bruk gjenopprettingskoden på siden «Glemt PIN». Ta vare på koden; den vises når du lager kontoen."
+        },
+        {
+          "q": "Hvorfor spør siden om lagring?",
+          "a": "For å huske innloggingen og innstillingene dine på denne enheten. Svarer du nei, fungerer spillene, men ingenting huskes. Se personvernerklæringen."
+        },
+        {
+          "q": "Kan jeg spille mot andre?",
+          "a": "Noen spill har flerspillerrom på nett. Andre spilles mot bots eller alene."
+        },
+        {
+          "q": "Hvordan sletter jeg kontoen?",
+          "a": "Spør via kontaktlenken under. Vi sletter kontoen, fremgangen og, på forespørsel, ledertavleoppføringene."
+        },
+        {
+          "q": "Jeg fant en feil eller et upassende brukernavn.",
+          "a": "Opprett en sak på github.com/SpillArena/SpillArena/issues."
+        }
+      ]
+    }
   }
 }

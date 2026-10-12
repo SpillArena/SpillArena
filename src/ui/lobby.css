@@ -279,3 +279,12 @@ html.dark .form-error { background: #3d202b; border-color: #714051; color: #ffcb
   .account-button span { display: none; }
   .account-button { padding: 10px; }
 }
+
+/* privacy, terms, FAQ */
+.legal-page { max-width: 720px; margin-inline: auto; padding-block: 40px 24px; }
+.legal-page h1 { font-size: clamp(32px, 5vw, 48px); letter-spacing: -1.2px; line-height: 1.1; margin: 24px 0 12px; }
+.legal-page h2 { font-family: var(--serif); font-size: 21px; font-weight: 500; margin: 28px 0 6px; }
+.legal-page p { font-size: 14px; line-height: 1.75; margin: 0 0 10px; color: var(--muted); }
+.legal-page .legal-lead { font-size: 16px; color: var(--ink); }
+.legal-page .legal-updated { font-size: 12px; }
+.legal-page .legal-contact { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); }
