@@ -8,6 +8,15 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '13-10-2026',
+        title: 'MelodyRush: refreshed style and out of beta',
+        release: '1.14.1',
+        changes: [
+            'MelodyRush has a refreshed in-game style with a new look',
+            'MelodyRush is out of beta - removed the beta label and the warning before you play',
+        ],
+    },
+    {
+        date: '13-10-2026',
         title: 'ProportionPanic: new look and multiplayer',
         release: '1.14.0',
         changes: [

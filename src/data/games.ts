@@ -111,7 +111,6 @@ export const games: Game[] = [
         color: "bg-orange-600",
         githubUrl: "https://github.com/SpillArena/MelodyRush",
         liveUrl: "https://spillarena.no/melodyrush/",
-        beta: true,
     },
     {
         id: 9,
