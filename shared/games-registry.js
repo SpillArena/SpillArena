@@ -8,7 +8,7 @@
  *
  * Navnet er det samme segmentet som routeren bruker i spillarena.no/<navn>.
  */
-export const GAMES = ['atlasmaster', 'scribblebot', 'hangbot', 'proportionpanic', 'pixelpanic', 'fleetbot', 'erashuffle', 'melodyrush', 'hitline']
+export const GAMES = ['atlasmaster', 'scribblebot', 'hangbot', 'proportionpanic', 'pixelpanic', 'fleetbot', 'erashuffle', 'melodyrush', 'hitline', 'sipzone']
 
 export const isGame = (id) => typeof id === 'string' && GAMES.includes(id)
 

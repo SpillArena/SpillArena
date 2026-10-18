@@ -431,6 +431,7 @@
   },
   "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
   "hitlineDescription": "Hitline – recognise the song and place it on your timeline by release year. Play solo, share a screen or invite friends to an online room.",
+  "sipZoneDescription": "SipZone – Norwegian-inspired drinking games for friends. Share one phone or use your own devices with SipZone Live. Choose what goes in your glass.",
   "lobby": {
     "skip": "Skip to games",
     "search": {
@@ -493,7 +494,8 @@
       "strategy": "Strategy",
       "words": "Words & pictures",
       "knowledge": "Knowledge",
-      "music": "Music"
+      "music": "Music",
+      "party": "Party games"
     },
     "descriptions": {
       "1": "Place your ships. Read your opponent. Sink the entire fleet.",
@@ -504,7 +506,8 @@
       "6": "The picture gets sharper. Can you see the answer before the pixels reveal it?",
       "7": "Five moments in history. One right order. Put time in its place.",
       "8": "Guess the pop song from short clips. Less listening earns more points.",
-      "9": "Know the song? Put it in release-year order. Play solo or with friends."
+      "9": "Know the song? Put it in release-year order. Play solo or with friends.",
+      "10": "Drinking games for a night with friends. Share one phone or play on your own devices with SipZone Live."
     },
     "gameCount_one": "{{count}} game to explore",
     "gameCount_other": "{{count}} games to explore",

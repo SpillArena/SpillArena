@@ -7,6 +7,16 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '19-10-2026',
+        title: 'SipZone joins the arena in beta',
+        release: '1.15.0',
+        changes: [
+            'Added SipZone as a beta game, with the beta badge and the shared warning before entering the game',
+            'Added the Party games category, Norwegian and English game descriptions, and dedicated SipZone posters and icon',
+            'SipZone is included in search, the multiplayer filter, game traffic and the most-visited game spotlight',
+        ],
+    },
+    {
         date: '13-10-2026',
         title: 'MelodyRush: refreshed style and out of beta',
         release: '1.14.1',

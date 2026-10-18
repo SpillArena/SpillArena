@@ -286,6 +286,15 @@ const GAMES = [
     art: () => hitlineArt(),
     glyph: () => hitlineGlyph(),
   },
+  {
+    id: 10, file: 'SipZone', title: ['Sip', 'Zone'],
+    bg: '#153a30', deep: '#081f19', accent: '#ff825b', ink: '#f6f0dc',
+    bannerOffsetY: -18,
+    genre: { no: 'Festleker', en: 'Party games' },
+    tagline: { no: 'Gode venner. Bare én runde til.', en: 'Good friends. Just one more round.' },
+    art: (lang) => sipZoneArt(lang),
+    glyph: () => sipZoneGlyph(),
+  },
 ]
 
 // ---- HangBot: håndtegnet galge, en liten bot og bokstavbrikker
@@ -834,6 +843,56 @@ function hitlineGlyph() {
   return out
 }
 
+// ---- SipZone: the green vors table, playing cards, a glass and a round party box.
+
+function sipZoneCards() {
+  const pine = '#153a30', paper = '#f6f0dc', coral = '#ff825b'
+  const heart = (x, y, scale) => `<path transform="translate(${x} ${y}) scale(${scale})" d="M0 21C-9 12-34-2-34-21C-34-40-10-48 0-30C10-48 34-40 34-21C34-2 9 12 0 21Z" fill="#d65442"/>`
+  let out = '<defs><pattern id="sip-card-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 0 20 10 10 20 0 10Z" fill="none" stroke="#f6f0dc" stroke-opacity=".55" stroke-width="1.5"/></pattern></defs>'
+  out += g('transform="rotate(-16 160 260)"',
+    cardShadow(62, 95, 190, 292, 16),
+    `<rect x="62" y="95" width="190" height="292" rx="16" fill="${paper}"/>`,
+    `<rect x="72" y="105" width="170" height="272" rx="9" fill="${coral}"/>`,
+    '<rect x="79" y="112" width="156" height="258" rx="6" fill="url(#sip-card-pattern)"/>',
+    `<circle cx="157" cy="241" r="38" fill="${paper}"/>`,
+    text('S.', FONTS.serif, 49, 157, 241, {fill:pine,anchor:'middle',middle:true}))
+  out += g('transform="rotate(12 288 294)"',
+    cardShadow(193, 143, 190, 292, 16),
+    `<rect x="193" y="143" width="190" height="292" rx="16" fill="${paper}"/>`,
+    '<rect x="202" y="152" width="172" height="274" rx="9" fill="none" stroke="#153a3028"/>',
+    text('A', FONTS.serif, 34, 208, 182, {fill:'#d65442'}),heart(219,204,.28),
+    heart(288,294,1.35),
+    g('transform="rotate(180 288 289)"',text('A',FONTS.serif,34,208,182,{fill:'#d65442'}),heart(219,204,.28)))
+  return out
+}
+
+function sipZoneArt(lang) {
+  const pine = '#153a30', paper = '#f6f0dc', coral = '#ff825b'
+  let out = '<ellipse cx="265" cy="466" rx="230" ry="26" fill="#041c13" fill-opacity=".25"/>'
+  out += sipZoneCards()
+  out += g('transform="translate(342 10) rotate(12 55 90)"',
+    `<ellipse cx="58" cy="184" rx="75" ry="20" fill="#eadc90"/>`,
+    `<path d="M101 60H123Q145 60 145 85V117Q145 139 115 139H101" fill="none" stroke="${paper}" stroke-width="11"/>`,
+    `<path d="M10 41H112L102 168Q58 184 18 168Z" fill="#e5ad49" stroke="${paper}" stroke-width="5"/>`,
+    '<path d="M33 67 38 147M61 67 62 151M88 67 84 147" stroke="#f6f0dc" stroke-opacity=".45" stroke-width="5" stroke-linecap="round"/>',
+    `<path d="M7 47Q-5 23 15 18Q18-2 38 8Q53-5 67 8Q88-1 94 15Q117 13 115 42L111 59Q98 67 85 54Q72 66 59 55Q46 66 33 54Q20 64 7 47Z" fill="${paper}"/>`)
+  out += g('transform="rotate(-10 382 421)"',
+    `<ellipse cx="382" cy="436" rx="83" ry="66" fill="#041c13"/>`,
+    `<ellipse cx="382" cy="423" rx="83" ry="66" fill="${paper}"/>`,
+    `<ellipse cx="382" cy="418" rx="77" ry="59" fill="${pine}" stroke="${coral}" stroke-width="3"/>`,
+    text('SIP',FONTS.sansBold,32,382,413,{fill:paper,anchor:'middle'}),
+    text('ZONE',FONTS.sansBold,25,382,441,{fill:coral,anchor:'middle'}),
+    text(lang==='no'?'SEND VIDERE':'PASS IT ON',FONTS.sans,9,382,458,{fill:'#eadc90',anchor:'middle',tracking:1.3}))
+  for (const [x,y,r] of [[29,397,12],[260,48,10],[485,302,9]]) out += `<path d="M${x-r} ${y}H${x+r}M${x} ${y-r}V${y+r}" stroke="#eadc90" stroke-width="3" stroke-linecap="round"/>`
+  return out
+}
+
+function sipZoneGlyph() {
+  return g('transform="translate(-2 -8) scale(1.06)"',sipZoneCards())
+    + '<circle cx="377" cy="407" r="76" fill="#ff825b" stroke="#f6f0dc" stroke-width="5"/>'
+    + '<path d="M377 364V450M334 407H420M347 377 407 437M347 437 407 377" stroke="#153a30" stroke-width="6" stroke-linecap="round"/>'
+}
+
 // ---------------------------------------------------------------- bilder
 
 function background(w, h, game, radius = 0) {
@@ -919,13 +978,14 @@ for (const game of selected) {
   manifest.push(game)
 }
 
-const imports = manifest.flatMap((game) => [
+// The complete manifest stays current when regenerating only one game.
+const imports = GAMES.flatMap((game) => [
   ...LANGS.map((lang) => `import ${game.file}${lang === 'no' ? 'No' : 'En'} from '../assets/games/${game.file}.${lang}.svg'`),
   `import ${game.file}Icon from '../assets/games/icons/${game.file}.svg'`,
 ])
-const entries = manifest.map((game) => `    ${game.id}: { banner: { no: ${game.file}No, en: ${game.file}En }, icon: ${game.file}Icon },`)
+const entries = GAMES.map((game) => `    ${game.id}: { banner: { no: ${game.file}No, en: ${game.file}En }, icon: ${game.file}Icon },`)
 
-if (!onlyGame) writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs — kjør \`npm run art\` i stedet for å endre her.
+writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs — kjør \`npm run art\` i stedet for å endre her.
 ${imports.join('\n')}
 
 export type ArtLanguage = 'no' | 'en'
@@ -943,4 +1003,4 @@ ${entries.join('\n')}
 }
 `)
 
-console.log(`Skrev ${manifest.length * 3} bilder${onlyGame ? ` for ${onlyGame}` : ' og src/data/game-art.ts'}`)
+console.log(`Skrev ${manifest.length * 3} bilder${onlyGame ? ` for ${onlyGame}` : ''} og src/data/game-art.ts`)

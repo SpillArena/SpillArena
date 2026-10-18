@@ -40,6 +40,14 @@ test('slash variants are combined; rankings use recent page loads with determini
   assert.equal(tie.games[0].game, 'hangbot')
 })
 
+test('SipZone document visits merge both slash variants and can feature the new beta game', () => {
+  const ranking = normalizePopularity({ games: [row('/sipzone', 11), row('/sipzone/', 9), row('/hitline/', 15)] }, filter, now)
+  assert.deepEqual(ranking.games[0], { game: 'sipzone', requests: 20 })
+  assert.ok(filter.clientRequestPath_in.includes('/sipzone'))
+  assert.ok(filter.clientRequestPath_in.includes('/sipzone/'))
+  assert.equal(selectPopularGame(ranking, candidates, now.getTime()).title, 'sipzone')
+})
+
 test('empty, stale, future, malformed and unsupported rankings cannot claim a popular game', () => {
   assert.equal(selectPopularGame(normalizePopularity({ games: [] }, filter, now), candidates, now.getTime()), null)
   for (const payload of [null, { available: false }, { ...normalized(), games: [{ game: 'hitline', requests: -1 }] },

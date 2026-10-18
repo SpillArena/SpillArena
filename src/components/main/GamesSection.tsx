@@ -13,7 +13,7 @@ export default function GamesSection({ onClick }: { onClick: (game: Game) => voi
   return <section className="games-section" id="games" aria-labelledby="games-title">
     <div className="section-heading"><div><p className="eyebrow">{t('lobby.collection')}</p><h2 id="games-title">{t('lobby.allGames')}</h2></div><span className="game-count" role="status" aria-live="polite">{t('lobby.gameCount', { count: visible.length })}</span></div>
     <div className="filter-bar" role="group" aria-label={t('lobby.filterLabel')}>
-      {(['all', 'strategy', 'words', 'knowledge', 'music'] as const).map(category => <button className="filter" type="button" key={category} aria-pressed={filter === category} onClick={() => setFilter(category)}>
+      {(['all', 'strategy', 'words', 'knowledge', 'music', 'party'] as const).map(category => <button className="filter" type="button" key={category} aria-pressed={filter === category} onClick={() => setFilter(category)}>
         {t(`lobby.categories.${category}`)}{category === 'all' && <span className="filter-count">{games.length}</span>}
       </button>)}
       <button className="filter" type="button" aria-pressed={filter === 'multiplayer'} onClick={() => setFilter('multiplayer')}>

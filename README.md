@@ -44,6 +44,7 @@ SpillArena brings independent web games together in a responsive lobby. Browse b
 | [EraShuffle](https://github.com/SpillArena/EraShuffle) | Put historical events in chronological order |
 | [MelodyRush](https://github.com/SpillArena/MelodyRush) | Recognise music from short previews |
 | [Hitline](https://github.com/SpillArena/Hitline) | Place songs on a musical timeline |
+| [SipZone](https://github.com/SpillArena/SipZone) · Beta | Norwegian-inspired drinking games on one phone or with SipZone Live |
 
 Game availability and beta status are maintained in [`src/data/games.ts`](src/data/games.ts). Each game has its own repository; this one owns the lobby and shared account service.
 

@@ -431,6 +431,7 @@
   },
   "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
   "hitlineDescription": "Hitline – kjenn igjen låten og plasser den på tidslinjen etter utgivelsesår. Spill alene, del en skjerm eller inviter venner til et rom på nett.",
+  "sipZoneDescription": "SipZone – norske drikkeleker til vors og hyttetur. Spill på én mobil eller på hver deres enhet med SipZone Live. Dere bestemmer selv hva som er i glasset.",
   "lobby": {
     "skip": "Hopp til spillene",
     "search": {
@@ -493,7 +494,8 @@
       "strategy": "Taktikk",
       "words": "Ord & bilder",
       "knowledge": "Kunnskap",
-      "music": "Musikk"
+      "music": "Musikk",
+      "party": "Festleker"
     },
     "descriptions": {
       "1": "Plasser skipene dine. Les motstanderen. Senk hele flåten.",
@@ -504,7 +506,8 @@
       "6": "Bildet blir skarpere. Ser du svaret før resten av pikslene?",
       "7": "Fem historiske øyeblikk. Én riktig rekkefølge. Sett tiden på plass.",
       "8": "Gjett poplåten fra korte lydklipp. Jo mindre du hører, jo flere poeng.",
-      "9": "Kjenner du låten? Finn riktig plass etter utgivelsesår. Spill alene eller med venner."
+      "9": "Kjenner du låten? Finn riktig plass etter utgivelsesår. Spill alene eller med venner.",
+      "10": "Drikkeleker til vors og hyttetur. Del én mobil, eller spill på hver deres enhet med SipZone Live."
     },
     "gameCount_one": "{{count}} spill å utforske",
     "gameCount_other": "{{count}} spill å utforske",

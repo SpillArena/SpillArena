@@ -1,7 +1,7 @@
 import type { GameId } from "../account";
 import { gameArt, type ArtLanguage } from "./game-art";
 
-export type GameCategory = 'strategy' | 'words' | 'knowledge' | 'music';
+export type GameCategory = 'strategy' | 'words' | 'knowledge' | 'music' | 'party';
 
 export type Game = {
     id: number;
@@ -123,6 +123,18 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/Hitline",
         liveUrl: "https://spillarena.no/hitline/",
         beta: true,
+    },
+    {
+        id: 10,
+        title: "SipZone",
+        category: "party",
+        multiplayer: true,
+        descriptionKey: "sipZoneDescription",
+        icon: "PartyPopper",
+        color: "bg-emerald-900",
+        githubUrl: "https://github.com/SpillArena/SipZone",
+        liveUrl: "https://spillarena.no/sipzone/",
+        beta: true,
     }
 ];
 
@@ -137,4 +149,5 @@ export const GAME_TITLES: Record<GameId, string> = {
     erashuffle: "EraShuffle",
     melodyrush: "MelodyRush",
     hitline: "Hitline",
+    sipzone: "SipZone",
 };
