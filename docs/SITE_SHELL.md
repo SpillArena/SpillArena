@@ -8,7 +8,7 @@ The lobby and all seven games use a 1760px maximum page width, including horizon
 
 ## Cookies and storage
 
-Every site uses the shared `src/account/ConsentDialog.tsx`, `consent.ts` and the `cookie-consent` key on the same origin. Settings and the footer can reopen the dialog. An undecided or declined choice keeps new optional data in memory. Accepting flushes that data to browser storage; declining removes the game's declared optional keys and keeps the current visit usable. The consent choice itself is remembered. The choice applies to the lobby and all games served on `spillarena.no`.
+Every site uses the shared `src/account/ConsentDialog.tsx`, `consent.ts` and the `cookie-consent` key on the same origin. Settings and the footer can reopen the dialog. An undecided or declined choice keeps new optional data in memory. Accepting flushes that data to browser storage; declining removes the game's declared optional keys and keeps the current visit usable. The consent choice itself is remembered. The choice applies to the lobby and all games served on `spillarena.no`. On a page that loads AdSense (`loadAdSense()` in `src/account/ads.ts`), Google's certified consent message asks first and the dialog only steps in if that message does not come; see "Ads (Google AdSense)" in `docs/OPERATIONS.md`.
 
 Storage controls show the same accept, decline, status and manage actions in English and Norwegian. Each game still explains its own stored data in the dialog.
 

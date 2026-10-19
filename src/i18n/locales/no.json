@@ -60,7 +60,7 @@
     },
     "alwaysStored": "Lagres alltid",
     "server": "Bare hvis du lager en konto, lagres dette også på serveren vår: brukernavnet ditt, en beskyttet utgave av PIN-koden som ingen kan lese, og fremgangen din i hvert spill.",
-    "noTracking": "Ingen reklame, ingen sporing, og dataene dine selges eller deles aldri til reklame. Se personvernerklæringen for detaljer.",
+    "noTracking": "Ingen sporing eller analysekapsler, og dataene dine selges aldri. Eventuell reklame kommer fra Google, med et eget samtykkevalg. Se personvernerklæringen for detaljer.",
     "accept": "Godta og lagre",
     "decline": "Avslå",
     "current": "Valget ditt nå: {{choice}}",
@@ -580,7 +580,7 @@
   },
   "legal": {
     "back": "Tilbake til spillene",
-    "updated": "Sist oppdatert 12. oktober 2026",
+    "updated": "Sist oppdatert 19. oktober 2026",
     "contactLabel": "Kontakt",
     "contact": "Spørsmål, feil, sletting av konto eller innsynsforespørsler:",
     "privacy": {
@@ -598,7 +598,8 @@
         {
           "h": "Hva vi lagrer i nettleseren din",
           "p": [
-            "Hvis du godtar lagring: en innloggingsnøkkel som varer i opptil 30 dager, samt tema, aksentfarge og språk. Avslår du, beholdes ikke dette og du starter på nytt hver gang. Du kan endre svaret når som helst under «Lagring & personvern» i bunnen av siden."
+            "Hvis du godtar lagring: en innloggingsnøkkel som varer i opptil 30 dager, samt tema, aksentfarge og språk. Avslår du, beholdes ikke dette og du starter på nytt hver gang. Du kan endre svaret når som helst under «Lagring & personvern» i bunnen av siden.",
+            "Sider med reklame lar også Google lagre informasjonskapsler og lignende kjennetegn i nettleseren din. Hva Google kan lagre, og om reklamen kan tilpasses deg, følger valget du gjør i Googles samtykkevindu, ikke svaret over."
           ]
         },
         {
@@ -611,13 +612,14 @@
           "h": "Tredjeparter",
           "p": [
             "Cloudflare drifter nettstedet og databasen vår og ser vanlige forespørselsdata (som IP-adresse) for å levere sidene og beskytte mot misbruk. Vi bruker Cloudflares egen trafikkstatistikk, som ikke bruker informasjonskapsler.",
-            "Skrifter lastes fra Google Fonts, så nettleseren din kontakter Google når siden lastes. Vi bruker ingen annonser, sporingspiksler eller sosiale widgets."
+            "Skrifter lastes fra Google Fonts, så nettleseren din kontakter Google når siden lastes. Vi bruker ingen sporingspiksler eller sosiale widgets.",
+            "Reklame: SpillArena kan vise reklame fra Google AdSense for å dekke driftskostnadene. Bare sider som viser reklame, laster Googles annonsekode. På de sidene bruker Google og annonsepartnerne Google samarbeider med informasjonskapsler og lignende teknologi for å vise annonser, begrense hvor ofte du ser den samme, måle dem og hindre svindel, og bare hvis du tillater det, for å tilpasse dem etter aktiviteten din her og på andre nettsteder. I EØS, Storbritannia og Sveits spør Google om dette samtykket i sitt eget vindu, bygget på IABs Transparency and Consent Framework. Du kan endre valget når som helst med «Annonseinnstillinger» under «Lagring & personvern», eller med lenken til personvern- og informasjonskapselinnstillinger som Google legger til på siden. Slik bruker Google dataene: policies.google.com/technologies/partner-sites. Kontoen din, PIN-koden, fremgangen og kontaktmeldingene dine deles aldri med Google eller annonsører."
           ]
         },
         {
           "h": "Hvorfor vi behandler det (behandlingsgrunnlag)",
           "p": [
-            "Kontodata behandles for å levere kontoen og ledertavlene du ba om (avtale). Kontaktmeldinger behandles for å svare deg (din henvendelse). Lagring i nettleseren skjer bare med samtykke. Søppelfilter og sikkerhetslogging er berettiget interesse."
+            "Kontodata behandles for å levere kontoen og ledertavlene du ba om (avtale). Kontaktmeldinger behandles for å svare deg (din henvendelse). Lagring i nettleseren skjer bare med samtykke. Søppelfilter og sikkerhetslogging er berettiget interesse. Informasjonskapsler for reklame og tilpasset reklame krever samtykke, som Googles vindu spør om; Google behandler annonsedata etter sin egen personvernerklæring."
           ]
         },
         {
@@ -694,7 +696,7 @@
       "items": [
         {
           "q": "Er det gratis?",
-          "a": "Ja. Ingen betaling, ingen reklame, ingen nedlasting."
+          "a": "Ja. Ingen betaling og ingen nedlasting. Noen sider viser reklame, som hjelper med å dekke driftskostnadene."
         },
         {
           "q": "Trenger jeg konto?",
@@ -710,7 +712,7 @@
         },
         {
           "q": "Hvorfor spør siden om lagring?",
-          "a": "For å huske innloggingen og innstillingene dine på denne enheten. Svarer du nei, fungerer spillene, men ingenting huskes. Se personvernerklæringen."
+          "a": "For å huske innloggingen og innstillingene dine på denne enheten. Svarer du nei, fungerer spillene, men ingenting huskes. Sider med reklame viser også Googles samtykkevindu: det er et eget valg, bare om reklame. Se personvernerklæringen."
         },
         {
           "q": "Kan jeg spille mot andre?",

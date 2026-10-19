@@ -10,6 +10,7 @@ import './ui/lobby.css'
 import App from './App'
 import CookieConsentBanner from './components/CookieConsentBanner'
 import { hideLoader, installGameLinkLoader } from './ui/loader'
+import { loadAdSense } from './account'
 
 /*
  * Økten lagres bare når samtykket er gitt. Uten det lever innloggingen i minnet
@@ -17,6 +18,14 @@ import { hideLoader, installGameLinkLoader } from './ui/loader'
  * ligger nå i src/account/ (session.ts leser svaret fra consent.ts), felles for
  * forsiden og alle spillene, så den trenger ikke settes opp her.
  */
+
+/*
+ * Reklame, og Googles samtykkevindu med den. Før første tegning, så
+ * samtykkedialogen vet at den skal vente på Googles. Uten VITE_ADSENSE_CLIENT
+ * (se .env.production) gjør kallet ingenting. Hvorfor og hvordan: src/account/ads.ts
+ * og docs/OPERATIONS.md.
+ */
+loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
