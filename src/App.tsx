@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { gameBanner, games, type Game } from './data/games'
-import { getSession, useAccount } from './account'
+import { adsRequested, getSession, useAccount } from './account'
+import { isPinPage } from './lib/adFreePages'
 import HeaderSection from './components/header/HeaderSection'
 import HeroSection from './components/main/HeroSection'
 import GamesSection from './components/main/GamesSection'
@@ -37,6 +38,11 @@ export default function App() {
       window.history.replaceState(window.history.state, '', url)
     }
     const onHashChange = () => {
+      // reklameskriptet kan ikke fjernes fra en side, bare lastes uten — se src/lib/adFreePages.ts
+      if (adsRequested() && isPinPage()) {
+        window.location.reload()
+        return
+      }
       setPage(currentPage())
       requestAnimationFrame(() => {
         if (window.location.hash === '#games') document.getElementById('games')?.scrollIntoView()

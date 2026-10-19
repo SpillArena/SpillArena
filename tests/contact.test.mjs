@@ -7,7 +7,7 @@ import { matchFaq } from '../src/lib/faqMatch.ts'
 import { validateContact, senderHash, MAX_PER_HOUR, notifySupport, supportMail, smtpOptions } from '../shared/contact-server.js'
 import { onRequestPost } from '../functions/api/contact.js'
 import { onRequestGet as getMessages } from '../functions/api/admin/messages.js'
-import { issueToken, tokenHash } from '../shared/account-server.js'
+import { issueAdminToken, issueToken, tokenHash } from '../shared/account-server.js'
 
 const faqOf = (lang) => JSON.parse(readFileSync(new URL(`../src/i18n/locales/${lang}.json`, import.meta.url))).legal.faq.items
 const en = faqOf('en')
@@ -218,7 +218,9 @@ test('real schema: signed-in message and admin inbox contain only verified accou
   const headers = { Authorization: `Bearer ${token}` }
   const response = await submitAndWait(post({ ...good, account: { username: 'Admin', createdAt: 'forged' } }, headers), env)
   assert.equal(response.status, 200)
-  const inbox = await getMessages({ env, request: new Request('https://spillarena.no/api/admin/messages', { headers }) })
+  // the inbox is admin-only, and admin calls take the panel's own token
+  const adminHeaders = { Authorization: `Bearer ${await issueAdminToken(env.AUTH_SECRET, 'kari')}` }
+  const inbox = await getMessages({ env, request: new Request('https://spillarena.no/api/admin/messages', { headers: adminHeaders }) })
   assert.equal(inbox.status, 200)
   const body = await inbox.json()
   assert.equal(body.messages.length, 1)

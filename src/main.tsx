@@ -11,6 +11,7 @@ import App from './App'
 import CookieConsentBanner from './components/CookieConsentBanner'
 import { hideLoader, installGameLinkLoader } from './ui/loader'
 import { loadAdSense } from './account'
+import { isPinPage } from './lib/adFreePages'
 
 /*
  * Økten lagres bare når samtykket er gitt. Uten det lever innloggingen i minnet
@@ -22,10 +23,11 @@ import { loadAdSense } from './account'
 /*
  * Reklame, og Googles samtykkevindu med den. Før første tegning, så
  * samtykkedialogen vet at den skal vente på Googles. Uten VITE_ADSENSE_CLIENT
- * (se .env.production) gjør kallet ingenting. Hvorfor og hvordan: src/account/ads.ts
- * og docs/OPERATIONS.md.
+ * (se .env.production) gjør kallet ingenting. Aldri på sider der PIN-en
+ * skrives (src/lib/adFreePages.ts). Hvorfor og hvordan: src/account/ads.ts og
+ * docs/OPERATIONS.md.
  */
-loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)
+if (!isPinPage()) loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

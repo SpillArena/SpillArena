@@ -17,6 +17,15 @@ import { checkName } from '../src/account/username-policy.ts'
 export const TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000
 
 /**
+ * Hvor lenge adminpanelets eget tegn varer — se issueAdminToken.
+ *
+ * Kort med vilje: tegnet finnes bare i minnet mens panelet er åpent, og et
+ * kvarter rekker for det en admin gjør der. Går det ut, spør panelet om PIN-en
+ * igjen i stedet for å kaste adminen ut.
+ */
+export const ADMIN_TOKEN_TTL_MS = 15 * 60 * 1000
+
+/**
  * Runder i PBKDF2.
  *
  * Satt av CPU-taket i en Pages Function, ikke av kryptografi: gratisplanen gir
@@ -142,6 +151,42 @@ export async function countFailedPin(env, row, now) {
     .run()
 }
 
+/**
+ * Sjekker PIN-en til en innlogget konto, med SAMME forsøksgrense som innloggingen.
+ *
+ * Brukes der tegnet alene ikke er nok: kontosidene (functions/api/account/) og
+ * adminpanelets eget tegn (functions/api/admin/session.js). Tegnet er nettopp
+ * det som kan komme på avveie, og uten grense kunne den som hadde det prøve alle
+ * ti tusen PIN-ene her. Telleren er den samme som i /api/auth, så fem feil her
+ * stenger også innloggingen et kvarter.
+ *
+ * `{}` når PIN-en stemmer, ellers `{ error }` med et ferdig svar.
+ */
+export async function checkPin(env, username, pin) {
+  if (typeof pin !== 'string' || !PIN_RE.test(pin)) return { error: json({ error: 'bad_pin' }, 400) }
+  const row = await env.DB.prepare(
+    `SELECT username, pin_hash, pin_salt, failed, locked_until FROM players WHERE username = ?`,
+  )
+    .bind(username)
+    .first()
+  if (!row) return { error: json({ error: 'unauthorized' }, 401) }
+
+  const now = new Date()
+  if (row.locked_until && row.locked_until > now.toISOString()) {
+    return { error: lockedResponse(row.locked_until, now) }
+  }
+
+  const attempted = await hashPin(pin, row.pin_salt)
+  if (!timingSafeEqual(attempted, row.pin_hash)) {
+    await countFailedPin(env, row, now)
+    return { error: json({ error: 'bad_credentials' }, 401) }
+  }
+  if (row.failed) {
+    await env.DB.prepare(`UPDATE players SET failed = 0 WHERE username = ?`).bind(row.username).run()
+  }
+  return {}
+}
+
 const encoder = new TextEncoder()
 
 export const toBase64Url = (bytes) =>
@@ -217,6 +262,29 @@ export async function issueToken(secret, username, now = Date.now()) {
 }
 
 /**
+ * Adminpanelets eget tegn: samme form og samme nøkkel, men `s: 'admin'` og et
+ * kvarter i stedet for tretti dager.
+ *
+ * HVORFOR ET EGET TEGN. Det vanlige tegnet ligger i localStorage i tretti dager,
+ * og alt som kjører på spillarena.no kan lese det — også skript fra andre, som
+ * reklamen. Med bare det tegnet kunne en admin-konto gi engangskoder til andre
+ * spillere (og dermed kontoene deres), slette dem og gjøre seg selv til admin.
+ * requireAdmin krever derfor dette tegnet, og det får man bare med PIN-en
+ * (functions/api/admin/session.js). Klienten holder det i minnet, aldri på
+ * disken, og bare mens panelet er åpent.
+ *
+ * Spillenes kopier av verifyToken leser bare `u` og `e`. For dem er dette et
+ * vanlig tegn som går ut om et kvarter, og de ser det aldri: panelet sender det
+ * bare til /api/admin/*.
+ */
+export async function issueAdminToken(secret, username, now = Date.now()) {
+  const payload = toBase64Url(
+    encoder.encode(JSON.stringify({ u: username, e: now + ADMIN_TOKEN_TTL_MS, i: now, s: 'admin' })),
+  )
+  return `${payload}.${await hmac(secret, payload)}`
+}
+
+/**
  * Navnet og utstedelsestida i et gyldig tegn, eller null. Kaster aldri.
  *
  * Tegn fra før `i` fantes regnes som utstedt `TOKEN_TTL_MS` før de går ut —
@@ -230,9 +298,15 @@ export async function verifyTokenClaims(secret, token, now = Date.now()) {
   const signature = token.slice(dot + 1)
   if (!timingSafeEqual(signature, await hmac(secret, payload))) return null
   try {
-    const { u, e, i } = JSON.parse(new TextDecoder().decode(fromBase64Url(payload)))
+    const { u, e, i, s } = JSON.parse(new TextDecoder().decode(fromBase64Url(payload)))
     if (typeof u !== 'string' || typeof e !== 'number' || e < now) return null
-    return { username: u, expiresAt: e, issuedAt: typeof i === 'number' ? i : e - TOKEN_TTL_MS }
+    return {
+      username: u,
+      expiresAt: e,
+      issuedAt: typeof i === 'number' ? i : e - TOKEN_TTL_MS,
+      // bare tegn fra issueAdminToken har et omfang
+      scope: s === 'admin' ? 'admin' : null,
+    }
   } catch {
     return null
   }
@@ -379,5 +453,5 @@ export async function requireUser(env, request) {
   if (row.tokens_valid_from && claims.issuedAt < Date.parse(row.tokens_valid_from)) {
     return { response: json({ error: 'unauthorized' }, 401) }
   }
-  return { username: row.username, admin: row.admin === 1 }
+  return { username: row.username, admin: row.admin === 1, scope: claims.scope }
 }

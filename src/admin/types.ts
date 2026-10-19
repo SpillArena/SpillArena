@@ -7,6 +7,7 @@ import type { GameId } from '../account'
 
 export type AdminErrorCode =
     | 'forbidden'
+    | 'pin_required'
     | 'unauthorized'
     | 'banned'
     | 'not_found'
@@ -62,8 +63,9 @@ export interface LogEntry {
     /**
      * `recover` skrives av spilleren selv, når en kode er brukt til ny PIN.
      * `reset-pin` finnes bare i gamle rader, fra før admin laget engangskoder.
+     * `open-panel` skrives når en admin åpner panelet med PIN-en.
      */
-    action: AdminAction | 'delete' | 'recover' | 'reset-pin'
+    action: AdminAction | 'delete' | 'recover' | 'reset-pin' | 'open-panel'
     target: string | null
     details: Record<string, unknown> | null
 }
