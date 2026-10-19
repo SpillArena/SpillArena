@@ -231,3 +231,87 @@ Avatar generation runs locally through the DiceBear JavaScript library. Seeds ar
 ## Game traffic breakdown
 
 The admin Traffic tab ranks every registered game by successful entry-page requests and displays its share of game visits for the selected UTC period. The query reuses the public popularity filter, combines trailing-slash variants, and includes games with zero visits. It excludes assets, API calls, other hostnames, and redirects. Counts can include bots and Cloudflare sampling; they are page visits, not unique people or completed rounds. Missing or malformed analytics return an explicit error rather than invented zero counts. No new analytics secret or database migration is required for this breakdown.
+
+## Ads (Google AdSense)
+
+Built and **off**. The switch is `VITE_ADSENSE_CLIENT` in `.env.production`: the
+publisher id exactly as AdSense shows it (`ca-pub-` and 16 digits). It is not a
+secret: it ends up in the page, in `ads.txt` and in every ad request. That is
+why it lives in git and not in the Pages settings. Empty means no tag, no
+`ads.txt`, no verification tag, and a consent dialog that behaves as it did
+before ads existed.
+
+| Path | What it is |
+|---|---|
+| `src/account/ads.ts` | Loads the AdSense tag and listens to Google's consent message (IAB TCF). **Vendored** like the rest of `src/account/`. |
+| `src/account/ConsentDialog.tsx` | Waits for Google's message and points to Google's ad settings (also vendored). |
+| `vite.config.ts` | Writes `/ads.txt` and `<meta name="google-adsense-account">` from the id, and stops the build on a malformed one. |
+| `src/main.tsx` | `loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)` before the first render. |
+| `tests/ads-consent.test.mjs` | `npm run test:ads`: the consent rules below, against a fake Google tag. |
+
+### Two questions, one prompt
+
+SpillArena asks one thing of its own: may it keep the sign-in and settings in
+this browser (`cookie-consent`). Ads need a second answer, about Google's
+cookies and personalised ads. In the EEA (Norway included), the UK and
+Switzerland, Google serves personalised ads only when that answer comes from a
+**Google-certified CMP using IAB TCF**. Our dialog is not one, so it cannot ask.
+Google's free CMP qualifies, and it arrives with the AdSense tag.
+
+On a page that calls `loadAdSense()`:
+
+- **Google's message shows**, or was answered on an earlier visit: our dialog
+  does not open by itself. If `cookie-consent` has no answer yet, it gets
+  Google's answer to TCF purpose 1 ("store and/or access information on a
+  device"). After that the two answers are separate, and changing one never
+  changes the other. A player who refused Google gets the existing "progress is
+  not being saved" strip, which can still turn SpillArena's own storage on.
+- **No message comes**: ad blocker, CSP, outside the regions Google asks in, or
+  nothing within four seconds. Our dialog asks, as on any page. If Google's
+  message shows up later anyway, an unanswered dialog of ours steps aside.
+
+"Storage & privacy" still opens our dialog. On a page with ads it also says
+where ads come from, and once Google's message is live it has an **Ad settings**
+button (`googlefc.showRevocationMessage`). A page without ads never calls
+`loadAdSense()`, so the games' dialogs work as before. The only change there is
+that the "no ads" line no longer claims anything for the whole domain.
+
+### Which pages may show ads
+
+| Page | Ads | Why |
+|---|---|---|
+| Lobby | Yes, once switched on | |
+| AtlasMaster, EraShuffle, FleetBot, HangBot, PixelPanic, ProportionPanic, ScribbleBot | Later, menus and result screens only, never during play | Each game opts in by calling `loadAdSense()` itself. Not done yet. |
+| SipZone | **No** | Drinking games and snus fall under Google's publisher restrictions (alcohol misuse: "competition drinking"; tobacco). |
+| MelodyRush, Hitline | **No** | Deezer's developer terms restrict commercial use, and `MelodyRush/docs/MUSIC_SOURCE.md` asks Deezer for an *ad-free* quiz. Revisit only with Deezer's written approval. |
+
+### Turning it on
+
+1. Create the AdSense account (18+, payee and tax details) and add the site
+   `spillarena.no`. Every game sits under that one site, because they share the
+   origin.
+2. Put the id in `.env.production`, build and deploy. Check that
+   `https://spillarena.no/ads.txt` returns the line
+   `google.com, pub-…, DIRECT, f08c47fec0942fa0` and that the router serves it
+   from this project like `robots.txt`, not as a 404 or a game. Then ask AdSense
+   to verify the site with the meta tag method. The meta tag needs no script,
+   so this works while the CSP still blocks Google.
+3. In AdSense, **Privacy & messaging → European regulations**: create a
+   message in Norwegian Bokmål and English, give `https://spillarena.no/#privacy`
+   as the privacy policy, and publish it. Without a published message no
+   consent is collected, and EEA visitors get no personalised ads.
+4. **Not done yet. This decides whether the tag can run at all.** `public/_headers` allows
+   scripts only from `'self'`, so the browser blocks the tag. `ads.ts` sees the
+   error and our dialog asks, so nothing breaks, but no ads or Google message
+   appear either. Opening the CSP for Google (`*.googlesyndication.com`,
+   `*.doubleclick.net`, `*.google.com`, `fundingchoicesmessages.google.com`,
+   …, or a nonce-based CSP with `'strict-dynamic'`) means a third-party script
+   runs on this origin. **It can read `localStorage`, including the session
+   token `spillarena.session`.** Decide that first: accept it, or move the
+   session to an `HttpOnly` cookie.
+5. Add ad units (lobby, then the opted-in games' menus), with fixed slot
+   heights so the layout does not jump.
+6. After approval, apply for H5 Games Ads (`adBreak()`) for ads between rounds.
+
+The privacy policy (`legal.privacy` in both locale files), the FAQ and the
+consent texts already describe ads from Google AdSense and the separate choice.

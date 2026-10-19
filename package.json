@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "art": "node scripts/generate-game-art.mjs",
     "test:contact": "node --test tests/contact.test.mjs",
-    "test:avatar": "node --test tests/avatar.test.mjs"
+    "test:avatar": "node --test tests/avatar.test.mjs",
+    "test:ads": "node --test tests/ads-consent.test.mjs"
   },
   "dependencies": {
     "@dicebear/core": "^10.7.0",

@@ -60,7 +60,7 @@
     },
     "alwaysStored": "Always stored",
     "server": "Only if you create an account, this is also saved on our server: your username, a protected version of your PIN that nobody can read, and your progress in each game.",
-    "noTracking": "No ads, no tracking, and your data is never sold or shared for advertising. See the privacy policy for details.",
+    "noTracking": "No tracking or analytics cookies, and your data is never sold. Ads, where shown, come from Google with their own consent choice. See the privacy policy for details.",
     "accept": "Accept and save",
     "decline": "Decline",
     "current": "Your current choice: {{choice}}",
@@ -580,7 +580,7 @@
   },
   "legal": {
     "back": "Back to games",
-    "updated": "Last updated 12 October 2026",
+    "updated": "Last updated 19 October 2026",
     "contactLabel": "Contact",
     "contact": "Questions, bugs, account deletion or data requests:",
     "privacy": {
@@ -598,7 +598,8 @@
         {
           "h": "What we store in your browser",
           "p": [
-            "If you accept storage: a sign-in token that lasts up to 30 days, and your theme, accent colour and language. If you decline, these are not kept and you start fresh on every visit. You can change your answer any time under “Storage & privacy” in the footer."
+            "If you accept storage: a sign-in token that lasts up to 30 days, and your theme, accent colour and language. If you decline, these are not kept and you start fresh on every visit. You can change your answer any time under “Storage & privacy” in the footer.",
+            "Pages that show ads also let Google store cookies and similar identifiers in your browser. What Google may store, and whether ads may be personalised, follows the choice you make in Google’s consent message, not the answer above."
           ]
         },
         {
@@ -611,13 +612,14 @@
           "h": "Third parties",
           "p": [
             "Cloudflare hosts the site and our database and sees ordinary request data (such as IP address) to deliver the pages and protect against abuse. We use Cloudflare’s own traffic statistics, which do not use cookies.",
-            "Fonts are loaded from Google Fonts, so your browser contacts Google when the page loads. We use no advertising, tracking pixels or social-media widgets."
+            "Fonts are loaded from Google Fonts, so your browser contacts Google when the page loads. We use no tracking pixels or social-media widgets.",
+            "Ads: SpillArena can show ads from Google AdSense to help cover running costs. Only pages that show ads load Google’s ad code. On those pages, Google and the ad partners it works with use cookies and similar technology to show ads, limit how often you see the same one, measure them and prevent fraud, and, only if you allow it, to personalise them based on your activity here and on other sites. In the EEA, the UK and Switzerland, Google asks for that consent in its own message, built on the IAB Transparency and Consent Framework. You can change your choice at any time with “Ad settings” under “Storage & privacy”, or with the privacy and cookie settings link Google adds to the page. How Google uses this data: policies.google.com/technologies/partner-sites. Your SpillArena account, PIN, progress and contact messages are never shared with Google or advertisers."
           ]
         },
         {
           "h": "Why we process it (legal basis)",
           "p": [
-            "Account data is processed to provide the account and leaderboards you asked for (contract). Contact messages are processed to answer you (your request). Browser storage is kept only with your consent. Spam protection and security logging are a legitimate interest."
+            "Account data is processed to provide the account and leaderboards you asked for (contract). Contact messages are processed to answer you (your request). Browser storage is kept only with your consent. Spam protection and security logging are a legitimate interest. Ad cookies and personalised ads require your consent, which Google’s message asks for; Google processes ad data under its own privacy policy."
           ]
         },
         {
@@ -694,7 +696,7 @@
       "items": [
         {
           "q": "Is it free?",
-          "a": "Yes. No payments, no ads, no downloads."
+          "a": "Yes. No payments and no downloads. Some pages show ads, which help cover running costs."
         },
         {
           "q": "Do I need an account?",
@@ -710,7 +712,7 @@
         },
         {
           "q": "Why does it ask about storage?",
-          "a": "To remember your sign-in and settings on this device. Say no and the games still work, but nothing is remembered. See the privacy policy."
+          "a": "To remember your sign-in and settings on this device. Say no and the games still work, but nothing is remembered. Pages with ads also show Google’s consent message: that is a separate choice, about ads only. See the privacy policy."
         },
         {
           "q": "Can I play against other people?",

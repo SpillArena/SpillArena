@@ -67,6 +67,7 @@ npm run test:admin
 npm run test:avatar
 npm run test:popularity
 npm run test:contact
+npm run test:ads
 npm run build
 ```
 
