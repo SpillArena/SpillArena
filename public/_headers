@@ -6,11 +6,25 @@
 #
 # The CSP is the second line of defence for the session token in localStorage:
 # without inline or foreign script, an injected <script> has nothing to run.
-# Google Fonts is the only outside origin the page loads from. Add an origin
-# here before adding a script, stylesheet, font or analytics beacon that needs
-# one, or it will be blocked.
+# Add an origin here before adding a script, stylesheet, font or analytics
+# beacon that needs one, or it will be blocked.
+#
+# Outside origins, and why:
+# - Google Fonts: the fonts (style-src, font-src).
+# - Google AdSense and its consent message (src/account/ads.ts): the ad tag and
+#   what it loads (script-src), ad and consent frames (frame-src), ad requests,
+#   measurement and fraud checks (connect-src), ad images and pixels (img-src).
+#   Only Google's own hosts may run script here; the ads themselves render in
+#   frames on other origins and cannot read this page.
+#
+# What an AdSense script on this origin can reach: the page, and localStorage
+# with the 30-day session token. That is accepted on purpose, with two limits:
+# the admin API needs a separate PIN-issued token that only lives in memory
+# (issueAdminToken in shared/account-server.js), and pages where a PIN is typed
+# never load the tag (src/lib/adFreePages.ts). See "Ads (Google AdSense)" in
+# docs/OPERATIONS.md before widening any of this.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://adtrafficquality.google https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.google.com; frame-src https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.safeframe.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin

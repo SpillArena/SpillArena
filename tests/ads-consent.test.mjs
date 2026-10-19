@@ -165,3 +165,13 @@ test("ad settings reopen Google's message", async () => {
   queued()
   assert.equal(shown, 1)
 })
+
+test('pages where a PIN is typed never load the ad tag', async () => {
+  const { isPinPage } = await import('../src/lib/adFreePages.ts')
+  for (const href of ['https://spillarena.no/#login', 'https://spillarena.no/#register', 'https://spillarena.no/#recover', 'https://spillarena.no/#profile', 'https://spillarena.no/?recover=1']) {
+    assert.equal(isPinPage(href), true, href)
+  }
+  for (const href of ['https://spillarena.no/', 'https://spillarena.no/#games', 'https://spillarena.no/#privacy', 'https://spillarena.no/#contact', 'https://spillarena.no/#profile-x']) {
+    assert.equal(isPinPage(href), false, href)
+  }
+})

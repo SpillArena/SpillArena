@@ -144,9 +144,22 @@ player's card an admin can ban and unban, lift a PIN lockout, set a new PIN,
 rename, remove leaderboard rows, make another player admin, and delete the
 account.
 
+**The panel asks for the PIN every time it opens.** `/api/admin/*` does not
+take the 30-day sign-in token. It takes a separate admin token from
+`POST /api/admin/session { pin }`, which lasts 15 minutes. The client keeps it
+in memory only (`src/admin/api.ts`) and revokes it with
+`DELETE /api/admin/session` when the panel closes. If it expires while the
+panel is open, the PIN field comes back. Wrong PINs count towards the same
+lockout as signing in (`checkPin` in `shared/account-server.js`), and every
+unlock is written to the log as `open-panel`. The sign-in token sits in
+`localStorage`, where any script on the page can read it, including the ad tag.
+Without this, that token alone could issue a one-time code for any player, take
+over that player's account, delete accounts, or make another account admin.
+`requireAdmin` answers a sign-in token with `403 pin_required`.
+
 | Path | What it is |
 |---|---|
-| `functions/api/admin/` | Overview, player list, and one player (read and act). |
+| `functions/api/admin/` | Overview, player list, and one player (read and act). `session.js` gives and revokes the panel's own token. |
 | `shared/admin-server.js` | The admin check, the audit log, and which leaderboards live in the hub database. |
 | `src/admin/`, `src/components/admin/` | The panel. Front page only; not vendored. |
 
@@ -294,24 +307,47 @@ that the "no ads" line no longer claims anything for the whole domain.
    `https://spillarena.no/ads.txt` returns the line
    `google.com, pub-…, DIRECT, f08c47fec0942fa0` and that the router serves it
    from this project like `robots.txt`, not as a 404 or a game. Then ask AdSense
-   to verify the site with the meta tag method. The meta tag needs no script,
-   so this works while the CSP still blocks Google.
+   to verify the site with the meta tag method.
 3. In AdSense, **Privacy & messaging → European regulations**: create a
    message in Norwegian Bokmål and English, give `https://spillarena.no/#privacy`
    as the privacy policy, and publish it. Without a published message no
    consent is collected, and EEA visitors get no personalised ads.
-4. **Not done yet. This decides whether the tag can run at all.** `public/_headers` allows
-   scripts only from `'self'`, so the browser blocks the tag. `ads.ts` sees the
-   error and our dialog asks, so nothing breaks, but no ads or Google message
-   appear either. Opening the CSP for Google (`*.googlesyndication.com`,
-   `*.doubleclick.net`, `*.google.com`, `fundingchoicesmessages.google.com`,
-   …, or a nonce-based CSP with `'strict-dynamic'`) means a third-party script
-   runs on this origin. **It can read `localStorage`, including the session
-   token `spillarena.session`.** Decide that first: accept it, or move the
-   session to an `HttpOnly` cookie.
+4. Once the message is published, open the lobby with DevTools and check the
+   console for `Content Security Policy` errors. The allowlist in
+   `public/_headers` was tested against the tag with no message published. In
+   that test the tag, Google's ad-traffic-quality checks and the frames loaded
+   without a single violation. Google's consent message loads from
+   `fundingchoicesmessages.google.com`, which is allowed but untested until a
+   message exists. Add a host only after you have seen it blocked.
 5. Add ad units (lobby, then the opted-in games' menus), with fixed slot
    heights so the layout does not jump.
 6. After approval, apply for H5 Games Ads (`adBreak()`) for ads between rounds.
 
 The privacy policy (`legal.privacy` in both locale files), the FAQ and the
 consent texts already describe ads from Google AdSense and the separate choice.
+
+### What the ad tag can reach, and the limits on it
+
+The CSP lets Google's own hosts run script on `spillarena.no`. The ads
+themselves render in frames on other origins, but the tag itself has the same
+access as our code. It can read `localStorage`, including the 30-day session
+token, and anything typed on the page. That risk is accepted, with two limits:
+
+- **No admin power from the session token.** The admin API needs the PIN-issued
+  token from the panel (see "The admin panel"). Taking over an ordinary account
+  already needs the PIN: changing it, renaming, recovery codes and deletion all
+  ask for it again.
+- **No ad tag where a PIN is typed.** `#login`, `#register`, `#recover`,
+  `#profile` and `?recover` load without it (`src/lib/adFreePages.ts`). Going to
+  one of them from a page that already has the tag reloads the page, since a
+  loaded script cannot be removed. The rest of that visit stays ad-free.
+
+What is left: a compromised Google script could read the session token and use
+it until it expires (30 days, or a sign-out). With it, someone could play
+multiplayer as that player and post or overwrite their results. The way out is
+an `HttpOnly` cookie for the session. Every game and room Worker sends the token
+itself, so that is a change in all repos.
+
+**For the games (step 5):** a game that calls `loadAdSense()` must keep its
+PIN fields (the AccountBadge sign-in) off the pages with the tag, the same way.
+Its own `_headers` needs the same Google hosts.
