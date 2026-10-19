@@ -13,11 +13,17 @@ import { json, requireUser } from './account-server.js'
  * `players.admin` leses fra raden på hvert kall (se requireUser), ikke fra
  * tegnet. En som mister flagget mister panelet på neste klikk, ikke om tretti
  * dager.
+ *
+ * Og tegnet må være adminpanelets eget, fra PIN-en (issueAdminToken i
+ * account-server.js). Det vanlige tegnet ligger i nettleseren i tretti dager og
+ * kan leses av alt som kjører på siden; alene gir det ikke panelet. En som ikke
+ * er admin, får `forbidden` uansett tegn, så svaret sier ikke mer enn før.
  */
 export async function requireAdmin(env, request) {
   const auth = await requireUser(env, request)
   if (auth.response) return auth
   if (!auth.admin) return { response: json({ error: 'forbidden' }, 403) }
+  if (auth.scope !== 'admin') return { response: json({ error: 'pin_required' }, 403) }
   return auth
 }
 

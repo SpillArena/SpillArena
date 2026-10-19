@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ShieldCheck, X } from 'lucide-react'
-import { fetchOverview } from '../../admin/api'
+import { fetchOverview, isAdminUnlocked, lockAdmin, onAdminLock, unlockAdmin } from '../../admin/api'
 import { errorText } from '../../admin/format'
 import type { AdminErrorCode, LogEntry } from '../../admin/types'
 import AdminOverview from './AdminOverview'
@@ -31,6 +31,11 @@ const TABS: Tab[] = ['overview', 'traffic', 'players', 'messages', 'log']
  * requireAdmin på tjeneren, som sjekker flagget på nytt ved hvert eneste kall.
  * En som åpner dette uten å være admin, får et panel fullt av «ikke tilgang».
  *
+ * PIN-EN HVER GANG. Panelet bruker sitt eget tegn, ikke økten: det fås med
+ * PIN-en, varer et kvarter, finnes bare i minnet og tilbakekalles når panelet
+ * lukkes (se src/admin/api.ts). Går det ut mens panelet er åpent, kommer
+ * PIN-feltet tilbake i stedet for fanene.
+ *
  * Tegnes i en portal rett under <body>. Headeren er animert med transform, og
  * `position: fixed` inni et element med transform er fast til det elementet,
  * ikke til vinduet.
@@ -48,7 +53,12 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
     const [selected, setSelected] = useState<string | null>(null)
     const [list, setList] = useState<ListState>({ query: '', filter: 'all', sort: 'seen' })
     const [notice, setNotice] = useState<string | null>(null)
+    const [unlocked, setUnlocked] = useState(isAdminUnlocked)
     const dialogRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => onAdminLock(() => setUnlocked(false)), [])
+    // lukket panel, ingen tilgang: tegnet tilbakekalles med en gang
+    useEffect(() => () => lockAdmin(), [])
 
     const openPlayer = useCallback((name: string) => {
         setNotice(null)
@@ -60,7 +70,8 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
     useEffect(() => {
         const previous = document.body.style.overflow
         document.body.style.overflow = 'hidden'
-        dialogRef.current?.focus()
+        // PIN-feltet har alt tatt fokus; det skal det få beholde
+        if (!dialogRef.current?.contains(document.activeElement)) dialogRef.current?.focus()
         return () => {
             document.body.style.overflow = previous
         }
@@ -123,7 +134,7 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                         </div>
                     </div>
 
-                    <div className="order-last flex w-full items-center gap-2 sm:order-none sm:w-auto">
+                    {unlocked && <div className="order-last flex w-full items-center gap-2 sm:order-none sm:w-auto">
                         <div
                             role="tablist"
                             aria-label={t('admin.title')}
@@ -148,7 +159,7 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                                 </button>
                             ))}
                         </div>
-                    </div>
+                    </div>}
 
                     <button
                         type="button"
@@ -168,11 +179,13 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                         </p>
                     )}
 
-                    {tab === 'overview' && <AdminOverview onOpenPlayer={openPlayer} onShowLog={() => setTab('log')} />}
+                    {!unlocked && <UnlockForm onUnlocked={() => setUnlocked(true)} />}
 
-                    {tab === 'traffic' && <AdminTraffic />}
+                    {unlocked && tab === 'overview' && <AdminOverview onOpenPlayer={openPlayer} onShowLog={() => setTab('log')} />}
 
-                    {tab === 'players' &&
+                    {unlocked && tab === 'traffic' && <AdminTraffic />}
+
+                    {unlocked && tab === 'players' &&
                         (selected ? (
                             <PlayerDetail
                                 username={selected}
@@ -188,12 +201,79 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                             <PlayerList state={list} onChange={setList} onOpen={openPlayer} />
                         ))}
 
-                    {tab === 'messages' && <AdminMessages />}
+                    {unlocked && tab === 'messages' && <AdminMessages />}
 
-                    {tab === 'log' && <LogTab onOpenPlayer={openPlayer} />}
+                    {unlocked && tab === 'log' && <LogTab onOpenPlayer={openPlayer} />}
                 </div>
             </motion.div>
         </motion.div>
+    )
+}
+
+/**
+ * PIN-en, før panelet viser noe.
+ *
+ * Samme forsøksgrense som innloggingen: fem feil stenger kontoen et kvarter,
+ * også innloggingen. Feltet tømmes etter hvert forsøk.
+ */
+function UnlockForm({ onUnlocked }: { onUnlocked: () => void }) {
+    const { t } = useTranslation()
+    const [pin, setPin] = useState('')
+    const [error, setError] = useState<string | null>(null)
+    const [busy, setBusy] = useState(false)
+
+    const submit = async (event: React.FormEvent) => {
+        event.preventDefault()
+        if (busy) return
+        setBusy(true)
+        setError(null)
+        const result = await unlockAdmin(pin)
+        setBusy(false)
+        setPin('')
+        if (result.ok) {
+            onUnlocked()
+            return
+        }
+        setError(
+            result.error === 'bad_credentials'
+                ? t('admin.unlock.wrong')
+                : result.error === 'locked'
+                  ? t('admin.unlock.locked', { minutes: Math.max(1, Math.ceil((result.retryAfter ?? 900) / 60)) })
+                  : errorText(t, result.error as AdminErrorCode),
+        )
+    }
+
+    return (
+        <form onSubmit={submit} className="mx-auto flex max-w-sm flex-col gap-3 py-6">
+            <h3 className="font-[family-name:var(--font-serif)] text-lg font-semibold">{t('admin.unlock.title')}</h3>
+            <p className="text-sm" style={{ color: 'var(--text-subtle)' }}>
+                {t('admin.unlock.help')}
+            </p>
+            <label className="flex flex-col gap-1 text-xs font-medium" style={{ color: 'var(--text-subtle)' }}>
+                {t('admin.unlock.pin')}
+                <input
+                    value={pin}
+                    onChange={(event) => setPin(event.target.value.replace(/\D/g, ''))}
+                    type="password"
+                    inputMode="numeric"
+                    minLength={4}
+                    maxLength={6}
+                    required
+                    autoFocus
+                    autoComplete="current-password"
+                    className="rounded-lg border px-2.5 py-1.5 text-sm tracking-[0.3em]"
+                    style={{ borderColor: 'var(--border)', background: 'var(--surface)', color: 'var(--text)' }}
+                />
+            </label>
+            {error && (
+                <p role="alert" className="form-error">
+                    {error}
+                </p>
+            )}
+            <button type="submit" disabled={busy || pin.length < 4} className="button primary">
+                {t('admin.unlock.submit')}
+            </button>
+        </form>
     )
 }
 

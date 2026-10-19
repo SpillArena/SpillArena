@@ -22,52 +22,16 @@ import {
   PIN_RE,
   RECOVERY_CODE_LENGTH,
   TOKEN_TTL_MS,
+  checkPin,
   codeWithHash,
-  countFailedPin,
   hashPin,
   issueToken,
   json,
-  lockedResponse,
   requireUser,
   serviceFailed,
-  timingSafeEqual,
   toBase64Url,
   validateUsername,
 } from '../../../shared/account-server.js'
-
-/**
- * Sjekker PIN-en mot raden, med SAMME forsøksgrense som innloggingen.
- *
- * Den talte ikke feil før, med begrunnelsen at kontoen alt var bevist med
- * tegnet. Men tegnet er nettopp det som kan komme på avveie, og uten grense
- * kunne den som hadde det prøve alle ti tusen PIN-ene her, bytte PIN-en og ta
- * kontoen. Telleren er den samme som i /api/auth, så fem feil her stenger også
- * innloggingen et kvarter.
- */
-async function checkPin(env, username, pin) {
-  if (typeof pin !== 'string' || !PIN_RE.test(pin)) return { error: json({ error: 'bad_pin' }, 400) }
-  const row = await env.DB.prepare(
-    `SELECT username, pin_hash, pin_salt, failed, locked_until FROM players WHERE username = ?`,
-  )
-    .bind(username)
-    .first()
-  if (!row) return { error: json({ error: 'unauthorized' }, 401) }
-
-  const now = new Date()
-  if (row.locked_until && row.locked_until > now.toISOString()) {
-    return { error: lockedResponse(row.locked_until, now) }
-  }
-
-  const attempted = await hashPin(pin, row.pin_salt)
-  if (!timingSafeEqual(attempted, row.pin_hash)) {
-    await countFailedPin(env, row, now)
-    return { error: json({ error: 'bad_credentials' }, 401) }
-  }
-  if (row.failed) {
-    await env.DB.prepare(`UPDATE players SET failed = 0 WHERE username = ?`).bind(row.username).run()
-  }
-  return {}
-}
 
 /**
  * Bytter brukernavn.

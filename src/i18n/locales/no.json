@@ -322,6 +322,14 @@
       "none": "Ingen resultater på ledertavlene.",
       "dailyNote": "Fjernes dagens rad i Proportion Panic eller Pixel Panic, kan spilleren spille dagen på nytt."
     },
+    "unlock": {
+      "title": "Bekreft at det er deg",
+      "help": "Adminpanelet ber om PIN-koden hver gang det åpnes. Tilgangen varer i 15 minutter og lagres aldri på denne enheten. Feil forsøk teller mot samme grense som innloggingen.",
+      "pin": "PIN",
+      "submit": "Åpne adminpanelet",
+      "wrong": "Feil PIN.",
+      "locked": "For mange feil forsøk. Prøv igjen om {{minutes}} min."
+    },
     "log": {
       "ban": "stengte ute",
       "unban": "opphevet utestengingen av",
@@ -335,12 +343,14 @@
       "withScores": "med resultatene på ledertavlene",
       "issue-reset-code": "laget engangskode for",
       "recover": "satte ny PIN med en kode",
+      "open-panel": "åpnet adminpanelet",
       "validUntil": "gyldig til {{date}}",
       "viaResetCode": "engangskode fra admin",
       "viaRecoveryCode": "egen gjenopprettingskode"
     },
     "errors": {
       "forbidden": "Kontoen din er ikke admin.",
+      "pin_required": "Bekreft PIN-koden for å fortsette.",
       "unauthorized": "Du er logget ut. Logg inn på nytt.",
       "banned": "Kontoen din er utestengt.",
       "not_found": "Spilleren finnes ikke lenger.",

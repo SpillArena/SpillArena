@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { issueToken } from '../shared/account-server.js'
+import { issueAdminToken, issueToken } from '../shared/account-server.js'
 import { onRequestGet } from '../functions/api/admin/traffic.js'
 import { gameTrafficFilter, normalizeTraffic, trafficPeriod } from '../shared/traffic-server.js'
 
@@ -19,9 +19,10 @@ const zone = {
   ],
 }
 
-async function context({ admin = 1, banned = false, revoked = false, configured = true, days = '7', token = true } = {}) {
+async function context({ admin = 1, banned = false, revoked = false, configured = true, days = '7', token = true, session = false } = {}) {
   const secret = 'local-unit-test-secret'
-  const signed = await issueToken(secret, 'TestAdmin')
+  // the admin panel's own token; `session` sends the 30-day sign-in token instead
+  const signed = await (session ? issueToken : issueAdminToken)(secret, 'TestAdmin')
   return {
     env: {
       AUTH_SECRET: secret,
@@ -61,9 +62,9 @@ test('empty datasets produce an empty report; malformed metrics do not become ze
   assert.throws(() => normalizeTraffic({ ...zone, totals: [{ ...zone.totals[0], uniq: {} }] }, 7, period))
 })
 
-test('unauthenticated, non-admin, banned and revoked accounts cannot query the provider', async () => {
+test('unauthenticated, non-admin, banned, revoked and PIN-less accounts cannot query the provider', async () => {
   await withProvider(() => { throw new Error('Provider must not be called') }, async () => {
-    for (const [options, expected] of [[{ token: false }, 401], [{ admin: 0 }, 403], [{ banned: true }, 401], [{ revoked: true }, 401]]) {
+    for (const [options, expected] of [[{ token: false }, 401], [{ admin: 0 }, 403], [{ banned: true }, 401], [{ revoked: true }, 401], [{ session: true }, 403]]) {
       assert.equal((await onRequestGet(await context(options))).status, expected)
     }
   })

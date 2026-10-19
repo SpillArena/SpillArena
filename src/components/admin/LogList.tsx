@@ -61,8 +61,8 @@ export default function LogList({ entries, onOpenPlayer }: LogListProps) {
                         <span className="min-w-0 flex-1">
                             <span className="font-semibold">{entry.admin}</span>{' '}
                             {t(`admin.log.${entry.action}`)}{' '}
-                            {/* `recover` gjør spilleren selv: navnet står alt først */}
-                            {entry.action === 'recover' ? null : canOpen ? (
+                            {/* `recover` gjør spilleren selv, `open-panel` adminen selv: navnet står alt først */}
+                            {entry.action === 'recover' || entry.action === 'open-panel' ? null : canOpen ? (
                                 <button
                                     type="button"
                                     onClick={() => onOpenPlayer?.(entry.target!)}

@@ -322,6 +322,14 @@
       "none": "No leaderboard entries.",
       "dailyNote": "Removing today's row in Proportion Panic or Pixel Panic lets the player play today again."
     },
+    "unlock": {
+      "title": "Confirm it's you",
+      "help": "The admin panel asks for your PIN every time it opens. Access lasts 15 minutes and is never stored on this device. Wrong attempts count towards the same limit as signing in.",
+      "pin": "PIN",
+      "submit": "Open admin panel",
+      "wrong": "Wrong PIN.",
+      "locked": "Too many wrong attempts. Try again in {{minutes}} min."
+    },
     "log": {
       "ban": "banned",
       "unban": "unbanned",
@@ -335,12 +343,14 @@
       "withScores": "including leaderboard entries",
       "issue-reset-code": "made a one-time code for",
       "recover": "set a new PIN with a code",
+      "open-panel": "opened the admin panel",
       "validUntil": "valid until {{date}}",
       "viaResetCode": "one-time code from an admin",
       "viaRecoveryCode": "own recovery code"
     },
     "errors": {
       "forbidden": "Your account isn't an admin.",
+      "pin_required": "Confirm your PIN to continue.",
       "unauthorized": "You were signed out. Sign in again.",
       "banned": "Your account is banned.",
       "not_found": "That player no longer exists.",
