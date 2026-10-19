@@ -48,7 +48,6 @@
   .arena-brand { gap: 8px; }
   .arena-brand-mark { width: 36px; height: 36px; }
   .arena-header-actions { gap: 10px; }
-  .arena-footer-row { padding-bottom: 68px; }
 }
 @media (max-width: 420px) {
   :root { --arena-gutter: 17px; }
@@ -64,5 +63,5 @@
 .arena-lobby-link:hover { background: var(--arena-ink); border-color: var(--arena-ink); color: var(--arena-paper); }
 .arena-lobby-link:hover .arena-lobby-icon { transform: translateX(-3px); }
 .arena-lobby-link:active { transform: translateY(1px); }
-@media (max-width: 520px) { .arena-lobby-link { width: 40px; padding: 0; justify-content: center; } }
+@media (max-width: 520px) { .arena-lobby-link { width: 40px; padding: 0; justify-content: center; } .arena-lobby-label { display: none; } }
 @media (prefers-reduced-motion: reduce) { .arena-lobby-link, .arena-lobby-icon { transition: none; } }
