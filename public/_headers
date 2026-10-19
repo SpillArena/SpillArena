@@ -13,9 +13,15 @@
 # - Google Fonts: the fonts (style-src, font-src).
 # - Google AdSense and its consent message (src/account/ads.ts): the ad tag and
 #   what it loads (script-src), ad and consent frames (frame-src), ad requests,
-#   measurement and fraud checks (connect-src), ad images and pixels (img-src).
-#   Only Google's own hosts may run script here; the ads themselves render in
-#   frames on other origins and cannot read this page.
+#   measurement and fraud checks (connect-src), Google's pixels (img-src). The
+#   ads themselves render in frames on other origins, under their own policy,
+#   and cannot read this page.
+#
+#   script-src names only the hosts the tag was seen loading script from. Keep
+#   broad Google hosts out of it: www.google.com and the doubleclick and
+#   gstatic hosts serve JSONP and other scripts an injected <script src> could
+#   abuse, so allowing them would undo most of this policy. Add a host only
+#   after seeing it blocked in the console, and only the exact host.
 #
 # What an AdSense script on this origin can reach: the page, and localStorage
 # with the 30-day session token. That is accepted on purpose, with two limits:
@@ -24,7 +30,7 @@
 # never load the tag (src/lib/adFreePages.ts). See "Ads (Google AdSense)" in
 # docs/OPERATIONS.md before widening any of this.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://adtrafficquality.google https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.google.com; frame-src https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.safeframe.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://pagead2.googlesyndication.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com https://www.gstatic.com; connect-src 'self' https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://adtrafficquality.google https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.google.com; frame-src https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.safeframe.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
