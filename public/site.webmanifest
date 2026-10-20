@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "SpillArena",
+  "short_name": "SpillArena",
+  "description": "Gratis nettleserspill på norsk, mot bots og venner.",
+  "lang": "no",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "categories": ["games"],
+  "background_color": "#18151e",
+  "theme_color": "#18151e",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

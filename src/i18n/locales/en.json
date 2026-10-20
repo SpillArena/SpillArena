@@ -442,6 +442,15 @@
   "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
   "hitlineDescription": "Hitline – recognise the song and place it on your timeline by release year. Play solo, share a screen or invite friends to an online room.",
   "sipZoneDescription": "SipZone – Norwegian-inspired drinking games for friends. Share one phone or use your own devices with SipZone Live. Choose what goes in your glass.",
+  "install": {
+    "title": "Add SpillArena to your home screen",
+    "description": "Opens full screen, with every game one tap away.",
+    "iosBefore": "Tap",
+    "iosAfter": "then “Add to Home Screen”.",
+    "shareIcon": "Share",
+    "action": "Install",
+    "dismiss": "Not now"
+  },
   "lobby": {
     "skip": "Skip to games",
     "search": {
