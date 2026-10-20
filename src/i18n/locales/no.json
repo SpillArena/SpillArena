@@ -442,6 +442,15 @@
   "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
   "hitlineDescription": "Hitline – kjenn igjen låten og plasser den på tidslinjen etter utgivelsesår. Spill alene, del en skjerm eller inviter venner til et rom på nett.",
   "sipZoneDescription": "SipZone – norske drikkeleker til vors og hyttetur. Spill på én mobil eller på hver deres enhet med SipZone Live. Dere bestemmer selv hva som er i glasset.",
+  "install": {
+    "title": "Legg SpillArena på hjem-skjermen",
+    "description": "Åpner i fullskjerm, med alle spillene ett trykk unna.",
+    "iosBefore": "Trykk",
+    "iosAfter": "og velg «Legg til på Hjem-skjerm».",
+    "shareIcon": "Del",
+    "action": "Installer",
+    "dismiss": "Ikke nå"
+  },
   "lobby": {
     "skip": "Hopp til spillene",
     "search": {

@@ -8,6 +8,7 @@ import HeaderSection from './components/header/HeaderSection'
 import HeroSection from './components/main/HeroSection'
 import GamesSection from './components/main/GamesSection'
 import BetaWarningModal from './components/main/BetaWarningModal'
+import InstallPrompt from './components/main/InstallPrompt'
 import FooterSection from './components/footer/FooterSection'
 import AuthModal from './components/account/AuthModal'
 import ProfilePage from './components/account/ProfilePage'
@@ -80,6 +81,7 @@ export default function App() {
         <AuthModal key={page} open presentation="page" initialMode={page} onClose={() => { window.location.hash = getSession() ? 'profile' : '' }} />}
     </main>
     <FooterSection />
+    <InstallPrompt />
     <BetaWarningModal game={betaGame} onClose={() => setBetaGame(null)} onConfirm={() => { if (betaGame) goToGame(betaGame, t('lobby.loadingGame', { title: betaGame.title })) }} />
     <Dialog open={pickedGame !== null} onClose={() => setPickedGame(null)} title={pickedGame?.title ?? ''} eyebrow={t('lobby.pickedLabel')}>
       {pickedGame && <><img className="picked-art" src={gameBanner(pickedGame, i18n.resolvedLanguage)} alt="" /><p>{t(`lobby.descriptions.${pickedGame.id}`)}</p>{pickedGame.beta && <p className="dialog-note">{t('betaWarningMessage', { title: pickedGame.title })}</p>}
