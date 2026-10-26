@@ -2,12 +2,11 @@ import { useTranslation } from 'react-i18next'
 import { openConsentDialog } from '../../account'
 import logo from '../../assets/logo.svg'
 import Changelog from './Changelog'
-import { version } from '../../../package.json'
 
 export default function FooterSection() {
   const { t } = useTranslation()
   return <footer className="site-footer arena-container"><div className="footer-row">
-    <div className="footer-identity"><a className="footer-brand" href="#"><img src={logo} alt="" width={24} height={24} /><span>SpillArena</span><span className="footer-tagline">{t('lobby.footerTagline')}</span></a><span className="version-label" aria-label={`${t('lobby.versionLabel')} ${version}`}>v{version}</span></div>
-    <div className="footer-links"><Changelog /><a href="#privacy">{t('lobby.privacyLink')}</a><a href="#terms">{t('lobby.termsLink')}</a><a href="#faq">{t('lobby.faqLink')}</a><a href="#contact">{t('lobby.contactLink')}</a><button type="button" onClick={openConsentDialog}>{t('lobby.storage')}</button><a href="https://github.com/SpillArena/SpillArena" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+    <div className="footer-identity"><a className="footer-brand" href="#"><img src={logo} alt="" width={24} height={24} /><span className="footer-brand-copy"><span>SpillArena</span><span className="footer-tagline">{t('lobby.footerTagline')}</span></span></a></div>
+    <nav className="footer-links" aria-label={t('lobby.footerNavigation')}><Changelog /><a href="#privacy">{t('lobby.privacyLink')}</a><a href="#terms">{t('lobby.termsLink')}</a><a href="#faq">{t('lobby.faqLink')}</a><a href="#contact">{t('lobby.contactLink')}</a><button type="button" onClick={openConsentDialog}>{t('lobby.storage')}</button><a href="https://github.com/SpillArena/SpillArena" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
   </div></footer>
 }

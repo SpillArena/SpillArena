@@ -77,15 +77,22 @@ html[lang="en"] .hero h1 { font-size: clamp(46px, 5.8vw, 96px); }
 .account-strip h2 { font-family: var(--serif); font-size: 25px; font-weight: 500; margin: 0 0 6px; letter-spacing: -.5px; }
 .account-strip p { font-size: 12px; line-height: 1.7; margin: 0; color: var(--muted); }
 .account-strip .button { margin-left: auto; flex-shrink: 0; }
-.footer-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding-block: 25px; }
-.footer-brand { display: flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 700; }
-.footer-tagline { color: var(--muted); font-size: 11px; font-weight: 400; margin-left: 12px; }
-.footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 23px; font-size: 11px; color: var(--muted); }
-.version-label { color: var(--ink); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.footer-identity { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
-.footer-links button { border: 0; padding: 0; min-height: 44px; background: transparent; font-size: inherit; }
-.footer-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.site-footer { flex-shrink: 0; }
+.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 32px; padding-block: 18px; border-top: 1px solid var(--line); }
+.footer-brand { display: inline-flex; align-items: center; gap: 10px; min-width: 0; min-height: 44px; font-size: 12px; font-weight: 700; }
+.footer-brand img { display: block; flex-shrink: 0; }
+.footer-brand-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; line-height: 1.5; }
+.footer-tagline { color: var(--muted); font-size: 11px; font-weight: 400; overflow-wrap: anywhere; }
+.footer-links { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 0 20px; min-width: 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.footer-identity { display: flex; align-items: center; gap: 14px; min-width: 0; flex-shrink: 0; }
+.footer-links button { display: inline-flex; align-items: center; border: 0; padding: 0; min-height: 44px; background: transparent; font: inherit; white-space: nowrap; }
+.footer-links a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
 .footer-links a:hover, .footer-links button:hover { color: var(--accent-ink); }
+@media (max-width: 900px) {
+  .footer-row { align-items: stretch; flex-direction: column; gap: 8px; }
+  .footer-identity { justify-content: space-between; }
+  .footer-links { justify-content: flex-start; column-gap: 18px; }
+}
 .prototype-label { border: 1px solid var(--line); padding: 5px 7px; border-radius: 4px; font-size: 10px; }
 .skip-link { position: fixed; top: 10px; left: 15px; transform: translateY(-200%); background: var(--card); border: 1px solid var(--accent); padding: 12px; z-index: 100; }
 .skip-link:focus { transform: translateY(0); }
@@ -142,9 +149,6 @@ legend { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
   .account-strip { flex-wrap: wrap; gap: 14px; margin-top: 32px; }
   .account-strip > div:nth-child(2) { flex: 1; min-width: 200px; }
   .account-strip .button { margin: 4px 0 0 66px; }
-  .footer-row { align-items: start; flex-direction: column; gap: 9px; padding-block: 24px; }
-  .footer-tagline { margin-left: 5px; }
-  .footer-links { gap: 17px; flex-wrap: wrap; }
 }
 @media (max-width: 480px) { .game-grid { grid-template-columns: 1fr; } .account-button { font-size: 12px; gap: 6px; padding-inline: 4px; } .account-button svg { width: 17px; } .featured-bottom { gap: 12px; } .featured-bottom p:last-child { font-size: 11px; } .feature-play { min-height: 44px; } }
 @media (max-width: 420px) { .arena-container { padding-inline: 17px; } .brand { font-size: 19px; } .eyebrow { font-size: 10px; letter-spacing: 1.1px; } .hero-actions { gap: 3px; } .button { padding-inline: 14px; } .text-button { padding-inline: 9px; font-size: 12px; } .account-strip .button { margin-left: 0; width: 100%; } .sa-dialog { padding: 28px 22px; } }
@@ -173,8 +177,11 @@ body:has(.sa-dialog[open]) { overflow: hidden; }
 .inline-link:hover { text-decoration: underline; }
 .full-width { width: 100%; }
 .button:disabled, .option:disabled { cursor: wait; opacity: .55; transform: none; }
-.back-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 12px; color: var(--muted); margin-bottom: 22px; }
-.back-link:hover { color: var(--accent-ink); }
+.back-link { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; max-width: 100%; min-height: 48px; padding: 10px 15px 10px 10px; border: 1px solid color-mix(in srgb, var(--accent-ink) 35%, var(--line)); border-radius: 10px; background: var(--accent-soft); color: var(--ink); font-size: 13px; font-weight: 650; line-height: 1.4; margin-bottom: 22px; transition: background 180ms, border-color 180ms; }
+.back-link > svg { flex-shrink: 0; box-sizing: content-box; width: 16px; height: 16px; padding: 5px; border-radius: 7px; background: var(--card); color: var(--accent-ink); transition: transform 180ms ease; }
+.back-link:hover { background: color-mix(in srgb, var(--accent) 18%, var(--card)); border-color: var(--accent-ink); }
+.back-link:hover > svg { transform: translateX(-2px); }
+.contact-actions .back-link { margin-bottom: 0; }
 .account-page-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 9%; max-width: 1120px; margin-inline: auto; padding-block: 58px 70px; }
 .auth-story .back-link { display: flex; width: fit-content; }
 .auth-logo { margin: 18px 0 22px; }
@@ -184,7 +191,15 @@ body:has(.sa-dialog[open]) { overflow: hidden; }
 .auth-benefits svg { color: var(--accent-ink); flex-shrink: 0; }
 .auth-panel { border: 1px solid var(--line); background: var(--card); border-radius: 14px; padding: 32px; margin-top: 40px; min-width: 0; }
 .auth-panel h2 { font-family: var(--serif); font-size: 36px; font-weight: 500; letter-spacing: -1px; line-height: 1.15; margin: 15px 0 23px; }
-.auth-tabs { margin-bottom: 24px; }
+.auth-tabs { position: relative; isolation: isolate; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 4px; margin-bottom: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.auth-tab-indicator { position: absolute; z-index: -1; inset: 4px auto 4px 4px; width: calc((100% - 8px) / 2); border: 1px solid color-mix(in srgb, var(--accent-ink) 55%, var(--line)); border-radius: 8px; background: var(--accent-soft); box-shadow: 0 2px 6px #0000000d; transition: transform 340ms cubic-bezier(.22, 1, .36, 1); }
+.auth-tabs[data-mode="register"] .auth-tab-indicator { transform: translateX(100%); }
+.auth-tab { min-width: 0; min-height: 44px; padding: 11px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 500; transition: color 180ms ease; }
+.auth-tab[aria-selected="true"] { color: var(--ink); }
+.auth-tab:hover { color: var(--ink); }
+.auth-tab:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: -2px; }
+.auth-tab:disabled { cursor: wait; }
+.auth-form-reveal { overflow: clip; padding: 6px; margin: -6px; }
 .sa-form { display: flex; flex-direction: column; gap: 20px; }
 .sa-form .form-intro { font-size: 13px; color: var(--muted); line-height: 1.7; margin: 0 0 3px; }
 .sa-form label { display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink); }
@@ -298,7 +313,7 @@ html.dark .button.danger:hover { background: #ae2540; border-color: #ae2540; }
 .guest-profile { max-width: 640px; margin-inline: auto; padding-block: 80px; }
 .guest-profile h1 { font-size: 56px; width: auto; line-height: 1.1; }
 .guest-profile p:not(.eyebrow) { color: var(--muted); line-height: 1.7; }
-.guest-profile .back-link { margin: 15px; }
+.guest-profile .back-link { margin-bottom: 24px; }
 @media (max-width: 1050px) { .account-page-layout { gap: 5%; } .account-page-layout .auth-story h1 { font-size: 48px; } .auth-panel { padding: 26px; } }
 @media (max-width: 720px) {
   .account-page-layout { grid-template-columns: 1fr; gap: 28px; padding-block: 24px 40px; max-width: 520px; }

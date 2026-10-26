@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import type { Variants } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import Dialog from '../../ui/Dialog'
 import logo from '../../assets/logo.svg'
@@ -7,6 +9,7 @@ import { authenticate, createRecoveryCode, recoverAccount } from '../../account'
 import type { AuthAction } from '../../account'
 import { useCookieConsent } from '../../context/useCookieConsent'
 import RecoveryCodeNotice from './RecoveryCodeNotice'
+import { useGlobalLoader } from '../../ui/useGlobalLoader'
 
 /** `recover` er «Glemt PIN?»: ny PIN med en kode i stedet for den gamle. */
 export type AuthMode = AuthAction | 'recover'
@@ -30,6 +33,16 @@ interface AuthModalProps {
  */
 function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void; initialMode: AuthMode; presentation: 'page' | 'modal' }) {
     const { t } = useTranslation()
+    const modeId = useId()
+    const reducedMotion = useReducedMotion()
+    const usernameInput = useRef<HTMLInputElement>(null)
+    const formRef = useRef<HTMLFormElement>(null)
+    const [formHeight, setFormHeight] = useState<number>()
+    useEffect(() => { usernameInput.current?.focus({ preventScroll: true }) }, [])
+    const fieldVariants: Variants = {
+        hidden: { opacity: 0, y: -8 },
+        visible: { opacity: 1, y: 0, transition: { duration: reducedMotion ? 0 : .34, ease: [.22, 1, .36, 1] } },
+    }
     const [action, setAction] = useState<AuthMode>(initialMode)
     const [username, setUsername] = useState('')
     const [pin, setPin] = useState('')
@@ -41,11 +54,19 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
      * ved siden av, for koden vises aldri igjen.
      */
     const [shown, setShown] = useState<{ username: string; code: string } | null>(null)
+    useEffect(() => {
+        const form = formRef.current
+        if (!form) return
+        const observer = new ResizeObserver(([entry]) => setFormHeight(entry.contentRect.height))
+        observer.observe(form)
+        return () => observer.disconnect()
+    }, [action, shown])
     const [error, setError] = useState<string | null>(null)
     /** Sekunder igjen av en utestenging, når tjenesten sier det. */
     const [retryAfter, setRetryAfter] = useState<number | undefined>(undefined)
     const [busy, setBusy] = useState(false)
     const { consent, showBanner } = useCookieConsent()
+    useGlobalLoader(busy, t(`account.${action === 'login' ? 'signingIn' : action === 'register' ? 'creatingAccount' : 'recoveringAccount'}`))
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault()
@@ -74,49 +95,51 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
         setError(null)
         setRetryAfter(undefined)
 
-        if (action === 'recover') {
-            const result = await recoverAccount(username, code, pin)
-            setBusy(false)
+        try {
+            if (action === 'recover') {
+                const result = await recoverAccount(username, code, pin)
+                if (!result.ok) {
+                    setError(result.error)
+                    setRetryAfter(result.retryAfter)
+                    return
+                }
+                setPin('')
+                setConfirm('')
+                setCode('')
+                setShown({ username: result.session.username, code: result.recoveryCode })
+                return
+            }
+
+            const result = await authenticate(action, username, pin)
             if (!result.ok) {
                 setError(result.error)
                 setRetryAfter(result.retryAfter)
                 return
             }
+
+            /*
+             * En ny konto får en gjenopprettingskode med en gang, mens PIN-en
+             * fortsatt står i skjemaet. Feiler det, er kontoen likevel laget, og
+             * kontomenyen ber om en kode senere — da er det ikke verdt å stoppe her.
+             */
+            if (action === 'register') {
+                const recovery = await createRecoveryCode(pin)
+                if (recovery.ok) {
+                    setPin('')
+                    setConfirm('')
+                    setShown({ username: result.session.username, code: recovery.data.recoveryCode })
+                    return
+                }
+            }
+
             setPin('')
             setConfirm('')
-            setCode('')
-            setShown({ username: result.session.username, code: result.recoveryCode })
-            return
-        }
-
-        const result = await authenticate(action, username, pin)
-        if (!result.ok) {
+            onClose()
+        } catch {
+            setError('service_failed')
+        } finally {
             setBusy(false)
-            setError(result.error)
-            setRetryAfter(result.retryAfter)
-            return
         }
-
-        /*
-         * En ny konto får en gjenopprettingskode med en gang, mens PIN-en
-         * fortsatt står i skjemaet. Feiler det, er kontoen likevel laget, og
-         * kontomenyen ber om en kode senere — da er det ikke verdt å stoppe her.
-         */
-        if (action === 'register') {
-            const recovery = await createRecoveryCode(pin)
-            if (recovery.ok) {
-                setBusy(false)
-                setPin('')
-                setConfirm('')
-                setShown({ username: result.session.username, code: recovery.data.recoveryCode })
-                return
-            }
-        }
-
-        setBusy(false)
-        setPin('')
-        setConfirm('')
-        onClose()
     }
 
     const switchMode = (next: AuthMode) => {
@@ -125,6 +148,14 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
         setRetryAfter(undefined)
         setConfirm('')
         setCode('')
+    }
+
+    const onTabKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
+        event.preventDefault()
+        const next = event.key === 'Home' ? 'login' : event.key === 'End' ? 'register' : action === 'login' ? 'register' : 'login'
+        switchMode(next)
+        event.currentTarget.querySelector<HTMLButtonElement>(`[data-mode="${next}"]`)?.focus()
     }
 
     /*
@@ -161,33 +192,36 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
     )
     const content = shown ? <RecoveryCodeNotice username={shown.username} code={shown.code} onDone={onClose} /> : (
       <>
-        {action !== 'recover' && <div className="option-row auth-tabs" role="group" aria-label={t('account.title')}>
-          <button className="option" type="button" disabled={busy} aria-pressed={action === 'login'} onClick={() => switchMode('login')}>{t('account.signIn')}</button>
-          <button className="option" type="button" disabled={busy} aria-pressed={action === 'register'} onClick={() => switchMode('register')}>{t('account.register')}</button>
+        {action !== 'recover' && <div className="auth-tabs" data-mode={action} role="tablist" aria-label={t('account.title')} onKeyDown={onTabKeyDown}>
+          <span className="auth-tab-indicator" aria-hidden="true" />
+          {(['login', 'register'] as const).map(mode => <button key={mode} id={`${modeId}-${mode}`} className="auth-tab" data-mode={mode} type="button" role="tab" disabled={busy} aria-selected={action === mode} aria-controls={`${modeId}-panel`} tabIndex={action === mode ? 0 : -1} onClick={() => switchMode(mode)}>{t(mode === 'login' ? 'account.signIn' : 'account.register')}</button>)}
         </div>}
-        <form onSubmit={submit} className="sa-form">
-          <p className="form-intro">{t(action === 'recover' ? 'account.recovery.intro' : 'account.blurb')}</p>
-          <label>{t('account.username')}<input value={username} onChange={event => setUsername(event.target.value)} maxLength={20} autoComplete="username" autoFocus required disabled={busy} /></label>
-          {action === 'recover' && <label>{t('account.recovery.code')}
+        <motion.div className="auth-form-reveal" initial={false} animate={{ height: formHeight === undefined ? 'auto' : formHeight + 12 }} transition={{ duration: reducedMotion ? 0 : .38, ease: [.22, 1, .36, 1] }}>
+        <motion.form ref={formRef} key={action} id={`${modeId}-panel`} role={action === 'recover' ? undefined : 'tabpanel'} aria-labelledby={action === 'recover' ? undefined : `${modeId}-${action}`} onSubmit={submit} className="sa-form" aria-busy={busy}
+          initial={reducedMotion ? false : 'hidden'} animate="visible" variants={{ hidden: {}, visible: { transition: { delayChildren: reducedMotion ? 0 : .025, staggerChildren: reducedMotion ? 0 : .055 } } }}>
+          <motion.p variants={fieldVariants} className="form-intro">{t(action === 'recover' ? 'account.recovery.intro' : 'account.blurb')}</motion.p>
+          <motion.label variants={fieldVariants}>{t('account.username')}<input ref={usernameInput} value={username} onChange={event => setUsername(event.target.value)} maxLength={20} autoComplete="username" required disabled={busy} /></motion.label>
+          {action === 'recover' && <motion.label variants={fieldVariants}>{t('account.recovery.code')}
             <input className="code-input" value={code} onChange={event => setCode(event.target.value.toUpperCase())} maxLength={20} autoComplete="off" autoCapitalize="characters" spellCheck={false} required disabled={busy} />
             <span className="field-hint">{t('account.recovery.codeHint')}</span>
-          </label>}
-          <label>{t(action === 'recover' ? 'account.recovery.newPin' : 'account.pin')}
+          </motion.label>}
+          <motion.label variants={fieldVariants}>{t(action === 'recover' ? 'account.recovery.newPin' : 'account.pin')}
             <input className="pin-input" value={pin} onChange={event => setPin(event.target.value.replace(/\D/g, ''))} inputMode="numeric" pattern="\d{4,6}" minLength={4} maxLength={6} autoComplete={action === 'login' ? 'current-password' : 'new-password'} type="password" required disabled={busy} />
             <span className="field-hint">{t('account.pinHint')}</span>
-          </label>
-          {action !== 'login' && <label>{t('account.repeatPin')}
+          </motion.label>
+          {action !== 'login' && <motion.label variants={fieldVariants}>{t('account.repeatPin')}
             <input className="pin-input" value={confirm} onChange={event => setConfirm(event.target.value.replace(/\D/g, ''))} inputMode="numeric" pattern="\d{4,6}" minLength={4} maxLength={6} autoComplete="new-password" type="password" required disabled={busy} />
-          </label>}
-          {consent !== 'accepted' && <div className="form-warning"><p>{t('account.noConsent')}</p><button type="button" className="inline-link" onClick={showBanner}>{t('account.enableStorage')}</button></div>}
+          </motion.label>}
+          {consent !== 'accepted' && <motion.div variants={fieldVariants} className="form-warning"><p>{t('account.noConsent')}</p><button type="button" className="inline-link" onClick={showBanner}>{t('account.enableStorage')}</button></motion.div>}
           {error && <p role="alert" className="form-error">{errorText(error)}</p>}
-          <button type="submit" disabled={busy} className="button primary full-width">{busy ? t('profile.working') : submitLabel}<ArrowUpRight size={17} aria-hidden="true" /></button>
-          {action === 'login' && <button type="button" disabled={busy} className="inline-link" onClick={() => switchMode('recover')}>{t('account.recovery.forgotPin')}</button>}
-          {action === 'recover' && <><p className="field-hint">{t('account.recovery.noCode')}</p><button type="button" disabled={busy} className="inline-link" onClick={() => switchMode('login')}>{t('account.recovery.backToSignIn')}</button></>}
-        </form>
+          <motion.button variants={fieldVariants} type="submit" disabled={busy} className="button primary full-width">{busy ? t('profile.working') : submitLabel}<ArrowUpRight size={17} aria-hidden="true" /></motion.button>
+          {action === 'login' && <motion.button variants={fieldVariants} type="button" disabled={busy} className="inline-link" onClick={() => switchMode('recover')}>{t('account.recovery.forgotPin')}</motion.button>}
+          {action === 'recover' && <><motion.p variants={fieldVariants} className="field-hint">{t('account.recovery.noCode')}</motion.p><motion.button variants={fieldVariants} type="button" disabled={busy} className="inline-link" onClick={() => switchMode('login')}>{t('account.recovery.backToSignIn')}</motion.button></>}
+        </motion.form>
+        </motion.div>
       </>
     )
-    if (presentation === 'modal') return <Dialog open onClose={onClose} title={title} dismissible={!shown}>{content}</Dialog>
+    if (presentation === 'modal') return <Dialog open onClose={onClose} title={title} dismissible={!shown && !busy}>{content}</Dialog>
     return <div className="account-page-layout">
       <aside className="auth-story">
         {!shown && <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>}

@@ -16,6 +16,7 @@ import LegalPage from './components/main/LegalPage'
 import ContactForm from './components/main/ContactForm'
 import Dialog from './ui/Dialog'
 import { goToGame } from './ui/loader'
+import { useGlobalLoader } from './ui/useGlobalLoader'
 
 type Page = 'home' | 'login' | 'register' | 'recover' | 'profile' | 'privacy' | 'terms' | 'faq' | 'contact'
 function currentPage(): Page {
@@ -30,6 +31,21 @@ export default function App() {
   const [page, setPage] = useState<Page>(currentPage)
   const [betaGame, setBetaGame] = useState<Game | null>(null)
   const [pickedGame, setPickedGame] = useState<Game | null>(null)
+  const [signingOut, setSigningOut] = useState(false)
+  useGlobalLoader(signingOut, t('account.signingOut'))
+
+  const handleSignOut = async () => {
+    if (signingOut) return
+    setSigningOut(true)
+    try {
+      const pending = signOut()
+      window.location.hash = ''
+      setPage('home')
+      await pending
+    } finally {
+      setSigningOut(false)
+    }
+  }
 
   useEffect(() => {
     const url = new URL(window.location.href)
@@ -77,7 +93,7 @@ export default function App() {
         <HeroSection onSurprise={pickGame} onPlay={handleGameClick} />
         <GamesSection onClick={handleGameClick} />
         <aside className="account-strip" aria-labelledby="account-strip-title"><div className="account-symbol" aria-hidden="true"><ArrowUpRight size={28} /></div><div><h2 id="account-strip-title">{t('lobby.accountTitle')}</h2><p>{t('lobby.accountDescription')}</p></div><a className="button secondary" href={isSignedIn ? '#profile' : '#login'}>{t(isSignedIn ? 'account.yourProfile' : 'lobby.accountMore')}<ArrowUpRight size={16} aria-hidden="true" /></a></aside>
-      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' ? <LegalPage kind={page} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => { signOut(); window.location.hash = '' }} onPlay={handleGameClick} /> :
+      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' ? <LegalPage kind={page} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => void handleSignOut()} onPlay={handleGameClick} /> :
         <AuthModal key={page} open presentation="page" initialMode={page} onClose={() => { window.location.hash = getSession() ? 'profile' : '' }} />}
     </main>
     <FooterSection />

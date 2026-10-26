@@ -12,7 +12,7 @@ export default function LegalPage({ kind }: { kind: LegalKind }) {
   const sections = kind === 'faq' ? [] : t(`legal.${kind}.sections`, { returnObjects: true }) as Section[]
   const items = kind === 'faq' ? t('legal.faq.items', { returnObjects: true }) as FaqItem[] : []
   return <article className="legal-page">
-    <a className="button secondary" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('legal.back')}</a>
+    <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('legal.back')}</a>
     <h1>{t(`legal.${kind}.title`)}</h1>
     <p className="legal-lead">{t(`legal.${kind}.intro`)}</p>
     {kind !== 'faq' && <p className="legal-updated">{t('legal.updated')}</p>}

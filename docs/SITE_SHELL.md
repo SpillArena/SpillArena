@@ -22,7 +22,7 @@ The lobby retains its current logo, “Alt står på spill” tagline and 1200 �
 
 ## Project details
 
-The lobby shares the games' width, branding and consent dialog. Its own header/footer components use the same shell gutters and retain account and settings controls on the right. Changelog and the current package version are always visible in the footer; Changelog opens the full release history in a dialog.
+The lobby shares the games' width, branding and consent dialog. Its own header/footer components use the same shell gutters and retain account and settings controls on the right. The footer's Changelog button opens the full release history in a dialog, with the current package version in its header.
 
 The lobby's cream/plum design lives in `src/ui/lobby.css`. It provides a featured game, aligned game cards, category filters, and a game picker. Account views use hash navigation (`/#login`, `/#register`, `/#recover`, `/#profile`), so they do not require new server routes. Sign-in, registration and recovery use the existing account service; the profile displays saved XP/levels and preserves rename, recovery-code management, sign-out and admin access. System theme and accent customization remain consent-aware. The shared vendored shell components are retained for the individual games.
 
