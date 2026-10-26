@@ -19,12 +19,12 @@
     "@dicebear/core": "^10.7.0",
     "@dicebear/styles": "^10.6.0",
     "framer-motion": "^12.38.0",
-    "i18next": "^26.4.2",
-    "lucide-react": "^1.48.0",
-    "nodemailer": "^10.1.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "react-i18next": "^17.0.15"
+    "i18next": "^26.5.11",
+    "lucide-react": "^1.61.0",
+    "nodemailer": "^10.2.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-i18next": "^17.1.9"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -34,18 +34,18 @@
     "@types/node": "^24.12.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.1",
+    "@vitejs/plugin-react": "^6.1.2",
     "d3-geo": "^3.1.1",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
-    "globals": "^17.12.0",
+    "globals": "^17.13.0",
     "opentype.js": "^2.0.0",
     "tailwindcss": "^4.3.3",
     "topojson-client": "^3.1.0",
     "typescript": "~6.0.2",
-    "typescript-eslint": "^8.70.1",
-    "vite": "^8.3.0",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.5",
     "world-atlas": "^2.0.2"
   }
 }
