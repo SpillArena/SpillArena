@@ -177,26 +177,34 @@ export function createRecoveryCode(pin: string): Promise<ApiResult<{ recoveryCod
  * The local sign-out happens first and does not wait: the player pressed the
  * button and should see the result at once, online or not. `keepalive` lets
  * the request finish even when the click navigates away. A failed request is
- * not retried; the token still expires on its own.
+ * not retried; the token still expires on its own. The returned promise settles
+ * after revocation or the usual eight-second timeout, so the UI can show progress.
  *
  * Only this device is signed out. Changing the PIN signs out every device.
  * Games verify tokens without a lookup and do not see the revocation, so a
  * revoked token can still submit results until it expires — but it no longer
  * reaches the account.
  */
-export function endSession(): void {
+export async function endSession(): Promise<void> {
     const token = getToken()
     signOut()
     if (!token) return
-    void fetch(`${API_BASE}/auth`, {
-        method: 'POST',
-        keepalive: true,
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ action: 'logout' }),
-    }).catch(() => {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
+    try {
+        await fetch(`${API_BASE}/auth`, {
+            method: 'POST',
+            keepalive: true,
+            signal: controller.signal,
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ action: 'logout' }),
+        })
+    } catch {
         // offline or unreachable: the session is gone here, which is what the
         // player asked for
-    })
+    } finally {
+        clearTimeout(timer)
+    }
 }
 
 /**

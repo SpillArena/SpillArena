@@ -75,6 +75,6 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
 
 export default function ProfilePage({ username, onSignOut, onPlay }: { username: string | null; onSignOut: () => void; onPlay: (game: Game) => void }) {
   const { t } = useTranslation()
-  if (!username) return <section className="guest-profile"><p className="eyebrow">{t('account.yourProfile')}</p><h1>{t('lobby.accountTitle')}</h1><p>{t('profile.signInIntro')}</p><a className="button primary" href="#login">{t('account.signIn')}<ArrowUpRight size={16} aria-hidden="true" /></a><a className="back-link" href="#">{t('profile.guestPlay')}</a></section>
+  if (!username) return <section className="guest-profile"><a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a><p className="eyebrow">{t('account.yourProfile')}</p><h1>{t('lobby.accountTitle')}</h1><p>{t('profile.signInIntro')}</p><a className="button primary" href="#login">{t('account.signIn')}<ArrowUpRight size={16} aria-hidden="true" /></a></section>
   return <SignedInProfile key={username} username={username} onSignOut={onSignOut} onPlay={onPlay} />
 }

@@ -7,6 +7,18 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '27-10-2026',
+        title: 'Smoother sign-in and a cleaner footer',
+        release: '1.15.1',
+        changes: [
+            'The shared SpillArena loading animation now appears while signing in, signing out, creating an account or recovering a PIN, and clears when the request finishes or times out',
+            'Sign-in and account creation now share a sliding selector, with fields revealed from top to bottom and smooth form resizing; keyboard navigation and reduced-motion preferences are supported',
+            'Made the Back to games control clearer and more consistent across account, profile, contact and information pages',
+            'Improved footer spacing, branding alignment and link wrapping from small phones to wide desktop screens, while keeping comfortable tap targets',
+            'Removed the standalone footer version number; the current version is shown inside Changelog',
+        ],
+    },
+    {
         date: '19-10-2026',
         title: 'SipZone joins the arena in beta',
         release: '1.15.0',
