@@ -8,6 +8,26 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '27-10-2026',
+        title: 'EraShuffle: new look and multiplayer',
+        release: '1.16.0',
+        changes: [
+            'EraShuffle now has multiplayer: create a room or join one with a code or invite link, and race the same three timelines against the same clock, with live standings and rematches',
+            'New bold, game-like design with a clearer menu, daily challenge and practice modes, round view and results, plus new illustrations on the front page',
+            'Scoring is simpler: every card in its exact place earns 1,000 points, with your result shown as, for example, 1,000 / 5,000 and how many cards were correct. The speed bonus is gone',
+            'Level, XP, records and achievements now sit at the bottom of the page, and multiplayer matches earn XP too',
+            'Removed the timeline playground from the front page',
+        ],
+    },
+    {
+        date: '27-10-2026',
+        title: 'HitLine: Temporally removed from the arena',
+        release: '1.15.2',
+        changes: [
+            'HitLine has been temporarily removed from the arena due to a licensing issue. We are working to resolve this and will bring it back as soon as possible.',
+        ],
+    },
+    {
+        date: '27-10-2026',
         title: 'Smoother sign-in and a cleaner footer',
         release: '1.15.1',
         changes: [
