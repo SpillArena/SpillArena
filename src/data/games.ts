@@ -123,6 +123,7 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/Hitline",
         liveUrl: "https://spillarena.no/hitline/",
         beta: true,
+        disabled: true,
     },
     {
         id: 10,
