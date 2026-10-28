@@ -295,6 +295,15 @@ const GAMES = [
     art: (lang) => sipZoneArt(lang),
     glyph: () => sipZoneGlyph(),
   },
+  {
+    id: 11, file: 'Cracked', title: ['Cracked'],
+    bg: '#202632', deep: '#11141b', accent: '#f2b544', ink: '#f3f1ea',
+    bannerOffsetY: -18,
+    genre: { no: 'Daglig ordgåte', en: 'Daily word puzzle' },
+    tagline: { no: 'Knekk dagens kodeord. Pilene viser vei.', en: 'Crack today’s code word. Follow the arrows.' },
+    art: (lang) => crackedArt(lang),
+    glyph: () => crackedGlyph(),
+  },
 ]
 
 // ---- HangBot: håndtegnet galge, en liten bot og bokstavbrikker
@@ -893,6 +902,33 @@ function sipZoneGlyph() {
     + '<path d="M377 364V450M334 407H420M347 377 407 437M347 437 407 377" stroke="#153a30" stroke-width="6" stroke-linecap="round"/>'
 }
 
+// ---- Cracked: the game's brass padlock, letter tiles and alphabet arrows.
+
+function crackedGlyph() {
+  const symbol = readFileSync(join(ROOT, 'src/assets/games/art/cracked-lock.svg'), 'utf8')
+    .replace(/<svg[^>]*>|<\/svg>/g, '')
+  return g('transform="translate(48 48) scale(6.5)"', symbol)
+}
+
+function crackedArt(lang) {
+  const letters = lang === 'no' ? ['S', 'T', 'O', 'R', 'M'] : ['S', 'T', 'O', 'R', 'E']
+  const colors = ['#2f9e5f', '#2f9e5f', '#f07f2e', '#262c38', '#262c38']
+  let out = g('transform="translate(114 6) scale(.54)"', crackedGlyph())
+  letters.forEach((letter, index) => {
+    const x = 10 + index * 96
+    out += tile(x, 322, 84, 84, colors[index], { r: 14 })
+    out += text(letter, FONTS.sansBold, 38, x + 42, 364, { middle: true, anchor: 'middle', fill: '#fffaf0' })
+    if (index >= 2) {
+      const direction = index === 2 ? 'M3 -5 -2 0 3 5' : 'M-3 -5 2 0 -3 5'
+      out += `<path d="${direction}" transform="translate(${x + 68} 337)" fill="none" stroke="#fffaf0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`
+    }
+  })
+  out += '<path d="M70 455H424M84 445 70 455 84 465M410 445 424 455 410 465" fill="none" stroke="#f2b544" stroke-opacity=".65" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'
+  out += text('A', FONTS.sansBold, 20, 42, 456, { middle: true, anchor: 'middle', fill: '#f2b544' })
+  out += text(lang === 'no' ? 'Å' : 'Z', FONTS.sansBold, 20, 454, 456, { middle: true, anchor: 'middle', fill: '#f2b544' })
+  return out
+}
+
 // ---------------------------------------------------------------- bilder
 
 function background(w, h, game, radius = 0) {
@@ -913,13 +949,13 @@ function banner(game, lang) {
   const title = `${game.title.join('')}`
   const genre = game.genre[lang].toUpperCase()
 
-  // to linjer, samme størrelse: den lengste linja bestemmer
-  const size = Math.min(fit(game.title[0], FONTS.serif, maxW, 118), fit(game.title[1], FONTS.serifItalic, maxW, 118))
+  // Samme størrelse på tittellinjene: den lengste linja bestemmer.
+  const size = Math.min(...game.title.map((line, index) => fit(line, index === 0 ? FONTS.serif : FONTS.serifItalic, maxW, 118)))
   const tagSize = 25
   const tagLines = wrap(game.tagline[lang], FONTS.sans, tagSize, 440)
 
   const chipW = measure(genre, FONTS.sansBold, 14, 2.4) + 40
-  const blockH = 48 + 26 + size * 0.95 * 2 + 26 + tagLines.length * tagSize * 1.4
+  const blockH = 48 + 26 + size * 0.95 * game.title.length + 26 + tagLines.length * tagSize * 1.4
   let y = Math.max(150, (H - blockH) / 2 + 26) + (game.bannerOffsetY ?? 0)
 
   let body = ''
@@ -927,8 +963,10 @@ function banner(game, lang) {
   body += text(genre, FONTS.sansBold, 14, left + 20, y + 20, { fill: ink, middle: true, tracking: 2.4 })
   y += 40 + 26 + size * 0.78
   body += text(game.title[0], FONTS.serif, size, left - size * 0.03, y, { fill: ink })
-  y += size * 0.98
-  body += text(game.title[1], FONTS.serifItalic, size, left - size * 0.02, y, { fill: game.accent })
+  if (game.title[1]) {
+    y += size * 0.98
+    body += text(game.title[1], FONTS.serifItalic, size, left - size * 0.02, y, { fill: game.accent })
+  }
   y += 30 + tagSize
   for (const line of tagLines) {
     body += text(line, FONTS.sans, tagSize, left, y, { fill: ink, opacity: 0.86 })

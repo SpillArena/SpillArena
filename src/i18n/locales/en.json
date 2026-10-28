@@ -454,6 +454,7 @@
   "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
   "hitlineDescription": "Hitline – recognise the song and place it on your timeline by release year. Play solo, share a screen or invite friends to an online room.",
   "sipZoneDescription": "SipZone – Norwegian-inspired drinking games for friends. Share one phone or use your own devices with SipZone Live. Choose what goes in your glass.",
+  "crackedDescription": "Cracked – crack the daily code word in five tries. Arrows guide you through the alphabet, with practice locks and a weekly master code.",
   "install": {
     "title": "Add SpillArena to your home screen",
     "description": "Opens full screen, with every game one tap away.",
@@ -539,7 +540,8 @@
       "7": "Five moments in history. One right order. Put time in its place.",
       "8": "Guess the pop song from short clips. Less listening earns more points.",
       "9": "Know the song? Put it in release-year order. Play solo or with friends.",
-      "10": "Drinking games for a night with friends. Share one phone or play on your own devices with SipZone Live."
+      "10": "Drinking games for a night with friends. Share one phone or play on your own devices with SipZone Live.",
+      "11": "Crack the daily code word in five tries. Follow the arrows through the alphabet."
     },
     "gameCount_one": "{{count}} game to explore",
     "gameCount_other": "{{count}} games to explore",
