@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Cracked">
+<title>Cracked</title>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d333e"/><stop offset="1" stop-color="#171b24"/></linearGradient>
+<radialGradient id="glow" cx="0.72" cy="0.42" r="0.55"><stop offset="0" stop-color="#fff" stop-opacity="0.2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2" fill="#ffffff" fill-opacity="0.12"/></pattern>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<rect width="512" height="512" rx="112" fill="url(#glow)"/>
+<rect width="512" height="512" rx="112" fill="url(#dots)"/>
+<rect x="3" y="3" width="506" height="506" rx="109" fill="none" stroke="#fff" stroke-opacity="0.1" stroke-width="6"/>
+<g transform="translate(48 48) scale(6.5)">
+  <rect width="64" height="64" rx="15" fill="#151922"/>
+  <path d="M22 29V20.5a10 10 0 0 1 19.4-3.4" fill="none" stroke="#f2b544" stroke-width="5.5" stroke-linecap="round"/>
+  <rect x="13" y="28" width="38" height="27" rx="7" fill="#f2b544"/>
+  <path d="M33.5 28l-3 8 4.5 3.5-3.5 8 2.5 7.5" fill="none" stroke="#151922" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="24" cy="40" r="3.6" fill="#151922"/>
+  <path d="M24 42.5v5.5" stroke="#151922" stroke-width="3" stroke-linecap="round"/>
+
+</g>
+</svg>

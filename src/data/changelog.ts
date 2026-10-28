@@ -7,6 +7,16 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '29-10-2026',
+        title: 'Cracked is coming soon',
+        release: '1.17.0',
+        changes: [
+            'Added Cracked to the Words & pictures collection as Coming Soon: crack a daily code word in five tries, with arrows guiding you through the alphabet',
+            'Added Norwegian and English descriptions, dedicated posters and a lock icon',
+            'Cracked stays unavailable to play and is excluded from search, random picks and the spotlight until launch',
+        ],
+    },
+    {
         date: '27-10-2026',
         title: 'EraShuffle: new look and multiplayer',
         release: '1.16.0',

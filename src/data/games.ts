@@ -136,6 +136,17 @@ export const games: Game[] = [
         githubUrl: "https://github.com/SpillArena/SipZone",
         liveUrl: "https://spillarena.no/sipzone/",
         beta: true,
+    },
+    {
+        id: 11,
+        title: "Cracked",
+        category: "words",
+        descriptionKey: "crackedDescription",
+        icon: "LockKeyholeOpen",
+        color: "bg-amber-600",
+        githubUrl: "https://github.com/SpillArena/Cracked",
+        liveUrl: "https://spillarena.no/cracked/",
+        disabled: true,
     }
 ];
 
@@ -151,4 +162,5 @@ export const GAME_TITLES: Record<GameId, string> = {
     melodyrush: "MelodyRush",
     hitline: "Hitline",
     sipzone: "SipZone",
+    cracked: "Cracked",
 };
