@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, Ban, Check, Copy } from 'lucide-react'
+import { ArrowLeft, Ban, CalendarDays, Check, Clock3, Copy, Gamepad2, KeyRound, ShieldCheck, Trophy, Zap } from 'lucide-react'
 import { levelProgress, normalizeProgress } from '../../account'
 import { deletePlayer, fetchPlayer, runAction } from '../../admin/api'
 import { GAME_IDS, errorText, formatNumber, gameTitle } from '../../admin/format'
@@ -8,6 +8,8 @@ import type { ActionBody, AdminErrorCode, PlayerDetail as Detail } from '../../a
 import { formatDate, formatDateTime } from '../../lib/formatDate'
 import LogList from './LogList'
 import { Badge, Button, Card, ConfirmButton, ErrorNotice, Muted, SectionHeading } from './ui'
+import Avatar from '../account/Avatar'
+import './admin-players.css'
 
 interface PlayerDetailProps {
     username: string
@@ -122,31 +124,47 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
     const played = GAME_IDS.filter((id) => data.games[id])
     const unplayed = GAME_IDS.filter((id) => !data.games[id])
     const boardTotal = data.boards.reduce((sum, board) => sum + board.entries, 0)
+    const totalXp = played.reduce((sum, id) => sum + normalizeProgress(data.games[id]?.progress).xp, 0)
+    const arenaLevel = levelProgress(totalXp)
 
     return (
-        <div className="flex flex-col gap-8">
-            <section className="flex flex-col gap-3">
-                {header}
-                <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="min-w-0 truncate text-xl font-semibold">{account.username}</h3>
-                        {isAdmin && <Badge kind="admin" />}
-                        {isBanned && <Badge kind="banned" />}
-                        {account.locked && <Badge kind="locked" />}
+        <div className="admin-player-detail">
+            {header}
+            <section className="admin-player-hero" aria-labelledby="admin-player-title">
+                <div className="admin-player-profile">
+                    <Avatar key={account.username} username={account.username} avatar={account.avatar} className="admin-player-avatar admin-player-avatar--large" />
+                    <div className="admin-player-profile-copy">
+                        <p className="admin-players-eyebrow">{t('admin.playersPage.profile')}</p>
+                        <h3 id="admin-player-title">{account.username}</h3>
+                        <div className="admin-player-badges">
+                            {isAdmin && <Badge kind="admin" />}
+                            {isBanned && <Badge kind="banned" />}
+                            {account.locked && <Badge kind="locked" />}
+                            {!isAdmin && !isBanned && !account.locked && <span className="admin-player-role">{t('admin.playersPage.player')}</span>}
+                            {isSelf && <span className="admin-player-self">{t('admin.playersPage.you')}</span>}
+                        </div>
                     </div>
-                    <p className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-xs" style={{ color: 'var(--text-subtle)' }}>
-                        <span>{t('admin.created', { date: formatDate(account.createdAt) })}</span>
-                        <span>{t('admin.lastSeen', { date: formatDateTime(account.lastSeen) })}</span>
-                        {account.failed > 0 && <span>{t('admin.failed', { count: account.failed })}</span>}
-                        {account.locked && (
-                            <span>{t('admin.lockedUntil', { date: formatDateTime(account.lockedUntil) })}</span>
-                        )}
-                        {!account.hasRecoveryCode && <span>{t('admin.noRecoveryCode')}</span>}
-                        {account.resetCodeExpires && (
-                            <span>{t('admin.resetCodeActive', { date: formatDateTime(account.resetCodeExpires) })}</span>
-                        )}
-                    </p>
                 </div>
+                <dl className="admin-player-metadata">
+                    <div><dt><CalendarDays size={14} aria-hidden="true" />{t('admin.playersPage.joined')}</dt><dd>{formatDate(account.createdAt) ?? '—'}</dd></div>
+                    <div><dt><Clock3 size={14} aria-hidden="true" />{t('admin.playersPage.lastActive')}</dt><dd>{formatDateTime(account.lastSeen) ?? '—'}</dd></div>
+                    <div><dt><KeyRound size={14} aria-hidden="true" />{t('admin.playersPage.recovery')}</dt><dd data-warning={!account.hasRecoveryCode}>{t(account.hasRecoveryCode ? 'admin.playersPage.recoveryReady' : 'admin.noRecoveryCode')}</dd></div>
+                </dl>
+                <p className="admin-player-access-notes">
+                    {account.failed > 0 && <span>{t('admin.failed', { count: account.failed })}</span>}
+                    {account.locked && (
+                        <span>{t('admin.lockedUntil', { date: formatDateTime(account.lockedUntil) })}</span>
+                    )}
+                    {account.resetCodeExpires && (
+                        <span>{t('admin.resetCodeActive', { date: formatDateTime(account.resetCodeExpires) })}</span>
+                    )}
+                </p>
+                <dl className="admin-player-stat-grid">
+                    <div><dt><Zap size={14} aria-hidden="true" />{t('profile.totalXp')}</dt><dd>{n(totalXp)} <small>XP</small></dd></div>
+                    <div><dt><ShieldCheck size={14} aria-hidden="true" />{t('profile.arenaLevel')}</dt><dd>{arenaLevel.level}</dd></div>
+                    <div><dt><Gamepad2 size={14} aria-hidden="true" />{t('admin.playersPage.savedGames')}</dt><dd>{played.length}<small> / {GAME_IDS.length}</small></dd></div>
+                    <div><dt><Trophy size={14} aria-hidden="true" />{t('admin.sections.boards')}</dt><dd>{n(boardTotal)}</dd></div>
+                </dl>
 
                 {isBanned && (
                     <div className="flex gap-2.5 rounded-xl bg-red-100 px-3 py-2.5 text-sm text-red-800 dark:bg-red-900/40 dark:text-red-100">
@@ -164,7 +182,7 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                 )}
             </section>
 
-            <section>
+            <section className="admin-player-actions-panel">
                 <SectionHeading>{t('admin.sections.actions')}</SectionHeading>
 
                 {notice && (

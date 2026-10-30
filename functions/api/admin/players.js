@@ -14,6 +14,7 @@
 
 import { json, serviceFailed } from '../../../shared/account-server.js'
 import { requireAdmin } from '../../../shared/admin-server.js'
+import { readAvatar } from '../../../shared/avatar.js'
 
 const PAGE = 50
 const MAX_QUERY = 40
@@ -56,7 +57,7 @@ export async function onRequestGet(context) {
   try {
     const [page, count] = await Promise.all([
       env.DB.prepare(
-        `SELECT p.username,
+        `SELECT p.username, p.avatar,
                 p.admin,
                 p.created_at   AS createdAt,
                 p.last_seen    AS lastSeen,
@@ -82,6 +83,7 @@ export async function onRequestGet(context) {
 
     const players = (page.results ?? []).map((row) => ({
       ...row,
+      avatar: readAvatar(row.avatar),
       admin: row.admin === 1,
       locked: Boolean(row.locked),
       xp: Math.max(0, Math.round(Number(row.xp) || 0)),

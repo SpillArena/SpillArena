@@ -1,4 +1,5 @@
 import type { GameId } from '../account'
+import type { AvatarChoice } from '../components/account/avatar-options'
 
 /*
  * Formene /api/admin/* svarer med. Denne mappa er IKKE vendret ut til spillene
@@ -89,6 +90,7 @@ export type PlayerSort = 'seen' | 'created' | 'name' | 'xp'
 
 export interface PlayerRow {
     username: string
+    avatar?: AvatarChoice | null
     admin: boolean
     createdAt: string
     lastSeen: string
@@ -107,6 +109,7 @@ export interface PlayerPage {
 
 export interface PlayerAccount {
     username: string
+    avatar?: AvatarChoice | null
     admin: boolean
     createdAt: string
     lastSeen: string

@@ -2,12 +2,14 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { DatabaseSync } from 'node:sqlite'
 import { readFileSync, readdirSync } from 'node:fs'
-import { issueToken } from '../shared/account-server.js'
+import { issueAdminToken, issueToken } from '../shared/account-server.js'
 import { onRequestPut } from '../functions/api/account/avatar.js'
 import { onRequestGet } from '../functions/api/profile/index.js'
 import { readAvatar, validAvatar } from '../shared/avatar.js'
 import { AVATAR_CUSTOMIZATION } from '../shared/avatar-options.js'
 import { Avatar, Style } from '@dicebear/core'
+import { onRequestGet as playerList } from '../functions/api/admin/players.js'
+import { onRequestGet as playerDetail } from '../functions/api/admin/player.js'
 
 const secret = 'avatar-local-test-secret'
 const picture = { style: 'bottts', seed: 'test-picture-123' }
@@ -43,6 +45,53 @@ test('avatar accepts only supported styles and bounded seeds; corrupt storage fa
   for (const value of [null, [], {}, { style: 'unknown', seed: 'a' }, { ...picture, seed: '<script>' }, { ...picture, seed: 'a'.repeat(65) }, { ...picture, url: 'https://outside.example' }]) assert.equal(validAvatar(value), false)
   assert.equal(readAvatar('bad-json'), null)
   assert.equal(readAvatar(null), null)
+})
+
+test('admin list and player detail return validated saved portraits without credentials', async () => {
+  const { env, sql } = database()
+  try {
+    sql.prepare('UPDATE players SET admin = 1 WHERE username = ?').run('Alice')
+    const avatar = { ...picture, options: { eyesVariant: 'happy', backgroundColor: '#123456' } }
+    sql.prepare('UPDATE players SET avatar = ? WHERE username = ?').run(JSON.stringify(avatar), 'Bob')
+    const headers = { Authorization: `Bearer ${await issueAdminToken(secret, 'Alice')}` }
+    const list = await playerList({ env, request: new Request('https://spillarena.no/api/admin/players?sort=name', { headers }) })
+    assert.equal(list.status, 200)
+    assert.equal(list.headers.get('Cache-Control'), 'no-store')
+    const page = await list.json()
+    assert.equal(page.players[0].username, 'Alice')
+    assert.equal(page.players[0].avatar, null)
+    assert.deepEqual(page.players[1].avatar, avatar)
+    const detail = await playerDetail({ env, request: new Request('https://spillarena.no/api/admin/player?u=Bob', { headers }) })
+    assert.equal(detail.status, 200)
+    assert.equal(detail.headers.get('Cache-Control'), 'no-store')
+    const body = await detail.json()
+    assert.deepEqual(body.account.avatar, avatar)
+    for (const account of [...page.players, body.account]) {
+      for (const field of ['pin_hash', 'pin_salt', 'recovery_hash', 'recovery_salt', 'reset_hash', 'reset_salt']) assert.equal(Object.hasOwn(account, field), false)
+    }
+    for (const raw of ['not-json', '{"style":"unknown","seed":"x"}', null]) {
+      sql.prepare('UPDATE players SET avatar = ? WHERE username = ?').run(raw, 'Bob')
+      const page = await (await playerList({ env, request: new Request('https://spillarena.no/api/admin/players?q=Bob', { headers }) })).json()
+      assert.equal(page.players[0].avatar, null)
+      const body = await (await playerDetail({ env, request: new Request('https://spillarena.no/api/admin/player?u=Bob', { headers }) })).json()
+      assert.equal(body.account.avatar, null)
+    }
+  } finally { sql.close() }
+})
+
+test('admin player portraits require the separate admin session', async () => {
+  const { env, sql } = database()
+  try {
+    sql.prepare('UPDATE players SET admin = 1 WHERE username = ?').run('Alice')
+    for (const token of [null, await issueToken(secret, 'Alice'), await issueAdminToken(secret, 'Bob')]) {
+      const headers = token ? { Authorization: `Bearer ${token}` } : {}
+      for (const [handler, path] of [[playerList, 'players'], [playerDetail, 'player?u=Bob']]) {
+        const response = await handler({ env, request: new Request(`https://spillarena.no/api/admin/${path}`, { headers }) })
+        assert.ok([401, 403].includes(response.status))
+        assert.equal(Object.hasOwn(await response.json(), 'avatar'), false)
+      }
+    }
+  } finally { sql.close() }
 })
 
 test('actual migrations: avatar persists for its owner, survives rename, and can be removed', async () => {
