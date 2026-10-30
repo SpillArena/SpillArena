@@ -45,6 +45,7 @@ SpillArena brings independent web games together in a responsive lobby. Browse b
 | [MelodyRush](https://github.com/SpillArena/MelodyRush) | Recognise music from short previews |
 | [Hitline](https://github.com/SpillArena/Hitline) | Place songs on a musical timeline |
 | [SipZone](https://github.com/SpillArena/SipZone) · Beta | Norwegian-inspired drinking games on one phone or with SipZone Live |
+| [Cracked](https://github.com/SpillArena/Cracked) · Coming Soon | Crack a daily code word in five tries, guided by alphabet arrows |
 
 Game availability and beta status are maintained in [`src/data/games.ts`](src/data/games.ts). Each game has its own repository; this one owns the lobby and shared account service.
 

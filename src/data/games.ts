@@ -1,3 +1,4 @@
+import { GAME_DEFAULTS, type Availability } from "../../shared/game-settings.js";
 import type { GameId } from "../account";
 import { gameArt, type ArtLanguage } from "./game-art";
 
@@ -13,6 +14,7 @@ export type Game = {
     color: string;
     githubUrl: string;
     liveUrl: string;
+    availability?: Availability;
     disabled?: boolean;
     beta?: boolean;
 };
@@ -27,7 +29,7 @@ export const gameBanner = (game: Game, language: string | undefined): string | u
 /** Det kvadratiske ikonet (512×512), uten tekst. Til små flater der banneret blir uleselig. */
 export const gameIcon = (game: Game): string | undefined => gameArt[game.id]?.icon
 
-export const games: Game[] = [
+const catalogue: Game[] = [
     {
         id: 1,
         title: "FleetBot",
@@ -99,7 +101,6 @@ export const games: Game[] = [
         color: "bg-emerald-700",
         githubUrl: "https://github.com/SpillArena/EraShuffle",
         liveUrl: "https://spillarena.no/erashuffle",
-        beta: true,
     },
     {
         id: 8,
@@ -122,8 +123,6 @@ export const games: Game[] = [
         color: "bg-teal-700",
         githubUrl: "https://github.com/SpillArena/Hitline",
         liveUrl: "https://spillarena.no/hitline/",
-        beta: true,
-        disabled: true,
     },
     {
         id: 10,
@@ -135,9 +134,24 @@ export const games: Game[] = [
         color: "bg-emerald-900",
         githubUrl: "https://github.com/SpillArena/SipZone",
         liveUrl: "https://spillarena.no/sipzone/",
-        beta: true,
+    },
+    {
+        id: 11,
+        title: "Cracked",
+        category: "words",
+        descriptionKey: "crackedDescription",
+        icon: "LockKeyholeOpen",
+        color: "bg-amber-600",
+        githubUrl: "https://github.com/SpillArena/Cracked",
+        liveUrl: "https://spillarena.no/cracked/",
     }
 ];
+
+/** Initial render and offline fallback; live settings come from useGames. */
+export const games: Game[] = catalogue.map(game => {
+    const setting = GAME_DEFAULTS.find(item => item.game === new URL(game.liveUrl).pathname.split('/')[1])!
+    return { ...game, beta: setting.beta, availability: setting.availability, disabled: setting.availability !== 'available' }
+});
 
 /** Spillnavnet slik forsiden viser det, ut fra id-en tjeneren lagrer. */
 export const GAME_TITLES: Record<GameId, string> = {
@@ -151,4 +165,5 @@ export const GAME_TITLES: Record<GameId, string> = {
     melodyrush: "MelodyRush",
     hitline: "Hitline",
     sipzone: "SipZone",
+    cracked: "Cracked",
 };

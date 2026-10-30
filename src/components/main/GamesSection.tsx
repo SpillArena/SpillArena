@@ -1,12 +1,13 @@
+import { useGames } from '../../hooks/useGames'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Users } from 'lucide-react'
 import type { Game, GameCategory } from '../../data/games'
-import { games } from '../../data/games'
 import GameCard from './GameCard'
 
 export default function GamesSection({ onClick }: { onClick: (game: Game) => void }) {
   const { t } = useTranslation()
+  const games = useGames()
   const [filter, setFilter] = useState<GameCategory | 'all' | 'multiplayer'>('all')
   const multiplayerCount = games.filter(game => game.multiplayer).length
   const visible = games.filter(game => filter === 'all' || (filter === 'multiplayer' ? game.multiplayer : game.category === filter))

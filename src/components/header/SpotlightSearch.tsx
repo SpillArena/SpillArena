@@ -1,9 +1,10 @@
+import { useGames } from '../../hooks/useGames'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowUpRight, Search } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { gameIcon, games, type Game } from '../../data/games'
+import { gameIcon, type Game } from '../../data/games'
 import './spotlight.css'
 
 /*
@@ -49,6 +50,7 @@ function isTyping(target: EventTarget | null) {
 
 export default function SpotlightSearch({ onSelect }: { onSelect: (game: Game) => void }) {
   const { t, i18n } = useTranslation()
+  const games = useGames()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [active, setActive] = useState(0)
@@ -65,7 +67,7 @@ export default function SpotlightSearch({ onSelect }: { onSelect: (game: Game) =
       return [fixed(`lobby.categories.${game.category}`), fixed(`lobby.descriptions.${game.id}`), fixed(game.descriptionKey)]
     })
     return { game, title: normalize(game.title), text: normalize([...fields, KEYWORDS[game.id] ?? ''].join(' ')) }
-  }), [i18n])
+  }), [games, i18n])
 
   const results = useMemo(() => {
     const words = normalize(query).split(/\s+/).filter(Boolean)

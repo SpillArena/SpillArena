@@ -14,9 +14,9 @@ export default function GameCard({ game, onClick }: { game: Game; onClick: (game
     }}>
     <div className="card-art">
       {banner && <img src={banner} alt="" width={1200} height={675} loading="lazy" />}
-      {game.disabled ? <span className="beta-badge">{t('comingSoon')}</span> : game.beta && <span className="beta-badge">{t('betaLabel')}</span>}
+      {game.disabled ? <span className="beta-badge">{t(game.availability === 'unavailable' ? 'gameUnavailable' : 'comingSoon')}</span> : game.beta && <span className="beta-badge">{t('betaLabel')}</span>}
     </div>
     <div className="card-copy"><p className="category-label">{t(`lobby.categories.${game.category}`)}</p><h3>{game.title}</h3><p className="card-description">{t(`lobby.descriptions.${game.id}`)}</p></div>
-    <div className="card-footer"><span>{t(game.disabled ? 'comingSoon' : 'lobby.play')}</span><ArrowUpRight className="card-arrow" size={20} aria-hidden="true" /></div>
+    <div className="card-footer"><span>{t(game.disabled ? (game.availability === 'unavailable' ? 'gameUnavailable' : 'comingSoon') : 'lobby.play')}</span><ArrowUpRight className="card-arrow" size={20} aria-hidden="true" /></div>
   </a>
 }

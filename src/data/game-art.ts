@@ -29,6 +29,9 @@ import HitlineIcon from '../assets/games/icons/Hitline.svg'
 import SipZoneNo from '../assets/games/SipZone.no.svg'
 import SipZoneEn from '../assets/games/SipZone.en.svg'
 import SipZoneIcon from '../assets/games/icons/SipZone.svg'
+import CrackedNo from '../assets/games/Cracked.no.svg'
+import CrackedEn from '../assets/games/Cracked.en.svg'
+import CrackedIcon from '../assets/games/icons/Cracked.svg'
 
 export type ArtLanguage = 'no' | 'en'
 
@@ -51,4 +54,5 @@ export const gameArt: Record<number, GameArt> = {
     8: { banner: { no: MelodyRushNo, en: MelodyRushEn }, icon: MelodyRushIcon },
     9: { banner: { no: HitlineNo, en: HitlineEn }, icon: HitlineIcon },
     10: { banner: { no: SipZoneNo, en: SipZoneEn }, icon: SipZoneIcon },
+    11: { banner: { no: CrackedNo, en: CrackedEn }, icon: CrackedIcon },
 }

@@ -626,6 +626,7 @@ export const RESERVED_NAMES: readonly string[] = [
   'billing',
   'bot',
   'channel',
+  'cracked',
   'deleted',
   'era-shuffle',
   'erashuffle',
