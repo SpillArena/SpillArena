@@ -442,6 +442,10 @@ export async function requireUser(env, request) {
     return { response: serviceFailed(error) }
   }
   if (!row) return { response: json({ error: 'unauthorized' }, 401) }
+  // Re-registering a deleted username must never revive its previous sessions.
+  if (claims.issuedAt < Date.parse(row.created_at)) {
+    return { response: json({ error: 'unauthorized' }, 401) }
+  }
   // logget ut på tjeneren — se `logout` i functions/api/auth/
   if (row._revoked) return { response: json({ error: 'unauthorized' }, 401) }
   if (row.banned_at) return { response: json({ error: 'banned' }, 401) }

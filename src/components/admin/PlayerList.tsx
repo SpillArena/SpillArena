@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ChevronRight, Search } from 'lucide-react'
+import { ChevronRight, Clock3, Gamepad2, LoaderCircle, Search, Users, X } from 'lucide-react'
+import { levelProgress } from '../../account'
 import { fetchPlayers } from '../../admin/api'
 import { errorText, formatNumber } from '../../admin/format'
 import type { AdminErrorCode, PlayerFilter, PlayerPage, PlayerSort } from '../../admin/types'
 import { formatDate } from '../../lib/formatDate'
-import { Badge, Button, ErrorNotice, Muted } from './ui'
+import { Badge, Button, ErrorNotice } from './ui'
+import Avatar from '../account/Avatar'
+import './admin-players.css'
 
 export interface ListState {
     query: string
@@ -31,10 +34,12 @@ const DEBOUNCE_MS = 250
  */
 export default function PlayerList({ state, onChange, onOpen }: PlayerListProps) {
     const { t, i18n } = useTranslation()
+    const searchId = useId()
     const [query, setQuery] = useState(state.query)
     const [page, setPage] = useState<{ key: string; data?: PlayerPage; error?: AdminErrorCode } | null>(null)
     const [loadingMore, setLoadingMore] = useState(false)
     const [attempt, setAttempt] = useState(0)
+    const [moreError, setMoreError] = useState<{ key: string; error: AdminErrorCode } | null>(null)
 
     // søket sendes når skrivingen tar en pause, ikke for hvert tastetrykk
     useEffect(() => {
@@ -61,8 +66,9 @@ export default function PlayerList({ state, onChange, onOpen }: PlayerListProps)
     const data = page?.data
 
     const loadMore = async () => {
-        if (!data || loadingMore) return
+        if (!data || loadingMore || loading) return
         setLoadingMore(true)
+        setMoreError(null)
         const r = await fetchPlayers({ ...state, offset: data.players.length })
         setLoadingMore(false)
         if (r.ok) {
@@ -71,22 +77,27 @@ export default function PlayerList({ state, onChange, onOpen }: PlayerListProps)
                     ? { key, data: { ...r.data, players: [...prev.data.players, ...r.data.players] } }
                     : prev,
             )
-        }
+        } else setMoreError({ key, error: r.error })
     }
 
     const n = (value: number) => formatNumber(value, i18n.language)
 
     return (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3">
-                <label className="relative block">
-                    <span className="sr-only">{t('admin.search')}</span>
+        <section className="admin-players" aria-labelledby="admin-players-title">
+            <header className="admin-players-heading">
+                <div><p className="admin-players-eyebrow">{t('admin.playersPage.eyebrow')}</p><h3 id="admin-players-title">{t('admin.tabs.players')}</h3></div>
+                <span className="admin-players-total"><Users size={15} aria-hidden="true" />{data && !loading ? t('admin.playersPage.total', { count: data.total }) : t('admin.loading')}</span>
+                <p>{t('admin.playersPage.intro')}</p>
+            </header>
+            <div className="admin-players-toolbar">
+                <div className="admin-player-search">
+                    <label className="sr-only" htmlFor={searchId}>{t('admin.search')}</label>
                     <Search
                         aria-hidden="true"
-                        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2"
-                        style={{ color: 'var(--text-subtle)' }}
+                        size={17}
                     />
                     <input
+                        id={searchId}
                         type="search"
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
@@ -94,33 +105,28 @@ export default function PlayerList({ state, onChange, onOpen }: PlayerListProps)
                         maxLength={40}
                         autoComplete="off"
                         spellCheck={false}
-                        className="w-full rounded-xl border py-2 pl-9 pr-3 text-sm outline-none focus:border-[color:var(--accent)]"
-                        style={{ borderColor: 'var(--border)', background: 'var(--surface)', color: 'var(--text)' }}
                     />
-                </label>
+                    {query && <button type="button" onClick={() => { setQuery(''); onChange({ ...state, query: '' }) }} aria-label={t('admin.playersPage.clearSearch')}><X size={15} aria-hidden="true" /></button>}
+                </div>
 
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div role="group" aria-label={t('admin.filters.label')} className="flex flex-wrap gap-1.5">
+                    <div role="group" aria-label={t('admin.filters.label')} className="admin-player-filters">
                         {FILTERS.map((filter) => (
                             <button
                                 key={filter}
                                 type="button"
                                 aria-pressed={state.filter === filter}
                                 onClick={() => onChange({ ...state, query, filter })}
-                                className="pp-dropdown-item cursor-pointer rounded-full border px-3 py-1 text-xs font-semibold"
-                                style={{ borderColor: 'var(--border)' }}
                             >
                                 {t(`admin.filters.${filter}`)}
                             </button>
                         ))}
                     </div>
-                    <label className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-subtle)' }}>
+                    <label className="admin-player-sort">
                         {t('admin.sort.label')}
                         <select
                             value={state.sort}
                             onChange={(event) => onChange({ ...state, query, sort: event.target.value as PlayerSort })}
-                            className="cursor-pointer rounded-lg border px-2 py-1 text-xs font-semibold"
-                            style={{ borderColor: 'var(--border)', background: 'var(--surface)', color: 'var(--text)' }}
                         >
                             {SORTS.map((sort) => (
                                 <option key={sort} value={sort}>
@@ -135,43 +141,42 @@ export default function PlayerList({ state, onChange, onOpen }: PlayerListProps)
             {page?.error && page.key === key ? (
                 <ErrorNotice onRetry={() => setAttempt((a) => a + 1)}>{errorText(t, page.error)}</ErrorNotice>
             ) : !data ? (
-                <Muted>{t('admin.loading')}</Muted>
+                <div className="admin-player-loading" role="status"><LoaderCircle size={20} aria-hidden="true" />{t('admin.loading')}</div>
             ) : (
                 <div className={loading ? 'opacity-60 transition-opacity' : 'transition-opacity'} aria-busy={loading}>
-                    <Muted className="mb-2 text-xs">
+                    <p className="admin-player-results" role="status">
                         {t('admin.results', { shown: n(data.players.length), total: n(data.total) })}
-                    </Muted>
+                    </p>
 
                     {data.players.length === 0 ? (
-                        <Muted>{t('admin.noPlayers')}</Muted>
+                        <div className="admin-player-empty"><Users size={30} aria-hidden="true" /><h4>{t('admin.noPlayers')}</h4><p>{t('admin.playersPage.emptyHint')}</p><Button onClick={() => { setQuery(''); onChange({ ...state, query: '', filter: 'all' }) }}>{t('admin.playersPage.resetFilters')}</Button></div>
                     ) : (
-                        <ul className="flex flex-col gap-1.5">
+                        <ul className="admin-player-list">
                             {data.players.map((player) => (
                                 <li key={player.username}>
                                     <button
                                         type="button"
                                         onClick={() => onOpen(player.username)}
-                                        className="pp-dropdown-item group flex w-full cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 text-left hover:bg-[var(--surface)]"
-                                        style={{ borderColor: 'var(--border)' }}
+                                        className="admin-player-row"
+                                        disabled={loading}
                                     >
-                                        <span className="min-w-0 flex-1">
-                                            <span className="flex flex-wrap items-center gap-1.5">
-                                                <span className="truncate text-sm font-semibold">{player.username}</span>
+                                        <Avatar username={player.username} avatar={player.avatar} className="admin-player-avatar" />
+                                        <span className="admin-player-identity">
+                                            <span className="admin-player-name">{player.username}</span>
+                                            <span className="admin-player-badges">
                                                 {player.admin && <Badge kind="admin" />}
                                                 {player.bannedAt && <Badge kind="banned" />}
                                                 {player.locked && <Badge kind="locked" />}
-                                            </span>
-                                            <span className="mt-0.5 block text-xs tabular-nums" style={{ color: 'var(--text-subtle)' }}>
-                                                {t('admin.row.xpGames', { xp: n(player.xp), count: player.games })}
+                                                {!player.admin && !player.bannedAt && !player.locked && <span className="admin-player-role">{t('admin.playersPage.player')}</span>}
                                             </span>
                                         </span>
-                                        <span className="hidden shrink-0 text-right text-xs tabular-nums sm:block" style={{ color: 'var(--text-subtle)' }}>
-                                            {t('admin.row.lastSeen', { date: formatDate(player.lastSeen) })}
+                                        <span className="admin-player-progress"><strong>{n(player.xp)} <small>XP</small></strong><span>{t('admin.progress.level', { level: levelProgress(player.xp).level })}<span aria-hidden="true"> · </span><Gamepad2 size={12} aria-hidden="true" />{player.games}<span className="sr-only"> {t('admin.playersPage.savedGames')}</span></span></span>
+                                        <span className="admin-player-seen">
+                                            <Clock3 size={13} aria-hidden="true" />{t('admin.row.lastSeen', { date: formatDate(player.lastSeen) ?? '—' })}
                                         </span>
                                         <ChevronRight
                                             aria-hidden="true"
-                                            className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5"
-                                            style={{ color: 'var(--text-subtle)' }}
+                                            className="admin-player-arrow" size={17}
                                         />
                                     </button>
                                 </li>
@@ -181,13 +186,14 @@ export default function PlayerList({ state, onChange, onOpen }: PlayerListProps)
 
                     {data.players.length < data.total && (
                         <div className="mt-3 flex justify-center">
-                            <Button onClick={() => void loadMore()} disabled={loadingMore}>
-                                {t('admin.loadMore')}
+                            <Button onClick={() => void loadMore()} disabled={loadingMore || loading}>
+                                {loadingMore && <LoaderCircle size={14} className="admin-player-spinner" aria-hidden="true" />}{t(loadingMore ? 'admin.loading' : 'admin.loadMore')}
                             </Button>
                         </div>
                     )}
+                    {moreError?.key === key && <ErrorNotice onRetry={() => void loadMore()}>{errorText(t, moreError.error)}</ErrorNotice>}
                 </div>
             )}
-        </div>
+        </section>
     )
 }

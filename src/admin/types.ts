@@ -1,4 +1,5 @@
 import type { GameId } from '../account'
+import type { AvatarChoice } from '../components/account/avatar-options'
 
 /*
  * Formene /api/admin/* svarer med. Denne mappa er IKKE vendret ut til spillene
@@ -65,7 +66,7 @@ export interface LogEntry {
      * `reset-pin` finnes bare i gamle rader, fra før admin laget engangskoder.
      * `open-panel` skrives når en admin åpner panelet med PIN-en.
      */
-    action: AdminAction | 'delete' | 'recover' | 'reset-pin' | 'open-panel'
+    action: AdminAction | 'delete' | 'recover' | 'reset-pin' | 'open-panel' | 'game-settings'
     target: string | null
     details: Record<string, unknown> | null
 }
@@ -89,6 +90,7 @@ export type PlayerSort = 'seen' | 'created' | 'name' | 'xp'
 
 export interface PlayerRow {
     username: string
+    avatar?: AvatarChoice | null
     admin: boolean
     createdAt: string
     lastSeen: string
@@ -107,6 +109,7 @@ export interface PlayerPage {
 
 export interface PlayerAccount {
     username: string
+    avatar?: AvatarChoice | null
     admin: boolean
     createdAt: string
     lastSeen: string

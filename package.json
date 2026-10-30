@@ -7,12 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "test:admin": "node --test tests/admin-traffic.test.mjs tests/admin-session.test.mjs",
+    "test:admin": "node --test tests/admin-traffic.test.mjs tests/admin-session.test.mjs tests/game-settings.test.mjs",
     "test:popularity": "node --test tests/popularity.test.mjs",
     "preview": "vite preview",
     "art": "node scripts/generate-game-art.mjs",
     "test:contact": "node --test tests/contact.test.mjs",
     "test:avatar": "node --test tests/avatar.test.mjs",
+    "test:account": "node --test tests/account-deletion.test.mjs",
     "test:ads": "node --test tests/ads-consent.test.mjs"
   },
   "dependencies": {

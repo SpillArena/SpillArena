@@ -1,9 +1,10 @@
+import { useGames } from '../../hooks/useGames'
 import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowUpRight, KeyRound, LogOut, Pencil, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, KeyRound, LogOut, Pencil, ShieldCheck, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { fetchAccount, levelProgress } from '../../account'
 import type { AccountOverview, GameId } from '../../account'
-import { gameIcon, games, type Game } from '../../data/games'
+import { gameIcon, type Game } from '../../data/games'
 import { formatDate } from '../../lib/formatDate'
 import Dialog from '../../ui/Dialog'
 import AdminPanel from '../admin/AdminPanel'
@@ -11,6 +12,7 @@ import RenameForm from './RenameForm'
 import RecoveryCodeForm from './RecoveryCodeForm'
 import Avatar from './Avatar'
 import AvatarForm from './AvatarForm'
+import DeleteAccountDialog from './DeleteAccountDialog'
 
 // Game-specific profile documents only share their XP field.
 function xpOf(progress: unknown): number | null {
@@ -20,14 +22,16 @@ function xpOf(progress: unknown): number | null {
 }
 const idOf = (game: Game) => new URL(game.liveUrl).pathname.split('/').filter(Boolean)[0] as GameId
 
-function SignedInProfile({ username, onSignOut, onPlay }: { username: string; onSignOut: () => void; onPlay: (game: Game) => void }) {
+function SignedInProfile({ username, onSignOut, onPlay, onDeleted }: { username: string; onSignOut: () => void; onPlay: (game: Game) => void; onDeleted: () => void }) {
   const { t, i18n } = useTranslation()
+  const games = useGames()
   const [overview, setOverview] = useState<AccountOverview | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [attempt, setAttempt] = useState(0)
   const [editing, setEditing] = useState<'rename' | 'recovery' | 'avatar' | null>(null)
   const [adminOpen, setAdminOpen] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -55,7 +59,7 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
       <div className="section-heading profile-games-heading"><div><p className="eyebrow">{t('profile.yourArena')}</p><h2>{t('profile.gameProgress')}</h2></div><a className="inline-link" href="#games">{t('lobby.explore')} ↗</a></div>
       <ul className="profile-game-grid">{saved.map(({ game, entry, xp }) => {
         const level = xp === null ? null : levelProgress(xp)
-        return <li className="profile-game" key={game.id}><div className="profile-game-top"><img src={gameIcon(game)} alt="" width={64} height={64} /><div><p className="category-label">{t(`lobby.categories.${game.category}`)}</p><h3>{game.title}</h3></div><a className="icon-button" href={game.liveUrl} aria-label={`${t('lobby.play')}: ${game.title}`} onClick={event => { if (game.beta || !(event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)) { event.preventDefault(); onPlay(game) } }}><ArrowUpRight size={19} /></a></div>
+        return <li className="profile-game" key={game.id}><div className="profile-game-top"><img src={gameIcon(game)} alt="" width={64} height={64} /><div><p className="category-label">{t(`lobby.categories.${game.category}`)}</p><h3>{game.title}</h3></div><a className="icon-button" href={game.disabled ? undefined : game.liveUrl} aria-disabled={game.disabled || undefined} aria-label={`${t('lobby.play')}: ${game.title}`} onClick={event => { if (game.disabled || game.beta || !(event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)) { event.preventDefault(); if (!game.disabled) onPlay(game) } }}><ArrowUpRight size={19} /></a></div>
           {level ? <><div className="profile-game-values"><span>{t('profile.gameLevel', { level: level.level })}</span><span>{xp === null ? null : formatNumber(xp)} XP</span></div><progress max={100} value={level.pct} aria-label={`${game.title}: ${t('profile.gameLevel', { level: level.level })}`} /><p className="profile-game-note">{t('profile.lastSaved', { date: formatDate(entry?.updatedAt) })}</p></> : <p className="profile-game-note">{t('account.notPlayed')} · {t('profile.startPlaying')}</p>}
         </li>
       })}</ul>
@@ -66,6 +70,11 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
       <button type="button" className="button danger" onClick={onSignOut}><LogOut size={16} aria-hidden="true" />{t('account.signOut')}</button>
     </div></section>
     {overview?.hasRecoveryCode === false && <div className="form-warning"><p>{t('account.recovery.missing')}</p></div>}
+    <section className="profile-account profile-delete" aria-labelledby="profile-delete-title">
+      <div><h2 id="profile-delete-title">{t('account.deletion.title')}</h2><p>{t('account.deletion.summary')}</p></div>
+      <button type="button" className="button delete-account-button" onClick={() => setDeleting(true)}><Trash2 size={16} aria-hidden="true" />{t('account.deletion.open')}</button>
+    </section>
+    {deleting && <DeleteAccountDialog username={username} onClose={() => setDeleting(false)} onDeleted={onDeleted} />}
     <Dialog open={editing !== null} onClose={() => setEditing(null)} dismissible={false} className={editing === 'avatar' ? 'avatar-dialog' : ''} title={t(editing === 'avatar' ? 'profile.avatar.title' : editing === 'rename' ? 'profile.renameTitle' : 'account.recovery.savedTitle')}>
       {editing === 'avatar' ? <AvatarForm username={username} current={overview?.avatar} onCancel={() => setEditing(null)} onDone={avatar => { setEditing(null); setOverview(value => value ? { ...value, avatar } : value) }} /> : editing === 'rename' ? <RenameForm current={username} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} /> : <RecoveryCodeForm username={username} replacing={overview?.hasRecoveryCode === true} onCancel={() => setEditing(null)} onDone={() => { setEditing(null); refresh() }} />}
     </Dialog>
@@ -73,8 +82,8 @@ function SignedInProfile({ username, onSignOut, onPlay }: { username: string; on
   </section>
 }
 
-export default function ProfilePage({ username, onSignOut, onPlay }: { username: string | null; onSignOut: () => void; onPlay: (game: Game) => void }) {
+export default function ProfilePage({ username, onSignOut, onPlay, onDeleted }: { username: string | null; onSignOut: () => void; onPlay: (game: Game) => void; onDeleted: () => void }) {
   const { t } = useTranslation()
   if (!username) return <section className="guest-profile"><a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a><p className="eyebrow">{t('account.yourProfile')}</p><h1>{t('lobby.accountTitle')}</h1><p>{t('profile.signInIntro')}</p><a className="button primary" href="#login">{t('account.signIn')}<ArrowUpRight size={16} aria-hidden="true" /></a></section>
-  return <SignedInProfile key={username} username={username} onSignOut={onSignOut} onPlay={onPlay} />
+  return <SignedInProfile key={username} username={username} onSignOut={onSignOut} onPlay={onPlay} onDeleted={onDeleted} />
 }

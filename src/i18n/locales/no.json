@@ -127,6 +127,17 @@
     "switchToRegister": "Har du ikke konto? Lag en.",
     "switchToSignIn": "Har du konto? Logg inn.",
     "yourProfile": "Profilen din",
+    "deletion": {
+      "title": "Slett konto og data",
+      "open": "Slett konto",
+      "summary": "Fjern kontoen, lagret fremgang og tilknyttede data permanent.",
+      "description": "Dette sletter {{username}} permanent, inkludert profilbilde, gjenopprettingskoder, lagret spillfremgang, resultater på ledertavler og kontaktmeldinger knyttet til dette brukernavnet.",
+      "scope": "Lokale spilldata på enheter, aktive flerspillerrom, resultater under tidligere brukernavn og e-poster som allerede er sendt, blir ikke fjernet.",
+      "confirm": "Jeg forstår at dette ikke kan angres.",
+      "submit": "Slett permanent",
+      "deleting": "Sletter …",
+      "success": "Kontoen din og tilknyttede data er slettet. Du er logget ut."
+    },
     "notPlayed": "Ikke spilt",
     "errors": {
       "bad_username": "Ugyldig brukernavn. Bokstaver, tall, mellomrom og . _ ' -",
@@ -202,7 +213,8 @@
       "players": "Spillere",
       "log": "Logg",
       "traffic": "Trafikk",
-      "messages": "Meldinger"
+      "messages": "Meldinger",
+      "games": "Spill"
     },
     "loading": "Laster …",
     "retry": "Prøv igjen",
@@ -225,6 +237,23 @@
     "seeAll": "Se alle",
     "noLog": "Ingen admin-handlinger ennå.",
     "search": "Søk etter brukernavn",
+    "playersPage": {
+      "eyebrow": "Administrer spillere",
+      "intro": "Se spillerprofiler, fremgang og kontotilgang.",
+      "total_one": "{{count}} spiller",
+      "total_other": "{{count}} spillere",
+      "clearSearch": "Tøm søket",
+      "emptyHint": "Prøv et annet brukernavn eller fjern filtrene for å se alle spillerne.",
+      "resetFilters": "Vis alle spillere",
+      "player": "Spiller",
+      "profile": "Spillerprofil",
+      "you": "Deg",
+      "joined": "Ble med",
+      "lastActive": "Sist aktiv",
+      "recovery": "Gjenopprettingskode",
+      "recoveryReady": "Opprettet",
+      "savedGames": "Spill med fremgang"
+    },
     "filters": {
       "label": "Filter",
       "all": "Alle",
@@ -358,7 +387,8 @@
       "open-panel": "åpnet adminpanelet",
       "validUntil": "gyldig til {{date}}",
       "viaResetCode": "engangskode fra admin",
-      "viaRecoveryCode": "egen gjenopprettingskode"
+      "viaRecoveryCode": "egen gjenopprettingskode",
+      "game-settings": "endret spillstatus for"
     },
     "errors": {
       "forbidden": "Kontoen din er ikke admin.",
@@ -448,6 +478,31 @@
       "status": {
         "new": "Ny",
         "done": "Ferdig"
+      }
+    },
+    "games": {
+      "title": "Spillstatus",
+      "eyebrow": "Administrer spill",
+      "total_one": "{{count}} spill",
+      "total_other": "{{count}} spill",
+      "betaHelp": "Vis en advarsel før spillstart",
+      "unsaved": "Ulagrede endringer",
+      "upToDate": "Alt er lagret",
+      "reset": "Forkast endringer",
+      "help": "Endre tilgjengelighet og betamerking uten en ny utrulling. Lagre hvert spill for å ta endringen i bruk.",
+      "availability": "Tilgjengelighet",
+      "available": "Tilgjengelig",
+      "coming_soon": "Kommer snart",
+      "unavailable": "Utilgjengelig",
+      "save": "Lagre",
+      "saving": "Lagrer…",
+      "saved": "Lagret",
+      "on": "På",
+      "off": "Av",
+      "hint": {
+        "available": "Spillet kan åpnes. Betamerking viser en advarsel før spillstart.",
+        "coming_soon": "Vises som «Kommer snart», og spilladressen sperres av routeren.",
+        "unavailable": "Vises som utilgjengelig, og spilladressen sperres av routeren."
       }
     }
   },
@@ -846,5 +901,6 @@
       "unauthorized": "Innloggingen din har utløpt. Logg inn igjen for å legge ved kontoen, eller send på nytt som gjest.",
       "network": "Fikk ikke kontakt med tjeneren. Sjekk tilkoblingen og prøv igjen."
     }
-  }
+  },
+  "gameUnavailable": "Utilgjengelig"
 }

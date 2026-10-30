@@ -7,6 +7,7 @@ import { fetchOverview, isAdminUnlocked, lockAdmin, onAdminLock, unlockAdmin } f
 import { errorText } from '../../admin/format'
 import type { AdminErrorCode, LogEntry } from '../../admin/types'
 import AdminOverview from './AdminOverview'
+import AdminGames from './AdminGames'
 import AdminTraffic from './AdminTraffic'
 import LogList from './LogList'
 import AdminMessages from './AdminMessages'
@@ -22,8 +23,8 @@ interface AdminPanelProps {
     username: string
 }
 
-type Tab = 'overview' | 'traffic' | 'players' | 'messages' | 'log'
-const TABS: Tab[] = ['overview', 'traffic', 'players', 'messages', 'log']
+type Tab = 'overview' | 'traffic' | 'games' | 'players' | 'messages' | 'log'
+const TABS: Tab[] = ['overview', 'traffic', 'games', 'players', 'messages', 'log']
 
 /**
  * Adminpanelet — bare for kontoer med `players.admin = 1`.
@@ -171,7 +172,7 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                         <div
                             role="tablist"
                             aria-label={t('admin.title')}
-                            className="grid flex-1 grid-cols-5 gap-1 rounded-xl p-1 sm:flex-none"
+                            className="grid flex-1 grid-cols-3 sm:grid-cols-6 gap-1 rounded-xl p-1 sm:flex-none"
                             style={{ background: 'color-mix(in srgb, var(--surface) 92%, #000 8%)' }}
                         >
                             {TABS.map((value) => (
@@ -185,7 +186,7 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                                         setSelected(null)
                                         setNotice(null)
                                     }}
-                                    className="pp-dropdown-item cursor-pointer rounded-lg px-2 py-1.5 text-xs font-semibold sm:px-4"
+                                    className="pp-dropdown-item cursor-pointer rounded-lg px-2 py-1.5 text-xs font-semibold sm:px-2"
                                     style={{ color: tab === value ? 'var(--text)' : 'var(--text-subtle)' }}
                                 >
                                     {t(`admin.tabs.${value}`)}
@@ -217,6 +218,8 @@ function Panel({ onClose, username }: Omit<AdminPanelProps, 'open'>) {
                     {unlocked && tab === 'overview' && <AdminOverview onOpenPlayer={openPlayer} onShowLog={() => setTab('log')} />}
 
                     {unlocked && tab === 'traffic' && <AdminTraffic />}
+
+                    {unlocked && tab === 'games' && <AdminGames />}
 
                     {unlocked && tab === 'players' &&
                         (selected ? (

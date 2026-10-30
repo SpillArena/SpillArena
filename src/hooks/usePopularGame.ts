@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
-import { games, type Game } from '../data/games'
+import { type Game } from '../data/games'
+import { useGames } from './useGames'
 import { selectPopularGame } from '../lib/popularity'
 
 export function usePopularGame(): Game | null {
-  const [popular, setPopular] = useState<Game | null>(null)
+  const games = useGames()
+  const [payload, setPayload] = useState<unknown>(null)
   useEffect(() => {
     let disposed = false
     let controller: AbortController | null = null
@@ -15,9 +17,9 @@ export function usePopularGame(): Game | null {
         const response = await fetch(`${import.meta.env.BASE_URL}api/popular-games`, { signal: controller.signal, cache: 'no-store' })
         if (!response.ok) throw new Error('Popularity unavailable')
         const payload: unknown = await response.json()
-        if (!disposed) setPopular(selectPopularGame(payload, games))
+        if (!disposed) setPayload(payload)
       } catch {
-        if (!disposed) setPopular(null)
+        if (!disposed) setPayload(null)
       } finally {
         window.clearTimeout(timeout)
         controller = null
@@ -35,5 +37,5 @@ export function usePopularGame(): Game | null {
       document.removeEventListener('visibilitychange', onVisible)
     }
   }, [])
-  return popular
+  return selectPopularGame(payload, games)
 }

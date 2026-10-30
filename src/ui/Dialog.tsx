@@ -11,11 +11,19 @@ export default function Dialog({ open, onClose, title, eyebrow = 'SpillArena', c
   const titleId = useId()
   const { t } = useTranslation()
   useEffect(() => {
+    ref.current?.setAttribute('closedby', dismissible ? 'closerequest' : 'none')
+  }, [dismissible])
+  useEffect(() => {
     const dialog = ref.current
-    dialog?.setAttribute('closedby', dismissible ? 'closerequest' : 'none')
+    const previousFocus = document.activeElement
     if (open && !dialog?.open) dialog?.showModal()
     else if (!open && dialog?.open) dialog.close()
-  }, [open, dismissible])
+    return () => {
+      if (!open) return
+      if (dialog?.open) dialog.close()
+      if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus({ preventScroll: true })
+    }
+  }, [open])
   return createPortal(<dialog ref={ref} className={`sa-dialog ${className}`} aria-labelledby={titleId}
     onKeyDown={event => { if (event.key === 'Escape' && !dismissible) { event.preventDefault(); event.stopPropagation() } }}
     onCancel={event => { event.preventDefault(); if (dismissible) onClose() }}

@@ -287,11 +287,8 @@ export async function changePin(pin: string, newPin: string): Promise<AuthResult
 }
 
 /**
- * Deletes the account and every profile on it, then signs out.
- *
- * Leaderboard rows in the games' own databases are NOT touched — those live in
- * separate databases, and a score on a board is an entry in a list other people
- * read, not data the account carries around.
+ * Deletes the account, saved profiles and linked shared-database data, then
+ * signs out. Local game saves and delivered emails are separate.
  */
 export async function deleteAccount(pin: string): Promise<ApiResult<{ deleted: boolean }>> {
     const result = await call<{ deleted: boolean }>('/account', {
@@ -299,6 +296,9 @@ export async function deleteAccount(pin: string): Promise<ApiResult<{ deleted: b
         method: 'DELETE',
         body: JSON.stringify({ pin }),
     })
-    if (result.ok) signOut()
+    if (result.ok) {
+        if (result.data?.deleted !== true) return { ok: false, error: 'service_failed' }
+        signOut()
+    }
     return result
 }

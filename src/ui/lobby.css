@@ -309,6 +309,16 @@ html.dark .button.danger:hover { background: #ae2540; border-color: #ae2540; }
 .profile-account h2 { font-family: var(--serif); font-size: 28px; font-weight: 500; margin: 10px 0; }
 .profile-account p:last-child { font-size: 12px; color: var(--muted); margin: 0; max-width: 450px; line-height: 1.65; }
 .profile-account-actions { display: flex; gap: 9px; flex-wrap: wrap; }
+.profile-delete { align-items: center; margin-top: 28px; }
+.profile-delete h2 { font-size: 22px; }
+.button.delete-account-button { color: #a5263e; border-color: #d7a4ae; background: transparent; }
+.button.delete-account-button:hover { background: #fce9ec; }
+html.dark .button.delete-account-button { color: #ffcbd6; border-color: #945269; }
+html.dark .button.delete-account-button:hover { background: #3d202b; }
+.sa-form label.deletion-confirm { display: flex; flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 400; line-height: 1.6; }
+.deletion-confirm input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; accent-color: #b92c43; }
+.deletion-actions > .button { flex: 1 1 140px; }
+.account-deleted-notice { padding: 16px; border: 1px solid var(--accent-ink); border-radius: 8px; background: var(--accent-soft); color: var(--ink); line-height: 1.6; }
 .profile-page > .form-warning { margin-top: 24px; }
 .guest-profile { max-width: 640px; margin-inline: auto; padding-block: 80px; }
 .guest-profile h1 { font-size: 56px; width: auto; line-height: 1.1; }

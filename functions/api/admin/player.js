@@ -56,6 +56,7 @@ import {
   requireAdmin,
   targetOf,
 } from '../../../shared/admin-server.js'
+import { readAvatar } from '../../../shared/avatar.js'
 
 const MAX_REASON = 200
 const LOG_LIMIT = 30
@@ -70,7 +71,7 @@ async function loadTarget(env, request) {
   const name = targetOf(request)
   if (!name) return { response: json({ error: 'bad_target' }, 400) }
   const account = await env.DB.prepare(
-    `SELECT username, admin, created_at AS createdAt, last_seen AS lastSeen, failed,
+    `SELECT username, avatar, admin, created_at AS createdAt, last_seen AS lastSeen, failed,
             locked_until AS lockedUntil,
             COALESCE(locked_until > strftime('%Y-%m-%dT%H:%M:%fZ', 'now'), 0) AS locked,
             banned_at AS bannedAt, ban_reason AS banReason, banned_by AS bannedBy,
@@ -85,6 +86,7 @@ async function loadTarget(env, request) {
   return {
     account: {
       ...account,
+      avatar: readAvatar(account.avatar),
       admin: account.admin === 1,
       locked: Boolean(account.locked),
       hasRecoveryCode: account.hasRecoveryCode === 1,

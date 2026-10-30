@@ -127,6 +127,17 @@
     "switchToRegister": "No account? Create one.",
     "switchToSignIn": "Already have an account? Sign in.",
     "yourProfile": "Your profile",
+    "deletion": {
+      "title": "Delete account and data",
+      "open": "Delete account",
+      "summary": "Permanently remove your account, saved progress and linked data.",
+      "description": "This permanently deletes {{username}}, including your avatar, recovery codes, saved game progress, leaderboard entries and contact messages linked to this username.",
+      "scope": "Local game saves on devices, active multiplayer rooms, scores under previous usernames and emails already sent are not removed.",
+      "confirm": "I understand that this cannot be undone.",
+      "submit": "Delete permanently",
+      "deleting": "Deleting…",
+      "success": "Your account and linked data have been deleted. You are signed out."
+    },
     "notPlayed": "Not played",
     "errors": {
       "bad_username": "Invalid username. Letters, numbers, spaces and . _ ' -",
@@ -202,7 +213,8 @@
       "players": "Players",
       "log": "Log",
       "traffic": "Traffic",
-      "messages": "Messages"
+      "messages": "Messages",
+      "games": "Games"
     },
     "loading": "Loading…",
     "retry": "Try again",
@@ -225,6 +237,23 @@
     "seeAll": "See all",
     "noLog": "No admin actions yet.",
     "search": "Search by username",
+    "playersPage": {
+      "eyebrow": "Player management",
+      "intro": "View player profiles, progress and account access.",
+      "total_one": "{{count}} player",
+      "total_other": "{{count}} players",
+      "clearSearch": "Clear search",
+      "emptyHint": "Try another username or clear the filters to see all players.",
+      "resetFilters": "Show all players",
+      "player": "Player",
+      "profile": "Player profile",
+      "you": "You",
+      "joined": "Joined",
+      "lastActive": "Last active",
+      "recovery": "Recovery code",
+      "recoveryReady": "Set up",
+      "savedGames": "Games with progress"
+    },
     "filters": {
       "label": "Filter",
       "all": "All",
@@ -358,7 +387,8 @@
       "open-panel": "opened the admin panel",
       "validUntil": "valid until {{date}}",
       "viaResetCode": "one-time code from an admin",
-      "viaRecoveryCode": "own recovery code"
+      "viaRecoveryCode": "own recovery code",
+      "game-settings": "changed game settings for"
     },
     "errors": {
       "forbidden": "Your account isn't an admin.",
@@ -448,6 +478,31 @@
       "status": {
         "new": "New",
         "done": "Done"
+      }
+    },
+    "games": {
+      "title": "Game status",
+      "eyebrow": "Game management",
+      "total_one": "{{count}} game",
+      "total_other": "{{count}} games",
+      "betaHelp": "Show a warning before launch",
+      "unsaved": "Unsaved changes",
+      "upToDate": "Up to date",
+      "reset": "Discard changes",
+      "help": "Change availability and beta labels without a new deployment. Save each game to apply its settings.",
+      "availability": "Availability",
+      "available": "Available",
+      "coming_soon": "Coming soon",
+      "unavailable": "Unavailable",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "on": "On",
+      "off": "Off",
+      "hint": {
+        "available": "The game can be opened. Beta shows a warning before launch.",
+        "coming_soon": "Shown as “Coming soon”; the router blocks the game URL.",
+        "unavailable": "Shown as unavailable; the router blocks the game URL."
       }
     }
   },
@@ -846,5 +901,6 @@
       "unauthorized": "Your sign-in has expired. Sign in again to include your account, or send again as a guest.",
       "network": "Could not reach the server. Check your connection and try again."
     }
-  }
+  },
+  "gameUnavailable": "Unavailable"
 }
