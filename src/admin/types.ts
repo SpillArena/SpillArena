@@ -65,7 +65,7 @@ export interface LogEntry {
      * `reset-pin` finnes bare i gamle rader, fra før admin laget engangskoder.
      * `open-panel` skrives når en admin åpner panelet med PIN-en.
      */
-    action: AdminAction | 'delete' | 'recover' | 'reset-pin' | 'open-panel'
+    action: AdminAction | 'delete' | 'recover' | 'reset-pin' | 'open-panel' | 'game-settings'
     target: string | null
     details: Record<string, unknown> | null
 }

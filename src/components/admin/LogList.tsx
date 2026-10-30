@@ -24,6 +24,8 @@ export default function LogList({ entries, onOpenPlayer }: LogListProps) {
     const describe = (entry: LogEntry): string | null => {
         const d = entry.details ?? {}
         switch (entry.action) {
+            case 'game-settings':
+                return `${t(`admin.games.${String(d.availability)}`)} · ${t('betaLabel')}: ${t(d.beta ? 'admin.games.on' : 'admin.games.off')}`
             case 'ban':
                 return typeof d.reason === 'string' ? `“${d.reason}”` : null
             case 'rename':
@@ -48,7 +50,7 @@ export default function LogList({ entries, onOpenPlayer }: LogListProps) {
             {entries.map((entry) => {
                 const detail = describe(entry)
                 // en slettet konto har ikke noe kort å åpne
-                const canOpen = Boolean(onOpenPlayer && entry.target && entry.action !== 'delete')
+                const canOpen = Boolean(onOpenPlayer && entry.target && entry.action !== 'delete' && entry.action !== 'game-settings')
                 return (
                     <li
                         key={entry.id}

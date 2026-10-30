@@ -1,7 +1,8 @@
+import { useGames } from './hooks/useGames'
 import { useEffect, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { gameBanner, games, type Game } from './data/games'
+import { gameBanner, type Game } from './data/games'
 import { adsRequested, getSession, useAccount } from './account'
 import { isPinPage } from './lib/adFreePages'
 import HeaderSection from './components/header/HeaderSection'
@@ -27,6 +28,7 @@ function currentPage(): Page {
 
 export default function App() {
   const { t, i18n } = useTranslation()
+  const games = useGames()
   const { username, isSignedIn, signOut } = useAccount()
   const [page, setPage] = useState<Page>(currentPage)
   const [betaGame, setBetaGame] = useState<Game | null>(null)
@@ -76,6 +78,7 @@ export default function App() {
   }, [page, i18n.resolvedLanguage, t])
 
   const handleGameClick = (game: Game) => {
+    game = games.find(item => item.id === game.id) ?? game
     if (game.disabled || !game.liveUrl) return
     if (game.beta) setBetaGame(game)
     else goToGame(game, t('lobby.loadingGame', { title: game.title }))
@@ -98,10 +101,10 @@ export default function App() {
     </main>
     <FooterSection />
     <InstallPrompt />
-    <BetaWarningModal game={betaGame} onClose={() => setBetaGame(null)} onConfirm={() => { if (betaGame) goToGame(betaGame, t('lobby.loadingGame', { title: betaGame.title })) }} />
+    <BetaWarningModal game={betaGame} onClose={() => setBetaGame(null)} onConfirm={() => { if (betaGame && !games.find(item => item.id === betaGame.id)?.disabled) goToGame(betaGame, t('lobby.loadingGame', { title: betaGame.title })) }} />
     <Dialog open={pickedGame !== null} onClose={() => setPickedGame(null)} title={pickedGame?.title ?? ''} eyebrow={t('lobby.pickedLabel')}>
       {pickedGame && <><img className="picked-art" src={gameBanner(pickedGame, i18n.resolvedLanguage)} alt="" /><p>{t(`lobby.descriptions.${pickedGame.id}`)}</p>{pickedGame.beta && <p className="dialog-note">{t('betaWarningMessage', { title: pickedGame.title })}</p>}
-        <div className="dialog-actions"><button className="button secondary" type="button" onClick={pickGame}>{t('lobby.pickAgain')}</button><a className="button primary" href={pickedGame.liveUrl}>{t('lobby.play')}<ArrowUpRight size={16} aria-hidden="true" /></a></div></>}
+        <div className="dialog-actions"><button className="button secondary" type="button" onClick={pickGame}>{t('lobby.pickAgain')}</button><a className="button primary" href={games.find(item => item.id === pickedGame.id)?.disabled ? undefined : pickedGame.liveUrl}>{t('lobby.play')}<ArrowUpRight size={16} aria-hidden="true" /></a></div></>}
     </Dialog>
   </div>
 }

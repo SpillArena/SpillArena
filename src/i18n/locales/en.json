@@ -202,7 +202,8 @@
       "players": "Players",
       "log": "Log",
       "traffic": "Traffic",
-      "messages": "Messages"
+      "messages": "Messages",
+      "games": "Games"
     },
     "loading": "Loading…",
     "retry": "Try again",
@@ -358,7 +359,8 @@
       "open-panel": "opened the admin panel",
       "validUntil": "valid until {{date}}",
       "viaResetCode": "one-time code from an admin",
-      "viaRecoveryCode": "own recovery code"
+      "viaRecoveryCode": "own recovery code",
+      "game-settings": "changed game settings for"
     },
     "errors": {
       "forbidden": "Your account isn't an admin.",
@@ -448,6 +450,24 @@
       "status": {
         "new": "New",
         "done": "Done"
+      }
+    },
+    "games": {
+      "title": "Game status",
+      "help": "Change availability and beta labels without a new deployment. Save each game to apply its settings.",
+      "availability": "Availability",
+      "available": "Available",
+      "coming_soon": "Coming soon",
+      "unavailable": "Unavailable",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "on": "On",
+      "off": "Off",
+      "hint": {
+        "available": "The game can be opened. Beta shows a warning before launch.",
+        "coming_soon": "Shown as “Coming soon”; the router blocks the game URL.",
+        "unavailable": "Shown as unavailable; the router blocks the game URL."
       }
     }
   },
@@ -846,5 +866,6 @@
       "unauthorized": "Your sign-in has expired. Sign in again to include your account, or send again as a guest.",
       "network": "Could not reach the server. Check your connection and try again."
     }
-  }
+  },
+  "gameUnavailable": "Unavailable"
 }

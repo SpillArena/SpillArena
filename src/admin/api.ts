@@ -1,3 +1,4 @@
+import type { GameSetting } from '../../shared/game-settings.js'
 import { getToken, signOut } from '../account'
 import type {
     ActionBody,
@@ -232,4 +233,12 @@ export function setMessageStatus(id: number, status: 'new' | 'done'): Promise<Ad
 
 export function deleteMessage(id: number): Promise<AdminResult<{ ok: true }>> {
     return call(`/admin/messages?id=${id}`, { method: 'DELETE' })
+}
+
+export function fetchGameSettings(): Promise<AdminResult<{ games: GameSetting[] }>> {
+    return call('/admin/games')
+}
+
+export function saveGameSetting(setting: GameSetting): Promise<AdminResult<{ ok: true }>> {
+    return call('/admin/games', { method: 'PUT', body: JSON.stringify(setting) })
 }

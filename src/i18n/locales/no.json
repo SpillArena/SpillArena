@@ -202,7 +202,8 @@
       "players": "Spillere",
       "log": "Logg",
       "traffic": "Trafikk",
-      "messages": "Meldinger"
+      "messages": "Meldinger",
+      "games": "Spill"
     },
     "loading": "Laster …",
     "retry": "Prøv igjen",
@@ -358,7 +359,8 @@
       "open-panel": "åpnet adminpanelet",
       "validUntil": "gyldig til {{date}}",
       "viaResetCode": "engangskode fra admin",
-      "viaRecoveryCode": "egen gjenopprettingskode"
+      "viaRecoveryCode": "egen gjenopprettingskode",
+      "game-settings": "endret spillstatus for"
     },
     "errors": {
       "forbidden": "Kontoen din er ikke admin.",
@@ -448,6 +450,24 @@
       "status": {
         "new": "Ny",
         "done": "Ferdig"
+      }
+    },
+    "games": {
+      "title": "Spillstatus",
+      "help": "Endre tilgjengelighet og betamerking uten en ny utrulling. Lagre hvert spill for å ta endringen i bruk.",
+      "availability": "Tilgjengelighet",
+      "available": "Tilgjengelig",
+      "coming_soon": "Kommer snart",
+      "unavailable": "Utilgjengelig",
+      "save": "Lagre",
+      "saving": "Lagrer…",
+      "saved": "Lagret",
+      "on": "På",
+      "off": "Av",
+      "hint": {
+        "available": "Spillet kan åpnes. Betamerking viser en advarsel før spillstart.",
+        "coming_soon": "Vises som «Kommer snart», og spilladressen sperres av routeren.",
+        "unavailable": "Vises som utilgjengelig, og spilladressen sperres av routeren."
       }
     }
   },
@@ -846,5 +866,6 @@
       "unauthorized": "Innloggingen din har utløpt. Logg inn igjen for å legge ved kontoen, eller send på nytt som gjest.",
       "network": "Fikk ikke kontakt med tjeneren. Sjekk tilkoblingen og prøv igjen."
     }
-  }
+  },
+  "gameUnavailable": "Utilgjengelig"
 }

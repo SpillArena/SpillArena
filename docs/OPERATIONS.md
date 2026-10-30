@@ -351,3 +351,43 @@ itself, so that is a change in all repos.
 **For the games (step 5):** a game that calls `loadAdSense()` must keep its
 PIN fields (the AccountBadge sign-in) off the pages with the tag, the same way.
 Its own `_headers` needs the same Google hosts.
+
+## Release settings in the admin panel
+
+The **Games** tab controls each game's availability (`available`, `coming_soon`,
+`unavailable`) and its independent Beta flag. Settings live in
+`spillarena-hub.game_settings`; writes require the existing PIN-issued admin
+token and are committed together with a `game-settings` audit-log entry.
+Hitline and Cracked start as coming soon. Other current statuses are preserved.
+
+Apply `0016_game_settings.sql` before deploying this feature:
+
+```sh
+npx wrangler d1 migrations apply spillarena-hub --remote
+```
+
+Deploy both this Pages project and the updated `spillarena-router` Worker.
+The router needs the `DB` binding to the same hub database and checks release
+settings before forwarding game requests. Changing only the lobby cannot
+block direct URLs. The router repository's README describes the rollout order
+and access limits. No production deployment or remote migration is performed
+by the local checks.
+
+`GET /api/game-settings` is public and returns only game ids, titles,
+availability, and beta flags with `Cache-Control: no-store`.
+`GET /api/admin/games` and `PUT /api/admin/games` require admin access.
+PUT accepts `{ game, availability, beta }` (the UI also supplies the title;
+the server uses the catalogue's title when reading). Edits affect one game at
+a time and do not touch accounts, progress, or scores. If two admins edit the
+same game, the last successful save wins; each save is audited.
+
+The lobby refreshes public settings every 30 seconds while visible and when
+returning to the tab. A successful admin save updates the current lobby
+immediately. Failed reads retain the last known settings, or the checked-in
+initial settings before the first successful read. The router independently
+blocks game requests on status lookup failures. It does not cache settings.
+After the initial rollout, status edits need no deployment. New games still
+need a catalogue entry, origin route, and seeded database setting.
+
+Local checks: `npm run test:admin`, `npm run test:popularity`, `npm run lint`,
+`npm run build`, and the router's `node --test tests/proxy.test.mjs`.
