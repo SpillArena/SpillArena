@@ -108,6 +108,30 @@ case. If the database leaks, nobody should be able to read a PIN straight out
 of it. You need both. This guards a game account on a scoreboard, which is the
 level I picked on purpose.
 
+### Account deletion
+
+The signed-in profile has a **Delete account and data** section. Deletion asks
+for the current PIN and an explicit acknowledgement, with the usual PIN attempt
+limit. `DELETE /api/account { pin }` takes the identity from the verified session.
+One database batch removes the account (including avatar and recovery codes),
+all saved profiles, leaderboard rows for that username, linked contact messages
+and matching admin history. References in `players.banned_by` are cleared.
+A failed write rolls the whole deletion back. No schema migration is needed.
+
+The client signs out only after `{ deleted: true }` and shows a confirmation on
+the lobby. The account service rejects sessions issued before the current
+account was created, so re-registering a deleted username does not revive its
+old sessions. Games that verify token signatures without an account lookup
+still accept old tokens until expiry; this change does not update those games.
+
+The confirmation explains the limits: local game saves on devices, active
+multiplayer rooms, scores under previous usernames and already delivered emails
+are not removed. Those stores do not have a deletion path in this account API.
+Anonymous guest entries are not matched by their displayed nickname.
+
+Run `npm run test:account` for authentication, PIN lockout, deletion scope,
+transaction rollback and username reuse checks against the migrated schema.
+
 ### Setting it up
 
 ```bash

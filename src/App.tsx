@@ -32,6 +32,7 @@ export default function App() {
   const [betaGame, setBetaGame] = useState<Game | null>(null)
   const [pickedGame, setPickedGame] = useState<Game | null>(null)
   const [signingOut, setSigningOut] = useState(false)
+  const [accountDeleted, setAccountDeleted] = useState(false)
   useGlobalLoader(signingOut, t('account.signingOut'))
 
   const handleSignOut = async () => {
@@ -89,11 +90,12 @@ export default function App() {
     <a className="skip-link" href="#main-content" onClick={event => { event.preventDefault(); document.getElementById('main-content')?.focus(); document.getElementById('main-content')?.scrollIntoView() }}>{t('profile.skipContent')}</a>
     <HeaderSection username={username} onSelectGame={handleGameClick} />
     <main className="arena-container lobby-content" id="main-content" tabIndex={-1}>
+      {accountDeleted && <p className="account-deleted-notice" role="status">{t('account.deletion.success')}</p>}
       {page === 'home' ? <>
         <HeroSection onSurprise={pickGame} onPlay={handleGameClick} />
         <GamesSection onClick={handleGameClick} />
         <aside className="account-strip" aria-labelledby="account-strip-title"><div className="account-symbol" aria-hidden="true"><ArrowUpRight size={28} /></div><div><h2 id="account-strip-title">{t('lobby.accountTitle')}</h2><p>{t('lobby.accountDescription')}</p></div><a className="button secondary" href={isSignedIn ? '#profile' : '#login'}>{t(isSignedIn ? 'account.yourProfile' : 'lobby.accountMore')}<ArrowUpRight size={16} aria-hidden="true" /></a></aside>
-      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' ? <LegalPage kind={page} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => void handleSignOut()} onPlay={handleGameClick} /> :
+      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' ? <LegalPage kind={page} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => void handleSignOut()} onPlay={handleGameClick} onDeleted={() => { setAccountDeleted(true); window.location.hash = ''; setPage('home') }} /> :
         <AuthModal key={page} open presentation="page" initialMode={page} onClose={() => { window.location.hash = getSession() ? 'profile' : '' }} />}
     </main>
     <FooterSection />

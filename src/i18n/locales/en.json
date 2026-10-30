@@ -127,6 +127,17 @@
     "switchToRegister": "No account? Create one.",
     "switchToSignIn": "Already have an account? Sign in.",
     "yourProfile": "Your profile",
+    "deletion": {
+      "title": "Delete account and data",
+      "open": "Delete account",
+      "summary": "Permanently remove your account, saved progress and linked data.",
+      "description": "This permanently deletes {{username}}, including your avatar, recovery codes, saved game progress, leaderboard entries and contact messages linked to this username.",
+      "scope": "Local game saves on devices, active multiplayer rooms, scores under previous usernames and emails already sent are not removed.",
+      "confirm": "I understand that this cannot be undone.",
+      "submit": "Delete permanently",
+      "deleting": "Deleting…",
+      "success": "Your account and linked data have been deleted. You are signed out."
+    },
     "notPlayed": "Not played",
     "errors": {
       "bad_username": "Invalid username. Letters, numbers, spaces and . _ ' -",

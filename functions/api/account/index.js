@@ -32,6 +32,7 @@ import {
   toBase64Url,
   validateUsername,
 } from '../../../shared/account-server.js'
+import { clearBoardStatements, existingBoards } from '../../../shared/admin-server.js'
 
 /**
  * Bytter brukernavn.
@@ -170,12 +171,8 @@ export async function onRequestPost(context) {
 }
 
 /**
- * Sletter kontoen og alle profildokumentene den eier.
- *
- * Det dette IKKE rører er radene på spillenes egne ledertavler. De ligger i
- * hver sin database, og en poengsum på en tavle er et resultat i en liste
- * andre leser — ikke personlige data kontoen bærer med seg. Skal en tavlerad
- * bort, må det skje i spillet som eier tavla.
+ * Deletes the account and its linked data in the shared database atomically.
+ * Local game saves, live multiplayer rooms and delivered emails are separate.
  */
 export async function onRequestDelete(context) {
   const { env, request } = context
@@ -193,7 +190,14 @@ export async function onRequestDelete(context) {
     const check = await checkPin(env, auth.username, body?.pin)
     if (check.error) return check.error
 
+    const boards = await existingBoards(env)
     await env.DB.batch([
+      ...clearBoardStatements(env, boards, auth.username),
+      env.DB.prepare(`DELETE FROM contact_messages WHERE username = ? COLLATE NOCASE`).bind(auth.username),
+      env.DB.prepare(`DELETE FROM admin_log WHERE admin = ?1 COLLATE NOCASE OR target = ?1 COLLATE NOCASE
+        OR json_extract(details, '$.from') = ?1 COLLATE NOCASE
+        OR json_extract(details, '$.to') = ?1 COLLATE NOCASE`).bind(auth.username),
+      env.DB.prepare(`UPDATE players SET banned_by = NULL WHERE banned_by = ? COLLATE NOCASE`).bind(auth.username),
       env.DB.prepare(`DELETE FROM player_progress WHERE username = ?`).bind(auth.username),
       env.DB.prepare(`DELETE FROM players WHERE username = ?`).bind(auth.username),
     ])

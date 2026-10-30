@@ -127,6 +127,17 @@
     "switchToRegister": "Har du ikke konto? Lag en.",
     "switchToSignIn": "Har du konto? Logg inn.",
     "yourProfile": "Profilen din",
+    "deletion": {
+      "title": "Slett konto og data",
+      "open": "Slett konto",
+      "summary": "Fjern kontoen, lagret fremgang og tilknyttede data permanent.",
+      "description": "Dette sletter {{username}} permanent, inkludert profilbilde, gjenopprettingskoder, lagret spillfremgang, resultater på ledertavler og kontaktmeldinger knyttet til dette brukernavnet.",
+      "scope": "Lokale spilldata på enheter, aktive flerspillerrom, resultater under tidligere brukernavn og e-poster som allerede er sendt, blir ikke fjernet.",
+      "confirm": "Jeg forstår at dette ikke kan angres.",
+      "submit": "Slett permanent",
+      "deleting": "Sletter …",
+      "success": "Kontoen din og tilknyttede data er slettet. Du er logget ut."
+    },
     "notPlayed": "Ikke spilt",
     "errors": {
       "bad_username": "Ugyldig brukernavn. Bokstaver, tall, mellomrom og . _ ' -",
