@@ -7,6 +7,17 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '04-11-2026',
+        title: 'AtlasMaster: new look',
+        release: '1.18.0',
+        changes: [
+            'AtlasMaster has a new night-map look in dark navy and lime, with a new compass icon and new posters in the arena',
+            'The front page is now the map itself: pick a region to see its categories and your best score, then play, or choose from the list under the map',
+            'The category, mode and pace screens are rebuilt with larger cards, a summary of your round, and a start button that stays within reach on phones',
+            'The Less motion setting now stops every animation straight away, not only on the next screen',
+        ],
+    },
+    {
         date: '29-10-2026',
         title: 'Cracked is coming soon',
         release: '1.17.0',
