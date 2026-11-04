@@ -231,7 +231,8 @@ const GAMES = [
   },
   {
     id: 4, file: 'AtlasMaster', title: ['Atlas', 'Master'],
-    bg: '#7c3aed', deep: '#2e1065', accent: '#a5f3fc',
+    // Samme nattkart som spillet selv: marineblå grunn og limegrønn aksent.
+    bg: '#16213a', deep: '#070e1a', accent: '#c8ff3c', ink: '#e8eef7',
     genre: { no: 'Geografi', en: 'Geography' },
     tagline: { no: 'Land, hovedsteder og byer – på tid.', en: 'Countries, capitals and cities – against the clock.' },
     question: { no: 'Hvor er Norge?', en: 'Where is Norway?' },
@@ -473,13 +474,30 @@ const WORLD = (() => {
 })()
 const GLOBE_CENTER = [-14, -48]
 const NORWAY_PIN = [18.9, 69.6]
-const LAND = ['#6ee7b7', '#86efac', '#5eead4', '#a7f3d0', '#7dd3c0']
 
-/** Samme land får alltid samme grønnfarge, uten at naboer nødvendigvis gjør det. */
-function landColor(name) {
-  let h = 0
-  for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0
-  return LAND[h % LAND.length]
+/*
+ * Landene får fargen til regionen de hører til i AtlasMaster, slik forsidekartet
+ * der viser dem. Id-ene er de samme M49-kodene som world-atlas bruker, og
+ * listene er kopiert fra AtlasMaster/src/components/menu/WorldMapPicker.tsx —
+ * endres regionene der, må de endres her også. Rekkefølgen betyr noe: Russland
+ * ligger i både Asia og Europa, og havner i den første som treffer.
+ */
+const ATLAS_REGIONS = [
+  ['#1f9bb0', [28, 44, 52, 84, 124, 188, 192, 212, 214, 222, 308, 320, 332, 340, 388, 484, 558, 591, 659, 662, 670, 780, 840, 304, 660, 533, 60, 92, 136, 531, 500, 630, 652, 663, 666, 534, 796, 850]],
+  ['#3f6fd6', [36, 242, 296, 520, 554, 583, 584, 585, 598, 882, 90, 776, 798, 548, 16, 184, 316, 540, 570, 580, 574, 258, 612, 772, 876]],
+  ['#8394aa', [10]],
+  ['#d07a1e', [4, 31, 50, 51, 64, 96, 104, 116, 144, 156, 158, 268, 356, 360, 364, 368, 376, 392, 398, 400, 408, 410, 414, 417, 418, 422, 458, 496, 512, 524, 586, 608, 626, 634, 643, 682, 704, 760, 762, 764, 784, 792, 795, 860, 887]],
+  ['#3f9a45', [12, 24, 72, 108, 120, 132, 140, 148, 174, 178, 180, 204, 226, 231, 232, 262, 266, 270, 288, 324, 384, 404, 426, 430, 434, 450, 454, 466, 478, 480, 504, 508, 516, 562, 566, 624, 646, 678, 686, 690, 694, 706, 710, 716, 728, 729, 748, 768, 788, 800, 818, 834, 854, 894, 732]],
+  ['#16a08e', [32, 68, 76, 152, 170, 218, 328, 600, 604, 740, 858, 862]],
+  ['#7458e6', [8, 40, 56, 70, 100, 112, 191, 196, 203, 208, 233, 246, 250, 276, 300, 348, 352, 372, 380, 428, 440, 442, 470, 498, 499, 528, 578, 616, 620, 642, 643, 688, 703, 705, 724, 752, 756, 804, 807, 826]],
+].map(([color, ids]) => [color, new Set(ids)])
+
+/** Land utenfor en spillbar region — Verden i AtlasMaster. */
+const ATLAS_OTHER = '#2a3550'
+
+function landColor(country) {
+  const code = Number(country.id)
+  return ATLAS_REGIONS.find(([, ids]) => ids.has(code))?.[0] ?? ATLAS_OTHER
 }
 
 function pinMark(tipX, tipY, pr, fill, stroke) {
@@ -523,7 +541,7 @@ function thin(stream, tolerance) {
 function globe(cx, cy, radius, game, { pin = true } = {}) {
   const projection = geoOrthographic().scale(radius).translate([cx, cy]).rotate(GLOBE_CENTER).clipAngle(90).precision(0.5)
   const path = geoPath({ stream: (output) => projection.stream(thin(output, radius / 80)) }).digits(1)
-  const ink = '#1e0a3c'
+  const ink = shade(game.deep, 0.4)
 
   // ett path-element per farge, ikke per land: samme bilde, en brøkdel av markupen
   const byColor = new Map()
@@ -532,7 +550,7 @@ function globe(cx, cy, radius, game, { pin = true } = {}) {
     const d = path(country)
     if (!d) continue
     if (country.properties.name === 'Norway') { norway = d; continue }
-    const color = landColor(country.properties.name)
+    const color = landColor(country)
     byColor.set(color, (byColor.get(color) ?? '') + d)
   }
 
@@ -549,7 +567,8 @@ function globe(cx, cy, radius, game, { pin = true } = {}) {
   out += `<path d="${path(geoGraticule10())}" fill="none" stroke="#fff" stroke-opacity="0.13" stroke-width="1"/>`
   // landene, med grensene som en tynn mørk strek
   for (const [color, d] of byColor) out += `<path d="${d}" fill="${color}" stroke="${ink}" stroke-opacity="0.45" stroke-width="0.7" stroke-linejoin="round"/>`
-  out += `<path d="${norway}" fill="#fde047" stroke="${ink}" stroke-opacity="0.6" stroke-width="0.9" stroke-linejoin="round"/>`
+  // Norge lyser opp som det valgte stedet i en runde
+  out += `<path d="${norway}" fill="${game.accent}" stroke="${ink}" stroke-opacity="0.6" stroke-width="0.9" stroke-linejoin="round"/>`
   // lys og mørk kant, så den ser rund ut
   out += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="url(#globe-light)"/>`
   out += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="url(#globe-shade)"/>`
@@ -566,12 +585,27 @@ function atlasArt(question, game) {
   const size = 26, w = measure(question, FONTS.sansSemi, size) + 64
   const x = 260 - w / 2, y = 456
   out += cardShadow(x, y, w, 58, 29, 8, 0.2)
-  out += `<rect x="${r1(x)}" y="${y}" width="${r1(w)}" height="58" rx="29" fill="#faf5ff"/>`
+  out += `<rect x="${r1(x)}" y="${y}" width="${r1(w)}" height="58" rx="29" fill="#ffffff"/>`
   out += text(question, FONTS.sansSemi, size, 260, y + 29, { fill: shade(game.deep, 0.1), anchor: 'middle', middle: true })
   return out
 }
 
-const atlasGlyph = (game) => globe(256, 256, 186, game)
+/**
+ * Ikonet er kompasset fra AtlasMasters eget app-ikon (AtlasMaster/public/favicon.svg),
+ * forstørret fra 64- til 512-rutenettet, så spillet ser likt ut i lobbyen og på
+ * hjemskjermen.
+ */
+function atlasGlyph(game) {
+  const k = 7
+  const c = game.accent
+  return `<g transform="translate(${256 - 32 * k} ${256 - 32 * k}) scale(${k})">`
+    + `<circle cx="32" cy="32" r="21" fill="none" stroke="${c}" stroke-width="2.6" opacity=".45"/>`
+    + `<path d="M32 6v6M58 32h-6M32 58v-6M6 32h6" stroke="${c}" stroke-width="3" stroke-linecap="round"/>`
+    + `<path d="m32 13 7 19H25Z" fill="${c}"/>`
+    + `<path d="m32 51 7-19H25Z" fill="#8a9bb8"/>`
+    + `<circle cx="32" cy="32" r="3.2" fill="${game.deep}" stroke="${c}" stroke-width="2"/>`
+    + `</g>`
+}
 
 // ---- ProportionPanic: en giraff og en seilbåt, en linjal mellom dem, og
 // spørsmålet om hvor høy båten er
