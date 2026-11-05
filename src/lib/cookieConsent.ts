@@ -17,7 +17,8 @@ export const STORAGE_ITEMS = [
     // samme nøkkel som STORAGE_KEY i src/account/session.ts — den er vendret og
     // eksporterer den ikke
     { id: 'session', keys: ['spillarena.session'], necessary: false },
-    { id: 'settings', keys: ['theme', 'accent', 'lang'], necessary: false },
+    // spillarena:install-dismissed: «Legg til på hjem-skjermen» er skjult (InstallPrompt.tsx)
+    { id: 'settings', keys: ['theme', 'accent', 'lang', 'spillarena:install-dismissed'], necessary: false },
     { id: 'choice', keys: [CONSENT_KEY], necessary: true },
 ] as const
 

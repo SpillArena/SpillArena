@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import i18n from './i18n/i18n'
+// skriftene ligger i pakken, ikke hos Google Fonts: ingenting hentes utenfra før samtykket
+import './assets/fonts/fonts.css'
 import './index.css'
 import { CookieConsentProvider } from './context/CookieConsentProvider'
 import { ThemeProvider } from './context/ThemeContext'

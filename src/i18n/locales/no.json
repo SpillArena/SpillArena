@@ -51,7 +51,7 @@
       },
       "settings": {
         "title": "Innstillingene dine",
-        "body": "Om du har valgt lyst eller mørkt tema, favorittfargen din og språket ditt."
+        "body": "Om du har valgt lyst eller mørkt tema, favorittfargen din, språket ditt og om du har skjult tipset om å legge siden på hjem-skjermen."
       },
       "choice": {
         "title": "Svaret ditt på dette spørsmålet",
@@ -669,7 +669,7 @@
   },
   "legal": {
     "back": "Tilbake til spillene",
-    "updated": "Sist oppdatert 19. oktober 2026",
+    "updated": "Sist oppdatert 5. november 2026",
     "contactLabel": "Kontakt",
     "contact": "Spørsmål, feil, sletting av konto eller innsynsforespørsler:",
     "privacy": {
@@ -687,8 +687,18 @@
         {
           "h": "Hva vi lagrer i nettleseren din",
           "p": [
-            "Hvis du godtar lagring: en innloggingsnøkkel som varer i opptil 30 dager, samt tema, aksentfarge og språk. Avslår du, beholdes ikke dette og du starter på nytt hver gang. Du kan endre svaret når som helst under «Lagring & personvern» i bunnen av siden.",
-            "Sider med reklame lar også Google lagre informasjonskapsler og lignende kjennetegn i nettleseren din. Hva Google kan lagre, og om reklamen kan tilpasses deg, følger valget du gjør i Googles samtykkevindu, ikke svaret over."
+            "SpillArena setter ingen informasjonskapsler (cookies). Det vi lagrer, ligger i nettleserens lokale lagring, og bare hvis du godtar: en innloggingsnøkkel som varer i opptil 30 dager, tema, aksentfarge og språk, om du har skjult tipset om å legge siden på hjem-skjermen, og fremgang, resultater og innstillinger i spillene.",
+            "Avslår du, lagres ingenting av dette på enheten. Det du gjør, lever bare til du lukker fanen, og det som alt lå lagret, slettes. Du kan endre svaret når som helst under «Lagring & personvern» i bunnen av siden.",
+            "To ting lagres uansett, fordi de bare husker selve svaret: svaret ditt på lagringsspørsmålet, så vi ikke spør igjen, og at du har sett påminnelsen om at fremgangen ikke lagres. Påminnelsen huskes bare til fanen lukkes.",
+            "På sider med reklame kan Google lagre informasjonskapsler og lignende kjennetegn i nettleseren din, men bare etter valget du gjør i Googles samtykkevindu, ikke etter svaret over. Se «Reklame»."
+          ]
+        },
+        {
+          "h": "Ingenting lastes før du har svart",
+          "p": [
+            "Skriftene ligger på spillarena.no sammen med resten av siden, så nettleseren din kontakter ikke Google Fonts eller andre skrifttjenester. Vi bruker ingen analyseskript, sporingspiksler eller sosiale widgets.",
+            "På sider med reklame lastes først bare Googles samtykkevindu, som må til for at Google kan spørre deg. Selve annonsekoden, og annonsene, informasjonskapslene og målingene som følger med den, lastes først når du har svart. Utenfor EØS, Storbritannia og Sveits, der Google ikke spør, lastes annonsekoden med en gang.",
+            "Noen spill henter innhold fra andre tjenester når du åpner eller spiller dem: musikk i MelodyRush og Hitline, ord i HangBot. Hvem det er, står under «Leverandører»."
           ]
         },
         {
@@ -698,23 +708,41 @@
           ]
         },
         {
-          "h": "Tredjeparter",
+          "h": "Leverandører",
           "p": [
-            "Cloudflare drifter nettstedet og databasen vår og ser vanlige forespørselsdata (som IP-adresse) for å levere sidene og beskytte mot misbruk. Vi bruker Cloudflares egen trafikkstatistikk, som ikke bruker informasjonskapsler.",
-            "Skrifter lastes fra Google Fonts, så nettleseren din kontakter Google når siden lastes. Vi bruker ingen sporingspiksler eller sosiale widgets.",
-            "Reklame: SpillArena kan vise reklame fra Google AdSense for å dekke driftskostnadene. Bare sider som viser reklame, laster Googles annonsekode. På de sidene bruker Google og annonsepartnerne Google samarbeider med informasjonskapsler og lignende teknologi for å vise annonser, begrense hvor ofte du ser den samme, måle dem og hindre svindel, og bare hvis du tillater det, for å tilpasse dem etter aktiviteten din her og på andre nettsteder. I EØS, Storbritannia og Sveits spør Google om dette samtykket i sitt eget vindu, bygget på IABs Transparency and Consent Framework. Du kan endre valget når som helst med «Annonseinnstillinger» under «Lagring & personvern», eller med lenken til personvern- og informasjonskapselinnstillinger som Google legger til på siden. Slik bruker Google dataene: policies.google.com/technologies/partner-sites. Kontoen din, PIN-koden, fremgangen og kontaktmeldingene dine deles aldri med Google eller annonsører."
+            "Cloudflare, Inc. (USA) drifter nettstedet, spillene, databasen og flerspillerrommene. Cloudflare ser vanlige forespørselsdata som IP-adresse, nettlesertype og hvilken side som ble åpnet, for å levere sidene og beskytte mot misbruk. Trafikkstatistikken vi ser, sidevisninger per spill, kommer fra Cloudflares egne serverlogger og bruker ingen informasjonskapsler eller skript i nettleseren.",
+            "Google Ireland Limited og Google LLC (USA) står for reklamen gjennom Google AdSense og for Googles samtykkevindu. Reklamen vises på forsiden, ikke på sidene for innlogging, registrering, gjenoppretting og profil, og ikke i spillene. Se «Reklame».",
+            "Resend, Inc. (USA) sender oss en e-post når du bruker kontaktskjemaet, med det du skrev der: navn, e-postadresse, emne, melding og brukernavnet ditt hvis du er innlogget.",
+            "Domeneshop AS (Norge) leverer e-postkontoen support@spillarena.no, der varsler fra kontaktskjemaet og e-post du sender oss, havner.",
+            "Deezer SA (Frankrike) leverer musikken i MelodyRush og Hitline. Albumcoverne og de korte lydklippene lastes rett fra Deezers servere når du åpner eller spiller disse spillene, så Deezer ser IP-adressen din og hvilke låter som lastes. Vi sender ingen kontoopplysninger til Deezer, og du trenger ingen Deezer-konto.",
+            "Datamuse (USA) og MyMemory fra Translated srl (Italia) brukes i HangBot når boten velger et ord: nettleseren din henter et tilfeldig ord fra Datamuse og en oversettelse fra MyMemory. De ser IP-adressen din og ordet som slås opp, ikke kontoen din.",
+            "Profilbildene lages med DiceBear-biblioteket, i nettleseren din og på serveren vår. Ingenting sendes til DiceBear."
+          ]
+        },
+        {
+          "h": "Reklame",
+          "p": [
+            "SpillArena kan vise reklame fra Google AdSense for å dekke driftskostnadene. På sidene med reklame bruker Google og annonsepartnerne Google samarbeider med informasjonskapsler og lignende teknologi for å vise annonser, begrense hvor ofte du ser den samme, måle dem og hindre svindel, og bare hvis du tillater det, for å tilpasse dem etter aktiviteten din her og på andre nettsteder.",
+            "I EØS, Storbritannia og Sveits spør Google om dette samtykket i sitt eget vindu, bygget på IABs Transparency and Consent Framework, før annonsekoden lastes. Du kan endre valget når som helst med «Annonseinnstillinger» under «Lagring & personvern», eller med lenken til personvern- og informasjonskapselinnstillinger som Google legger til på siden. Slik bruker Google dataene: policies.google.com/technologies/partner-sites.",
+            "Kontoen din, PIN-koden, fremgangen og kontaktmeldingene dine deles aldri med Google eller annonsører."
+          ]
+        },
+        {
+          "h": "Overføring ut av EØS",
+          "p": [
+            "Cloudflare, Google, Resend og Datamuse kan behandle opplysninger i USA. For Cloudflare, Google og Resend skjer det etter leverandørens databehandlervilkår, med EUs standardkontraktsvilkår eller EU–US Data Privacy Framework som grunnlag. Datamuse er en åpen tjeneste uten egen avtale med oss; forespørselen dit inneholder ingen kontoopplysninger."
           ]
         },
         {
           "h": "Hvorfor vi behandler det (behandlingsgrunnlag)",
           "p": [
-            "Kontodata behandles for å levere kontoen og ledertavlene du ba om (avtale). Kontaktmeldinger behandles for å svare deg (din henvendelse). Lagring i nettleseren skjer bare med samtykke. Søppelfilter og sikkerhetslogging er berettiget interesse. Informasjonskapsler for reklame og tilpasset reklame krever samtykke, som Googles vindu spør om; Google behandler annonsedata etter sin egen personvernerklæring."
+            "Kontodata behandles for å levere kontoen og ledertavlene du ba om (avtale). Kontaktmeldinger behandles for å svare deg (din henvendelse). Lagring i nettleseren skjer bare med samtykke. Å levere sidene og spillene, inkludert innholdet spillene henter fra Deezer, Datamuse og MyMemory, søppelfilter og sikkerhetslogging er berettiget interesse. Informasjonskapsler for reklame og tilpasset reklame krever samtykke, som Googles vindu spør om; Google behandler annonsedata etter sin egen personvernerklæring."
           ]
         },
         {
           "h": "Dine rettigheter",
           "p": [
-            "Du kan endre navn på kontoen på profilsiden. For å få kontoen og fremgangen slettet, eller for innsyn i eller retting av opplysninger, kontakt oss (se under); vi fjerner også ledertavleoppføringene dine på forespørsel. Du kan klage til Datatilsynet."
+            "Du kan endre navn på kontoen og slette den selv på profilsiden. Sletting fjerner kontoen, profilbildet, gjenopprettingskodene, lagret fremgang, ledertavleoppføringene og kontaktmeldingene som er knyttet til brukernavnet. Lagring i nettleseren på enhetene dine, aktive flerspillerrom, poeng under tidligere brukernavn og e-post som alt er sendt, fjernes ikke av seg selv; kontakt oss for det, eller for innsyn i eller retting av opplysninger (se under). Du kan klage til Datatilsynet."
           ]
         },
         {

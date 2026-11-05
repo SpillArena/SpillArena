@@ -12,6 +12,16 @@ import { getConsent, setConsent } from './consent'
  * the AdSense tag, once a European regulations message is published under
  * Privacy & messaging in AdSense.
  *
+ * NOTHING FOR ADS LOADS BEFORE THAT ANSWER. Before it, the page loads only
+ * Google's consent message on its own (the Privacy & messaging tag) — it is the
+ * question, so it has to come first. The ad tag itself, adsbygoogle.js, and the
+ * ad requests, cookies and pixels that come with it, are added only once
+ * Google's message has an answer: given now, or stored from an earlier visit.
+ * What that answer allows (personalised, non-personalised or limited ads) is
+ * then up to Google's tag, which reads it through TCF. Outside the regions
+ * Google asks in (gdprApplies false) the tag loads right away, since no
+ * question is asked there.
+ *
  * Showing both on a first visit would be two walls before the first game, so on
  * a page with ads Google's message goes first and ours waits:
  *
@@ -22,9 +32,10 @@ import { getConsent, setConsent } from './consent'
  *   and the strip saying progress is not being saved offers a way to turn it on.
  *   After that the two answers are separate: changing one never changes the
  *   other.
- * - No message comes: no publisher id, the tag blocked by an ad blocker or the
- *   CSP, outside the regions Google asks in, or nothing within WAIT_MS. Our
- *   dialog asks, exactly as on a page without ads.
+ * - No message comes: no publisher id, the message blocked by an ad blocker or
+ *   the CSP, outside the regions Google asks in, or nothing within WAIT_MS. Our
+ *   dialog asks, exactly as on a page without ads. A message that never
+ *   answers means no ad tag either.
  *
  * A page without ads never calls loadAdSense(), and everything here stays 'off'.
  *
@@ -66,6 +77,9 @@ export const ADSENSE_CLIENT_PATTERN = /^ca-pub-\d{16}$/
 
 const TAG = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
 
+/** Google's consent message alone, without the ads: the Privacy & messaging tag. */
+const MESSAGE = 'https://fundingchoicesmessages.google.com/i/'
+
 /**
  * How long our dialog waits for Google's message before asking itself. Long
  * enough for the tag on a slow phone, short enough that a blocked tag does not
@@ -78,6 +92,7 @@ type Listener = (state: AdConsentState) => void
 const listeners = new Set<Listener>()
 let state: AdConsentState = 'off'
 let loaded = false
+let tagAdded = false
 
 function update(next: AdConsentState): void {
     if (next === state) return
@@ -101,10 +116,36 @@ export function onAdConsentStateChange(listener: Listener): () => void {
     }
 }
 
+function addScript(src: string, onError?: () => void): void {
+    const script = document.createElement('script')
+    script.async = true
+    script.crossOrigin = 'anonymous'
+    script.src = src
+    if (onError) script.addEventListener('error', onError)
+    document.head.appendChild(script)
+}
+
 /**
- * Loads the AdSense tag, and Google's consent message with it. Call it once,
- * before the first render, with the page's publisher id. An empty or missing id
- * is the switch that keeps ads off, so a build without one behaves as before.
+ * Google's snippet for the message also leaves an empty frame named
+ * googlefcPresent, which its scripts look for. Same thing here, without the
+ * inline script the CSP would block.
+ */
+function signalMessagePresent(): void {
+    if (!document.body) {
+        document.addEventListener?.('DOMContentLoaded', signalMessagePresent, { once: true })
+        return
+    }
+    const frame = document.createElement('iframe')
+    frame.name = 'googlefcPresent'
+    frame.style.display = 'none'
+    document.body.appendChild(frame)
+}
+
+/**
+ * Loads Google's consent message, and the AdSense tag once the message has an
+ * answer. Call it once, before the first render, with the page's publisher id.
+ * An empty or missing id is the switch that keeps ads off, so a build without
+ * one behaves as before.
  */
 export function loadAdSense(client: string | undefined): void {
     if (loaded || typeof window === 'undefined' || typeof document === 'undefined') return
@@ -125,8 +166,15 @@ export function loadAdSense(client: string | undefined): void {
         update(next)
     }
 
-    // Google's documented way in: a queue that exists before the tag does,
-    // drained by the tag once its consent API is defined
+    // the ads themselves: only after Google's message has its answer
+    const addTag = () => {
+        if (tagAdded) return
+        tagAdded = true
+        addScript(`${TAG}?client=${encodeURIComponent(id)}`)
+    }
+
+    // Google's documented way in: a queue that exists before the message does,
+    // drained by the message once its consent API is defined
     const fc = (window.googlefc ??= {})
     fc.callbackQueue ??= []
     fc.callbackQueue.push({
@@ -138,6 +186,7 @@ export function loadAdSense(client: string | undefined): void {
                 if (data.gdprApplies === false) {
                     // outside the regions Google asks in: our dialog asks
                     settle('off')
+                    addTag()
                     return
                 }
                 if (data.eventStatus === 'cmpuishown') {
@@ -147,18 +196,15 @@ export function loadAdSense(client: string | undefined): void {
                     if (getConsent() === null) {
                         setConsent(data.purpose?.consents?.['1'] === true ? 'accepted' : 'declined')
                     }
+                    addTag()
                 }
             })
         },
     })
 
-    const script = document.createElement('script')
-    script.async = true
-    script.crossOrigin = 'anonymous'
-    script.src = `${TAG}?client=${encodeURIComponent(id)}`
-    // an ad blocker or the CSP: no message is coming, so do not keep our dialog waiting
-    script.addEventListener('error', () => settle('off'))
-    document.head.appendChild(script)
+    // the message's URL takes the id without "ca-"
+    addScript(`${MESSAGE}${encodeURIComponent(id.slice(3))}?ers=1`, () => settle('off'))
+    signalMessagePresent()
 }
 
 /** Opens Google's consent message again, so the ad choice can be changed. */
