@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Share, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { readPreference, writePreference } from '../../lib/cookieConsent'
 
 const DISMISSED_KEY = 'spillarena:install-dismissed'
 
@@ -18,7 +19,7 @@ const isIos = () =>
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 
 function wasDismissed() {
-  try { return localStorage.getItem(DISMISSED_KEY) === '1' } catch { return false }
+  try { return readPreference(DISMISSED_KEY) === '1' } catch { return false }
 }
 
 /*
@@ -53,7 +54,8 @@ export default function InstallPrompt() {
   if (hidden || !touch || (!event && !ios)) return null
 
   const dismiss = () => {
-    try { localStorage.setItem(DISMISSED_KEY, '1') } catch { /* private mode: it just comes back next visit */ }
+    // bare med samtykke, som de andre innstillingene; uten kommer tipset tilbake neste besøk
+    try { writePreference(DISMISSED_KEY, '1') } catch { /* private mode: it just comes back next visit */ }
     setHidden(true)
   }
   const install = async () => {

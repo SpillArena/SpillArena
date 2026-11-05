@@ -14,6 +14,8 @@ import { build } from 'rolldown'
  */
 
 const CLIENT = 'ca-pub-1234567890123456'
+const MESSAGE = 'https://fundingchoicesmessages.google.com/i/pub-1234567890123456?ers=1'
+const TAG = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${CLIENT}`
 const bundle = await build({ input: new URL('../src/account/ads.ts', import.meta.url).pathname, write: false, output: { format: 'esm' } })
 const file = join(mkdtempSync(join(tmpdir(), 'ads-consent-')), 'ads.mjs')
 writeFileSync(file, bundle.output[0].code)
@@ -78,19 +80,38 @@ test('a malformed id is refused rather than sent to Google', async (t) => {
   assert.equal(warn.mock.callCount(), 1)
 })
 
-test('a valid id loads the tag once and makes our dialog wait', async () => {
+test('a valid id loads only the consent message, once, and makes our dialog wait', async () => {
   const { scripts } = browser()
   const ads = await fresh()
   const seen = []
   ads.onAdConsentStateChange(state => seen.push(state))
   ads.loadAdSense(CLIENT)
   ads.loadAdSense(CLIENT)
-  assert.equal(scripts.length, 1)
-  assert.equal(scripts[0].src, `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${CLIENT}`)
+  assert.deepEqual(scripts.map(s => s.src), [MESSAGE], 'no ad tag before an answer')
   assert.equal(scripts[0].async, true)
-  assert.equal(scripts[0].crossOrigin, 'anonymous')
   assert.equal(ads.adsRequested(), true)
   assert.deepEqual(seen, ['waiting'])
+})
+
+test('the ad tag loads only once the message has an answer', async () => {
+  const { scripts } = browser()
+  const ads = await fresh()
+  ads.loadAdSense(CLIENT)
+  googleArrives([{ gdprApplies: true, eventStatus: 'cmpuishown' }])
+  assert.deepEqual(scripts.map(s => s.src), [MESSAGE], 'an open message is not an answer')
+  googleArrives([{ gdprApplies: true, eventStatus: 'useractioncomplete', purpose: { consents: { 1: false } } }])
+  assert.deepEqual(scripts.map(s => s.src), [MESSAGE, TAG], 'any answer, Google decides what it allows')
+  assert.equal(scripts[1].crossOrigin, 'anonymous')
+  googleArrives([{ gdprApplies: true, eventStatus: 'useractioncomplete', purpose: { consents: { 1: true } } }])
+  assert.equal(scripts.length, 2, 'the tag is added once')
+})
+
+test('an answer from an earlier visit loads the ad tag right away', async () => {
+  const { scripts } = browser()
+  const ads = await fresh()
+  ads.loadAdSense(CLIENT)
+  googleArrives([{ gdprApplies: true, eventStatus: 'tcloaded', purpose: { consents: { 1: true } } }])
+  assert.deepEqual(scripts.map(s => s.src), [MESSAGE, TAG])
 })
 
 test("Google's message takes over, and its yes to device storage answers ours", async () => {
@@ -131,12 +152,21 @@ test('outside the regions Google asks in, our dialog asks', async () => {
   assert.equal(store.get('cookie-consent'), undefined)
 })
 
-test('a blocked tag hands the question straight back to our dialog', async () => {
+test('outside the regions Google asks in, the ad tag loads without a question', async () => {
+  const { scripts } = browser()
+  const ads = await fresh()
+  ads.loadAdSense(CLIENT)
+  googleArrives([{ gdprApplies: false, eventStatus: 'tcloaded', purpose: { consents: {} } }])
+  assert.deepEqual(scripts.map(s => s.src), [MESSAGE, TAG])
+})
+
+test('a blocked message hands the question straight back to our dialog, and no ads load', async () => {
   const { scripts } = browser()
   const ads = await fresh()
   ads.loadAdSense(CLIENT)
   scripts[0].fire('error')
   assert.equal(ads.getAdConsentState(), 'off')
+  assert.equal(scripts.length, 1)
 })
 
 test('a tag that never answers stops holding our dialog back', async (t) => {

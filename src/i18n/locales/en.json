@@ -51,7 +51,7 @@
       },
       "settings": {
         "title": "Your settings",
-        "body": "Whether you chose light or dark mode, your favourite color and your language."
+        "body": "Whether you chose light or dark mode, your favourite color, your language and whether you hid the tip about adding the site to your home screen."
       },
       "choice": {
         "title": "Your answer to this question",
@@ -669,7 +669,7 @@
   },
   "legal": {
     "back": "Back to games",
-    "updated": "Last updated 19 October 2026",
+    "updated": "Last updated 5 November 2026",
     "contactLabel": "Contact",
     "contact": "Questions, bugs, account deletion or data requests:",
     "privacy": {
@@ -687,8 +687,18 @@
         {
           "h": "What we store in your browser",
           "p": [
-            "If you accept storage: a sign-in token that lasts up to 30 days, and your theme, accent colour and language. If you decline, these are not kept and you start fresh on every visit. You can change your answer any time under “Storage & privacy” in the footer.",
-            "Pages that show ads also let Google store cookies and similar identifiers in your browser. What Google may store, and whether ads may be personalised, follows the choice you make in Google’s consent message, not the answer above."
+            "SpillArena sets no cookies. What we store is kept in your browser’s local storage, and only if you accept: a sign-in token that lasts up to 30 days, your theme, accent colour and language, whether you hid the tip about adding the site to your home screen, and your progress, results and settings in the games.",
+            "If you decline, none of this is stored on your device. What you do lasts only until you close the tab, and anything already stored is deleted. You can change your answer any time under “Storage & privacy” in the footer.",
+            "Two things are stored either way, because they only remember the answer itself: your answer to the storage question, so we don’t ask again, and that you have seen the reminder that your progress isn’t being saved. The reminder is remembered only until the tab closes.",
+            "Pages that show ads may let Google store cookies and similar identifiers in your browser, but only as you choose in Google’s consent message, not by the answer above. See “Ads”."
+          ]
+        },
+        {
+          "h": "Nothing loads before you answer",
+          "p": [
+            "The fonts are served from spillarena.no along with the rest of the site, so your browser does not contact Google Fonts or any other font service. We use no analytics scripts, tracking pixels or social-media widgets.",
+            "On pages with ads, only Google’s consent message loads at first, which Google needs in order to ask you. The ad code itself, and the ads, cookies and measurement that come with it, load only once you have answered. Outside the EEA, the UK and Switzerland, where Google does not ask, the ad code loads straight away.",
+            "Some games fetch content from other services when you open or play them: music in MelodyRush and Hitline, words in HangBot. Who they are is listed under “Vendors”."
           ]
         },
         {
@@ -698,23 +708,41 @@
           ]
         },
         {
-          "h": "Third parties",
+          "h": "Vendors",
           "p": [
-            "Cloudflare hosts the site and our database and sees ordinary request data (such as IP address) to deliver the pages and protect against abuse. We use Cloudflare’s own traffic statistics, which do not use cookies.",
-            "Fonts are loaded from Google Fonts, so your browser contacts Google when the page loads. We use no tracking pixels or social-media widgets.",
-            "Ads: SpillArena can show ads from Google AdSense to help cover running costs. Only pages that show ads load Google’s ad code. On those pages, Google and the ad partners it works with use cookies and similar technology to show ads, limit how often you see the same one, measure them and prevent fraud, and, only if you allow it, to personalise them based on your activity here and on other sites. In the EEA, the UK and Switzerland, Google asks for that consent in its own message, built on the IAB Transparency and Consent Framework. You can change your choice at any time with “Ad settings” under “Storage & privacy”, or with the privacy and cookie settings link Google adds to the page. How Google uses this data: policies.google.com/technologies/partner-sites. Your SpillArena account, PIN, progress and contact messages are never shared with Google or advertisers."
+            "Cloudflare, Inc. (USA) hosts the site, the games, the database and the multiplayer rooms. Cloudflare sees ordinary request data such as IP address, browser type and which page was opened, to deliver the pages and protect against abuse. The traffic statistics we see, page views per game, come from Cloudflare’s own server logs and use no cookies or scripts in your browser.",
+            "Google Ireland Limited and Google LLC (USA) provide the ads, through Google AdSense, and Google’s consent message. Ads are shown on the front page, never on the sign-in, registration, recovery and profile pages, and not in the games. See “Ads”.",
+            "Resend, Inc. (USA) sends us an email when you use the contact form, containing what you wrote in it: name, email address, topic, message, and your username if you are signed in.",
+            "Domeneshop AS (Norway) provides the support@spillarena.no mailbox, where contact-form notifications and email you send us arrive.",
+            "Deezer SA (France) provides the music in MelodyRush and Hitline. Album covers and the short audio clips load directly from Deezer’s servers when you open or play these games, so Deezer sees your IP address and which tracks are loaded. We send no account data to Deezer, and you need no Deezer account.",
+            "Datamuse (USA) and MyMemory by Translated srl (Italy) are used in HangBot when the bot picks a word: your browser fetches a random word from Datamuse and a translation from MyMemory. They see your IP address and the word being looked up, not your account.",
+            "Profile pictures are made with the DiceBear library, in your browser and on our server. Nothing is sent to DiceBear."
+          ]
+        },
+        {
+          "h": "Ads",
+          "p": [
+            "SpillArena can show ads from Google AdSense to help cover running costs. On pages with ads, Google and the ad partners it works with use cookies and similar technology to show ads, limit how often you see the same one, measure them and prevent fraud, and, only if you allow it, to personalise them based on your activity here and on other sites.",
+            "In the EEA, the UK and Switzerland, Google asks for that consent in its own message, built on the IAB Transparency and Consent Framework, before the ad code loads. You can change your choice at any time with “Ad settings” under “Storage & privacy”, or with the privacy and cookie settings link Google adds to the page. How Google uses this data: policies.google.com/technologies/partner-sites.",
+            "Your SpillArena account, PIN, progress and contact messages are never shared with Google or advertisers."
+          ]
+        },
+        {
+          "h": "Transfers outside the EEA",
+          "p": [
+            "Cloudflare, Google, Resend and Datamuse may process data in the USA. For Cloudflare, Google and Resend this happens under the vendor’s data processing terms, based on the EU Standard Contractual Clauses or the EU–US Data Privacy Framework. Datamuse is an open service with no agreement with us; the request sent to it contains no account data."
           ]
         },
         {
           "h": "Why we process it (legal basis)",
           "p": [
-            "Account data is processed to provide the account and leaderboards you asked for (contract). Contact messages are processed to answer you (your request). Browser storage is kept only with your consent. Spam protection and security logging are a legitimate interest. Ad cookies and personalised ads require your consent, which Google’s message asks for; Google processes ad data under its own privacy policy."
+            "Account data is processed to provide the account and leaderboards you asked for (contract). Contact messages are processed to answer you (your request). Browser storage is kept only with your consent. Delivering the pages and games, including the content the games fetch from Deezer, Datamuse and MyMemory, spam protection and security logging are a legitimate interest. Ad cookies and personalised ads require your consent, which Google’s message asks for; Google processes ad data under its own privacy policy."
           ]
         },
         {
           "h": "Your rights",
           "p": [
-            "You can rename your account on your profile page. To have your account and progress deleted, or to get access to or correct your data, contact us (see below); we will also remove your leaderboard entries on request. You may complain to Datatilsynet, the Norwegian Data Protection Authority."
+            "You can rename your account and delete it yourself on your profile page. Deleting removes the account, your profile picture, recovery codes, saved progress, leaderboard entries and the contact messages linked to the username. Browser storage on your devices, active multiplayer rooms, scores under earlier usernames and emails already sent are not removed by it; contact us for those, or to get access to or correct your data (see below). You may complain to Datatilsynet, the Norwegian Data Protection Authority."
           ]
         },
         {

@@ -280,7 +280,7 @@ before ads existed.
 
 | Path | What it is |
 |---|---|
-| `src/account/ads.ts` | Loads the AdSense tag and listens to Google's consent message (IAB TCF). **Vendored** like the rest of `src/account/`. |
+| `src/account/ads.ts` | Loads Google's consent message (IAB TCF) on its own, and the AdSense tag only once the message has an answer. **Vendored** like the rest of `src/account/`. |
 | `src/account/ConsentDialog.tsx` | Waits for Google's message and points to Google's ad settings (also vendored). |
 | `vite.config.ts` | Writes `/ads.txt` and `<meta name="google-adsense-account">` from the id, and stops the build on a malformed one. |
 | `src/main.tsx` | `loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)` before the first render. |
@@ -293,7 +293,22 @@ this browser (`cookie-consent`). Ads need a second answer, about Google's
 cookies and personalised ads. In the EEA (Norway included), the UK and
 Switzerland, Google serves personalised ads only when that answer comes from a
 **Google-certified CMP using IAB TCF**. Our dialog is not one, so it cannot ask.
-Google's free CMP qualifies, and it arrives with the AdSense tag.
+Google's free CMP qualifies.
+
+### Nothing for ads loads before the answer
+
+`loadAdSense()` does not add `adsbygoogle.js` up front. It adds only Google's
+consent message, the Privacy & messaging tag
+(`fundingchoicesmessages.google.com/i/pub-…?ers=1`, plus the empty
+`googlefcPresent` frame Google's snippet makes), because that message is the
+question. `adsbygoogle.js`, and every ad request, cookie and pixel behind it, is
+added when TCF reports an answer: `useractioncomplete` (answered now) or
+`tcloaded` (answered on an earlier visit). Any answer loads it; what the answer
+allows is Google's to enforce. `gdprApplies: false` (outside the EEA, UK and
+Switzerland) loads it straight away. A blocked message, or one that never
+answers, means no ad tag at all. Fonts are self-hosted (`src/assets/fonts/`),
+so a first visit to the lobby contacts no one but `spillarena.no` and, on a
+page with ads, Google's consent message.
 
 On a page that calls `loadAdSense()`:
 
@@ -337,7 +352,9 @@ that the "no ads" line no longer claims anything for the whole domain.
    as the privacy policy, and publish it. Without a published message no
    consent is collected, and EEA visitors get no personalised ads.
 4. Once the message is published, open the lobby with DevTools and check the
-   console for `Content Security Policy` errors. The allowlist in
+   console for `Content Security Policy` errors, and in the Network tab that
+   no `adsbygoogle.js` or `doubleclick` request goes out before you answer
+   Google's message. The allowlist in
    `public/_headers` was tested against the tag with no message published. In
    that test the tag, Google's ad-traffic-quality checks and the frames loaded
    without a single violation. Google's consent message loads from

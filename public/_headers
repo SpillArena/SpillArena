@@ -9,8 +9,7 @@
 # Add an origin here before adding a script, stylesheet, font or analytics
 # beacon that needs one, or it will be blocked.
 #
-# Outside origins, and why:
-# - Google Fonts: the fonts (style-src, font-src).
+# Outside origins, and why (the fonts are self-hosted, src/assets/fonts):
 # - Google AdSense and its consent message (src/account/ads.ts): the ad tag and
 #   what it loads (script-src), ad and consent frames (frame-src), ad requests,
 #   measurement and fraud checks (connect-src), Google's pixels (img-src). The
@@ -30,7 +29,7 @@
 # never load the tag (src/lib/adFreePages.ts). See "Ads (Google AdSense)" in
 # docs/OPERATIONS.md before widening any of this.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://pagead2.googlesyndication.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com https://www.gstatic.com; connect-src 'self' https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://adtrafficquality.google https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.google.com; frame-src https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.safeframe.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://pagead2.googlesyndication.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com https://www.gstatic.com; connect-src 'self' https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://adtrafficquality.google https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.google.com; frame-src https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.safeframe.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
