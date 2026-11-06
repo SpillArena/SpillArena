@@ -7,6 +7,22 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '07-11-2026',
+        title: 'Cracked is out of beta',
+        release: '1.18.2',
+        changes: [
+            'Cracked is out of beta and ready for all players - removed the beta label and the warning before you play',
+        ],
+    },
+    {
+        date: '05-11-2026',
+        title: 'Pixel Panic has new design',
+        release: '1.18.1',
+        changes: [
+            'Pixel Panic has a new design with a more modern look and feel',
+        ],
+    },
+    {
         date: '04-11-2026',
         title: 'AtlasMaster: new look',
         release: '1.18.0',
