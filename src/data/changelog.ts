@@ -8,6 +8,17 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '07-11-2026',
+        title: 'EraShuffle is out of beta',
+        release: '1.18.3',
+        changes: [
+            'EraShuffle is out of beta and ready for all players - removed the beta label and the warning before you play',
+            'EraShuffle now has a new look with a more modern design and improved usability',
+            'The multiplayer mode has been improved with better room management and a more intuitive interface',
+            'The poster and icon have been updated to reflect the new design and branding',
+        ],
+    },
+    {
+        date: '07-11-2026',
         title: 'Cracked is out of beta',
         release: '1.18.2',
         changes: [

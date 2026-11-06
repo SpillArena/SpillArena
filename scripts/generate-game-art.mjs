@@ -260,14 +260,15 @@ const GAMES = [
   },
   {
     id: 7, file: 'EraShuffle', title: ['Era', 'Shuffle'],
-    bg: '#0d9488', deep: '#042f2e', accent: '#fde68a',
+    // Samme nattblå flate og ravgule aksent som spillets forside etter redesignet.
+    bg: '#232c47', deep: '#0e1422', accent: '#ffb176', ink: '#f4f5fa',
     genre: { no: 'Historie', en: 'History' },
     tagline: { no: 'Fem øyeblikk. Én tidslinje. Ny hver dag.', en: 'Five moments. One timeline. New every day.' },
-    events: {
-      no: ['Columbus seiler vest', 'Månelandingen', 'Berlinmuren faller', 'OL på Lillehammer'],
-      en: ['Columbus sails west', 'The Moon landing', 'The Berlin Wall falls', 'Lillehammer Olympics'],
+    cards: {
+      no: [['VERDEN', 'Berlinmuren faller'], ['VITENSKAP', 'Månelandingen'], ['VITENSKAP', 'Smarttelefonen']],
+      en: [['WORLD', 'The Berlin Wall falls'], ['SCIENCE', 'The Moon landing'], ['SCIENCE', 'The smartphone']],
     },
-    art: (lang, game) => eraArt(game.events[lang], game),
+    art: (lang, game) => eraArt(game.cards[lang], game),
     glyph: (game) => eraGlyph(game),
   },
   {
@@ -765,40 +766,74 @@ function pixelArt(guess, button, game) {
   return out
 }
 
-// ---- EraShuffle: en tidslinje med kort, og ett som flyttes på plass
+// ---- EraShuffle: tre vippede kort fra forsiden, og tidslinjen de skal inn på
 
-function eraCard(x, y, w, h, year, event, game, { tilt = 0, lift = false } = {}) {
-  const ink = shade(game.deep, 0.05)
-  const yearW = h * 1.15
-  const size = fit(event, FONTS.serifRegular, w - yearW - 40, 24)
-  return g(`transform="rotate(${tilt} ${r1(x + w / 2)} ${r1(y + h / 2)})"`,
-    cardShadow(x, y, w, h, 20, lift ? 18 : 8, lift ? 0.3 : 0.18),
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="20" fill="#fefce8"/>`,
-    tile(x + 12, y + 12, yearW, h - 24, year === '?' ? game.accent : game.deep, { depth: 0 }),
-    text(year, FONTS.serif, 28, x + 12 + yearW / 2, y + h / 2, { fill: year === '?' ? ink : '#fefce8', anchor: 'middle', middle: true }),
-    text(event, FONTS.serifRegular, size, x + yearW + 28, y + h / 2, { fill: ink, middle: true }))
+const ERA_PAPER = [
+  { bg: '#d8c9ff', ink: '#3a286e', tilt: -11, x: 0, y: 128, year: '1989', kind: 'wall' },
+  { bg: '#ffdfb4', ink: '#6e3616', tilt: -2, x: 170, y: 76, year: '1969', kind: 'rocket' },
+  { bg: '#bcebdc', ink: '#1b5549', tilt: 11, x: 340, y: 128, year: '2007', kind: 'phone' },
+]
+
+/** Små tegninger i kortenes strekstil, i et felt på 110×88. */
+function eraIllustration(kind, color) {
+  const open = `<g fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">`
+  const halo = `<circle cx="55" cy="46" r="33" fill="${color}" fill-opacity="0.15" stroke="none"/>`
+  if (kind === 'wall') return open + halo
+    + `<path d="M24 68V34h22l-4 9 5 8-4 17ZM88 68V40H66l4 8-5 8 3 12Z" fill="${color}" fill-opacity="0.2"/>`
+    + `<path d="M24 45h19M24 56h20M34 34v11M31 45v11M37 56v12M68 50h20M66 60h22M78 40v10M75 50v10M80 60v8M16 68h78"/>`
+    + `<rect x="61" y="10" width="8" height="5" rx="1" transform="rotate(18 65 12)"/></g>`
+  if (kind === 'rocket') return open + halo
+    + `<path d="M28 9a9.5 9.5 0 1 0 6 15 8 8 0 0 1-6-15Z" fill="${color}" fill-opacity="0.3"/>`
+    + `<g transform="rotate(35 55 46)"><path d="M50 62c0 6 2 10 5 15 3-5 5-9 5-15" fill="${color}" fill-opacity="0.3"/>`
+    + `<path d="M55 12c6 5 9 13 9 24v22H46V36c0-11 3-19 9-24ZM46 44l-8 9v7h8M64 44l8 9v7h-8M46 48h18"/>`
+    + `<circle cx="55" cy="32" r="4.5" fill="${color}" fill-opacity="0.3"/></g></g>`
+  return open + halo + `<g transform="rotate(-8 55 44)"><rect x="38" y="10" width="34" height="66" rx="8"/>`
+    + `<rect x="43" y="20" width="24" height="42" rx="2" fill="${color}" fill-opacity="0.2" stroke-width="2"/><path d="M51 15h8"/><circle cx="55" cy="69" r="3"/></g></g>`
 }
 
-function eraArt(events, game) {
-  let out = `<path d="M52 40V500" stroke="#fff" stroke-opacity="0.35" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12"/>`
-  const rows = [['1492', events[0], 40], ['1969', events[1], 160], ['1994', events[3], 400]]
-  for (const [year, event, y] of rows) {
-    out += `<circle cx="52" cy="${y + 46}" r="11" fill="${game.accent}" stroke="${game.deep}" stroke-width="4"/>`
-    out += eraCard(86, y, 400, 92, year, event, game)
-  }
-  // den tomme plassen, og kortet som er på vei inn i den
-  out += `<rect x="86" y="280" width="400" height="92" rx="20" fill="none" stroke="#fff" stroke-opacity="0.45" stroke-width="3" stroke-dasharray="10 10"/>`
-  out += eraCard(118, 262, 400, 92, '?', events[2], game, { tilt: -3, lift: true })
+function eraPaperCard(card, [category, label], game) {
+  const w = 160, h = 250, x = card.x, y = card.y
+  const cx = x + w / 2
+  let out = cardShadow(x, y, w, h, 24, 14, 0.32)
+  out += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="24" fill="${card.bg}" stroke="#fff" stroke-opacity="0.45" stroke-width="2"/>`
+  out += text(category, FONTS.sansBold, 12, cx, y + 34, { fill: card.ink, anchor: 'middle', tracking: 2.2, opacity: 0.8 })
+  out += g(`transform="translate(${r1(cx - 55)} ${y + 46}) scale(1)"`, eraIllustration(card.kind, card.ink))
+  out += text(card.year, FONTS.serif, 50, cx, y + 178, { fill: card.ink, anchor: 'middle' })
+  const size = fit(label, FONTS.sansBold, w - 24, 16)
+  out += text(label, FONTS.sansBold, size, cx, y + 222, { fill: card.ink, anchor: 'middle' })
+  return g(`transform="rotate(${card.tilt} ${r1(cx)} ${y + h / 2})"`, out)
+}
+
+function eraArt(cards, game) {
+  let out = ''
+  for (const i of [0, 2, 1]) out += eraPaperCard(ERA_PAPER[i], cards[i], game)
+  // tidslinjen: fem brikker, og den ene som mangler
+  const y = 458
+  out += `<path d="M30 ${y + 18}H470" stroke="#fff" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12"/>`
+  ;[0, 1, 2, 3, 4].forEach((i) => {
+    const x = 36 + i * 90
+    out += i === 2
+      ? `<rect x="${x}" y="${y}" width="36" height="36" rx="10" fill="none" stroke="${game.accent}" stroke-width="3" stroke-dasharray="7 6"/>`
+      : tile(x, y, 36, 36, i < 2 ? game.accent : '#5a6a94', { depth: 4, gloss: true })
+  })
   return out
 }
 
 function eraGlyph(game) {
-  let out = `<path d="M90 96V420" stroke="#fff" stroke-opacity="0.35" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 16"/>`
-  for (const [y, year] of [[96, '1492'], [314, '1994']]) {
-    out += `<circle cx="90" cy="${y + 50}" r="14" fill="${game.accent}" stroke="${game.deep}" stroke-width="5"/>`
-    out += g('', cardShadow(126, y, 300, 100, 24), `<rect x="126" y="${y}" width="300" height="100" rx="24" fill="#fefce8"/>`, tile(140, y + 14, 120, 72, game.deep, { depth: 0 }), text(year, FONTS.serif, 34, 200, y + 50, { fill: '#fefce8', anchor: 'middle', middle: true }), `<rect x="278" y="${y + 38}" width="120" height="24" rx="12" fill="${game.deep}" fill-opacity="0.18"/>`)
+  let out = ''
+  const cards = [
+    { ...ERA_PAPER[0], x: 28, y: 170, tilt: -12 },
+    { ...ERA_PAPER[2], x: 324, y: 170, tilt: 12 },
+    { ...ERA_PAPER[1], x: 176, y: 96, tilt: -2 },
+  ]
+  for (const card of cards) {
+    const w = 160, h = 250, cx = card.x + w / 2
+    out += g(`transform="rotate(${card.tilt} ${r1(cx)} ${card.y + h / 2})"`,
+      cardShadow(card.x, card.y, w, h, 24, 14, 0.32),
+      `<rect x="${card.x}" y="${card.y}" width="${w}" height="${h}" rx="24" fill="${card.bg}" stroke="#fff" stroke-opacity="0.45" stroke-width="2"/>`,
+      g(`transform="translate(${r1(cx - 55)} ${card.y + 40}) scale(1)"`, eraIllustration(card.kind, card.ink)),
+      text(card.year, FONTS.serif, 54, cx, card.y + 196, { fill: card.ink, anchor: 'middle' }))
   }
-  out += g('transform="rotate(-4 290 255)"', cardShadow(150, 205, 300, 100, 24, 18, 0.3), `<rect x="150" y="205" width="300" height="100" rx="24" fill="#fefce8"/>`, tile(164, 219, 120, 72, game.accent, { depth: 0 }), text('?', FONTS.serif, 44, 224, 255, { fill: game.deep, anchor: 'middle', middle: true }), `<rect x="302" y="243" width="120" height="24" rx="12" fill="${game.deep}" fill-opacity="0.18"/>`)
   return out
 }
 
