@@ -361,14 +361,30 @@ html.dark .button.delete-account-button:hover { background: #3d202b; }
 }
 
 /* privacy, terms, FAQ */
-.legal-page { max-width: 720px; margin-inline: auto; padding-block: 40px 24px; }
-.legal-page h1 { font-size: clamp(32px, 5vw, 48px); letter-spacing: -1.2px; line-height: 1.1; margin: 24px 0 12px; }
-.legal-page h2 { font-family: var(--serif); font-size: 21px; font-weight: 500; margin: 28px 0 6px; }
-.legal-page p { font-size: 14px; line-height: 1.75; margin: 0 0 10px; color: var(--muted); }
-.legal-page .legal-lead { font-size: 16px; color: var(--ink); }
-.legal-page .legal-updated { font-size: 12px; }
-.legal-page .legal-contact { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); }
-.legal-page a:not(.button) { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
+.legal-page { max-width: 720px; margin-inline: auto; padding-block: 40px 56px; }
+.legal-page h1 { font-size: clamp(32px, 5vw, 48px); letter-spacing: -1.2px; line-height: 1.1; margin: 24px 0 14px; text-wrap: balance; }
+.legal-page h2 { font-family: var(--serif); font-size: 21px; font-weight: 500; letter-spacing: -.2px; line-height: 1.3; margin: 36px 0 8px; text-wrap: balance; }
+.legal-page p { font-size: 15px; line-height: 1.75; margin: 0 0 12px; color: var(--muted); text-wrap: pretty; max-width: 66ch; }
+.legal-page .legal-lead { font-size: 17px; line-height: 1.7; color: var(--ink); }
+.legal-page .legal-updated { font-size: 12px; font-variant-numeric: tabular-nums; }
+.legal-page .legal-contact { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); }
+.legal-page a:not(.button):not(.back-link) { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition-property: text-decoration-thickness, color; transition-duration: 150ms; transition-timing-function: ease; }
+.legal-page a:not(.button):not(.back-link):hover { text-decoration-thickness: 2px; }
+.legal-contact a { display: inline-flex; align-items: center; min-height: 44px; }
+.legal-page .back-link { text-decoration: none; transition-property: background-color, border-color, scale; }
+.legal-page .back-link:active { scale: .96; }
+.legal-page .back-link .back-arrow { display: inline-block; transition: translate 180ms cubic-bezier(.2, 0, 0, 1); }
+.legal-page .back-link:hover .back-arrow { translate: -2px 0; }
+/* guide index: each guide is a tappable row */
+.legal-page > section:has(> h2 > a) { margin-top: 12px; padding: 18px 20px; border-radius: 14px; background: var(--card); box-shadow: 0 0 0 1px var(--line); transition-property: box-shadow, translate; transition-duration: 170ms; transition-timing-function: ease; }
+.legal-page > section:has(> h2 > a):hover { box-shadow: 0 0 0 1px var(--accent-ink), 0 8px 20px #2010270a; }
+.legal-page > section:has(> h2 > a) h2 { margin: 0 0 6px; font-size: 19px; }
+.legal-page > section:has(> h2 > a) h2 a { text-decoration: none; }
+.legal-page > section:has(> h2 > a) h2 a::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
+.legal-page > section:has(> h2 > a) { position: relative; }
+.legal-page > section:has(> h2 > a) p { margin: 0; }
+.legal-page .game-guide-cta, .legal-page.game-guide > .button { margin-block: 8px 12px; }
+@media (max-width: 520px) { .legal-page { padding-block: 24px 40px; } .legal-page > section:has(> h2 > a) { padding: 16px; } }
 
 /* contact form */
 .contact-page .contact-form { margin-top: 28px; }

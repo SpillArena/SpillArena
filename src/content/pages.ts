@@ -23,7 +23,7 @@ export function EditorialArticle({ page, slug, language, action }: { page?: Info
   const copy = copyFor(language)
   const c = copy.content
   const section = (title: string, paragraphs: string[]) => h('section', { key: title }, h('h2', null, title), ...paragraphs.map(p => h('p', { key: p }, p)))
-  const back = h('a', { className: 'back-link', href: '/' }, copy.legal.back)
+  const back = h('a', { className: 'back-link', href: '/' }, h('span', { className: 'back-arrow', 'aria-hidden': 'true' }, '←'), copy.legal.back)
   const contact = h('p', { className: 'legal-contact' }, h('a', { href: '/contact/' }, copy.contact.openForm), ' · ', h('a', { href: 'mailto:support@spillarena.no' }, 'support@spillarena.no'))
   if (slug) {
     const guide = guideFor(slug, language)
