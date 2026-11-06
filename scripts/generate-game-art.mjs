@@ -202,17 +202,17 @@ function logoMark(x, y, size) {
 const GAMES = [
   {
     id: 1, file: 'FleetBot', title: ['Fleet', 'Bot'],
-    bg: '#0c3753', deep: '#06121e', accent: '#ffb703',
+    bg: '#0c3753', deep: '#06121e', accent: '#ffb703', bot: true, pattern: 'none', scatter: 'naval',
     genre: { no: 'Strategi · bot / online', en: 'Strategy · bot / online' },
     tagline: { no: 'Finn flåten deres før de finner din.', en: 'Find their fleet before they find yours.' },
     // Exported by FleetBot's npm run art -- --spillarena ../../SpillArena.
     // Local copies keep this repository's art build independent of FleetBot.
-    art: () => readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-board.svg'), 'utf8'),
+    art: (lang) => fleetArt(lang),
     icon: () => readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-icon.svg'), 'utf8'),
   },
   {
     id: 2, file: 'HangBot', title: ['Hang', 'Bot'],
-    bg: '#20262e', deep: '#101419', accent: '#b9ee64', ink: '#f5f7f0',
+    bg: '#20262e', deep: '#101419', accent: '#b9ee64', ink: '#f5f7f0', bot: true, pattern: 'none', scatter: 'letters',
     genre: { no: 'Ordspill · alene / venner', en: 'Word game · solo / friends' },
     tagline: { no: 'Gjett ordet før tegningen er ferdig.', en: 'Guess the word before the drawing is done.' },
     word: { no: ['S', 'P', '?', 'L', 'L'], en: ['W', 'O', '?', 'D', 'S'] },
@@ -221,7 +221,7 @@ const GAMES = [
   },
   {
     id: 3, file: 'ScribbleBot', title: ['Scribble', 'Bot'],
-    bg: '#2d3050', deep: '#141728', accent: '#b79bff', ink: '#f4f2ff',
+    bg: '#2d3050', deep: '#141728', accent: '#b79bff', ink: '#f4f2ff', bot: true, pattern: 'none', scatter: 'doodle',
     genre: { no: 'Tegnespill · alene / venner', en: 'Drawing game · solo / friends' },
     tagline: { no: 'Gjett tegningen før tiden renner ut.', en: 'Guess the doodle before the clock runs out.' },
     hint: { no: '_ _ _ _ b _ _', en: '_ _ _ _ b _ _ _' },
@@ -232,7 +232,7 @@ const GAMES = [
   {
     id: 4, file: 'AtlasMaster', title: ['Atlas', 'Master'],
     // Samme nattkart som spillet selv: marineblå grunn og limegrønn aksent.
-    bg: '#16213a', deep: '#070e1a', accent: '#c8ff3c', ink: '#e8eef7',
+    bg: '#0e5a63', deep: '#04242a', accent: '#c8ff3c', ink: '#effaf8', pattern: 'grid',
     genre: { no: 'Geografi', en: 'Geography' },
     tagline: { no: 'Land, hovedsteder og byer – på tid.', en: 'Countries, capitals and cities – against the clock.' },
     question: { no: 'Hvor er Norge?', en: 'Where is Norway?' },
@@ -261,7 +261,7 @@ const GAMES = [
   {
     id: 7, file: 'EraShuffle', title: ['Era', 'Shuffle'],
     // Samme nattblå flate og ravgule aksent som spillets forside etter redesignet.
-    bg: '#232c47', deep: '#0e1422', accent: '#ffb176', ink: '#f4f5fa',
+    bg: '#2f4fd8', deep: '#0b1550', accent: '#ffc08a', ink: '#f6f7ff', pattern: 'rings',
     genre: { no: 'Historie', en: 'History' },
     tagline: { no: 'Fem øyeblikk. Én tidslinje. Ny hver dag.', en: 'Five moments. One timeline. New every day.' },
     cards: {
@@ -281,7 +281,7 @@ const GAMES = [
   },
   {
     id: 9, file: 'Hitline', title: ['Hit', 'line'],
-    bg: '#252c4a', deep: '#10142a', accent: '#ffb52e',
+    bg: '#be123c', deep: '#4c0519', accent: '#fde68a', pattern: 'lines',
     bannerOffsetY: -18, // Gi Beta-merket plass under slagordet på små spillkort.
     genre: { no: 'Musikktidslinje', en: 'Music timeline' },
     tagline: { no: 'Kjenn igjen låten. Finn plassen i tiden.', en: 'Know the song. Find its place in time.' },
@@ -299,7 +299,7 @@ const GAMES = [
   },
   {
     id: 11, file: 'Cracked', title: ['Cracked'],
-    bg: '#202632', deep: '#11141b', accent: '#f2b544', ink: '#f3f1ea',
+    bg: '#6b1d2e', deep: '#2a0a12', accent: '#f2b544', ink: '#f6efe6', pattern: 'hatch',
     bannerOffsetY: -18,
     genre: { no: 'Daglig ordgåte', en: 'Daily word puzzle' },
     tagline: { no: 'Knekk dagens kodeord. Pilene viser vei.', en: 'Crack today’s code word. Follow the arrows.' },
@@ -307,6 +307,20 @@ const GAMES = [
     glyph: () => crackedGlyph(),
   },
 ]
+
+// ---- FleetBot: brettet og admiralen fra spillet, i botskjermen
+
+/** Admiralen (eksportert fra FleetBot) med en snakkeboble over brettet. */
+function fleetArt(lang) {
+  const board = readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-board.svg'), 'utf8')
+  const captain = readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-captain.svg'), 'utf8')
+    .replace(/<svg ([^>]*?)width="236" height="236"/, '<svg x="-6" y="318" width="200" height="200" $1')
+  const line = lang === 'no' ? 'Overgi dere?' : 'Surrender?'
+  const w = measure(line, FONTS.sansBold, 21) + 44
+  return board + captain
+    + `<path d="M176 372l-28 34 34-12z" fill="#fffaf0"/><rect x="170" y="340" width="${r1(w)}" height="50" rx="25" fill="#fffaf0"/>`
+    + text(line, FONTS.sansBold, 21, 170 + w / 2, 365, { fill: '#0c1e2e', anchor: 'middle', middle: true })
+}
 
 // ---- HangBot: håndtegnet galge, en liten bot og bokstavbrikker
 
@@ -1000,16 +1014,114 @@ function crackedArt(lang) {
 
 // ---------------------------------------------------------------- bilder
 
+/** Bakgrunnsmønster: `dots` er standard, de andre gir spillene hver sin tekstur. */
+function patternDef(kind = 'dots', color = '#ffffff') {
+  const c = `stroke="${color}" stroke-opacity="0.1" stroke-width="2" fill="none"`
+  switch (kind) {
+    case 'none': return `<pattern id="dots" width="1" height="1" patternUnits="userSpaceOnUse"/>`
+    case 'circuit': return `<pattern id="dots" width="120" height="120" patternUnits="userSpaceOnUse"><path d="M0 30H34L50 46H96M60 120V84L76 68H120M0 96H20" ${c}/><circle cx="96" cy="46" r="4" ${c}/><circle cx="20" cy="96" r="4" ${c}/><circle cx="60" cy="84" r="4" ${c}/></pattern>`
+    case 'grid': return `<pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0H0V60" ${c}/></pattern>`
+    case 'hatch': return `<pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M-4 32L32 -4M-4 4L4 -4M24 32L32 24" ${c}/></pattern>`
+    case 'lines': return `<pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20 0V40" ${c}/></pattern>`
+    case 'rings': return `<pattern id="dots" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="26" ${c}/><circle cx="40" cy="40" r="10" ${c}/></pattern>`
+    default: return `<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2" fill="${color}" fill-opacity="0.12"/></pattern>`
+  }
+}
+
 function background(w, h, game, radius = 0) {
   const dots = game.dots ?? '#ffffff'
   return `<defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${tint(game.bg, 0.06)}"/><stop offset="1" stop-color="${mix(game.bg, game.deep, 0.62)}"/></linearGradient>
 <radialGradient id="glow" cx="0.72" cy="0.42" r="0.55"><stop offset="0" stop-color="#fff" stop-opacity="0.2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2" fill="${dots}" fill-opacity="0.12"/></pattern>
+${patternDef(game.pattern, dots)}
 </defs>
 <rect width="${w}" height="${h}" rx="${radius}" fill="url(#bg)"/>
 <rect width="${w}" height="${h}" rx="${radius}" fill="url(#glow)"/>
 <rect width="${w}" height="${h}" rx="${radius}" fill="url(#dots)"/>`
+}
+
+/**
+ * Bot-seriens felles uttrykk: selve plakaten er et robothode. Antenne, ører og
+ * en skjerm med skannelinjer rammer inn spillscenen, så FleetBot, HangBot og
+ * ScribbleBot hører sammen og skiller seg fra resten av arenaen.
+ */
+function botHead(game, lang) {
+  const a = game.accent, metal = mix(game.bg, '#ffffff', 0.1), cx = 890
+  const screen = { x: 634, y: 74, w: 512, h: 532, r: 44 }
+  return `<defs>
+<clipPath id="bot-screen"><rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" rx="${screen.r}"/></clipPath>
+<pattern id="scan" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="2" fill="#000" fill-opacity="0.16"/></pattern>
+<radialGradient id="screen-glow" cx="0.5" cy="0.35" r="0.8"><stop offset="0" stop-color="${mix(game.bg, '#ffffff', 0.08)}"/><stop offset="1" stop-color="${game.deep}"/></radialGradient>
+</defs>
+<ellipse cx="${cx}" cy="652" rx="270" ry="12" fill="#000" fill-opacity="0.28"/>
+<path d="M${cx} 54V28" stroke="${a}" stroke-width="8" stroke-linecap="round"/><circle cx="${cx}" cy="22" r="13" fill="${a}"/><circle cx="${cx - 4}" cy="18" r="4" fill="#fff" fill-opacity="0.55"/>
+<rect x="584" y="262" width="34" height="140" rx="16" fill="${a}"/><rect x="1162" y="262" width="34" height="140" rx="16" fill="${a}"/>
+<rect x="612" y="52" width="556" height="588" rx="70" fill="${shade(metal, 0.42)}"/>
+<rect x="612" y="52" width="556" height="576" rx="70" fill="${metal}" stroke="${a}" stroke-width="4"/>
+<path d="M660 66H820" stroke="#fff" stroke-opacity="0.3" stroke-width="5" stroke-linecap="round"/>
+<g fill="${a}"><circle cx="632" cy="612" r="4.5"/><circle cx="1148" cy="612" r="4.5"/></g>
+<rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" rx="${screen.r}" fill="url(#screen-glow)"/>
+<g clip-path="url(#bot-screen)"><g transform="translate(640 78)">${game.art(lang, game)}</g>
+<rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" fill="url(#scan)"/></g>
+<rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" rx="${screen.r}" fill="none" stroke="#000" stroke-opacity="0.45" stroke-width="5"/>`
+}
+
+/** Små, gjentakelsesfrie motiver til bot-seriens bakgrunn. Hvert motiv er tegnet rundt (0, 0), ca. 40 px bredt. */
+const SCATTER = {
+  naval: [
+    () => '<circle cy="-15" r="4.5"/><path d="M0 -10.5V16M-9 -3H9M-15 4Q-13 17 0 17Q13 17 15 4"/>',
+    () => '<path d="M-24 0q8 -9 16 0t16 0t16 0"/>',
+    () => '<circle r="5"/><circle r="13"/><circle r="22" stroke-dasharray="4 7"/>',
+    () => '<path d="M-20 4H20L13 15H-13Z"/><path d="M-4 4V-12H8V4M0 -12V-20"/>',
+    () => '<circle r="9"/><path d="M-17 0H-5M5 0H17M0 -17V-5M0 5V17"/>',
+    () => '<path d="M0 -18L5 -5L18 0L5 5L0 18L-5 5L-18 0L-5 -5Z"/>',
+  ],
+  letters: [
+    ...'AWSOEDRTNHGLKP'.split('').map((ch) => () => text(ch, FONTS.serif, 40, 0, 0, { fill: '#fff', anchor: 'middle', middle: true, opacity: 0.16 }).replace('<path ', '<path stroke="none" ')),
+    () => text('?', FONTS.serif, 42, 0, 0, { fill: '#fff', anchor: 'middle', middle: true, opacity: 0.16 }).replace('<path ', '<path stroke="none" '),
+    () => '<path d="M-16 20H16M-8 20V-20H10V-12"/><circle cx="10" cy="-6" r="5"/>',
+    () => '<path d="M-24 0H-10M-5 0H9M14 0H28"/>',
+    () => '<circle cy="-14" r="6"/><path d="M0 -8V8M0 -3L-9 4M0 -3L9 4M0 8L-7 20M0 8L7 20"/>',
+  ],
+  doodle: [
+    () => '<g transform="rotate(-30)"><rect x="-27" y="-6" width="54" height="12" rx="2"/><path d="M27 -6L42 0L27 6M-18 -6V6"/></g>',
+    () => '<g transform="rotate(-30)"><rect x="-27" y="-6" width="54" height="12" rx="2"/><path d="M27 -6L42 0L27 6M-18 -6V6"/></g>',
+    () => '<g transform="rotate(40)"><rect x="-27" y="-6" width="54" height="12" rx="2"/><path d="M27 -6L42 0L27 6M-18 -6V6"/></g>',
+    () => '<path d="M0 -10L2.8 -3L10 -3L4.2 1.6L6.2 9L0 4.6L-6.2 9L-4.2 1.6L-10 -3L-2.8 -3Z"/>',
+    () => '<path d="M0 -12Q11 2 0 11Q-11 2 0 -12Z"/>',
+    () => '<path d="M-21 0q7 -11 14 0t14 0t14 0"/>',
+    () => '<g transform="rotate(25)"><rect x="-4" y="-22" width="8" height="30" rx="3"/><path d="M-4 8Q0 22 4 8M-4 -6H4"/></g>',
+    () => '<circle r="10"/><circle r="4"/>',
+    () => '<path d="M-8 0H8M0 -8V8"/>',
+    () => '<path d="M-14 8Q-14 -12 0 -12Q14 -12 14 0Q14 12 0 12Q-8 12 -8 4Q-8 -4 0 -4"/>',
+    () => '<path d="M-12 10L0 -12L12 10Z"/>',
+  ],
+}
+
+/** Slumpmessig, men like hver gang: samme spill gir samme bakgrunn. Hopper over robothodet. */
+function scatterBackground(game, W, H) {
+  const motifs = SCATTER[game.scatter]
+  if (!motifs) return ''
+  let seed = game.id * 7919
+  const rand = () => {
+    seed = (seed + 0x6d2b79f5) | 0
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+  const placed = []
+  let out = ''
+  for (let n = 0; n < 700 && placed.length < 46; n++) {
+    const x = rand() * W, y = rand() * H
+    if (x > 560 && y > 10 && y < 665) continue // robothodet dekker dette
+    if (x > 60 && x < 540 && y > 140 && y < 580 && rand() < 0.9) continue // luft rundt teksten
+    if (placed.some(([px, py]) => Math.hypot(px - x, py - y) < 82)) continue
+    placed.push([x, y])
+    const motif = motifs[Math.floor(rand() * motifs.length)]
+    const rot = Math.round(rand() * 70 - 35), scale = r1(0.8 + rand() * 0.75), op = r1(0.07 + rand() * 0.07)
+    out += `<g transform="translate(${r1(x)} ${r1(y)}) rotate(${rot}) scale(${scale})" opacity="${op / 0.1}">${motif()}</g>`
+  }
+  return `<g fill="none" stroke="#fff" stroke-opacity="0.2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${out}</g>`
 }
 
 function banner(game, lang) {
@@ -1048,9 +1160,10 @@ function banner(game, lang) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${label}">
 <title>${label}</title>
 ${background(W, H, game)}
+${scatterBackground(game, W, H)}
 ${mark}
 ${body}
-<g transform="translate(640 78)">${game.art(lang, game)}</g>
+${game.bot ? botHead(game, lang) : `<g transform="translate(640 78)">${game.art(lang, game)}</g>`}
 </svg>
 `
 }
@@ -1076,11 +1189,8 @@ if (filterIndex !== -1 && !GAMES.some((game) => game.file === onlyGame)) throw n
 const selected = onlyGame ? GAMES.filter((game) => game.file === onlyGame) : GAMES
 const manifest = []
 for (const game of selected) {
-  // Keep FleetBot's current posters exactly as exported by its own repository.
   for (const lang of LANGS) writeFileSync(join(OUT, `${game.file}.${lang}.svg`),
-    game.file === 'FleetBot'
-      ? readFileSync(join(ROOT, `src/assets/games/art/fleetbot-poster.${lang}.svg`), 'utf8')
-      : banner(game, lang))
+    banner(game, lang))
   writeFileSync(join(OUT, 'icons', `${game.file}.svg`), icon(game))
   manifest.push(game)
 }
