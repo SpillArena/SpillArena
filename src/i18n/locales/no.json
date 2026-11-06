@@ -463,7 +463,13 @@
       "accountCreated": "Konto opprettet",
       "accountLastSeen": "Sist aktiv",
       "notification": "E-postvarsel",
-      "notificationStatus": {"unknown": "Ikke registrert", "pending": "Venter — sjekk igjen om litt", "sent": "Godtatt av e-postleverandøren", "failed": "Mislyktes — meldingen er lagret her", "not_configured": "Ikke satt opp — meldingen er lagret her"},
+      "notificationStatus": {
+        "unknown": "Ikke registrert",
+        "pending": "Venter — sjekk igjen om litt",
+        "sent": "Godtatt av e-postleverandøren",
+        "failed": "Mislyktes — meldingen er lagret her",
+        "not_configured": "Ikke satt opp — meldingen er lagret her"
+      },
       "empty": "Ingen meldinger ennå.",
       "from": "Fra",
       "topic": "Emne",
@@ -669,7 +675,7 @@
   },
   "legal": {
     "back": "Tilbake til spillene",
-    "updated": "Sist oppdatert 5. november 2026",
+    "updated": "Sist oppdatert 7. november 2026",
     "contactLabel": "Kontakt",
     "contact": "Spørsmål, feil, sletting av konto eller innsynsforespørsler:",
     "privacy": {
@@ -704,14 +710,14 @@
         {
           "h": "Spille uten konto",
           "p": [
-            "Alle spillene fungerer uten konto. Gjesteresultater blir i nettleseren din og havner aldri på en ledertavle under navnet ditt."
+            "Du kan prøve solospillene uten konto. Flerspillerrom på nett krever en gratis konto. Gjesteresultater blir i nettleseren din og havner ikke på en ledertavle under navnet ditt."
           ]
         },
         {
           "h": "Leverandører",
           "p": [
             "Cloudflare, Inc. (USA) drifter nettstedet, spillene, databasen og flerspillerrommene. Cloudflare ser vanlige forespørselsdata som IP-adresse, nettlesertype og hvilken side som ble åpnet, for å levere sidene og beskytte mot misbruk. Trafikkstatistikken vi ser, sidevisninger per spill, kommer fra Cloudflares egne serverlogger og bruker ingen informasjonskapsler eller skript i nettleseren.",
-            "Google Ireland Limited og Google LLC (USA) står for reklamen gjennom Google AdSense og for Googles samtykkevindu. Reklamen vises på forsiden, ikke på sidene for innlogging, registrering, gjenoppretting og profil, og ikke i spillene. Se «Reklame».",
+            "Google Ireland Limited og Google LLC (USA) står for reklamen gjennom Google AdSense og for Googles samtykkevindu. Annonsekode lastes bare på forsiden, ikke på spillguider, hjelpesider, kontaktskjema, kontosider eller i spillene. Se «Reklame».",
             "Resend, Inc. (USA) sender oss en e-post når du bruker kontaktskjemaet, med det du skrev der: navn, e-postadresse, emne, melding og brukernavnet ditt hvis du er innlogget.",
             "Domeneshop AS (Norge) leverer e-postkontoen support@spillarena.no, der varsler fra kontaktskjemaet og e-post du sender oss, havner.",
             "Deezer SA (Frankrike) leverer musikken i MelodyRush og Hitline. Albumcoverne og de korte lydklippene lastes rett fra Deezers servere når du åpner eller spiller disse spillene, så Deezer ser IP-adressen din og hvilke låter som lastes. Vi sender ingen kontoopplysninger til Deezer, og du trenger ingen Deezer-konto.",
@@ -817,7 +823,7 @@
         },
         {
           "q": "Trenger jeg konto?",
-          "a": "Nei. En konto lagrer bare XP og fremgang og setter navnet ditt på ledertavlene."
+          "a": "Du kan prøve solospillene som gjest. En konto lagrer fremgang på tvers av spill og kreves for flerspillerrom på nett og resultater under navnet ditt."
         },
         {
           "q": "Hvordan logger jeg inn?",
@@ -837,7 +843,7 @@
         },
         {
           "q": "Hvordan sletter jeg kontoen?",
-          "a": "Send e-post til support@spillarena.no. Vi sletter kontoen, fremgangen og, på forespørsel, ledertavleoppføringene."
+          "a": "Åpne profilen din og velg Slett konto. Bekreft med PIN-koden og avkrysningen for permanent sletting. Dette fjerner kontoen, profilbildet, gjenopprettingskodene, lagret fremgang, ledertavleoppføringer og kontaktmeldinger knyttet til ditt nåværende brukernavn. Lokale lagringer, aktive rom, poeng under gamle brukernavn og sendte e-poster fjernes ikke automatisk; kontakt oss for hjelp med dette."
         },
         {
           "q": "Jeg fant en feil eller et upassende brukernavn.",
@@ -930,5 +936,42 @@
       "network": "Fikk ikke kontakt med tjeneren. Sjekk tilkoblingen og prøv igjen."
     }
   },
-  "gameUnavailable": "Utilgjengelig"
+  "gameUnavailable": "Utilgjengelig",
+  "content": {
+    "aboutLink": "Om SpillArena",
+    "guidesLink": "Spilleregler og guider",
+    "guideLink": "Regler og tips",
+    "rules": "Slik spiller du",
+    "example": "Et eksempel",
+    "tip": "Tips til neste runde",
+    "play": "Åpne spillet",
+    "unavailable": "Dette spillet er ikke tilgjengelig akkurat nå. Se spilloversikten for oppdatert status.",
+    "homeTitle": "Nettleserspill laget av SpillArena",
+    "homeIntro": "Spill en taktisk kamp, løs en ordgåte eller test kunnskapene dine om geografi og historie. Spillene kjører i nettleseren. Solospill kan prøves som gjest; nettrom krever en gratis konto.",
+    "homeDetail": "Les reglene og eksemplene før du velger et spill. Guidene forklarer hva du skal gjøre, hvordan du tolker tilbakemeldinger og hva du kan øve på videre. Spill merket Beta er under utvikling; tilgjengelighet vises på hvert kort.",
+    "guidesTitle": "Velg et spill og lær reglene",
+    "guidesIntro": "Forklaringer, konkrete eksempler og praktiske tips til spillene på SpillArena. Tilgjengelighet vises i spilloversikten.",
+    "aboutTitle": "Om SpillArena",
+    "aboutIntro": "SpillArena er en samling nettleserspill laget og vedlikeholdt av Emil Berglund i Norge. Spillene utforsker ulike utfordringer: strategi, språk, bildegjenkjenning, geografi, historie og musikk.",
+    "aboutSections": [
+      {
+        "h": "Hva du kan spille",
+        "p": [
+          "FleetBot handler om å finne en skjult flåte. HangBot og Cracked tester ord på ulike måter, mens ScribbleBot og Pixel Panic lar deg kjenne igjen bilder. AtlasMaster bruker geografispørsmål og kart; EraShuffle setter historiske hendelser i rekkefølge. Musikkspillene bruker eksterne lydklipp, og SipZone er beregnet på voksne."
+        ]
+      },
+      {
+        "h": "Utvikling og tilbakemeldinger",
+        "p": [
+          "SpillArena er et hobbyprosjekt. Kildekoden ligger offentlig på GitHub, og endringsloggen i bunnteksten viser oppdateringer. Beta-merking viser spill som fortsatt er under utvikling. Hvis noe feiler, meld fra via kontaktskjemaet med spillnavn, enhet, nettleser og hva du gjorde før feilen."
+        ]
+      },
+      {
+        "h": "Konto og driftskostnader",
+        "p": [
+          "Du kan prøve solospillene uten konto. En gratis konto gir lagret fremgang og tilgang til nettrom. SpillArena kan bruke annonser på forsiden for å bidra til driftskostnadene. Spillguidene, hjelpesidene og kontosidene laster ikke annonsekode."
+        ]
+      }
+    ]
+  }
 }

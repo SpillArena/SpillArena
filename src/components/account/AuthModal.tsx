@@ -224,11 +224,11 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
     if (presentation === 'modal') return <Dialog open onClose={onClose} title={title} dismissible={!shown && !busy}>{content}</Dialog>
     return <div className="account-page-layout">
       <aside className="auth-story">
-        {!shown && <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>}
+        {!shown && <a className="back-link" href="/"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>}
         <img src={logo} alt="" className="auth-logo" width={58} height={58} />
         <p className="eyebrow">SpillArena</p><h1>{t('lobby.accountTitle')}</h1><p className="hero-description">{t('lobby.accountDescription')}</p>
         <ul className="auth-benefits"><li><Check size={16} aria-hidden="true" />{t('profile.benefitProgress')}</li><li><Check size={16} aria-hidden="true" />{t('profile.benefitGames')}</li><li><Check size={16} aria-hidden="true" />{t('profile.benefitGuest')}</li></ul>
-        {!shown && <a className="button secondary" href="#">{t('profile.guestPlay')}<ArrowUpRight size={16} aria-hidden="true" /></a>}
+        {!shown && <a className="button secondary" href="/">{t('profile.guestPlay')}<ArrowUpRight size={16} aria-hidden="true" /></a>}
       </aside>
       <section className="auth-panel" aria-labelledby="auth-title"><p className="eyebrow">{t('account.title')}</p><h2 id="auth-title">{title}</h2>{shown ? <><p className="field-hint">{t('account.recovery.saveIntro')}</p><Dialog open onClose={onClose} title={title} dismissible={false}>{content}</Dialog></> : content}</section>
     </div>

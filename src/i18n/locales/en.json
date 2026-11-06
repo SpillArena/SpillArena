@@ -463,7 +463,13 @@
       "accountCreated": "Account created",
       "accountLastSeen": "Last active",
       "notification": "Email notification",
-      "notificationStatus": {"unknown": "Not tracked", "pending": "Pending — check again shortly", "sent": "Accepted by email provider", "failed": "Failed — message is saved here", "not_configured": "Not configured — message is saved here"},
+      "notificationStatus": {
+        "unknown": "Not tracked",
+        "pending": "Pending — check again shortly",
+        "sent": "Accepted by email provider",
+        "failed": "Failed — message is saved here",
+        "not_configured": "Not configured — message is saved here"
+      },
       "empty": "No messages yet.",
       "from": "From",
       "topic": "Topic",
@@ -669,7 +675,7 @@
   },
   "legal": {
     "back": "Back to games",
-    "updated": "Last updated 5 November 2026",
+    "updated": "Last updated 7 November 2026",
     "contactLabel": "Contact",
     "contact": "Questions, bugs, account deletion or data requests:",
     "privacy": {
@@ -704,14 +710,14 @@
         {
           "h": "Playing without an account",
           "p": [
-            "Every game works without an account. Guest results stay in your browser and never reach a leaderboard under your name."
+            "You can try the solo games without an account. Online multiplayer rooms require a free account. Guest results stay in your browser and do not appear under your name on a leaderboard."
           ]
         },
         {
           "h": "Vendors",
           "p": [
             "Cloudflare, Inc. (USA) hosts the site, the games, the database and the multiplayer rooms. Cloudflare sees ordinary request data such as IP address, browser type and which page was opened, to deliver the pages and protect against abuse. The traffic statistics we see, page views per game, come from Cloudflare’s own server logs and use no cookies or scripts in your browser.",
-            "Google Ireland Limited and Google LLC (USA) provide the ads, through Google AdSense, and Google’s consent message. Ads are shown on the front page, never on the sign-in, registration, recovery and profile pages, and not in the games. See “Ads”.",
+            "Google Ireland Limited and Google LLC (USA) provide the ads, through Google AdSense, and Google’s consent message. Advertising code loads only on the home page, not on game guides, help pages, the contact form, account pages or in the games. See “Ads”.",
             "Resend, Inc. (USA) sends us an email when you use the contact form, containing what you wrote in it: name, email address, topic, message, and your username if you are signed in.",
             "Domeneshop AS (Norway) provides the support@spillarena.no mailbox, where contact-form notifications and email you send us arrive.",
             "Deezer SA (France) provides the music in MelodyRush and Hitline. Album covers and the short audio clips load directly from Deezer’s servers when you open or play these games, so Deezer sees your IP address and which tracks are loaded. We send no account data to Deezer, and you need no Deezer account.",
@@ -817,7 +823,7 @@
         },
         {
           "q": "Do I need an account?",
-          "a": "No. An account only saves your XP and progress and puts your name on leaderboards."
+          "a": "You can try the solo games as a guest. An account saves progress across games and is required for online multiplayer rooms and results under your name."
         },
         {
           "q": "How do I sign in?",
@@ -837,7 +843,7 @@
         },
         {
           "q": "How do I delete my account?",
-          "a": "Email support@spillarena.no. We delete the account, its progress and, on request, its leaderboard entries."
+          "a": "Open your profile and choose Delete account. Confirm with your PIN and the irreversible-deletion checkbox. This removes your account, avatar, recovery codes, saved progress, leaderboard entries and contact messages linked to your current username. Local saves, active rooms, scores under old usernames and delivered email are not removed automatically; contact support for help with those."
         },
         {
           "q": "I found a bug or a bad username.",
@@ -930,5 +936,42 @@
       "network": "Could not reach the server. Check your connection and try again."
     }
   },
-  "gameUnavailable": "Unavailable"
+  "gameUnavailable": "Unavailable",
+  "content": {
+    "aboutLink": "About SpillArena",
+    "guidesLink": "Rules & game guides",
+    "guideLink": "Rules & tips",
+    "rules": "How to play",
+    "example": "An example",
+    "tip": "Tips for your next round",
+    "play": "Open game",
+    "unavailable": "This game is currently unavailable. Check the catalogue for its latest status.",
+    "homeTitle": "Browser games made by SpillArena",
+    "homeIntro": "Play a tactical battle, solve a word puzzle or test your knowledge of geography and history. Each game runs in the browser. Solo games can be tried as a guest; online rooms require a free account.",
+    "homeDetail": "Read the rules and examples before choosing a game. The guides explain what to do, how to interpret feedback and what to practise next. Games marked Beta are still being developed; availability is shown on each card.",
+    "guidesTitle": "Choose a game and learn the rules",
+    "guidesIntro": "Instructions, worked examples and practical tips for the SpillArena games. Game availability is shown in the catalogue.",
+    "aboutTitle": "About SpillArena",
+    "aboutIntro": "SpillArena is a collection of browser games created and maintained by Emil Berglund in Norway. The games explore different kinds of challenges: strategy, language, visual recognition, geography, history and music.",
+    "aboutSections": [
+      {
+        "h": "What you can play",
+        "p": [
+          "FleetBot is about finding a hidden fleet. HangBot and Cracked test words in different ways, while ScribbleBot and Pixel Panic ask you to recognise pictures. AtlasMaster uses geographical questions and maps; EraShuffle puts historical events in order. Music games use external song previews, and SipZone is intended for adults."
+        ]
+      },
+      {
+        "h": "Development and feedback",
+        "p": [
+          "SpillArena is a hobby project. The source code is public on GitHub, and the changelog in the footer records changes. Beta labels identify games still being developed. If something fails, report the game, device, browser and steps that led to the problem through the contact form."
+        ]
+      },
+      {
+        "h": "Accounts and running costs",
+        "p": [
+          "You can try the solo games without an account. A free account supports saved progress and online rooms. SpillArena may use advertising on the home page to help cover hosting costs. The game guides, help pages and account pages do not load advertising code."
+        ]
+      }
+    ]
+  }
 }

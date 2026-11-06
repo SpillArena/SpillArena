@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
+import { contentPages } from "./scripts/content-pages.ts";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -39,5 +40,5 @@ function adsense(client: string): Plugin {
 }
 
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss(), adsense(loadEnv(mode, process.cwd(), "VITE_").VITE_ADSENSE_CLIENT ?? "")],
+  plugins: [react(), tailwindcss(), contentPages(), adsense(loadEnv(mode, process.cwd(), "VITE_").VITE_ADSENSE_CLIENT ?? "")],
 }));

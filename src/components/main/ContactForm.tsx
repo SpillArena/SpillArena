@@ -90,7 +90,7 @@ export default function ContactForm() {
         </dl>
 
         <div className="contact-success-actions">
-          <a className="back-link" href="#"><ArrowLeft size={17} aria-hidden="true" />{t('contact.backToGames')}</a>
+          <a className="back-link" href="/"><ArrowLeft size={17} aria-hidden="true" />{t('contact.backToGames')}</a>
           <button className="button secondary" type="button" onClick={reset}>{t('contact.sendAnother')}</button>
         </div>
       </section>
@@ -126,7 +126,7 @@ export default function ContactForm() {
     <h1>{t('contact.helpedTitle')}</h1>
     <p className="legal-lead">{t('contact.helpedBody')}</p>
     <div className="contact-actions">
-      <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('legal.back')}</a>
+      <a className="back-link" href="/"><ArrowLeft size={16} aria-hidden="true" />{t('legal.back')}</a>
       <button className="button secondary" type="button" onClick={() => setPhase('writing')}>{t('contact.backToForm')}</button>
     </div>
   </article>
@@ -137,7 +137,7 @@ export default function ContactForm() {
     : error === 'message_short' || error === 'message_long' ? ids.message : undefined
 
   return <article className="legal-page contact-page">
-    <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('legal.back')}</a>
+    <a className="back-link" href="/"><ArrowLeft size={16} aria-hidden="true" />{t('legal.back')}</a>
     <h1>{t('contact.title')}</h1>
     <p className="legal-lead">{t('contact.intro')}</p>
 
@@ -178,7 +178,7 @@ export default function ContactForm() {
             </div>}
           </li>)}
         </ul>
-        <a className="inline-link" href="#faq">{t('contact.allFaq')}</a>
+        <a className="inline-link" href="/faq/">{t('contact.allFaq')}</a>
       </section>}
 
       <label htmlFor={ids.email}><span>{t('contact.email')} <span aria-hidden="true">*</span></span>
@@ -204,7 +204,7 @@ export default function ContactForm() {
       </p>}
 
       <p className="field-hint">
-        <Trans i18nKey="contact.privacy" components={{ link: <a className="inline-link" href="#privacy" /> }} />
+        <Trans i18nKey="contact.privacy" components={{ link: <a className="inline-link" href="/privacy/" /> }} />
       </p>
 
       <div className="contact-actions">

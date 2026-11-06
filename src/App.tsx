@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { gameBanner, type Game } from './data/games'
 import { adsRequested, getSession, useAccount } from './account'
-import { isPinPage } from './lib/adFreePages'
+import { isAdFreePage } from './lib/adFreePages'
 import HeaderSection from './components/header/HeaderSection'
 import HeroSection from './components/main/HeroSection'
 import GamesSection from './components/main/GamesSection'
@@ -13,18 +13,12 @@ import InstallPrompt from './components/main/InstallPrompt'
 import FooterSection from './components/footer/FooterSection'
 import AuthModal from './components/account/AuthModal'
 import ProfilePage from './components/account/ProfilePage'
-import LegalPage from './components/main/LegalPage'
+import { EditorialArticle, HomeIntroduction, guideSlug, pageMetadata, type InfoPage } from './content/pages'
+import { currentPage, legacyInfoPath, type Page } from './lib/pages'
 import ContactForm from './components/main/ContactForm'
 import Dialog from './ui/Dialog'
 import { goToGame } from './ui/loader'
 import { useGlobalLoader } from './ui/useGlobalLoader'
-
-type Page = 'home' | 'login' | 'register' | 'recover' | 'profile' | 'privacy' | 'terms' | 'faq' | 'contact'
-function currentPage(): Page {
-  if (new URL(window.location.href).searchParams.has('recover')) return 'recover'
-  const hash = window.location.hash.slice(1)
-  return ['login', 'register', 'recover', 'profile', 'privacy', 'terms', 'faq', 'contact'].includes(hash) ? hash as Page : 'home'
-}
 
 export default function App() {
   const { t, i18n } = useTranslation()
@@ -59,7 +53,9 @@ export default function App() {
     }
     const onHashChange = () => {
       // reklameskriptet kan ikke fjernes fra en side, bare lastes uten — se src/lib/adFreePages.ts
-      if (adsRequested() && isPinPage()) {
+      const legacyPath = legacyInfoPath()
+      if (legacyPath) { window.location.assign(legacyPath); return }
+      if (adsRequested() && isAdFreePage()) {
         window.location.reload()
         return
       }
@@ -75,7 +71,19 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.lang = i18n.resolvedLanguage === 'no' ? 'nb' : 'en'
-    document.title = page === 'home' ? t('seoTitle') : page === 'contact' ? t('contact.title') + ' · SpillArena' : page === 'privacy' || page === 'terms' || page === 'faq' ? t(`legal.${page}.title`) + ' · SpillArena' : t(page === 'profile' ? 'account.yourProfile' : page === 'register' ? 'account.register' : page === 'recover' ? 'account.recovery.title' : 'account.signIn') + ' · SpillArena'
+    const slug = guideSlug(window.location.pathname)
+    const accountPage = ['login', 'register', 'recover', 'profile'].includes(page)
+    const metadata = pageMetadata(i18n.resolvedLanguage === 'en' ? 'en' : 'no',
+      ['home', 'guide'].includes(page) || accountPage ? undefined : page as InfoPage, page === 'guide' ? slug : undefined)
+    document.title = accountPage
+      ? t(page === 'profile' ? 'account.yourProfile' : page === 'register' ? 'account.register' : page === 'recover' ? 'account.recovery.title' : 'account.signIn') + ' · SpillArena'
+      : page === 'home' ? metadata.title : metadata.title + ' · SpillArena'
+    document.querySelector('meta[name="description"]')?.setAttribute('content', metadata.description)
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://spillarena.no${metadata.path}`)
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title)
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', metadata.description)
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://spillarena.no${metadata.path}`)
+    document.querySelector('meta[name="robots"]')?.setAttribute('content', accountPage ? 'noindex, follow' : 'index, follow')
   }, [page, i18n.resolvedLanguage, t])
 
   const handleGameClick = (game: Game) => {
@@ -89,6 +97,9 @@ export default function App() {
     if (pool.length) setPickedGame(pool[Math.floor(Math.random() * pool.length)])
   }
 
+  const slug = guideSlug(window.location.pathname)
+  const guideGame = slug ? games.find(game => new URL(game.liveUrl).pathname.split('/')[1] === slug) : undefined
+
   return <div className="lobby-app">
     <a className="skip-link" href="#main-content" onClick={event => { event.preventDefault(); document.getElementById('main-content')?.focus(); document.getElementById('main-content')?.scrollIntoView() }}>{t('profile.skipContent')}</a>
     <HeaderSection username={username} onSelectGame={handleGameClick} />
@@ -97,8 +108,9 @@ export default function App() {
       {page === 'home' ? <>
         <HeroSection onSurprise={pickGame} onPlay={handleGameClick} />
         <GamesSection onClick={handleGameClick} />
+        <HomeIntroduction language={i18n.resolvedLanguage === 'en' ? 'en' : 'no'} />
         <aside className="account-strip" aria-labelledby="account-strip-title"><div className="account-symbol" aria-hidden="true"><ArrowUpRight size={28} /></div><div><h2 id="account-strip-title">{t('lobby.accountTitle')}</h2><p>{t('lobby.accountDescription')}</p></div><a className="button secondary" href={isSignedIn ? '#profile' : '#login'}>{t(isSignedIn ? 'account.yourProfile' : 'lobby.accountMore')}<ArrowUpRight size={16} aria-hidden="true" /></a></aside>
-      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' ? <LegalPage kind={page} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => void handleSignOut()} onPlay={handleGameClick} onDeleted={() => { setAccountDeleted(true); window.location.hash = ''; setPage('home') }} /> :
+      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' || page === 'about' || page === 'guides' || page === 'guide' ? <EditorialArticle page={page === 'guide' ? undefined : page} slug={slug} action={guideGame && (guideGame.disabled ? <p role="status">{t('content.unavailable')}</p> : <button className="button primary" type="button" onClick={() => handleGameClick(guideGame)}>{t('content.play')}<ArrowUpRight size={16} aria-hidden="true" /></button>)} language={i18n.resolvedLanguage === 'en' ? 'en' : 'no'} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => void handleSignOut()} onPlay={handleGameClick} onDeleted={() => { setAccountDeleted(true); window.location.hash = ''; setPage('home') }} /> :
         <AuthModal key={page} open presentation="page" initialMode={page} onClose={() => { window.location.hash = getSession() ? 'profile' : '' }} />}
     </main>
     <FooterSection />

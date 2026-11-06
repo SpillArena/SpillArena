@@ -49,8 +49,8 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <!--
-    SpillArena-lasteren. Inline og ikke i pakken: den skal vises mens pakken
-    lastes. Brikkene er de 13 i logoen, i samme rekkefølge som S-en tegnes.
+    SpillArena-lasteren. Inline og ikke i pakken: den brukes ved navigasjon etter at siden
+    er lastet. Brikkene er de 13 i logoen, i samme rekkefølge som S-en tegnes.
     src/ui/loader.ts skrur den av og på.
   -->
   <style>
@@ -245,8 +245,8 @@
 </head>
 
 <body>
-  <div id="root"><main style="max-width:720px;margin:0 auto;padding:32px 16px;font-family:system-ui,sans-serif"><h1>SpillArena: gratis nettleserspill på norsk</h1><p>Alt står på spill. SpillArena er en samling gratis nettleserspill mot bots og venner. Ingen konto, ingen nedlasting.</p><ul><li><a href="/fleetbot">FleetBot</a>: Slagskip på nett. Plasser skipene dine og senk motstanderens flåte.</li><li><a href="/hangbot">HangBot</a>: Galgespill på nett. Gjett ordet før tegningen er ferdig.</li><li><a href="/scribblebot">ScribbleBot</a>: Tegn og gjett mot bots og venner.</li><li><a href="/atlasmaster">AtlasMaster</a>: Geografiquiz: land, hovedsteder, byer, elver og fjelltopper.</li><li><a href="/proportionpanic">Proportion Panic</a>: Gjett hvor store ting egentlig er.</li><li><a href="/pixelpanic">Pixel Panic</a>: Bildequiz: gjett filmen, spillet, stedet eller flagget mens bildet blir skarpere.</li><li><a href="/erashuffle">EraShuffle</a>: Historiespill: sett fem hendelser i riktig rekkefølge.</li><li><a href="/melodyrush/">MelodyRush</a>: Musikkquiz: gjett sangen fra korte lydklipp.</li><li><a href="/hitline/">Hitline</a>: Musikkspill: plasser låten på tidslinjen etter utgivelsesår.</li></ul></main></div>
-  <div id="arena-loader" class="arena-loader is-boot" role="status" aria-live="polite">
+  <div id="root"><!--app-content--><!--/app-content--></div>
+  <div id="arena-loader" class="arena-loader is-hidden" role="status" aria-live="polite">
     <div class="arena-loader-board" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <p class="arena-loader-label"></p>
   </div>

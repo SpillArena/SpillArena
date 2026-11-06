@@ -283,7 +283,7 @@ before ads existed.
 | `src/account/ads.ts` | Loads Google's consent message (IAB TCF) on its own, and the AdSense tag only once the message has an answer. **Vendored** like the rest of `src/account/`. |
 | `src/account/ConsentDialog.tsx` | Waits for Google's message and points to Google's ad settings (also vendored). |
 | `vite.config.ts` | Writes `/ads.txt` and `<meta name="google-adsense-account">` from the id, and stops the build on a malformed one. |
-| `src/main.tsx` | `loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)` before the first render. |
+| `src/main.tsx` | Loads AdSense only on the home catalogue, before the first render; `isAdFreePage()` excludes guides, help, contact and account pages, including legacy hashes. |
 | `tests/ads-consent.test.mjs` | `npm run test:ads`: the consent rules below, against a fake Google tag. |
 
 ### Two questions, one prompt
@@ -432,3 +432,13 @@ need a catalogue entry, origin route, and seeded database setting.
 
 Local checks: `npm run test:admin`, `npm run test:popularity`, `npm run lint`,
 `npm run build`, and the router's `node --test tests/proxy.test.mjs`.
+
+## Public content and AdSense review (7 November 2026)
+
+- `src/content/guides.json` holds Norwegian and English rules, examples and tips for all eleven games. These are editorial instructions, not an approval guarantee.
+- `/games/`, `/games/<slug>/`, `/about/`, `/faq/`, `/privacy/`, `/terms/` and `/contact/` are real document routes. Old `#faq`, `#privacy`, `#terms` and `#contact` links still resolve. Root-relative account/home links are required on these routes.
+- `scripts/content-pages.ts` uses the same `EditorialArticle` renderer as React and writes all public documents with their own title, description and canonical. The initial HTML stays readable if JS is unavailable; the loader is used for transitions only. Run `npm run build` before the content tests.
+- `/sitemap.xml` is served by `functions/sitemap.xml.js`, reading the existing `game_settings` table. Play URLs are included only for available games; guides remain available during maintenance. There are no fabricated `lastmod` dates. A static build has a defaults-based sitemap for preview; live Pages Functions overrides it. No migration is needed.
+- Only the home catalogue requests advertising. Information pages, guides, contact and account pages do not load either the Google consent script or ad script. Hash navigation to an ad-free screen reloads a document that has not loaded advertising code.
+- Each game's `index.html` has readable initial information and an expandable rules section outside React's root. `public/game-information.css` scopes styling and follows the document language. After changing guide introductions or rules, run `node scripts/sync-game-information.mjs --check`; `--write` explicitly updates the eleven sibling repos. This is never a side effect of the hub build. Review and deploy those repos separately.
+- Validation: `npm run build`, `npm run lint`, `node --test tests/*.test.mjs`. Build each changed game. Publish the hub and game changes, verify the public documents/sitemap and game availability, then request AdSense review manually. Do not describe a passing local check as a live deployment or Google approval.

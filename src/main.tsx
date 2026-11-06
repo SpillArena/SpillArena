@@ -13,7 +13,8 @@ import App from './App'
 import CookieConsentBanner from './components/CookieConsentBanner'
 import { hideLoader, installGameLinkLoader } from './ui/loader'
 import { loadAdSense } from './account'
-import { isPinPage } from './lib/adFreePages'
+import { isAdFreePage } from './lib/adFreePages'
+import { legacyInfoPath } from './lib/pages'
 
 /*
  * Økten lagres bare når samtykket er gitt. Uten det lever innloggingen i minnet
@@ -25,11 +26,13 @@ import { isPinPage } from './lib/adFreePages'
 /*
  * Reklame, og Googles samtykkevindu med den. Før første tegning, så
  * samtykkedialogen vet at den skal vente på Googles. Uten VITE_ADSENSE_CLIENT
- * (se .env.production) gjør kallet ingenting. Aldri på sider der PIN-en
- * skrives (src/lib/adFreePages.ts). Hvorfor og hvordan: src/account/ads.ts og
+ * (se .env.production) gjør kallet ingenting. Bare på forsiden, aldri på hjelpe-, kontakt- eller kontosider
+ * (src/lib/adFreePages.ts). Hvorfor og hvordan: src/account/ads.ts og
  * docs/OPERATIONS.md.
  */
-if (!isPinPage()) loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)
+const legacyPath = legacyInfoPath()
+if (legacyPath) window.history.replaceState(window.history.state, '', legacyPath)
+if (!isAdFreePage()) loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -44,6 +47,6 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>
 )
 
-// lasteren fra index.html har stått siden første byte; nå er det noe å vise
+// Første HTML er lesbar uten laster; lasteren brukes ved navigasjon og opptatte handlinger.
 requestAnimationFrame(hideLoader)
 installGameLinkLoader(game => i18n.t('lobby.loadingGame', { title: game.title }))

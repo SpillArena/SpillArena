@@ -1,0 +1,178 @@
+{
+  "fleetbot": {
+    "no": {
+      "title": "FleetBot: slagskip mot bot eller venner",
+      "intro": "FleetBot er et strategispill der to flåter møtes på et skjult rutenett. Du vet hvor dine egne skip ligger, men må finne motstanderens ved å skyte mot én rute om gangen. Du kan spille alene mot boten eller opprette et privat rom for en venn.",
+      "rules": "Plasser skipene dine på brettet før kampen starter. Velg deretter ruter på motstanderens brett og bruk tilbakemeldingen om treff og bom til å finne resten av flåten. Den som senker alle motstanderens skip først, vinner. Innstillingene lar deg velge brettstørrelse og vanskelighetsgrad for solospill.",
+      "example": "Hvis du får treff i én rute, undersøk rutene ved siden av. To treff på samme rad gir deg en retning å følge. En bom utenfor denne linjen hjelper deg å utelukke hvor skipet fortsetter.",
+      "tip": "Spre søket mens du leter etter et nytt skip, og samle skuddene når du har fått treff. Ikke bruk alle skuddene i ett hjørne før du har undersøkt resten av brettet."
+    },
+    "en": {
+      "title": "FleetBot: battleships against a bot or friends",
+      "intro": "FleetBot is a strategy game played with two fleets on hidden grids. You can see your own ships, but must locate your opponent’s by firing at individual squares. Play against the bot or create a private room for a friend.",
+      "rules": "Place your ships before the battle starts. Choose squares on the opposing grid and use hits and misses to locate the remaining ships. The first player to sink the entire opposing fleet wins. Solo settings let you choose the board size and difficulty.",
+      "example": "After hitting one square, try its neighbours. Two hits in the same row suggest a direction to follow. A miss beyond that line helps rule out where the ship continues.",
+      "tip": "Spread out your search while looking for a new ship, then concentrate your shots after a hit. Explore the board rather than spending every shot in one corner."
+    }
+  },
+  "hangbot": {
+    "no": {
+      "title": "HangBot: gjett det skjulte ordet",
+      "intro": "I HangBot gjetter du bokstaver for å finne et skjult ord før tegningen blir ferdig. Spill alene mot boten, eller bruk flerspillermodusene til å konkurrere med venner og velge hemmelige ord til hverandre.",
+      "rules": "Velg språk og vanskelighetsgrad, og start en runde. En riktig bokstav fyller ut plassene der den forekommer. Feil bokstaver bygger videre på tegningen. Finn hele ordet før du går tom for forsøk. Private flerspillerrom krever en SpillArena-konto.",
+      "example": "Ser du mønsteret «_ A _», kan en ny vokal eller en vanlig konsonant gi mer informasjon enn et helt tilfeldig tegn. En bokstav som forekommer flere ganger, fyller flere plasser samtidig.",
+      "tip": "Tilpass gjetningene til språket du spiller på. Begynn med bokstaver som passer i mange ord, og bruk ordlengden og plasseringen av kjente bokstaver til å snevre inn mulighetene."
+    },
+    "en": {
+      "title": "HangBot: find the hidden word",
+      "intro": "In HangBot, guess letters to uncover a hidden word before the drawing is complete. Play against the bot, compete with friends in multiplayer, or choose secret words for one another.",
+      "rules": "Choose a language and difficulty, then start a round. Correct letters fill every matching position. Incorrect letters add to the drawing. Complete the word before running out of attempts. Private multiplayer rooms require a SpillArena account.",
+      "example": "For a pattern such as “_ A _”, another vowel or a common consonant can be more useful than a random letter. A letter that occurs several times reveals several positions at once.",
+      "tip": "Adapt your guesses to the chosen language. Start with letters that fit many words, then use the word length and known positions to narrow down the possibilities."
+    }
+  },
+  "scribblebot": {
+    "no": {
+      "title": "ScribbleBot: se tegningen og gjett ordet",
+      "intro": "ScribbleBot lar deg gjette motivet mens en tegning blir til. Du kan spille alene, konkurrere om å kjenne igjen botens tegning i et privat rom eller bytte på å være tegner sammen med venner.",
+      "rules": "Se etter hva strekene forestiller, og skriv inn et forslag. I flerspiller får riktige svar poeng, og raske svar gir mer. I modusen der spillerne tegner selv, får tegneren også poeng når andre finner svaret. Flerspiller krever en gratis SpillArena-konto.",
+      "example": "En sirkel kan være både et hjul og en sol. Vent på hvordan de neste strekene knytter seg til formen: et andre hjul og en ramme gjør «sykkel» mer sannsynlig enn «sol».",
+      "tip": "Se på hele silhuetten før du låser deg til en liten detalj. Når du tegner selv, vis de viktigste formene først. Ikke skriv bokstaver eller avslør ordet i chatten."
+    },
+    "en": {
+      "title": "ScribbleBot: recognise the drawing",
+      "intro": "ScribbleBot asks you to name an image as it is drawn. Play solo, race friends to identify the bot’s picture in a private room, or take turns drawing for each other.",
+      "rules": "Watch the strokes and enter a guess. In multiplayer, correct answers earn points and faster answers earn more. When players take turns drawing, the artist also earns points when others solve the picture. Multiplayer requires a free SpillArena account.",
+      "example": "A circle could be a wheel or the sun. Watch how the next strokes connect: a second wheel and a frame make “bicycle” more likely than “sun”.",
+      "tip": "Look at the overall silhouette before focusing on one detail. When drawing, establish the main shapes first. Do not write letters or reveal the word in chat."
+    }
+  },
+  "atlasmaster": {
+    "no": {
+      "title": "AtlasMaster: geografi med kart og quiz",
+      "intro": "AtlasMaster tester geografikunnskapene dine, fra Norge til resten av verden. Du møter oppgaver om blant annet land, hovedsteder, byer, elver og fjelltopper. Kartet gir en romlig sammenheng som en ren liste med navn ikke gir.",
+      "rules": "Velg området og oppgavetypen du vil øve på. Les spørsmålet før du svarer på kartet eller i quizen. Bruk tilbakemeldingen til å se hva som var riktig, og spill flere runder for å øve på steder du blander sammen.",
+      "example": "Hvis du blander to naboland, se først på kystlinjen og hvilke land som ligger rundt. Det gjør det lettere å kjenne dem igjen neste gang enn å huske plasseringen som et tilfeldig punkt på skjermen.",
+      "tip": "Begynn med et område du kjenner, og utvid gradvis. Sammenlign et sted du bommer på med et kjent nabosted: retning og avstand gir flere holdepunkter enn navnet alene."
+    },
+    "en": {
+      "title": "AtlasMaster: geography with maps and quizzes",
+      "intro": "AtlasMaster tests geographical knowledge, from Norway to the rest of the world. Topics include countries, capitals, cities, rivers and mountain peaks. Maps put each answer in a spatial context rather than presenting names alone.",
+      "rules": "Choose a region and question type. Read each prompt before answering on the map or in the quiz. Use the feedback to identify the correct place, then return to the topics you find difficult.",
+      "example": "If you confuse two neighbouring countries, look at their coastlines and surrounding countries. Those features are easier to recognise next time than a seemingly random point on the screen.",
+      "tip": "Start with a familiar area and expand gradually. Compare a place you miss with a known neighbour: direction and distance give you more reference points than its name alone."
+    }
+  },
+  "proportionpanic": {
+    "no": {
+      "title": "Proportion Panic: test øyemålet",
+      "intro": "Proportion Panic handler om å anslå størrelser og forhold under tidspress. Du må bruke det du ser og vet til å velge et anslag, i stedet for å slå opp et nøyaktig svar. Spillet passer når du vil øve på proporsjoner og raske vurderinger.",
+      "rules": "Velg en oppgavetype fra spillmenyen. Les hva som skal anslås, og gi svaret ditt før tiden løper ut i moduser med tidtaking. Sammenlign anslaget med fasiten etterpå for å se om du overvurderte eller undervurderte størrelsen.",
+      "example": "Når du vurderer en andel, kan du først sammenligne med halvparten. Er den tydelig mindre, bruk en fjerdedel som neste holdepunkt. Da bygger du anslaget i flere trinn i stedet for å velge et tall uten referanse.",
+      "tip": "Skill mellom lengde og areal: en figur som er dobbelt så bred og dobbelt så høy, har fire ganger så stort areal. Se også etter samme type feil over flere runder."
+    },
+    "en": {
+      "title": "Proportion Panic: test your estimation",
+      "intro": "Proportion Panic is about judging sizes and proportions under time pressure. Use what you see and know to make an estimate rather than looking up an exact answer. It is a way to practise proportions and quick judgements.",
+      "rules": "Choose a question type from the game menu. Read what you need to estimate, then submit your answer before time runs out in timed modes. Compare your estimate with the answer afterwards to see whether you overestimated or underestimated.",
+      "example": "When judging a proportion, first compare it with one half. If it is clearly smaller, use one quarter as your next reference. This builds an estimate in steps instead of choosing a number without context.",
+      "tip": "Distinguish length from area: a shape twice as wide and twice as tall has four times the area. Look for the same kind of mistake across several rounds."
+    }
+  },
+  "pixelpanic": {
+    "no": {
+      "title": "Pixel Panic: kjenn igjen bildet før det blir skarpt",
+      "intro": "I Pixel Panic starter du med lite bildeinformasjon. Motivet blir tydeligere etter hvert, og du prøver å finne svaret så tidlig som mulig. Kategoriene omfatter blant annet filmer, spill, steder og flagg.",
+      "rules": "Velg kategori og spillmodus. Se på bildet og skriv inn hva du tror det forestiller. Etter hvert som flere detaljer blir synlige, får du bedre grunnlag for å svare. Målet er å kjenne igjen motivet mens du fortsatt har få detaljer å støtte deg på.",
+      "example": "Et flagg med store, ensfargede felt kan være gjenkjennelig før et lite symbol i midten vises. I et stedsbilde kan en horisont eller en kjent bygningsform være mer nyttig enn fargene alene.",
+      "tip": "Start med fargefordelingen og de største formene. Juster hypotesen når bildet blir tydeligere, i stedet for å holde fast ved den første gjetningen. Velg en kjent kategori mens du lærer spillets tempo."
+    },
+    "en": {
+      "title": "Pixel Panic: recognise the image as it sharpens",
+      "intro": "Pixel Panic begins with very little visual information. The picture becomes clearer over time, and you try to identify it as early as possible. Categories include films, games, places and flags.",
+      "rules": "Choose a category and mode, then examine the picture and enter your guess. More detail gives you better evidence as the image sharpens. The challenge is to recognise the subject while you still have relatively little information.",
+      "example": "A flag with large blocks of colour may be recognisable before a small central symbol appears. For a place, a skyline or a distinctive building shape can be more helpful than colours alone.",
+      "tip": "Start with the colour distribution and largest shapes. Revise your idea as the picture clears instead of sticking to your first guess. Choose a familiar category while learning the pace."
+    }
+  },
+  "erashuffle": {
+    "no": {
+      "title": "EraShuffle: sett historien i riktig rekkefølge",
+      "intro": "EraShuffle er et historiespill der du plasserer fem hendelser fra eldst til nyest. Utfordringen er å finne sammenhengen mellom hendelsene, også når du ikke husker alle årstallene. Etterpå kan du lese årstallene og forklaringene.",
+      "rules": "Start en runde og les alle fem hendelsene. Flytt dem til den rekkefølgen du mener er riktig, og bekreft når du er fornøyd. Se deretter på fasiten og historiene bak hendelsene. Den daglige oppgaven gir en felles utfordring å komme tilbake til.",
+      "example": "Er du usikker på et årstall, kan du likevel vite at en oppfinnelse må komme før en senere bruk av den. Plasser først de hendelsene du er trygg på, og bruk dem som holdepunkter for resten.",
+      "tip": "Tenk i perioder før du tenker i eksakte år. Spør hvilke hendelser som kan ha påvirket hverandre. Les forklaringene etter runden, særlig når en hendelse kom tidligere eller senere enn du trodde."
+    },
+    "en": {
+      "title": "EraShuffle: put history in order",
+      "intro": "EraShuffle is a history game in which you arrange five events from earliest to latest. The challenge is to connect events even when you do not remember every date. Afterwards, read the years and the stories behind them.",
+      "rules": "Start a round and read all five events. Move them into your chosen order, then confirm when you are ready. Review the correct sequence and explanations afterwards. The daily puzzle gives you a shared challenge to return to.",
+      "example": "Even without knowing a year, you may know that an invention must precede a later use of it. Place the events you are confident about first and use them as reference points.",
+      "tip": "Think in periods before exact years. Consider which events could have influenced others. Read the explanations afterwards, especially when something happened earlier or later than expected."
+    }
+  },
+  "melodyrush": {
+    "no": {
+      "title": "MelodyRush: gjett musikken fra korte klipp",
+      "intro": "MelodyRush er en musikkquiz der du kjenner igjen låter fra korte lydklipp. Du konkurrerer med deg selv eller venner om hvor lite du trenger å høre før du vet svaret. Musikken og albumcoverne hentes fra Deezer.",
+      "rules": "Start en runde, spill av klippet og gi et svar. Jo mindre av låten du trenger å høre, desto flere poeng kan du få. Følg valgene i spillmenyen for å spille alene eller med venner. Du trenger ikke en Deezer-konto for å høre forhåndsvisningene.",
+      "example": "Et kjent trommemønster kan gi en idé om artisten, mens en vokalfrase kan avsløre selve låten. Bruk neste lytt til å teste hypotesen, heller enn å gjenta den samme gjetningen.",
+      "tip": "Spill et sted der du hører klippet tydelig. Nettverk og tilgjengeligheten hos musikkleverandøren påvirker avspillingen. Hvis et klipp ikke lastes, prøv igjen senere; manglende lyd betyr ikke nødvendigvis at enheten er dempet."
+    },
+    "en": {
+      "title": "MelodyRush: identify songs from short clips",
+      "intro": "MelodyRush is a music quiz built around short song previews. Challenge yourself or friends to recognise a song from as little audio as possible. Music previews and cover art come from Deezer.",
+      "rules": "Start a round, listen to the clip and give an answer. Recognising the song from less audio can earn more points. Use the game menu to choose solo or multiplayer. You do not need a Deezer account to hear the previews.",
+      "example": "A distinctive drum pattern may suggest an artist, while a vocal phrase can reveal the song. Use another listen to test your idea rather than repeating the same guess.",
+      "tip": "Play somewhere you can hear clearly. Playback depends on your connection and the music provider’s availability. If a clip fails to load, try later; missing sound does not always mean your device is muted."
+    }
+  },
+  "hitline": {
+    "no": {
+      "title": "Hitline: plasser låter på en tidslinje",
+      "intro": "Hitline kombinerer musikkgjenkjenning med kunnskap om utgivelsesår. Du lytter til en låt og finner plassen dens mellom låtene du allerede har på tidslinjen. Spillet har solo- og flerspillermoduser, men kan være midlertidig utilgjengelig.",
+      "rules": "Når spillet er tilgjengelig, velger du en spillmodus og lytter til klippet. Vurder hvilket år låten kom ut, og plasser den mellom eldre og nyere låter på tidslinjen. Tilbakemeldingen viser om plasseringen var riktig. Lydklippene leveres av Deezer.",
+      "example": "Med låter fra 1980 og 2000 på tidslinjen trenger du først å avgjøre om den nye låten hører hjemme før, mellom eller etter dem. Du kan finne riktig intervall uten å kunne det eksakte året.",
+      "tip": "Bruk produksjonsstil og instrumenter som holdepunkter, men husk at nye låter kan ha retrolyd. Spill bare fra lenken når forsiden viser at spillet er tilgjengelig."
+    },
+    "en": {
+      "title": "Hitline: place songs on a timeline",
+      "intro": "Hitline combines song recognition with knowledge of release years. Listen to a song and place it between the tracks already on your timeline. The game has solo and multiplayer modes, but may be temporarily unavailable.",
+      "rules": "When the game is available, choose a mode and listen to the preview. Estimate the release year and place the song between older and newer tracks. Feedback reveals whether the position was correct. Audio previews are provided by Deezer.",
+      "example": "With tracks from 1980 and 2000 on your timeline, first decide whether the next song belongs before, between or after them. You can find the right interval without knowing the exact year.",
+      "tip": "Production style and instruments can help, but new songs can have a retro sound. Use the play link only when the catalogue shows the game as available."
+    }
+  },
+  "sipzone": {
+    "no": {
+      "title": "SipZone: festleker på én mobil eller flere enheter",
+      "intro": "SipZone samler festleker for en gruppe som sitter sammen. Dere kan dele én mobil eller bruke hver deres enhet med SipZone Live. Innholdet omtaler alkohol og er beregnet på voksne.",
+      "rules": "Velg en lek, legg inn spillerne og les oppgavene som vises. Avklar grenser før dere starter, og la alle hoppe over oppgaver. I SipZone Live følger dere instruksjonene i spillet for å bli med på hver deres enhet.",
+      "example": "Før første runde kan gruppen avtale at alle kan stå over uten å forklare hvorfor. Hvis en oppgave ikke passer for gruppen, hopper dere videre i stedet for å presse noen til å delta.",
+      "tip": "Deltakelse skal være frivillig, og dere kan spille uten alkohol. Ikke la en spillregel bestemme hvor mye noen skal drikke. Ta pauser og velg en annen lek hvis noen blir ukomfortable."
+    },
+    "en": {
+      "title": "SipZone: party games on one phone or several devices",
+      "intro": "SipZone brings together party games for a group in the same room. Share one phone or use separate devices with SipZone Live. The content refers to alcohol and is intended for adults.",
+      "rules": "Choose a game, add the players and read the prompts. Agree on boundaries before starting and let everyone skip tasks. For SipZone Live, follow the in-game instructions to join on separate devices.",
+      "example": "Before the first round, agree that anyone can pass without explaining why. If a prompt does not suit the group, move on rather than pressuring someone to take part.",
+      "tip": "Participation should be voluntary and you can play without alcohol. Do not let a game rule decide how much anyone drinks. Take breaks and switch games if someone feels uncomfortable."
+    }
+  },
+  "cracked": {
+    "no": {
+      "title": "Cracked: knekk dagens kodeord",
+      "intro": "Cracked er en ordgåte der du finner et skjult kodeord på fem forsøk. Tilbakemeldingen bruker piler gjennom alfabetet for å hjelpe deg videre. Du kan spille dagens oppgave eller øve på flere låser.",
+      "rules": "Skriv inn et gyldig ord og se på tilbakemeldingen for hver bokstav. Pilene forteller hvilken retning du må bevege deg i alfabetet for å finne riktig bokstav. Bruk informasjonen til å velge neste ord, og knekk hele koden før fem forsøk er brukt.",
+      "example": "Hvis pilen ved en bokstav peker fremover i alfabetet, må neste kandidat på den plassen ligge senere i alfabetet. Kombiner grensene fra flere forsøk for å snevre inn bokstavene som fortsatt kan passe.",
+      "tip": "Bruk alle tilbakemeldingene samtidig. Et nytt ord bør teste mulige bokstaver uten å bryte grenser du allerede kjenner. Språkvalget følger ordene i spillet: velg norsk for norske kodeord og engelsk for engelske."
+    },
+    "en": {
+      "title": "Cracked: solve the daily code word",
+      "intro": "Cracked is a word puzzle in which you uncover a hidden code word in five attempts. Alphabet arrows guide your next guess. Play the daily puzzle or practise with more locks.",
+      "rules": "Enter a valid word and check the feedback for each letter. Arrows show which direction to move through the alphabet to find the correct letter. Use that information to choose your next word and solve the code within five attempts.",
+      "example": "If an arrow points forwards through the alphabet, the next candidate for that position must be a later letter. Combine boundaries from several attempts to narrow down what can still fit.",
+      "tip": "Use all the feedback together. A new guess should test possible letters without breaking boundaries you already know. The word language follows your setting: Norwegian for Norwegian puzzles and English for English ones."
+    }
+  }
+}
