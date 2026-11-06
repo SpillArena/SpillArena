@@ -39,6 +39,24 @@ html.dark {
   --accent-ink: var(--accent);
   --on-accent: #24172f;
 }
+/*
+ * Same colours for a dark device before JavaScript has put .dark on <html>, so
+ * the first paint is not light. .light is an explicit choice and wins.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    color-scheme: dark;
+    --surface: #18151e;
+    --surface-card: #211d29;
+    --border: #3e3649;
+    --border-hover: #675477;
+    --text: #f5f0f7;
+    --text-subtle: #b6aebb;
+    --accent: #ceb1ed;
+    --accent-ink: var(--accent);
+    --on-accent: #24172f;
+  }
+}
 
 html,
 body,
