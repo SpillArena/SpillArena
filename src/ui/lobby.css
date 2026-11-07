@@ -118,6 +118,8 @@ legend { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
 .release-list h3 { margin: 12px 0; font-size: 18px; line-height: 1.4; }
 .release-list ul { list-style: none; padding-left: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .release-list ul li + li { margin-top: 6px; }
+.release-list ul li { display: flex; gap: 10px; }
+.release-list ul li::before { content: '-'; flex: none; color: var(--accent-ink); }
 .picked-art { width: 100%; border-radius: 8px; margin-top: 20px; display: block; }
 .dialog-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; }
 @media (min-width: 1500px) { .hero { gap: 9%; padding-block: 80px; } .hero-description { font-size: 18px; max-width: 440px; } .featured { padding: 26px; } .featured-bottom p:last-child { max-width: 340px; } }
