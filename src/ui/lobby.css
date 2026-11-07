@@ -116,7 +116,7 @@ legend { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
 .release-meta strong { color: var(--accent-ink); }
 .release-meta time { color: var(--muted); }
 .release-list h3 { margin: 12px 0; font-size: 18px; line-height: 1.4; }
-.release-list ul { padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.release-list ul { list-style: none; padding-left: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .release-list ul li + li { margin-top: 6px; }
 .picked-art { width: 100%; border-radius: 8px; margin-top: 20px; display: block; }
 .dialog-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; }
