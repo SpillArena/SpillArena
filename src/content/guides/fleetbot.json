@@ -1,0 +1,70 @@
+{
+  "no": {
+    "title": "FleetBot: slagskip mot bot eller venner",
+    "intro": "FleetBot er slagskip i nettleseren. To flåter møtes på hvert sitt skjulte rutenett, og du vinner ved å finne og senke alle motstanderens skip først. Du kan spille mot en av fire boter eller opprette et privat rom for en venn.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Du starter med å plassere skipene dine på brettet. Plasseringen er skjult for motstanderen, og motstanderens plassering er skjult for deg. Deretter skyter dere på omgang mot én rute om gangen. Spillet svarer med treff eller bom, og når alle rutene til et skip er truffet, får du beskjed om at skipet er senket.",
+        "Den som senker hele motstanderens flåte først, vinner. Innstillingene lar deg velge brettstørrelse (8×8, 10×10 eller 12×12) og hvilken bot du møter. Et større brett gir flere ruter å lete i og lengre partier."
+      ]},
+      { "h": "Velg motstander og spillmodus", "p": [
+        "Mot boten kan du spille som gjest eller med konto. Som gjest kjører spillet i nettleseren din og gir ingen plass på ledertavla. Med konto kjører partiet på serveren, som regner ut poengene selv, og beste parti havner på ledertavla.",
+        "Mot en venn oppretter du et nettrom som begge spillerne må ha konto for å bli med i. Klassisk gir ett skudd per tur. Salvo gir ett skudd per skip du har igjen, så flåten din blir både mål og våpen. Klassisk kan i tillegg settes til at du skyter igjen etter et treff, og begge variantene kan få tidtaker på 30 eller 60 sekunder per tur. Går du glipp av tre turer på rad, taper du partiet."
+      ]},
+      { "h": "De fire botene", "p": [
+        "Botene bruker bare informasjonen en vanlig spiller har: hvor de har skutt, om hvert skudd traff, og hvilke skip som er senket. De ser aldri plasseringen din. Lett skyter tilfeldig og følger av og til opp et treff. Middels leter i sjakkbrettmønster og gjør ferdig det den treffer. Vanskelig teller hvor de gjenværende skipene fortsatt kan ligge. Ekstrem gjør det samme, men velger alltid den mest sannsynlige ruten og leter med rutenett tilpasset det minste skipet som er igjen."
+      ]},
+      { "h": "Et eksempel på hvordan et treff følges opp", "p": [
+        "Anta at du får treff i en rute midt på brettet. Skipet kan ligge i fire retninger, så undersøk nabo-rutene først. Treffer du en rute til høyre, vet du at skipet ligger vannrett, og du kan følge raden til du får bom på begge sider. Bom på begge sider betyr at skipet er senket, eller at du har truffet to forskjellige skip ved siden av hverandre. Da lønner det seg å sjekke at antall treff passer med lengden på skipene som er igjen."
+      ]},
+      { "h": "Poeng mot boten", "p": [
+        "For parti mot boten med konto regnes poengene ut på serveren. Seier gir 1000 i grunnpoeng og tap 200. I tillegg kommer treffsikkerhet, opptil 400 poeng for en seier, og effektivitet, opptil 600 poeng for å vinne med få skudd. Minimum for å senke en hel flåte er 17 skudd, og det gir full effektivitet. Poengene ganges med en vanskelighetsfaktor: Lett 0,6, Middels 1, Vanskelig 1,4 og Ekstrem 1,8, og en brettfaktor på 0,9, 1 eller 1,15 for de tre størrelsene. Det betyr at en ren seier mot Ekstrem på 12×12 gir mest."
+      ]},
+      { "h": "Tips til neste parti", "p": [
+        "Når du leter etter et nytt skip, spre skuddene i et sjakkbrettmønster i stedet for å skyte tett. De fleste skip er lengre enn én rute, så et mønster med hull fanger dem uten at du bruker alle skuddene i ett hjørne. Så snart du har et treff, skift til å samle skuddene rundt det til skipet er senket.",
+        "Plasser skipene dine uforutsigbart. Mange spillere går for kantene og hjørnene, og mange legger skipene i en klynge. Spre skipene, la noen ligge mot kanten og noen midt på brettet, og la dem ikke ligge i en rett linje.",
+        "I Salvo er det en fordel å beskytte det siste skipet. Hvert skip du mister gir motstanderen ett skudd mindre, så det lønner seg å senke de store skipene tidlig og å holde de små skjult."
+      ]}
+    ],
+    "faq": [
+      { "q": "Må jeg ha konto for å spille FleetBot?", "a": "Nei. Du kan spille mot boten som gjest. Konto trengs for nettrom mot en venn og for å komme med på ledertavla." },
+      { "q": "Kan boten se hvor skipene mine ligger?", "a": "Nei. Botene bruker bare informasjon en spiller har, nemlig egne skudd, treff og senkede skip." },
+      { "q": "Hva skjer hvis jeg ikke rekker turen min i et nettrom?", "a": "Er tidtakeren på, hopper turen over når tiden er ute. Mister du tre turer på rad, taper du partiet." },
+      { "q": "Hvor mange skudd trengs minst for å vinne?", "a": "17 skudd er det minste som kan senke en hel flåte, og gir full effektivitetsbonus mot boten." }
+    ]
+  },
+  "en": {
+    "title": "FleetBot: Battleship against a bot or friends",
+    "intro": "FleetBot is Battleship in your browser. Two fleets face each other on hidden grids, and you win by finding and sinking every enemy ship first. You can play one of four bots or open a private room for a friend.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "You begin by placing your ships on the board. Your layout is hidden from your opponent, and theirs is hidden from you. You then take turns firing at one square at a time. The game answers with a hit or a miss, and when every square of a ship has been hit, you are told it is sunk.",
+        "Whoever sinks the whole enemy fleet first wins. The settings let you choose the board size (8×8, 10×10 or 12×12) and which bot you face. A bigger board means more squares to search and longer games."
+      ]},
+      { "h": "Choosing an opponent and a mode", "p": [
+        "Against the bot you can play as a guest or with an account. As a guest the game runs in your browser and does not reach the leaderboard. With an account the game runs on the server, which works out the score itself, and your best game appears on the leaderboard.",
+        "Against a friend you open an online room, and both players need an account to join. Classic gives one shot per turn. Salvo gives one shot per ship you still have afloat, so your fleet is both your target and your weapon. Classic can also let you shoot again after a hit, and both variants can add a turn timer of 30 or 60 seconds. Miss three turns in a row and you forfeit."
+      ]},
+      { "h": "The four bots", "p": [
+        "The bots use only what a normal player knows: where they have fired, whether each shot hit, and which ships are sunk. They never see your layout. Easy fires at random and sometimes follows up a hit. Medium searches in a checkerboard pattern and finishes what it hits. Hard counts where the remaining ships can still lie. Extreme does the same but always picks the most likely square and searches on a grid spaced by the smallest ship left."
+      ]},
+      { "h": "An example of following up a hit", "p": [
+        "Say you get a hit in the middle of the board. The ship could run in four directions, so check the neighbouring squares first. If the square to the right is also a hit, you know the ship lies horizontally and you can follow the row until you get a miss on both sides. A miss at both ends means the ship is sunk, or that you have hit two different ships side by side. Then it pays to check that your hits match the lengths of the ships that remain."
+      ]},
+      { "h": "Scoring against the bot", "p": [
+        "For a signed-in game against the bot the score is worked out on the server. A win gives 1000 base points and a loss 200. On top of that come accuracy, up to 400 for a win, and efficiency, up to 600 for winning in few shots. Sinking a whole fleet takes at least 17 shots, and that earns full efficiency. The total is multiplied by a bot factor (Easy 0.6, Medium 1, Hard 1.4, Extreme 1.8) and a board factor (0.9, 1 or 1.15 for the three sizes). A clean win against Extreme on 12×12 therefore scores most."
+      ]},
+      { "h": "Tips for your next game", "p": [
+        "When you are searching for a new ship, spread your shots in a checkerboard pattern rather than firing close together. Most ships are longer than one square, so a pattern with gaps catches them without spending every shot in one corner. As soon as you have a hit, switch to concentrating shots around it until the ship is sunk.",
+        "Place your own ships unpredictably. Many players go for edges and corners, and many cluster their ships. Spread them out, put some against the edge and some in the middle, and avoid putting them in one straight line.",
+        "In Salvo it pays to protect your last ship. Every ship you lose takes a shot away from your next turn, so sink the large ships early and keep the small ones hidden."
+      ]}
+    ],
+    "faq": [
+      { "q": "Do I need an account to play FleetBot?", "a": "No. You can play the bot as a guest. An account is needed for online rooms against a friend and for the leaderboard." },
+      { "q": "Can the bot see where my ships are?", "a": "No. The bots use only what a player knows: their own shots, hits and sunk ships." },
+      { "q": "What happens if I miss my turn in an online room?", "a": "If the timer is on, the turn passes when time runs out. Miss three turns in a row and you forfeit." },
+      { "q": "What is the fewest number of shots needed to win?", "a": "17 shots is the minimum to sink a whole fleet, and it earns the full efficiency bonus against the bot." }
+    ]
+  }
+}

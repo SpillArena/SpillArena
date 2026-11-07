@@ -15,7 +15,7 @@ import type { AuthAction, AuthErrorCode } from './types'
  * into a game has no way of knowing that unless something says so. This is that
  * something: small, always in the same place, and the same in all five games.
  *
- * IT USED TO BE A LINK, and deliberately so — the argument was that signing in
+ * IT USED TO BE A LINK, and deliberately so, the argument was that signing in
  * happens on spillarena.no once, and that a second login form inside a game
  * would suggest otherwise. That argument was about where the account LIVES,
  * and it is still true: this form posts to the same /api/auth on the front
@@ -32,7 +32,7 @@ import type { AuthAction, AuthErrorCode } from './types'
  * vendored into five repos that disagree about Tailwind versions and theme
  * variables, and a badge that renders correctly everywhere is worth more than
  * one that inherits perfectly in the one repo it was written for. For the same
- * reason every string is a prop — the games translate, this file cannot.
+ * reason every string is a prop, the games translate, this file cannot.
  */
 
 /** Seconds as something a person would say, for the lockout message. */
@@ -286,7 +286,7 @@ export interface AccountBadgeLabels {
     pin: string
     /** Shown only while registering. */
     confirmPin: string
-    /** Shown when the two PINs differ. Not a server code — nothing was sent. */
+    /** Shown when the two PINs differ. Not a server code, nothing was sent. */
     pinMismatch: string
     submitSignIn: string
     submitRegister: string
@@ -361,7 +361,7 @@ const DEFAULT_LABELS: AccountBadgeLabels = {
             case 'username_empty':
                 return 'Type a name first.'
             case 'username_too_long':
-                return 'That name is too long — 20 characters at most.'
+                return 'That name is too long. 20 characters at most.'
             case 'username_chars':
                 return "Names can use letters, numbers, spaces and . _ ' - only."
             case 'name_reserved':
@@ -461,7 +461,7 @@ const NORWEGIAN_LABELS: AccountBadgeLabels = {
 
 export interface AccountBadgeProps {
     /**
-     * Anything carrying an XP total — every game's profile qualifies, including
+     * Anything carrying an XP total, every game's profile qualifies, including
      * AtlasMaster's own richer one, which predates the shared engine. The level
      * and progress are shown in the panel when the player presses the badge.
      */
@@ -555,7 +555,7 @@ export function AccountBadge({
     }, [open, inHeader])
 
     // signing in happens on the front page too, which is very often another tab
-    // in the same browser — without this the game would keep saying "not signed
+    // in the same browser, without this the game would keep saying "not signed
     // in" until it was reloaded
     useEffect(() => onSessionChange((session) => setUsername(session?.username ?? null)), [])
 
@@ -589,7 +589,7 @@ export function AccountBadge({
         /*
          * A new PIN is confirmed before anything is sent.
          *
-         * Registering with a typo makes an account nobody can get into — the
+         * Registering with a typo makes an account nobody can get into, the
          * PIN is never shown back, there is no email to reset it with, and the
          * name is taken from then on. Signing in has no such trap: a wrong PIN
          * just fails and can be retried, so the second field would only be in

@@ -1,0 +1,72 @@
+{
+  "no": {
+    "title": "HangBot: galgespill på norsk og engelsk",
+    "intro": "HangBot er galgespill der boten velger ekte ord fra en ordbok. Du gjetter bokstav for bokstav og må finne ordet før tegningen er ferdig eller tiden går ut. Hver runde har et ord, et hint og en kategori.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Hver runde viser et skjult ord som streker, en kategori og et hint. Du trykker på bokstaver på skjermen eller bruker det fysiske tastaturet. Er bokstaven i ordet, dukker den opp på alle plassene den hører til. Er den ikke det, teller det som en bom, og tegningen får en ny del.",
+        "Du vinner runden ved å avsløre hele ordet før du har brukt opp antall bommer og før tiden er ute. Spillet kan spilles på norsk eller engelsk, og ordene følger språket du velger."
+      ]},
+      { "h": "Fem vanskelighetsgrader", "p": [
+        "Hver vanskelighetsgrad har sin egen grense for bommer, sin egen tidtaker og sin egen poengfaktor. På den letteste har du åtte bommer og 180 sekunder, og poengene ganges med 1. På den vanskeligste har du tre bommer og 60 sekunder, og poengene ganges med 2,8. Mellom disse ligger tre nivåer med sju, seks og fem bommer, og faktorer på 1,35, 1,7 og 2,1.",
+        "Det betyr at en rask og ren runde på høy vanskelighetsgrad gir langt flere poeng enn samme ord på lav. Det kan lønne seg å starte lavt for å finne en rytme og gå opp når du føler deg trygg."
+      ]},
+      { "h": "Rekker, XP og ledertavle", "p": [
+        "Riktige gjett på rad bygger en rekke, og en bom nullstiller den. Den beste rekken din huskes. Du tjener XP og stiger i nivå, og personlige rekorder vises under ledertavla på startsiden. Ledertavla deles mellom spillere som er logget inn. Er du frakoblet, brukes en lokal ledertavle på enheten.",
+        "Fremgang og innstillinger følger lagringsvalget du gjorde på SpillArena. Sier du nei til lagring, forblir de i den åpne fanen."
+      ]},
+      { "h": "Flerspiller", "p": [
+        "I flerspiller konkurrerer 2 til 8 innloggede spillere i et ordløp. Du oppretter et rom og deler romkoden, og hver spiller kobles til via sin egen nettleser. Den som er raskest og mest presis, kommer best ut."
+      ]},
+      { "h": "Et eksempel på en god åpning", "p": [
+        "Anta at du ser et ord med seks streker og kategorien «dyr». Start med vanlige vokaler som E og A, siden mange norske og engelske ord har dem. Dukker E opp på plass to og fem, har du allerede et mønster: _ E _ _ E _. Det gir deg mye å bygge videre på. Kommer det ingen treff, vet du at ordet er uvanlig, og du bør prøve andre vokaler eller vanlige konsonanter som R, S, T og N."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Les hintet og kategorien før du gjetter. De er der for å begrense antall ord, og en kategori som «mat» eller «geografi» utelukker hele grupper av bokstavkombinasjoner.",
+        "Gjett på bokstaver som deler ordet opp, ikke på de du allerede ser. Se på hvor mange plasser som er åpne, og tenk på hvilke endelser som er vanlige, som -ER, -ET eller -ING.",
+        "Hold øye med klokka på de høyeste nivåene. En trygg bokstav raskt er bedre enn en perfekt bokstav for sent."
+      ]}
+    ],
+    "faq": [
+      { "q": "Må jeg ha konto for å spille HangBot?", "a": "Nei. Du kan spille som gjest. Konto trengs for flerspiller og for å dele ledertavle med andre." },
+      { "q": "Kan jeg spille på engelsk?", "a": "Ja. Spillet støtter norsk og engelsk, og ordene velges i det språket du spiller på." },
+      { "q": "Hva skjer når tiden går ut?", "a": "Runden avsluttes, og ordet vises. Tidsgrensen varierer fra 180 sekunder på lett nivå til 60 sekunder på vanskeligste nivå." },
+      { "q": "Fungerer fysisk tastatur?", "a": "Ja. Du kan skrive bokstavene direkte på tastaturet, i tillegg til å trykke på skjermen." }
+    ]
+  },
+  "en": {
+    "title": "HangBot: Hangman in Norwegian and English",
+    "intro": "HangBot is hangman against a bot that picks real dictionary words. You guess letter by letter and must find the word before the drawing is complete or the clock runs out. Every round has a word, a hint and a category.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "Each round shows a hidden word as blanks, a category and a hint. You tap letters on screen or use your physical keyboard. If the letter is in the word, it appears in every place it belongs. If not, it counts as a miss and the drawing gains a new part.",
+        "You win the round by revealing the whole word before you run out of misses and before time is up. The game can be played in Norwegian or English, and the words follow the language you pick."
+      ]},
+      { "h": "Five difficulty levels", "p": [
+        "Each difficulty has its own miss limit, its own timer and its own score multiplier. On the easiest you have eight misses and 180 seconds, and points are multiplied by 1. On the hardest you have three misses and 60 seconds, with a multiplier of 2.8. In between sit three levels with seven, six and five misses, and multipliers of 1.35, 1.7 and 2.1.",
+        "A fast, clean round on a high level scores far more than the same word on a low one. It can pay to start low to find your rhythm and move up when you feel sure."
+      ]},
+      { "h": "Streaks, XP and the leaderboard", "p": [
+        "Correct guesses in a row build a streak, and a miss resets it. Your best streak is remembered. You earn XP and rise in level, and personal records appear below the leaderboard on the home screen. The leaderboard is shared between signed-in players. When you are offline, a local leaderboard on your device is used instead.",
+        "Progress and settings follow the storage choice you made on SpillArena. If you decline storage, they stay in the open tab."
+      ]},
+      { "h": "Multiplayer", "p": [
+        "In multiplayer, 2 to 8 signed-in players compete in a word race. You create a room and share the room code, and each player joins from their own browser. Whoever is fastest and most accurate comes out on top."
+      ]},
+      { "h": "An example of a good opening", "p": [
+        "Say you see a six-letter word in the category animals. Start with common vowels like E and A, since many Norwegian and English words contain them. If E appears in positions two and five, you already have a pattern: _ E _ _ E _. That gives you a lot to build on. If nothing hits, you know the word is unusual, and you should try other vowels or common consonants like R, S, T and N."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Read the hint and the category before you guess. They are there to narrow the options, and a category such as food or geography rules out whole groups of letter combinations.",
+        "Guess letters that split the word up, not letters you can already see. Look at how many positions are open and think about common endings such as -ER, -ED or -ING.",
+        "Watch the clock on the highest levels. A safe letter quickly is better than a perfect letter too late."
+      ]}
+    ],
+    "faq": [
+      { "q": "Do I need an account to play HangBot?", "a": "No. You can play as a guest. An account is needed for multiplayer and for sharing the leaderboard with others." },
+      { "q": "Can I play in English?", "a": "Yes. The game supports Norwegian and English, and words are chosen in the language you play in." },
+      { "q": "What happens when time runs out?", "a": "The round ends and the word is shown. The time limit ranges from 180 seconds on the easiest level to 60 seconds on the hardest." },
+      { "q": "Does a physical keyboard work?", "a": "Yes. You can type the letters directly on the keyboard as well as tapping the screen." }
+    ]
+  }
+}

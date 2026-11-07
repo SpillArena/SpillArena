@@ -35,7 +35,7 @@
     "section": "Privacy",
     "title": "Save your progress on this device?",
     "lead": "SpillArena stores a few small things in your browser so you stay signed in and your progress follows you between the games.",
-    "scope": "Your answer applies to all of SpillArena – the front page and every game.",
+    "scope": "Your answer applies to all of SpillArena: the front page and every game.",
     "withoutTitle": "If you decline:",
     "without": {
       "signin": "You aren't remembered. You have to sign in again every time you open a game or reload the page.",
@@ -122,7 +122,7 @@
     "pin": "PIN",
     "pinHint": "4–6 digits. It works across every game.",
     "blurb": "One account for all of SpillArena. Your progress follows you between the games.",
-    "noConsent": "Storage is off, so you're only signed in until you leave this page. In a game you can sign in again from the badge in the corner — your progress and results are then saved to your account.",
+    "noConsent": "Storage is off, so you're only signed in until you leave this page. In a game you can sign in again from the badge in the corner. Your progress and results are then saved to your account.",
     "enableStorage": "Turn on saving",
     "switchToRegister": "No account? Create one.",
     "switchToSignIn": "Already have an account? Sign in.",
@@ -156,10 +156,10 @@
       "name_reserved": "That name is reserved.",
       "pin_mismatch": "The two PINs are not the same.",
       "username_empty": "Type a username first.",
-      "username_too_long": "That username is too long — 20 characters at most.",
+      "username_too_long": "That username is too long. 20 characters at most.",
       "username_chars": "Usernames can use letters, numbers, spaces and . _ ' - only.",
       "locked_wait": "Too many wrong attempts. Try again in {{wait}}.",
-      "bad_code_format": "That doesn't look like a code. It has 8 or 12 characters — letters and numbers."
+      "bad_code_format": "That doesn't look like a code. It has 8 or 12 characters, letters and numbers."
     },
     "rename": "Change",
     "newUsername": "New username",
@@ -187,7 +187,7 @@
       "badCode": "Wrong username or code, or the code has been used or has expired.",
       "savedTitle": "Recovery code",
       "saveTitle": "Save your recovery code",
-      "saveIntro": "If you forget your PIN, this is the code that gets you back in. It is only shown now, and works once — then you get a new one.",
+      "saveIntro": "If you forget your PIN, this is the code that gets you back in. It is only shown now, and works once. Then you get a new one.",
       "codeLabel": "Your recovery code",
       "copy": "Copy",
       "copied": "Copied",
@@ -196,7 +196,7 @@
       "fileText": "SpillArena\n\nUsername: {{username}}\nRecovery code: {{code}}\n\nIf you forget your PIN, choose \"Forgot your PIN?\" on spillarena.no and enter the code.\nThe code works once. You get a new one afterwards.\nDon't share it with anyone.\n",
       "confirmSaved": "I have saved the code somewhere safe",
       "continue": "Continue",
-      "missing": "You don't have a recovery code. Make one now, while you remember your PIN — otherwise you'll need an admin's help if you forget it.",
+      "missing": "You don't have a recovery code. Make one now, while you remember your PIN. Otherwise you'll need an admin's help if you forget it.",
       "create": "Make a recovery code",
       "replace": "New recovery code",
       "createIntro": "With the code you can choose a new PIN yourself if you forget it.",
@@ -316,7 +316,7 @@
       "adminHint": "Admins can't be banned, renamed, deleted or given a one-time code. Admin rights are removed in the database, not here.",
       "issueResetCode": "Make one-time code",
       "resetCodeTitle": "One-time code for a new PIN",
-      "resetCodeHelp": "Give the code to the player. They choose \"Forgot your PIN?\", enter their username and the code, and pick a new PIN themselves. The code works once and expires {{date}}. It is only shown now — making a new one stops this one working.",
+      "resetCodeHelp": "Give the code to the player. They choose \"Forgot your PIN?\", enter their username and the code, and pick a new PIN themselves. The code works once and expires {{date}}. It is only shown now. Making a new one stops this one working.",
       "copy": "Copy",
       "copied": "Copied"
     },
@@ -465,10 +465,10 @@
       "notification": "Email notification",
       "notificationStatus": {
         "unknown": "Not tracked",
-        "pending": "Pending — check again shortly",
+        "pending": "Pending, check again shortly",
         "sent": "Accepted by email provider",
-        "failed": "Failed — message is saved here",
-        "not_configured": "Not configured — message is saved here"
+        "failed": "Failed, message is saved here",
+        "not_configured": "Not configured, message is saved here"
       },
       "empty": "No messages yet.",
       "from": "From",
@@ -512,10 +512,10 @@
       }
     }
   },
-  "melodyRushDescription": "MelodyRush – recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
-  "hitlineDescription": "Hitline – recognise the song and place it on your timeline by release year. Play solo, share a screen or invite friends to an online room.",
-  "sipZoneDescription": "SipZone – Norwegian-inspired drinking games for friends. Share one phone or use your own devices with SipZone Live. Choose what goes in your glass.",
-  "crackedDescription": "Cracked – crack the daily code word in five tries. Arrows guide you through the alphabet, with practice locks and a weekly master code.",
+  "melodyRushDescription": "MelodyRush: recognise the music from short audio clips. Play the daily mixtape, practise a decade or pick a playlist. Less listening, more points!",
+  "hitlineDescription": "Hitline: recognise the song and place it on your timeline by release year. Play solo, share a screen or invite friends to an online room.",
+  "sipZoneDescription": "SipZone: Norwegian-inspired drinking games for friends. Share one phone or use your own devices with SipZone Live. Choose what goes in your glass.",
+  "crackedDescription": "Cracked: crack the daily code word in five tries. Arrows guide you through the alphabet, with practice locks and a weekly master code.",
   "install": {
     "title": "Add SpillArena to your home screen",
     "description": "Opens full screen, with every game one tap away.",
@@ -564,7 +564,7 @@
     "knowledge": "Knowledge",
     "music": "Music",
     "accountTitle": "One account. The whole arena.",
-    "accountDescription": "Take your progress from game to game. Or play as a guest — your choice.",
+    "accountDescription": "Take your progress from game to game. Or play as a guest, your choice.",
     "accountMore": "About your SpillArena account",
     "footerTagline": "Made for the joy of playing.",
     "footerNavigation": "Footer navigation",
@@ -972,6 +972,8 @@
           "You can try the solo games without an account. A free account supports saved progress and online rooms. SpillArena may use advertising on the home page to help cover hosting costs. The game guides, help pages and account pages do not load advertising code."
         ]
       }
-    ]
+    ],
+    "backToGuides": "All guides",
+    "faqTitle": "Frequently asked questions"
   }
 }

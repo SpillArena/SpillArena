@@ -35,7 +35,7 @@
     "section": "Personvern",
     "title": "Lagre fremgangen din på denne enheten?",
     "lead": "SpillArena lagrer noen få ting i nettleseren din, slik at du forblir innlogget og fremgangen din følger deg mellom spillene.",
-    "scope": "Svaret gjelder hele SpillArena – forsiden og alle spillene.",
+    "scope": "Svaret gjelder hele SpillArena: forsiden og alle spillene.",
     "withoutTitle": "Hvis du avslår:",
     "without": {
       "signin": "Du blir ikke husket. Du må logge inn på nytt hver gang du åpner et spill eller laster siden på nytt.",
@@ -122,7 +122,7 @@
     "pin": "PIN",
     "pinHint": "4–6 siffer. Den brukes på alle spillene.",
     "blurb": "Én konto for hele SpillArena. Fremgangen din følger deg mellom spillene.",
-    "noConsent": "Lagring er slått av, så du er bare innlogget til du forlater siden. I et spill kan du logge inn igjen fra merket i hjørnet – da lagres fremgang og resultater på kontoen din.",
+    "noConsent": "Lagring er slått av, så du er bare innlogget til du forlater siden. I et spill kan du logge inn igjen fra merket i hjørnet. Da lagres fremgang og resultater på kontoen din.",
     "enableStorage": "Slå på lagring",
     "switchToRegister": "Har du ikke konto? Lag en.",
     "switchToSignIn": "Har du konto? Logg inn.",
@@ -156,10 +156,10 @@
       "name_reserved": "Det navnet er reservert.",
       "pin_mismatch": "De to PIN-kodene er ikke like.",
       "username_empty": "Skriv et brukernavn først.",
-      "username_too_long": "Brukernavnet er for langt — maks 20 tegn.",
+      "username_too_long": "Brukernavnet er for langt. Maks 20 tegn.",
       "username_chars": "Brukernavn kan bare bruke bokstaver, tall, mellomrom og . _ ' -",
       "locked_wait": "For mange feil forsøk. Prøv igjen om {{wait}}.",
-      "bad_code_format": "Koden ser ikke riktig ut. Den har 8 eller 12 tegn — bokstaver og tall."
+      "bad_code_format": "Koden ser ikke riktig ut. Den har 8 eller 12 tegn, bokstaver og tall."
     },
     "rename": "Endre",
     "newUsername": "Nytt brukernavn",
@@ -187,7 +187,7 @@
       "badCode": "Feil brukernavn eller kode, eller koden er brukt eller utløpt.",
       "savedTitle": "Gjenopprettingskode",
       "saveTitle": "Lagre gjenopprettingskoden din",
-      "saveIntro": "Glemmer du PIN-en, er dette koden som slipper deg inn igjen. Den vises bare nå, og virker én gang — da får du en ny.",
+      "saveIntro": "Glemmer du PIN-en, er dette koden som slipper deg inn igjen. Den vises bare nå, og virker én gang. Da får du en ny.",
       "codeLabel": "Gjenopprettingskoden din",
       "copy": "Kopier",
       "copied": "Kopiert",
@@ -196,7 +196,7 @@
       "fileText": "SpillArena\n\nBrukernavn: {{username}}\nGjenopprettingskode: {{code}}\n\nGlemmer du PIN-en, velg «Glemt PIN?» på spillarena.no og skriv inn koden.\nKoden virker én gang. Etterpå får du en ny.\nIkke del den med noen.\n",
       "confirmSaved": "Jeg har lagret koden et trygt sted",
       "continue": "Fortsett",
-      "missing": "Du har ingen gjenopprettingskode. Lag en nå, mens du husker PIN-en — ellers trenger du hjelp fra en admin om du glemmer den.",
+      "missing": "Du har ingen gjenopprettingskode. Lag en nå, mens du husker PIN-en. Ellers trenger du hjelp fra en admin om du glemmer den.",
       "create": "Lag gjenopprettingskode",
       "replace": "Ny gjenopprettingskode",
       "createIntro": "Med koden kan du velge ny PIN selv hvis du glemmer den.",
@@ -316,7 +316,7 @@
       "adminHint": "Admins kan ikke stenges ute, døpes om, slettes eller få engangskode. Admin fjernes i databasen, ikke her.",
       "issueResetCode": "Lag engangskode",
       "resetCodeTitle": "Engangskode for ny PIN",
-      "resetCodeHelp": "Gi koden til spilleren. De velger «Glemt PIN?», skriver inn brukernavnet og koden, og velger ny PIN selv. Koden virker én gang og går ut {{date}}. Den vises bare nå — lager du en ny, slutter denne å virke.",
+      "resetCodeHelp": "Gi koden til spilleren. De velger «Glemt PIN?», skriver inn brukernavnet og koden, og velger ny PIN selv. Koden virker én gang og går ut {{date}}. Den vises bare nå. Lager du en ny, slutter denne å virke.",
       "copy": "Kopier",
       "copied": "Kopiert"
     },
@@ -465,10 +465,10 @@
       "notification": "E-postvarsel",
       "notificationStatus": {
         "unknown": "Ikke registrert",
-        "pending": "Venter — sjekk igjen om litt",
+        "pending": "Venter, sjekk igjen om litt",
         "sent": "Godtatt av e-postleverandøren",
-        "failed": "Mislyktes — meldingen er lagret her",
-        "not_configured": "Ikke satt opp — meldingen er lagret her"
+        "failed": "Mislyktes, meldingen er lagret her",
+        "not_configured": "Ikke satt opp, meldingen er lagret her"
       },
       "empty": "Ingen meldinger ennå.",
       "from": "Fra",
@@ -512,10 +512,10 @@
       }
     }
   },
-  "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
-  "hitlineDescription": "Hitline – kjenn igjen låten og plasser den på tidslinjen etter utgivelsesår. Spill alene, del en skjerm eller inviter venner til et rom på nett.",
-  "sipZoneDescription": "SipZone – norske drikkeleker til vors og hyttetur. Spill på én mobil eller på hver deres enhet med SipZone Live. Dere bestemmer selv hva som er i glasset.",
-  "crackedDescription": "Cracked – knekk dagens kodeord på fem forsøk. Pilene viser vei gjennom alfabetet, med øvelseslåser og en ukentlig mesterkode.",
+  "melodyRushDescription": "MelodyRush: kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
+  "hitlineDescription": "Hitline: kjenn igjen låten og plasser den på tidslinjen etter utgivelsesår. Spill alene, del en skjerm eller inviter venner til et rom på nett.",
+  "sipZoneDescription": "SipZone: norske drikkeleker til vors og hyttetur. Spill på én mobil eller på hver deres enhet med SipZone Live. Dere bestemmer selv hva som er i glasset.",
+  "crackedDescription": "Cracked: knekk dagens kodeord på fem forsøk. Pilene viser vei gjennom alfabetet, med øvelseslåser og en ukentlig mesterkode.",
   "install": {
     "title": "Legg SpillArena på hjem-skjermen",
     "description": "Åpner i fullskjerm, med alle spillene ett trykk unna.",
@@ -564,7 +564,7 @@
     "knowledge": "Kunnskap",
     "music": "Musikk",
     "accountTitle": "Én konto. Hele arenaen.",
-    "accountDescription": "Ta med deg fremgangen mellom spillene. Eller spill som gjest — du velger.",
+    "accountDescription": "Ta med deg fremgangen mellom spillene. Eller spill som gjest, du velger.",
     "accountMore": "Om SpillArena-kontoen",
     "footerTagline": "Laget for spillegleden.",
     "footerNavigation": "Navigasjon i bunnteksten",
@@ -972,6 +972,8 @@
           "Du kan prøve solospillene uten konto. En gratis konto gir lagret fremgang og tilgang til nettrom. SpillArena kan bruke annonser på forsiden for å bidra til driftskostnadene. Spillguidene, hjelpesidene og kontosidene laster ikke annonsekode."
         ]
       }
-    ]
+    ],
+    "backToGuides": "Alle guider",
+    "faqTitle": "Vanlige spørsmål"
   }
 }

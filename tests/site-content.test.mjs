@@ -26,10 +26,13 @@ test('all game guides contain rules, examples and tips in both supported languag
     for (const slug of GUIDE_SLUGS) {
       const guide = guideFor(slug, language)
       const html = renderToStaticMarkup(createElement(EditorialArticle, { slug, language }))
-      for (const value of [guide.title, guide.intro, guide.rules, guide.example, guide.tip]) {
-        assert.ok(value.length > 20)
+      assert.ok(guide.sections.length >= 5 && guide.faq.length >= 4, `${slug}: ${language} structure`)
+      const words = [guide.intro, ...guide.sections.flatMap(s => s.p), ...guide.faq.map(f => f.a)].join(' ').split(/\s+/).length
+      assert.ok(words >= 450, `${slug}: ${language} has ${words} words`)
+      for (const value of [guide.title, guide.intro, ...guide.sections.map(s => s.h), ...guide.sections.flatMap(s => s.p), ...guide.faq.flatMap(f => [f.q, f.a])]) {
+        assert.ok(value.length > 0)
         // HTML escapes punctuation; content comes from the same shared object.
-        assert.ok(html.includes(value.slice(0, 20)), `${slug}: ${language}`)
+        assert.ok(html.includes(value.slice(0, 20).replaceAll('&', '&amp;').replaceAll('"', '&quot;')), `${slug}: ${language}: ${value.slice(0, 20)}`)
       }
       assert.equal(pageMetadata(language, undefined, slug).path, guidePath(slug))
     }
@@ -72,7 +75,21 @@ test('built information documents have their own HTML, canonical and metadata wi
   }
   for (const slug of GUIDE_SLUGS) {
     const html = await readFile(`dist${guidePath(slug)}index.html`, 'utf8')
-    assert.ok(html.includes(guideFor(slug, 'no').rules.slice(0, 30)), slug)
+    assert.ok(html.includes(guideFor(slug, 'no').sections[0].p[0].slice(0, 30)), slug)
     assert.ok(html.includes(`rel="canonical" href="https://spillarena.no${guidePath(slug)}"`), slug)
   }
+})
+
+test('guide back link returns to the guide index, other pages to the lobby', () => {
+  const guide = renderToStaticMarkup(createElement(EditorialArticle, { slug: GUIDE_SLUGS[0], language: 'no' }))
+  assert.match(guide, /class="back-link" href="\/games\/"/)
+  const page = renderToStaticMarkup(createElement(EditorialArticle, { page: 'about', language: 'no' }))
+  assert.match(page, /class="back-link" href="\/"/)
+})
+
+test('guide index is a poster grid with one linked card per game, and posters ship with the build', async () => {
+  const html = renderToStaticMarkup(createElement(EditorialArticle, { page: 'guides', language: 'no' }))
+  assert.equal(html.match(/class="guide-card"/g).length, GUIDE_SLUGS.length)
+  for (const slug of GUIDE_SLUGS) assert.ok(html.includes(`href="${guidePath(slug)}"`), slug)
+  for (const src of html.match(/\/art\/games\/[A-Za-z]+\.no\.svg/g)) await readFile(`dist${src}`, 'utf8')
 })

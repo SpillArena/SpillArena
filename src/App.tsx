@@ -52,7 +52,7 @@ export default function App() {
       window.history.replaceState(window.history.state, '', url)
     }
     const onHashChange = () => {
-      // reklameskriptet kan ikke fjernes fra en side, bare lastes uten — se src/lib/adFreePages.ts
+      // reklameskriptet kan ikke fjernes fra en side, bare lastes uten, se src/lib/adFreePages.ts
       const legacyPath = legacyInfoPath()
       if (legacyPath) { window.location.assign(legacyPath); return }
       if (adsRequested() && isAdFreePage()) {

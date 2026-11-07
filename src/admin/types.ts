@@ -3,7 +3,7 @@ import type { AvatarChoice } from '../components/account/avatar-options'
 
 /*
  * Formene /api/admin/* svarer med. Denne mappa er IKKE vendret ut til spillene
- * slik src/account/ er — adminpanelet finnes bare på forsiden.
+ * slik src/account/ er, adminpanelet finnes bare på forsiden.
  */
 
 export type AdminErrorCode =

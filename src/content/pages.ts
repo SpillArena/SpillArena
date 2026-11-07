@@ -1,11 +1,11 @@
 import { createElement as h, type ReactNode } from 'react'
 import no from '../i18n/locales/no.json' with { type: 'json' }
 import en from '../i18n/locales/en.json' with { type: 'json' }
-import guides from './guides.json' with { type: 'json' }
+import { guides } from './guides/index.ts'
 
 export type Language = 'no' | 'en'
 export type InfoPage = 'about' | 'privacy' | 'terms' | 'faq' | 'contact' | 'guides'
-export type GuideSlug = keyof typeof guides
+export type GuideSlug = keyof typeof guides & string
 export const GUIDE_SLUGS = Object.keys(guides) as GuideSlug[]
 export { INFO_PATHS, guidePath } from '../../shared/site-pages.js'
 import { INFO_PATHS, guidePath } from '../../shared/site-pages.js'
@@ -23,18 +23,19 @@ export function EditorialArticle({ page, slug, language, action }: { page?: Info
   const copy = copyFor(language)
   const c = copy.content
   const section = (title: string, paragraphs: string[]) => h('section', { key: title }, h('h2', null, title), ...paragraphs.map(p => h('p', { key: p }, p)))
-  const back = h('a', { className: 'back-link', href: '/' }, h('span', { className: 'back-arrow', 'aria-hidden': 'true' }, '←'), copy.legal.back)
+  const back = h('a', { className: 'back-link', href: slug ? INFO_PATHS.guides : '/' }, h('span', { className: 'back-arrow', 'aria-hidden': 'true' }, '←'), slug ? c.backToGuides : copy.legal.back)
   const contact = h('p', { className: 'legal-contact' }, h('a', { href: '/contact/' }, copy.contact.openForm), ' · ', h('a', { href: 'mailto:support@spillarena.no' }, 'support@spillarena.no'))
   if (slug) {
     const guide = guideFor(slug, language)
     return h('article', { className: 'legal-page game-guide' }, back,
       h('p', { className: 'eyebrow' }, c.guidesLink), h('h1', null, guide.title), h('p', { className: 'legal-lead' }, guide.intro), action,
-      section(c.rules, [guide.rules]), section(c.example, [guide.example]), section(c.tip, [guide.tip]),
+      ...guide.sections.map(s => section(s.h, s.p)),
+      h('section', { className: 'guide-faq' }, h('h2', null, c.faqTitle), ...guide.faq.map(item => h('div', { key: item.q, className: 'faq-item' }, h('h3', null, item.q), h('p', null, item.a)))),
       h('p', null, h('a', { href: '/#games' }, copy.lobby.explore), ' · ', h('a', { href: '/games/' }, c.guidesLink)), contact)
   }
-  if (page === 'guides') return h('article', { className: 'legal-page' }, back,
+  if (page === 'guides') return h('article', { className: 'legal-page guide-index' }, back,
     h('h1', null, c.guidesTitle), h('p', { className: 'legal-lead' }, c.guidesIntro),
-    ...GUIDE_SLUGS.map(key => sectionLink(key, language)))
+    h('ul', { className: 'guide-grid' }, ...GUIDE_SLUGS.map(key => guideCard(key, language))))
   if (page === 'about') return h('article', { className: 'legal-page' }, back,
     h('h1', null, c.aboutTitle), h('p', { className: 'legal-lead' }, c.aboutIntro),
     ...c.aboutSections.map(s => section(s.h, s.p)),
@@ -50,9 +51,35 @@ export function EditorialArticle({ page, slug, language, action }: { page?: Info
     ...sections.map(s => section(s.h, s.p)), contact)
 }
 
-function sectionLink(slug: GuideSlug, language: Language) {
+/** Poster file names and lobby categories per game. Posters are copied to /art/games/ by the build. */
+const GUIDE_META: Record<GuideSlug, { art: string; category: 'strategy' | 'words' | 'knowledge' | 'music' | 'party' }> = {
+  fleetbot: { art: 'FleetBot', category: 'strategy' }, hangbot: { art: 'HangBot', category: 'words' },
+  scribblebot: { art: 'ScribbleBot', category: 'words' }, atlasmaster: { art: 'AtlasMaster', category: 'knowledge' },
+  proportionpanic: { art: 'ProportionPanic', category: 'knowledge' }, pixelpanic: { art: 'PixelPanic', category: 'words' },
+  erashuffle: { art: 'EraShuffle', category: 'knowledge' }, melodyrush: { art: 'MelodyRush', category: 'music' },
+  hitline: { art: 'Hitline', category: 'music' }, sipzone: { art: 'SipZone', category: 'party' }, cracked: { art: 'Cracked', category: 'words' },
+}
+export const posterPath = (slug: GuideSlug, language: Language) => `/art/games/${GUIDE_META[slug].art}.${language}.svg`
+
+/** "FleetBot: slagskip mot bot" becomes a name and a tagline for the card. */
+function splitTitle(title: string) {
+  const [name, ...rest] = title.split(': ')
+  const tagline = rest.join(': ')
+  return { name, tagline: tagline && tagline[0].toUpperCase() + tagline.slice(1) }
+}
+
+function guideCard(slug: GuideSlug, language: Language) {
   const guide = guideFor(slug, language)
-  return h('section', { key: slug }, h('h2', null, h('a', { href: guidePath(slug) }, guide.title)), h('p', null, guide.intro))
+  const { name, tagline } = splitTitle(guide.title)
+  const copy = copyFor(language)
+  return h('li', { key: slug, className: 'guide-card' },
+    h('img', { className: 'guide-poster', src: posterPath(slug, language), alt: '', width: 1200, height: 675, loading: 'lazy', decoding: 'async' }),
+    h('div', { className: 'guide-card-body' },
+      h('p', { className: 'eyebrow' }, copy.lobby.categories[GUIDE_META[slug].category]),
+      h('h2', null, h('a', { href: guidePath(slug) }, name)),
+      tagline && h('p', { className: 'guide-tagline' }, tagline),
+      h('p', { className: 'guide-intro' }, guide.intro),
+      h('span', { className: 'guide-more', 'aria-hidden': 'true' }, copy.content.guideLink, ' →')))
 }
 
 export function HomeIntroduction({ language }: { language: Language }) {

@@ -13,7 +13,7 @@ import './admin-players.css'
 
 interface PlayerDetailProps {
     username: string
-    /** Adminen som ser på — noen handlinger kan ikke rettes mot seg selv. */
+    /** Adminen som ser på, noen handlinger kan ikke rettes mot seg selv. */
     selfName: string
     onBack: () => void
     onRenamed: (username: string) => void
@@ -146,8 +146,8 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                     </div>
                 </div>
                 <dl className="admin-player-metadata">
-                    <div><dt><CalendarDays size={14} aria-hidden="true" />{t('admin.playersPage.joined')}</dt><dd>{formatDate(account.createdAt) ?? '—'}</dd></div>
-                    <div><dt><Clock3 size={14} aria-hidden="true" />{t('admin.playersPage.lastActive')}</dt><dd>{formatDateTime(account.lastSeen) ?? '—'}</dd></div>
+                    <div><dt><CalendarDays size={14} aria-hidden="true" />{t('admin.playersPage.joined')}</dt><dd>{formatDate(account.createdAt) ?? '-'}</dd></div>
+                    <div><dt><Clock3 size={14} aria-hidden="true" />{t('admin.playersPage.lastActive')}</dt><dd>{formatDateTime(account.lastSeen) ?? '-'}</dd></div>
                     <div><dt><KeyRound size={14} aria-hidden="true" />{t('admin.playersPage.recovery')}</dt><dd data-warning={!account.hasRecoveryCode}>{t(account.hasRecoveryCode ? 'admin.playersPage.recoveryReady' : 'admin.noRecoveryCode')}</dd></div>
                 </dl>
                 <p className="admin-player-access-notes">
@@ -173,7 +173,7 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                             <p className="font-semibold">
                                 {t('admin.bannedNotice', {
                                     date: formatDateTime(account.bannedAt),
-                                    admin: account.bannedBy ?? '—',
+                                    admin: account.bannedBy ?? '-',
                                 })}
                             </p>
                             <p className="text-xs">{account.banReason ? `“${account.banReason}”` : t('admin.noReason')}</p>
@@ -235,7 +235,7 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                                     </Button>
                                 </>
                             )}
-                            {/* admin kan gis her, men bare tas bort i databasen —
+                            {/* admin kan gis her, men bare tas bort i databasen -
                                 se functions/api/admin/player.js */}
                             {!isAdmin && !isBanned && (
                                 <ConfirmButton disabled={busy} onConfirm={() => void run({ action: 'make-admin' })}>
@@ -438,10 +438,10 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
                                         <td className="py-2 pr-2">{gameTitle(board.game)}</td>
                                         <td className="py-2 text-right tabular-nums">{n(board.entries)}</td>
                                         <td className="py-2 text-right tabular-nums">
-                                            {board.best === null ? '—' : n(board.best)}
+                                            {board.best === null ? '-' : n(board.best)}
                                         </td>
                                         <td className="hidden py-2 text-right text-xs tabular-nums sm:table-cell" style={{ color: 'var(--text-subtle)' }}>
-                                            {formatDate(board.lastAt) ?? '—'}
+                                            {formatDate(board.lastAt) ?? '-'}
                                         </td>
                                         <td className="py-2 pl-3 text-right">
                                             {!isSelf && (
@@ -474,7 +474,7 @@ export default function PlayerDetail({ username, selfName, onBack, onRenamed, on
 /**
  * Engangskoden admin nettopp laget, med hva spilleren skal gjøre med den.
  *
- * Tjeneren har bare hashen, så lukkes denne, er koden borte — da lages en ny,
+ * Tjeneren har bare hashen, så lukkes denne, er koden borte, da lages en ny,
  * som erstatter den.
  */
 function IssuedCode({ code, expiresAt, onClose }: { code: string; expiresAt: string; onClose: () => void }) {
@@ -511,7 +511,7 @@ function IssuedCode({ code, expiresAt, onClose }: { code: string; expiresAt: str
 }
 
 /**
- * Ett felt, en forklaring og to knapper — utestenging og nytt navn er den
+ * Ett felt, en forklaring og to knapper, utestenging og nytt navn er den
  * samme formen. Skjemaet forsvinner når det lukkes, og det som var skrevet i
  * det forsvinner med.
  */

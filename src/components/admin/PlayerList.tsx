@@ -172,7 +172,7 @@ export default function PlayerList({ state, onChange, onOpen }: PlayerListProps)
                                         </span>
                                         <span className="admin-player-progress"><strong>{n(player.xp)} <small>XP</small></strong><span>{t('admin.progress.level', { level: levelProgress(player.xp).level })}<span aria-hidden="true"> · </span><Gamepad2 size={12} aria-hidden="true" />{player.games}<span className="sr-only"> {t('admin.playersPage.savedGames')}</span></span></span>
                                         <span className="admin-player-seen">
-                                            <Clock3 size={13} aria-hidden="true" />{t('admin.row.lastSeen', { date: formatDate(player.lastSeen) ?? '—' })}
+                                            <Clock3 size={13} aria-hidden="true" />{t('admin.row.lastSeen', { date: formatDate(player.lastSeen) ?? '-' })}
                                         </span>
                                         <ChevronRight
                                             aria-hidden="true"

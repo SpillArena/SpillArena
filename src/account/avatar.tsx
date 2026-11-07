@@ -6,7 +6,7 @@ import { getSession, onSessionChange } from './session'
 // The picture is chosen on the front page and drawn by /api/avatar, so a game
 // needs no DiceBear of its own: it asks which picture the account has, then
 // points an <img> at the renderer. Guests, a failed lookup and an account that
-// never picked one all render `fallback` — the game's own placeholder — so the
+// never picked one all render `fallback`, the game's own placeholder, so the
 // picture is an upgrade, never a requirement.
 
 const API_BASE = (import.meta.env.VITE_ACCOUNT_API as string | undefined) ?? '/api'
@@ -64,7 +64,7 @@ function useAvatarUrl(): string | null {
  *
  * Without `size` the picture fills whatever box the caller gives it. With
  * `size` (px) it brings its own small rounded frame and renders nothing at all
- * when there is no picture — for "Posting as <name>" lines, where an empty
+ * when there is no picture, for "Posting as <name>" lines, where an empty
  * square would be worse than no picture.
  */
 export function PlayerAvatar({ fallback = null, className, size }: { fallback?: ReactNode; className?: string; size?: number }) {
@@ -101,7 +101,7 @@ export function PlayerAvatar({ fallback = null, className, size }: { fallback?: 
 }
 
 /**
- * Another player's picture, looked up by name — for rooms, lineups and podiums.
+ * Another player's picture, looked up by name, for rooms, lineups and podiums.
  * A player without one (404) or a failed load shows `fallback`, usually their
  * initial, so a room never has a hole where a picture should be. The picture
  * fills the box the caller gives it.

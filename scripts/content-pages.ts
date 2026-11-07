@@ -1,6 +1,6 @@
 import { createElement as h } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { cp, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import type { Plugin } from 'vite'
 import { EditorialArticle, HomeIntroduction, GUIDE_SLUGS, INFO_PATHS, guideFor, guidePath, copyFor, pageMetadata, type InfoPage, type GuideSlug } from '../src/content/pages.ts'
@@ -30,9 +30,18 @@ export function staticDocumentBody(page?: InfoPage, slug?: GuideSlug): string {
  * version and no API/network dependency during a production build. */
 export function contentPages(): Plugin {
   let outDir = ''
+  let artDir = ''
   return {
     name: 'spillarena-content-pages',
-    configResolved(config) { outDir = resolve(config.root, config.build.outDir) },
+    configResolved(config) { outDir = resolve(config.root, config.build.outDir); artDir = resolve(config.root, 'src/assets/games') },
+    configureServer(server) {
+      // Dev: serve the posters from the generated art folder, as the build copies them to /art/games/.
+      server.middlewares.use('/art/games', async (request, response, next) => {
+        const name = decodeURIComponent((request.url ?? '').split('?')[0].slice(1))
+        if (!/^[A-Za-z]+\.(no|en)\.svg$/.test(name)) return next()
+        try { response.setHeader('Content-Type', 'image/svg+xml'); response.end(await readFile(resolve(artDir, name))) } catch { next() }
+      })
+    },
     transformIndexHtml(html) {
       const list = JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList',
         itemListElement: GUIDE_SLUGS.map((slug, index) => ({ '@type': 'ListItem', position: index + 1,
@@ -66,6 +75,9 @@ export function contentPages(): Plugin {
         await mkdir(directory, { recursive: true })
         await writeFile(resolve(directory, 'index.html'), html)
       }
+      const posters = (await readdir(artDir)).filter(file => /^[A-Za-z]+\.(no|en)\.svg$/.test(file))
+      await mkdir(resolve(outDir, 'art/games'), { recursive: true })
+      await Promise.all(posters.map(file => cp(resolve(artDir, file), resolve(outDir, 'art/games', file))))
       // Static preview fallback; Pages serves the D1-backed function in production.
       await writeFile(resolve(outDir, 'sitemap.xml'), renderSitemap(GAME_DEFAULTS))
     },

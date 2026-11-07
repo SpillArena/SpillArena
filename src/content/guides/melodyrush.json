@@ -1,0 +1,78 @@
+{
+  "no": {
+    "title": "MelodyRush: musikkquiz med korte lydklipp",
+    "intro": "MelodyRush er en retro musikkquiz. Du starter med et lydklipp på bare et sekund eller mindre og gjetter sangen. Trenger du mer, kan du låse opp lengre klipp, men poengene synker for hver gang.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Hver mikstape har fem sanger. Du hører et kort utdrag av en kjent låt og skriver inn hvilken sang du tror det er. Gjetter du feil, eller trykker Hør mer, låses det neste, lengre klippet opp. Gir du opp, får du null poeng for sangen.",
+        "Det finnes seks klipp per sang, fra 0,2 sekunder opp til 16 sekunder. Jo tidligere du gjetter riktig, jo flere poeng. Har du riktig artist, men feil sang, avsløres artisten som hint resten av runden."
+      ]},
+      { "h": "Poeng", "p": [
+        "Poengene avhenger av klippet du gjetter på: 0,2 sekunder gir 1000, 0,5 sekunder gir 800, 1 sekund gir 600, 4 sekunder gir 400, 8 sekunder gir 250 og 16 sekunder gir 100. En mikstape er verdt maksimalt 5000 poeng."
+      ]},
+      { "h": "Spillmodi", "p": [
+        "Daglig mikstape er fem sanger som er like for alle og bytter ved midnatt norsk tid. Resultatet kan deles som emojier uten å røpe sangene. Øving gir ubegrensede mikstaper, blandet eller etter tiår fra 1970-tallet til 2020-tallet. Spillelister gir kuraterte samlinger, som Eurovision, filmlåter, festhits, GTA V-radio og Rocket League.",
+        "I Sammen spiller to til åtte i en felles lobby med ett delt klipp, 15 sekunder per sang og pallseremoni til slutt. I Versus velger to spillere hemmelig fem sanger hver og gjetter hverandres. Sammen og Versus krever innlogging."
+      ]},
+      { "h": "Sangene og lyden", "p": [
+        "Spillet har 709 sanger fra 1970 til 2026 til daglig mikstape og øving, pluss 544 sanger som bare finnes i spesialiserte spillelister. Lyden er 30 sekunders forhåndsvisninger fra Deezer som strømmes og aldri lagres. Det er ingen annonser i selve spillet og intet abonnement."
+      ]},
+      { "h": "Fremgang", "p": [
+        "XP, nivåer, rekker og merker følger SpillArena-profilen din. Spillet fungerer på norsk og engelsk, med lyst og mørkt tema."
+      ]},
+      { "h": "Et eksempel", "p": [
+        "Du hører 0,2 sekunder av et intro og kjenner ikke igjen noe. Du trykker Hør mer og får 0,5 sekunder, og nå aner du en kjent basslinje. Ved 1 sekund er du sikker og gjetter sangen. Du får 600 poeng. Hadde du ventet til 16 sekunder, ville det bare vært 100 poeng."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Lytt etter rytme og instrumenter før du leter etter melodi. Et gitarriff, en synth eller et trommebeat kan være nok til å plassere tiåret.",
+        "Bruk artisthintet. Får du riktig artist med feil sang, begrenser det valgene til artistens kjente låter.",
+        "Ikke gjett tilfeldig. Et galt gjett låser opp neste klipp, og du mister poeng uten å ha lært noe nytt.",
+        "Øv på tiår. Velg ett tiår om gangen i øvingsmodus for å bygge opp gjenkjenning av lyden fra hver periode."
+      ]}
+    ],
+    "faq": [
+      { "q": "Hvor lange er klippene?", "a": "Seks trinn, fra 0,2 sekunder til 16 sekunder." },
+      { "q": "Hvor kommer lyden fra?", "a": "Fra 30 sekunders forhåndsvisninger hos Deezer. De strømmes og lagres ikke." },
+      { "q": "Er daglig mikstape lik for alle?", "a": "Ja. De samme fem sangene for alle, nye ved midnatt norsk tid." },
+      { "q": "Må jeg ha konto?", "a": "Ikke for solo. Sammen og Versus krever innlogging." }
+    ]
+  },
+  "en": {
+    "title": "MelodyRush: a music quiz with short audio clips",
+    "intro": "MelodyRush is a retro music quiz. You start with a clip of a second or less and guess the song. If you need more, you can unlock longer clips, but your score drops each time.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "Each mixtape has five songs. You hear a short slice of a well-known track and type which song you think it is. If you guess wrong, or press Hear more, the next, longer clip unlocks. If you give up, the song scores zero.",
+        "There are six clips per song, from 0.2 seconds up to 16 seconds. The earlier you guess correctly, the more points you get. If you have the right artist but the wrong song, the artist is revealed as a hint for the rest of the round."
+      ]},
+      { "h": "Scoring", "p": [
+        "Points depend on the clip you guess on: 0.2 seconds gives 1,000, 0.5 seconds gives 800, 1 second gives 600, 4 seconds gives 400, 8 seconds gives 250 and 16 seconds gives 100. A mixtape is worth at most 5,000 points."
+      ]},
+      { "h": "Ways to play", "p": [
+        "The daily mixtape is five songs that are the same for everyone and changes at midnight Norwegian time. The result can be shared as emojis without giving away the songs. Practice gives unlimited mixtapes, mixed or by decade from the 1970s to the 2020s. Playlists offer curated collections such as Eurovision, movie songs, party hits, GTA V radio and Rocket League.",
+        "In Together, two to eight players share one lobby with one shared clip, 15 seconds per song and a podium at the end. In Versus, two players secretly pick five songs each and guess each other’s. Together and Versus need a sign-in."
+      ]},
+      { "h": "The songs and the audio", "p": [
+        "The game has 709 songs from 1970 to 2026 for the daily mixtape and practice, plus 544 songs that live only in specialised playlists. Audio is 30-second previews from Deezer that are streamed and never stored. There are no ads in the game itself and no subscription."
+      ]},
+      { "h": "Progress", "p": [
+        "XP, levels, streaks and badges follow your SpillArena profile. The game works in Norwegian and English, with light and dark themes."
+      ]},
+      { "h": "An example", "p": [
+        "You hear 0.2 seconds of an intro and recognise nothing. You press Hear more and get 0.5 seconds, and now you sense a familiar bassline. At 1 second you are sure and guess the song. You score 600 points. If you had waited until 16 seconds, it would only have been 100 points."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Listen for rhythm and instruments before you look for melody. A guitar riff, a synth or a drum beat can be enough to place the decade.",
+        "Use the artist hint. If you get the right artist with the wrong song, it narrows the choices to that artist’s known tracks.",
+        "Do not guess at random. A wrong guess unlocks the next clip, and you lose points without learning anything new.",
+        "Practise by decade. Pick one decade at a time in practice mode to build recognition of the sound from each period."
+      ]}
+    ],
+    "faq": [
+      { "q": "How long are the clips?", "a": "Six steps, from 0.2 seconds to 16 seconds." },
+      { "q": "Where does the audio come from?", "a": "From 30-second previews at Deezer. They are streamed and not stored." },
+      { "q": "Is the daily mixtape the same for everyone?", "a": "Yes. The same five songs for everyone, new at midnight Norwegian time." },
+      { "q": "Do I need an account?", "a": "Not for solo. Together and Versus need a sign-in." }
+    ]
+  }
+}

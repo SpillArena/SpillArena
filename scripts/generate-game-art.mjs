@@ -9,8 +9,8 @@
  *
  * TEKSTEN ER STREKER, IKKE <text>. En SVG vist i <img> får ikke laste webfonter,
  * så <text> ville blitt tegnet med det nettleseren tilfeldigvis har. Her gjøres
- * hver bokstav om til en path med Fraunces og Space Grotesk — de samme fontene
- * som lobbyen — og bildet ser likt ut overalt.
+ * hver bokstav om til en path med Fraunces og Space Grotesk, de samme fontene
+ * som lobbyen, og bildet ser likt ut overalt.
  *
  * FORMSPRÅKET er brikkene fra logoen: avrundede kvadrater med en mørkere sokkel
  * under og en lys glans øverst. Hvert spill har sin egen farge; illustrasjonen
@@ -47,7 +47,7 @@ const FONTS = {
 
 /**
  * Kerning mellom to glyfer, i fontenheter. opentype.js gir NaN for noen par
- * (GPOS-oppslag den ikke støtter), og én NaN gjør resten av streken ugyldig —
+ * (GPOS-oppslag den ikke støtter), og én NaN gjør resten av streken ugyldig -
  * teksten stopper midt i et ord.
  */
 function kern(font, a, b) {
@@ -87,7 +87,7 @@ function measure(str, font, size, tracking = 0) {
 
 /**
  * Tekst som én path. `anchor` er start, middle eller end. `middle: true`
- * plasserer y på midten av versalhøyden i stedet for på grunnlinja — det som
+ * plasserer y på midten av versalhøyden i stedet for på grunnlinja, det som
  * trengs for en bokstav midt i en brikke.
  */
 function text(str, font, size, x, y, { fill = '#fff', tracking = 0, anchor = 'start', middle = false, opacity, decimals } = {}) {
@@ -166,7 +166,7 @@ function tile(x, y, w, h, color, { r, depth, gloss = true, opacity, stroke } = {
   return out + '</g>'
 }
 
-/** En flat, gjennomsiktig plass på et brett — der en brikke kan ligge. */
+/** En flat, gjennomsiktig plass på et brett, der en brikke kan ligge. */
 const slot = (x, y, s, fill = '#fff', opacity = 0.1) =>
   `<rect x="${r1(x)}" y="${r1(y)}" width="${r1(s)}" height="${r1(s)}" rx="${r1(s * 0.27)}" fill="${fill}" fill-opacity="${opacity}"/>`
 
@@ -196,7 +196,7 @@ function logoMark(x, y, size) {
 // ---------------------------------------------------------------- spillene
 
 /*
- * Hvert spill: farger, tekst på begge språk, og to tegninger — `art` til
+ * Hvert spill: farger, tekst på begge språk, og to tegninger, `art` til
  * banneret (et felt på 500×520) og `glyph` til ikonet (512×512).
  */
 const GAMES = [
@@ -480,7 +480,7 @@ function scribbleGlyph() {
 
 /*
  * Landene er Natural Earth i 1:50 mill. (world-atlas), projisert ortografisk
- * med d3-geo — samme projeksjon som et fotografi av jorda. Kloden er dreid så
+ * med d3-geo, samme projeksjon som et fotografi av jorda. Kloden er dreid så
  * Europa vender mot oss og Norge ligger øverst, der nåla står.
  */
 const WORLD = (() => {
@@ -493,7 +493,7 @@ const NORWAY_PIN = [18.9, 69.6]
 /*
  * Landene får fargen til regionen de hører til i AtlasMaster, slik forsidekartet
  * der viser dem. Id-ene er de samme M49-kodene som world-atlas bruker, og
- * listene er kopiert fra AtlasMaster/src/components/menu/WorldMapPicker.tsx —
+ * listene er kopiert fra AtlasMaster/src/components/menu/WorldMapPicker.tsx -
  * endres regionene der, må de endres her også. Rekkefølgen betyr noe: Russland
  * ligger i både Asia og Europa, og havner i den første som treffer.
  */
@@ -507,7 +507,7 @@ const ATLAS_REGIONS = [
   ['#7458e6', [8, 40, 56, 70, 100, 112, 191, 196, 203, 208, 233, 246, 250, 276, 300, 348, 352, 372, 380, 428, 440, 442, 470, 498, 499, 528, 578, 616, 620, 642, 643, 688, 703, 705, 724, 752, 756, 804, 807, 826]],
 ].map(([color, ids]) => [color, new Set(ids)])
 
-/** Land utenfor en spillbar region — Verden i AtlasMaster. */
+/** Land utenfor en spillbar region, Verden i AtlasMaster. */
 const ATLAS_OTHER = '#2a3550'
 
 function landColor(country) {
@@ -629,7 +629,7 @@ const GIRAFFE = { coat: '#fcd34d', spot: '#b45309', dark: '#431407' }
 
 /**
  * En giraff som ser mot høyre, med bakken på y = 360 og hodet rundt y = 0.
- * Flekkene er avrundede brikker — samme form som i logoen — klippet til
+ * Flekkene er avrundede brikker, samme form som i logoen, klippet til
  * kroppen og halsen.
  */
 function giraffe(id) {
@@ -1202,7 +1202,7 @@ const imports = GAMES.flatMap((game) => [
 ])
 const entries = GAMES.map((game) => `    ${game.id}: { banner: { no: ${game.file}No, en: ${game.file}En }, icon: ${game.file}Icon },`)
 
-writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs — kjør \`npm run art\` i stedet for å endre her.
+writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs, kjør \`npm run art\` i stedet for å endre her.
 ${imports.join('\n')}
 
 export type ArtLanguage = 'no' | 'en'

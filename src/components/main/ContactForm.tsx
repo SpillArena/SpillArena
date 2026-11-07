@@ -114,7 +114,7 @@ export default function ContactForm() {
             </dl>
             <div className="contact-email-message"><MessageSquareText size={16} aria-hidden="true" /><p>{receiptMessage}</p></div>
             <span className="contact-email-reply">{t('contact.replyTo', { name: receiptName })}</span>
-            <footer>{t('contact.receiptFooter', { id: receipt?.id ?? '—' })}</footer>
+            <footer>{t('contact.receiptFooter', { id: receipt?.id ?? '-' })}</footer>
           </div>
         </div>
       </section>

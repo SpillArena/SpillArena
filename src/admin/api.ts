@@ -21,15 +21,15 @@ import type {
  * MED PANELETS EGET TEGN, IKKE ØKTENS. Økten ligger i localStorage i tretti
  * dager, der alt som kjører på siden kan lese den. /api/admin/* tar derfor bare
  * imot et tegn som fås med PIN-en (unlockAdmin) og varer et kvarter. Det ligger
- * i variabelen under og ingen andre steder — ikke i localStorage, ikke i
- * sessionStorage — og glemmes når panelet lukkes (lockAdmin). Hvorfor:
+ * i variabelen under og ingen andre steder, ikke i localStorage, ikke i
+ * sessionStorage, og glemmes når panelet lukkes (lockAdmin). Hvorfor:
  * issueAdminToken i shared/account-server.js.
  *
- * Et avvist admintegn — utløpt, tilbakekalt, eller `pin_required` — låser
+ * Et avvist admintegn, utløpt, tilbakekalt, eller `pin_required`, låser
  * panelet (onAdminLock), og panelet spør om PIN-en igjen. Det logger IKKE ut:
  * økten kan godt være gyldig selv om kvarteret er over. Er kontoen utestengt,
- * kastes økten, som i src/account/api.ts. 403 `forbidden` — tegnet er godt,
- * men kontoen er ikke (lenger) admin — sendes bare oppover.
+ * kastes økten, som i src/account/api.ts. 403 `forbidden`, tegnet er godt,
+ * men kontoen er ikke (lenger) admin, sendes bare oppover.
  */
 const API_BASE = (import.meta.env.VITE_ACCOUNT_API as string | undefined) ?? '/api'
 const TIMEOUT_MS = 10000
@@ -98,7 +98,7 @@ export async function unlockAdmin(pin: string): Promise<UnlockResult> {
             return { ok: true }
         }
         const error = typeof body?.error === 'string' ? body.error : 'service_failed'
-        // feil PIN er også 401, men da er økten god — bare den skal ikke kastes
+        // feil PIN er også 401, men da er økten god, bare den skal ikke kastes
         if (response.status === 401 && error !== 'bad_credentials') {
             signOut()
             return { ok: false, error: error === 'banned' ? 'banned' : 'unauthorized' }
@@ -182,7 +182,7 @@ async function call<T>(path: string, init: RequestInit = {}): Promise<AdminResul
     }
 }
 
-/** `?u=` og ikke en sti — se targetOf i shared/admin-server.js. */
+/** `?u=` og ikke en sti, se targetOf i shared/admin-server.js. */
 const playerPath = (username: string) => `/admin/player?u=${encodeURIComponent(username)}`
 
 export function fetchOverview(): Promise<AdminResult<AdminOverview>> {

@@ -1,7 +1,7 @@
 import type { GameId } from './types'
 
 /**
- * XP, levels, personal bests and lifetime stats — the same engine in every game.
+ * XP, levels, personal bests and lifetime stats, the same engine in every game.
  *
  * Lifted from AtlasMaster, which had all of this before the accounts were
  * shared, and generalised so the other games get it without reinventing it.
@@ -15,7 +15,7 @@ import type { GameId } from './types'
  * device that was offline for a week can never make a profile worse than it
  * was. See `mergeProgress`, and `createProfileSync` in sync.ts for when it runs.
  *
- * Each game keeps its own document under its own GameId — the shapes below are
+ * Each game keeps its own document under its own GameId, the shapes below are
  * shared, the contents are not.
  */
 
@@ -26,7 +26,7 @@ export const XP_PER_LEVEL = 600
  * What kind of rounds these have been.
  *
  * Everything here is a sum, a maximum or a set. A profile saved before a field
- * existed reads back as zero and starts counting from where it stands — nothing
+ * existed reads back as zero and starts counting from where it stands, nothing
  * is lost, and nothing pretends to have happened.
  */
 export interface Stats {
@@ -37,7 +37,7 @@ export interface Stats {
     totalCorrect: number
     totalMistakes: number
     /**
-     * Free-form tallies: rounds per difficulty, per mode, per region — whatever
+     * Free-form tallies: rounds per difficulty, per mode, per region, whatever
      * the game counts. One flat map instead of a field per axis, because a game
      * that starts counting something new should not need a change here.
      */
@@ -116,8 +116,8 @@ function sumCounts(a: Record<string, number>, b: Record<string, number>): Record
  * Combines two profiles without either losing anything.
  *
  * `best` takes the maximum, because a record is a maximum. The counters take
- * the maximum too, NOT the sum: the two sides usually overlap — the same device
- * that played the rounds is syncing them up — and adding them would count the
+ * the maximum too, NOT the sum: the two sides usually overlap, the same device
+ * that played the rounds is syncing them up, and adding them would count the
  * same round twice on every sync. Taking the larger under-counts a genuinely
  * split history (rounds played on two devices while both were offline), which
  * is the safe direction to be wrong in: a number that is too low can still be
@@ -182,7 +182,7 @@ export interface RunFacts {
     bestStreak?: number
     /**
      * Whether this counts as a flawless round. Left out, it is derived from
-     * mistakes and correctCount — no mistakes, and the round actually finished.
+     * mistakes and correctCount, no mistakes, and the round actually finished.
      */
     flawless?: boolean
     /** tallies to bump by one, e.g. `{ difficulty: 'hard', outcome: 'win' }` */
@@ -215,7 +215,7 @@ export interface ProgressStore {
      * Returns the merged profile, already saved.
      */
     adoptRemote: (username: string, remote: Progress | null) => Progress
-    /** Forgets the in-memory copy — call when stored data is cleared. */
+    /** Forgets the in-memory copy, call when stored data is cleared. */
     forget: () => void
 }
 
@@ -233,7 +233,7 @@ export interface ProgressStoreOptions {
  * Storage is injected rather than imported: every repo has its own consent
  * module, and this file is vendored into all of them, so it cannot import any
  * one of them. The keys are namespaced by game so two games in the same origin
- * — which is exactly what spillarena.no is — never read each other's profile.
+ *, which is exactly what spillarena.no is, never read each other's profile.
  */
 export function createProgressStore(options: ProgressStoreOptions): ProgressStore {
     const { game, read, write } = options
@@ -327,7 +327,7 @@ export function createProgressStore(options: ProgressStoreOptions): ProgressStor
          * The owner check is the part that is easy to miss: without it, signing
          * in as someone else on a shared device would merge the previous
          * player's XP into the new account, permanently. A device whose profile
-         * belongs to a different account starts from empty instead — the other
+         * belongs to a different account starts from empty instead, the other
          * player's profile is safe on their own account, which is the whole
          * point of having one.
          */

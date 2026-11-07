@@ -50,7 +50,7 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
     const [code, setCode] = useState('')
     /**
      * Gjenopprettingskoden som skal vises, når det er en. Da er skjemaet borte,
-     * og vinduet lukkes bare med «Fortsett» — ikke med Escape eller et klikk
+     * og vinduet lukkes bare med «Fortsett», ikke med Escape eller et klikk
      * ved siden av, for koden vises aldri igjen.
      */
     const [shown, setShown] = useState<{ username: string; code: string } | null>(null)
@@ -78,7 +78,7 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
          * Registrerer du deg med en tastefeil, har du en konto ingen kommer inn
          * i: PIN-en vises aldri tilbake, det finnes ingen e-post å nullstille
          * med, og navnet er opptatt fra da av. Innlogging har ingen slik felle
-         * — feil PIN feiler bare, og kan prøves på nytt — så det andre feltet
+         *, feil PIN feiler bare, og kan prøves på nytt, så det andre feltet
          * ville bare vært i veien der.
          *
          * `pin_mismatch` er ikke en kode fra tjeneren. Den ligger likevel under
@@ -120,7 +120,7 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
             /*
              * En ny konto får en gjenopprettingskode med en gang, mens PIN-en
              * fortsatt står i skjemaet. Feiler det, er kontoen likevel laget, og
-             * kontomenyen ber om en kode senere — da er det ikke verdt å stoppe her.
+             * kontomenyen ber om en kode senere, da er det ikke verdt å stoppe her.
              */
             if (action === 'register') {
                 const recovery = await createRecoveryCode(pin)

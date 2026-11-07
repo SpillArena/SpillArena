@@ -1,0 +1,72 @@
+{
+  "no": {
+    "title": "AtlasMaster: geografiquiz med kart, land og hovedsteder",
+    "intro": "AtlasMaster er en kartquiz der du klikker, velger eller skriver stedet som lyser opp. Spillet startet som en quiz om norske fylker og dekker nå hele verden, fra land og hovedsteder til elver, fjelltopper og flagg.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Du velger først en region og en kategori. Deretter lyser et sted opp på kartet, eller et navn vises, og du svarer på en av tre måter: du klikker på kartet, velger blant alternativer eller skriver navnet selv. Raske og riktige svar bygger kombinasjoner og gir en tempobonus.",
+        "Hver svarmåte har sin egen poengberegning og sin egen ledertavle, så du kan øve på det du vil mestre."
+      ]},
+      { "h": "Ti regioner", "p": [
+        "Du kan velge Norge, Europa, Asia, Afrika, Sør-Amerika, Nord-Amerika, Oseania, Antarktis, USA eller hele verden. Norge har 15 fylker. Europa har 46 land, Asia 49, Afrika 54, Sør-Amerika 12, Nord-Amerika 23 og Oseania 14. USA har 50 delstater, og verdenskartet har 197 land. Antarktis har åtte forskningsstasjoner og seks fjelltopper.",
+        "Hver region bruker en kartprojeksjon som passer for området. USA vises med Alaska og Hawaii i egne innsett, mens Europa bruker en prosjeksjon som begrenser forvrengning for kontinentet."
+      ]},
+      { "h": "Kategorier", "p": [
+        "Kategoriene varierer med regionen. De omfatter land, fylker, delstater, hovedsteder, byer, elver, fjelltopper, flagg, hav og sjøer, og forskningsstasjoner på Antarktis. Ikke alle kategorier finnes i alle regioner. Norge har for eksempel fylker, byer, elver og fjell, mens Afrika har land, hovedsteder, elver, fjell og flagg."
+      ]},
+      { "h": "Ledertavle og lagring", "p": [
+        "Logger du inn med SpillArena-konto, kan du legge inn poeng på ledertavla. Rundene lagres alltid også på enheten din, så en runde går ikke tapt om nettet svikter. Spillet fungerer på norsk og engelsk, med lyst og mørkt tema."
+      ]},
+      { "h": "Et eksempel på en runde", "p": [
+        "Du velger Europa og kategorien hovedsteder. Spillet viser Kroatia, og du skal finne eller skrive navnet på hovedstaden. Svaret er Zagreb. Ved klikkmodus lyser landet opp, og du klikker på det. Ved skrivemodus må du skrive navnet selv. Treffer du raskt på flere runder, bygger du en kombinasjon som øker poengene."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Lær regionene i en rekkefølge som gir mening. Start med Norge eller Europa der du allerede kan en del, og bygg deg opp til Asia og Afrika.",
+        "Bruk valgalternativene når du er ny, og bytt til å skrive navnet når du kjenner dem. Det er den raskeste veien til å huske stavemåten.",
+        "Se etter mønstre i kartet. Land som deler en lang grense, har ofte lignende språk eller historie, og elver følger ofte landegrenser og fjellkjeder.",
+        "Hold kombinasjonen gående. En feil bryter den, så det lønner seg å være trygg før du svarer raskt."
+      ]}
+    ],
+    "faq": [
+      { "q": "Er AtlasMaster bare for Norge?", "a": "Nei. Spillet startet med norske fylker, men dekker nå ti regioner, inkludert hele verden." },
+      { "q": "Må jeg ha konto?", "a": "Nei. Du kan spille som gjest. Konto trengs for å legge inn poeng på ledertavla." },
+      { "q": "Går poengene tapt om nettet faller ut?", "a": "Nei. Runder lagres alltid også lokalt på enheten din." },
+      { "q": "Hvilke språk støttes?", "a": "Norsk og engelsk." }
+    ]
+  },
+  "en": {
+    "title": "AtlasMaster: a geography quiz with maps, countries and capitals",
+    "intro": "AtlasMaster is a map quiz where you click, choose or type the place that lights up. It began as a quiz on Norwegian counties and now covers the whole world, from countries and capitals to rivers, peaks and flags.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "You first pick a region and a category. A place then lights up on the map, or a name is shown, and you answer in one of three ways: click the map, pick from choices, or type the name yourself. Fast, correct answers build combos and earn a pace bonus.",
+        "Each way of answering has its own scoring and its own leaderboard, so you can practise the skill you want to master."
+      ]},
+      { "h": "Ten regions", "p": [
+        "You can choose Norway, Europe, Asia, Africa, South America, North America, Oceania, Antarctica, the USA or the whole world. Norway has 15 counties. Europe has 46 countries, Asia 49, Africa 54, South America 12, North America 23 and Oceania 14. The USA has 50 states, and the world map has 197 countries. Antarctica has eight research stations and six peaks.",
+        "Each region uses a map projection suited to the area. The USA is shown with Alaska and Hawaii in insets, while Europe uses a projection that limits distortion for the continent."
+      ]},
+      { "h": "Categories", "p": [
+        "Categories vary with the region. They include countries, counties, states, capitals, cities, rivers, peaks, flags, oceans and seas, and research stations in Antarctica. Not every category exists in every region. Norway, for instance, has counties, cities, rivers and peaks, while Africa has countries, capitals, rivers, peaks and flags."
+      ]},
+      { "h": "Leaderboard and saving", "p": [
+        "If you sign in with a SpillArena account, you can post scores to the leaderboard. Rounds are always saved on your device too, so a round is never lost if the network fails. The game works in Norwegian and English, with light and dark themes."
+      ]},
+      { "h": "An example round", "p": [
+        "You pick Europe and the category capitals. The game shows Croatia, and you need to find or type the name of its capital. The answer is Zagreb. In click mode the country lights up and you click it. In typing mode you spell the name yourself. If you answer quickly over several rounds, you build a combo that raises your score."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Learn the regions in an order that makes sense. Start with Norway or Europe, where you already know a lot, and work up to Asia and Africa.",
+        "Use the multiple-choice options while you are new, and switch to typing once you know the names. It is the fastest way to remember spelling.",
+        "Look for patterns on the map. Countries that share a long border often have similar languages or history, and rivers often follow borders and mountain ranges.",
+        "Keep your combo going. A mistake breaks it, so it pays to be sure before you answer quickly."
+      ]}
+    ],
+    "faq": [
+      { "q": "Is AtlasMaster only about Norway?", "a": "No. It began with Norwegian counties but now covers ten regions, including the whole world." },
+      { "q": "Do I need an account?", "a": "No. You can play as a guest. An account is needed to post scores to the leaderboard." },
+      { "q": "Are my scores lost if the connection drops?", "a": "No. Rounds are always saved locally on your device too." },
+      { "q": "Which languages are supported?", "a": "Norwegian and English." }
+    ]
+  }
+}

@@ -36,8 +36,8 @@ export function goToGame(game: Game, label: string): void {
 const normalizeUrl = (url: string) => new URL(url, window.location.href).href.replace(/\/+$/, '')
 
 /**
- * Viser lasteren for VANLIGE lenker til et spill også — utvalgt spill, «Spill
- * nå» i en dialog — uten at hver av dem må huske det.
+ * Viser lasteren for VANLIGE lenker til et spill også, utvalgt spill, «Spill
+ * nå» i en dialog, uten at hver av dem må huske det.
  *
  * Bare et klikk som blir i fanen: med Ctrl, ⌘, Shift eller midtknapp åpnes
  * spillet et annet sted, og denne siden skal ikke dekkes til. Et klikk en
@@ -56,7 +56,7 @@ export function installGameLinkLoader(labelFor: (game: Game) => string): () => v
   }
 
   /*
-   * Tilbake-knappen kan hente forsiden fra bfcache, akkurat slik den var — med
+   * Tilbake-knappen kan hente forsiden fra bfcache, akkurat slik den var, med
    * lasteren oppe. Da skal den bort med en gang.
    */
   const onPageShow = (event: PageTransitionEvent) => {

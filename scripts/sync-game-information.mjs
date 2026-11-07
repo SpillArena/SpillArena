@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
 
 const hub = fileURLToPath(new URL('..', import.meta.url))
-const guides = JSON.parse(await readFile(resolve(hub, 'src/content/guides.json'), 'utf8'))
 const roots = { fleetbot: 'FleetBot/battleship-frontend', hangbot: 'HangBot', scribblebot: 'ScribbleBot', atlasmaster: 'AtlasMaster', proportionpanic: 'ProportionPanic', pixelpanic: 'PixelPanic', erashuffle: 'EraShuffle', melodyrush: 'MelodyRush', hitline: 'Hitline', sipzone: 'SipZone', cracked: 'Cracked' }
+const guides = Object.fromEntries(await Promise.all(Object.keys(roots).map(async slug => [slug, JSON.parse(await readFile(resolve(hub, `src/content/guides/${slug}.json`), 'utf8'))])))
 const esc = text => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;')
 const css = `/* Shared by the initial HTML and the running game. Scoped to avoid changing gameplay. */
 .spillarena-game-information { box-sizing: border-box; max-width: 840px; width: 100%; margin: 24px auto; padding: 20px; color: var(--ink, #292335); background: var(--paper, #f7f5ef); font: 400 15px/1.75 system-ui, sans-serif; overflow-wrap: anywhere; border-radius: 12px; }
@@ -30,7 +30,7 @@ for (const [slug, directory] of Object.entries(roots)) {
   const block = '<!--game-information-->\n<section class="spillarena-game-information" aria-label="Spillinformasjon / Game information">\n'
     + ['no', 'en'].map(lang => {
       const g = guides[slug][lang]
-      return `<div lang="${lang === 'no' ? 'nb' : 'en'}" data-game-info-language="${lang}"><details><summary>${esc(g.title)}</summary><p>${esc(g.intro)}</p><h2>${lang === 'no' ? 'Slik spiller du' : 'How to play'}</h2><p>${esc(g.rules)}</p><p><a href="https://spillarena.no/games/${slug}/">${lang === 'no' ? 'Se eksempel og flere tips' : 'Read an example and more tips'}</a> · <a href="https://spillarena.no/">${lang === 'no' ? 'Alle spill' : 'All games'}</a></p></details></div>`
+      return `<div lang="${lang === 'no' ? 'nb' : 'en'}" data-game-info-language="${lang}"><details><summary>${esc(g.title)}</summary><p>${esc(g.intro)}</p><h2>${esc(g.sections[0].h)}</h2>${g.sections[0].p.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}<p><a href="https://spillarena.no/games/${slug}/">${lang === 'no' ? 'Les hele guiden med eksempel, tips og vanlige spørsmål' : 'Read the full guide with an example, tips and FAQ'}</a> · <a href="https://spillarena.no/">${lang === 'no' ? 'Alle spill' : 'All games'}</a></p></details></div>`
     }).join('\n') + '\n</section>\n<!--/game-information-->'
   if (html.includes('<!--game-information-->')) html = html.replace(/<!--game-information-->[\s\S]*?<!--\/game-information-->/, block)
   else html = html.replace('</body>', `${block}\n</body>`)

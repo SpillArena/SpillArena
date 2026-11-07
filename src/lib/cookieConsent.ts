@@ -3,7 +3,7 @@ export type ConsentStatus = 'accepted' | 'declined' | null
 export const CONSENT_KEY = 'cookie-consent'
 
 /**
- * Alt forsiden lagrer i nettleseren — ETT sted.
+ * Alt forsiden lagrer i nettleseren, ETT sted.
  *
  * Samtykkebanneret forklarer hver post med vanlige ord (nøklene vises ikke), og
  * et nei sletter nøklene. Står ny lagring ikke her, blir den verken forklart
@@ -14,7 +14,7 @@ export const CONSENT_KEY = 'cookie-consent'
  * måtte vi spørre på nytt ved hvert besøk.
  */
 export const STORAGE_ITEMS = [
-    // samme nøkkel som STORAGE_KEY i src/account/session.ts — den er vendret og
+    // samme nøkkel som STORAGE_KEY i src/account/session.ts, den er vendret og
     // eksporterer den ikke
     { id: 'session', keys: ['spillarena.session'], necessary: false },
     // spillarena:install-dismissed: «Legg til på hjem-skjermen» er skjult (InstallPrompt.tsx)

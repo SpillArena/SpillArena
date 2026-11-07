@@ -9,7 +9,7 @@ import { useConsent } from './useConsent'
  *
  * Centred, and it stays until it is answered: no close button, Escape or click
  * outside the first time. A strip at the bottom of the screen was easy to miss
- * or dismiss unread, and a "no" costs more than it looks — so the dialog says
+ * or dismiss unread, and a "no" costs more than it looks, so the dialog says
  * what a "no" means BEFORE the choice, and lists what is stored in words a
  * player understands (no storage keys). Opened again from a settings menu
  * (openConsentDialog), there is already an answer, and it closes like any
@@ -29,7 +29,7 @@ import { useConsent } from './useConsent'
  * versions and theme variables. It follows the system colour scheme.
  *
  * The text is built in, in Norwegian and English, because it is the same
- * question with the same answer everywhere — only the list of what a game
+ * question with the same answer everywhere, only the list of what a game
  * stores differs, and that comes in through `items`.
  */
 
@@ -46,7 +46,7 @@ export interface ConsentDialogProps {
     /**
      * What THIS game stores beyond the sign-in and the answer itself, in plain
      * words: "your progress in this game", "your chosen difficulty". Never a
-     * storage key — a player cannot read those.
+     * storage key, a player cannot read those.
      */
     items?: ConsentItem[]
     /** Game-specific disclosure for external media services, if used. */
@@ -147,7 +147,7 @@ const CSS = `
 }
 .sac-dialog *, .sac-reminder * { box-sizing: border-box; }
 /*
- * The host game's global styles reach in here — FleetBot uppercases every h2
+ * The host game's global styles reach in here, FleetBot uppercases every h2
  * and colours every p. Reset what they touch; the rules below that need a
  * different value are scoped under .sac-dialog so they still win.
  */
@@ -357,7 +357,7 @@ export function ConsentDialog({ language, game, items = [], privacyNote }: Conse
     const [open, setOpen] = useState<boolean>(() => getConsent() === null && getAdConsentState() === 'off')
     const [reminderHidden, setReminderHidden] = useState(reminderSeen)
     const dialogRef = useRef<HTMLDivElement>(null)
-    // opened by itself rather than from a menu — only then may Google's message replace it
+    // opened by itself rather than from a menu, only then may Google's message replace it
     const autoOpened = useRef(open)
     const dismissible = consent !== null
     const showReminder = consent === 'declined' && !open && !reminderHidden
@@ -395,7 +395,7 @@ export function ConsentDialog({ language, game, items = [], privacyNote }: Conse
         [],
     )
 
-    // answered elsewhere — the front page, or another game in another tab
+    // answered elsewhere, the front page, or another game in another tab
     useEffect(
         () =>
             onConsentChange((status) => {

@@ -1,11 +1,11 @@
 /**
- * Hvilke navn en spiller ikke får ta — ett sted, for hele SpillArena.
+ * Hvilke navn en spiller ikke får ta, ett sted, for hele SpillArena.
  *
  * DETTE ERSTATTER TRE KOPIER. FleetBot, HangBot og ScribbleBot hadde hver sin
  * fil med den samme engelske lista på ~470 ord (FleetBot/usernameBlocklist.js,
  * HangBot/src/constants/reservedUsernameTerms.js,
  * ScribbleBot/src/lib/reservedUsernames.ts). De hadde alt begynt å drive fra
- * hverandre — HangBot hadde to ord de andre ikke hadde — og AtlasMaster og
+ * hverandre, HangBot hadde to ord de andre ikke hadde, og AtlasMaster og
  * forsiden hadde ingen liste i det hele tatt, så kontoen alle spillene nå deler
  * ble laget helt uten filter.
  *
@@ -21,20 +21,20 @@
  *
  * 3. SAMMENLIGNINGEN VAR `includes` PÅ HELE LISTA. Med «ass», «anal» og «hell»
  *    på lista betyr det at ekte navn ble nektet: Cassandra, Kassandra, Hassan,
- *    Klasse, Grasse, Analyse, Passord, Massimo, Hellstrom — alle sperret ute av
+ *    Klasse, Grasse, Analyse, Passord, Massimo, Hellstrom, alle sperret ute av
  *    sitt eget navn, uten noen måte å komme videre på. Det er Scunthorpe-
  *    problemet, og det rammer nøyaktig de navnene et norsk nettsted må slippe
  *    inn. Se `isNameAllowed` for hva som gjøres i stedet.
  *
  * Lista er ikke og blir aldri komplett. Den er en terskel mot det åpenbare, og
- * feil vei å bomme er å slippe gjennom ett stygt navn — som et menneske kan
- * rydde opp i — framfor å nekte en spiller å hete det hen heter.
+ * feil vei å bomme er å slippe gjennom ett stygt navn, som et menneske kan
+ * rydde opp i, framfor å nekte en spiller å hete det hen heter.
  */
 
 /**
  * Ord som aldri finnes inni et uskyldig ord.
  *
- * DISSE, og bare disse, sammenlignes som delstreng — «xXnigg3rXx» skal fanges
+ * DISSE, og bare disse, sammenlignes som delstreng, «xXnigg3rXx» skal fanges
  * uansett hva som står rundt. Grunnen til at resten av lista IKKE behandles
  * slik står øverst i fila. Legger du noe til her, må det tåle den testen:
  * finnes bokstavrekka inni et vanlig navn, hører den hjemme i PROFANITY_TERMS.
@@ -606,7 +606,7 @@ export const NORWEGIAN_TERMS: readonly string[] = [
  * Navn som utgir seg for å være nettstedet, en ansatt eller et system.
  *
  * Eierens eget navn står IKKE her. «emilb» ville sperret «Emil B.», som er et
- * helt vanlig navn — og eieren har uansett alt kontoen sin. En reservasjon som
+ * helt vanlig navn, og eieren har uansett alt kontoen sin. En reservasjon som
  * nekter ekte folk navnet sitt verner mindre enn den koster.
  *
  * Disse nektes som HELE NAVNET (etter folding), ikke som ord inni et navn:
@@ -686,12 +686,12 @@ export const RESERVED_NAMES: readonly string[] = [
  *
  * Uten dette er «f4gg0t» et helt annet ord enn «faggot», og lista blir en
  * liste over stavemåter i stedet for ord. De gamle listene løste det ved å ta
- * inn stavevariantene som egne oppføringer — «4r5e», «5h1t», «b17ch» — noe som
+ * inn stavevariantene som egne oppføringer, «4r5e», «5h1t», «b17ch», noe som
  * bare virker for de variantene noen husket å skrive ned.
  *
  * Sifrene er tvetydige med vilje: «1337» folder til «leet», og et navn som
  * «Emil2000» folder til «emilzooo». Det gjør ingen skade, fordi resultatet kun
- * brukes til å slå opp i lista — det er aldri navnet som lagres.
+ * brukes til å slå opp i lista, det er aldri navnet som lagres.
  */
 const LEET: Record<string, string> = {
     '0': 'o', '1': 'i', '3': 'e', '4': 'a', '5': 's', '6': 'g',
@@ -730,7 +730,7 @@ function words(value: string): string[] {
 /**
  * Pynt rundt et ord er ikke et annet ord.
  *
- * «xXFuckXx» deles til «x», «xfuck», «xx» — og «xfuck» står ikke på noen liste,
+ * «xXFuckXx» deles til «x», «xfuck», «xx», og «xfuck» står ikke på noen liste,
  * så navnet slapp gjennom. Bokstavene som brukes til å ramme inn et navn er få
  * og forutsigbare, så hvert ord prøves også uten dem.
  *
@@ -750,7 +750,7 @@ export type NameRejection = 'severe' | 'profanity' | 'reserved'
  *
  * Tre regler, i tur:
  *
- *   1. Et grovt ord hvor som helst i navnet — delstreng, se SEVERE_TERMS.
+ *   1. Et grovt ord hvor som helst i navnet, delstreng, se SEVERE_TERMS.
  *   2. Et banneord som ET HELT ORD i navnet. «Cassandra» inneholder «ass», men
  *      har det ikke som ord, og slipper gjennom. Det er hele poenget.
  *   3. Hele navnet er et reservert navn. «Admin» nektes, «Admiral» gjør ikke.

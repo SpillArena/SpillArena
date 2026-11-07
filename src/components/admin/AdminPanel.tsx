@@ -27,7 +27,7 @@ type Tab = 'overview' | 'traffic' | 'games' | 'players' | 'messages' | 'log'
 const TABS: Tab[] = ['overview', 'traffic', 'games', 'players', 'messages', 'log']
 
 /**
- * Adminpanelet — bare for kontoer med `players.admin = 1`.
+ * Adminpanelet, bare for kontoer med `players.admin = 1`.
  *
  * At knappen hit bare vises for admins er pynt; det som faktisk stenger er
  * requireAdmin på tjeneren, som sjekker flagget på nytt ved hvert eneste kall.

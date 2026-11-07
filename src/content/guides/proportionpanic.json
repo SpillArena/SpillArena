@@ -1,0 +1,68 @@
+{
+  "no": {
+    "title": "Proportion Panic: hvor stort er det egentlig?",
+    "intro": "Proportion Panic er et spill om ekte størrelser. Hver runde ser du en referanse med kjent størrelse og en mystisk figur. Du drar i figuren til forholdet ser riktig ut, og jo nærmere sannheten du lander, jo flere poeng får du.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Hver runde viser to silhuetter på et brett. Den ene er referansen, og du får vite hvor stor den er. Den andre er den mystiske figuren, og du skal justere størrelsen til den ser riktig ut ved siden av referansen. Du har 30 sekunder på hver runde.",
+        "Når du låser svaret, avsløres den virkelige størrelsen sammen med en morsom fakta om gjenstanden eller dyret. Det er en del av poenget med spillet: du lærer noe hver gang, uansett hvor nær du var."
+      ]},
+      { "h": "Spillmoduser", "p": [
+        "Daglig utfordring består av fem par som er like for alle spillere den dagen. Du får et delbart resultat med emojier og en live ledertavle. Øving lar deg velge en kategori og spille tilfeldige par så mange ganger du vil.",
+        "I flerspiller kan to til åtte innloggede spillere endre størrelsen på de samme fem figurene i et sammenligningsrom, med tidsstyrte avsløringer, løpende stilling og omkamp."
+      ]},
+      { "h": "Slik regnes poengene", "p": [
+        "Poengene bygger på forholdet mellom gjettet ditt og det riktige svaret. Det betyr at «halvparten så stor» og «dobbelt så stor» taper like mye. Er du innenfor 6 prosent, får du full pott på 200 poeng. Er du 20 prosent unna, får du 156. Er du dobbelt så stor eller liten, får du 90, og tre ganger unna gir 60. Fem ganger unna eller mer gir null. Alt mellom disse punktene regnes ut jevnt.",
+        "Fem runder gir maksimalt 1000 poeng, så hver runde teller like mye."
+      ]},
+      { "h": "Et eksempel", "p": [
+        "Anta at referansen er et menneske på 1,8 meter og den mystiske figuren er en sjiraff. Du drar sjiraffen til du tror den er omtrent tre ganger så høy. Faktisk er en voksen sjiraff rundt fem meter høy, altså nesten tre ganger høyden til et menneske. Du lander innenfor 6 prosent og får full pott, eller du gjetter litt for lavt og får noe færre poeng. Uansett viser avsløringen den ekte størrelsen."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Tenk i forhold, ikke i tall. Spør deg selv hvor mange ganger referansen ville gått inn i figuren, og juster derfra.",
+        "Vær forsiktig med ytterpunktene. Fordi poengene bygger på forholdstall, er en feil på det doble like dyr uansett om den er for stor eller for liten.",
+        "Bruk Øving for å bygge intuisjon. Hver avsløring viser den virkelige størrelsen, så du bygger opp en følelse for hva som er stort og lite.",
+        "Merk deg lengden og høyden hver for seg. Mange dyr er mye lengre enn de er høye, og silhuetten viser formen du må justere."
+      ]}
+    ],
+    "faq": [
+      { "q": "Må jeg ha konto?", "a": "Ikke for å øve. Flerspiller krever innlogging." },
+      { "q": "Er daglig utfordring lik for alle?", "a": "Ja. Alle får de samme fem parene samme dag." },
+      { "q": "Hvor lang tid har jeg per runde?", "a": "30 sekunder." },
+      { "q": "Hvor kommer silhuettene fra?", "a": "Dyrene er hentet fra PhyloPic, mennesket fra Wikimedia Commons, og resten er tegnet for spillet." }
+    ]
+  },
+  "en": {
+    "title": "Proportion Panic: how big is it really?",
+    "intro": "Proportion Panic is a game about real-world size. Each round shows a reference of known size and a mystery figure. You drag the figure until the proportion looks right, and the closer you land to the truth, the more you score.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "Each round puts two silhouettes on a board. One is the reference, and you are told how big it is. The other is the mystery figure, and you adjust its size until it looks right next to the reference. You have 30 seconds for each round.",
+        "When you lock in, the real size is revealed along with a fun fact about the object or animal. That is part of the point: you learn something every time, however close you were."
+      ]},
+      { "h": "Game modes", "p": [
+        "The Daily Challenge is five pairs that are the same for every player that day. You get a shareable emoji result and a live leaderboard. Practice lets you pick a category and play random pairs as often as you like.",
+        "In multiplayer, two to eight signed-in players resize the same five figures in a comparison room, with timed reveals, live standings and rematches."
+      ]},
+      { "h": "How the score works", "p": [
+        "Scores come from the ratio between your guess and the truth. That means “half as big” and “twice as big” lose the same amount. Within 6 percent earns the full 200 points. 20 percent off earns 156. Twice as big or small earns 90, and three times off earns 60. Five times off or worse earns zero. Everything between those points is worked out smoothly.",
+        "Five rounds give at most 1,000 points, so every round counts equally."
+      ]},
+      { "h": "An example", "p": [
+        "Say the reference is a person of 1.8 metres and the mystery figure is a giraffe. You drag the giraffe until you think it is about three times as tall. A grown giraffe is around five metres tall, almost three times a person’s height. You land within 6 percent and earn the full score, or you guess a little low and earn somewhat fewer points. Either way the reveal shows the real size."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Think in ratios, not numbers. Ask yourself how many times the reference would fit into the figure, and adjust from there.",
+        "Be careful at the extremes. Because scoring is based on ratios, a mistake of double costs the same whether you are too big or too small.",
+        "Use Practice to build intuition. Each reveal shows the real size, so you build a feel for what is large and small.",
+        "Note length and height separately. Many animals are much longer than they are tall, and the silhouette shows the shape you must adjust."
+      ]}
+    ],
+    "faq": [
+      { "q": "Do I need an account?", "a": "Not to practise. Multiplayer requires signing in." },
+      { "q": "Is the daily challenge the same for everyone?", "a": "Yes. Everyone gets the same five pairs on the same day." },
+      { "q": "How long do I have per round?", "a": "30 seconds." },
+      { "q": "Where do the silhouettes come from?", "a": "Animals come from PhyloPic, the human figure from Wikimedia Commons, and the rest are drawn for the game." }
+    ]
+  }
+}
