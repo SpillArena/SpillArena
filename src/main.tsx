@@ -11,6 +11,8 @@ import './ui/arena.css'
 import './ui/lobby.css'
 import App from './App'
 import CookieConsentBanner from './components/CookieConsentBanner'
+import { PartyProvider } from './party/PartyProvider'
+import PartyGameFrame from './party/PartyGameFrame'
 import { hideLoader, installGameLinkLoader } from './ui/loader'
 import { loadAdSense } from './account'
 import { isAdFreePage } from './lib/adFreePages'
@@ -39,7 +41,10 @@ createRoot(document.getElementById('root')!).render(
     <CookieConsentProvider>
       <ThemeProvider>
         <AccentProvider>
-          <App />
+          <PartyProvider>
+            <App />
+            <PartyGameFrame />
+          </PartyProvider>
           <CookieConsentBanner />
         </AccentProvider>
       </ThemeProvider>

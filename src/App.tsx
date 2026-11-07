@@ -19,10 +19,14 @@ import ContactForm from './components/main/ContactForm'
 import Dialog from './ui/Dialog'
 import { goToGame } from './ui/loader'
 import { useGlobalLoader } from './ui/useGlobalLoader'
+import PartyPage from './party/PartyPage'
+import { useParty } from './party/context'
+import { gameSlug } from './party/slug'
 
 export default function App() {
   const { t, i18n } = useTranslation()
   const games = useGames()
+  const party = useParty()
   const { username, isSignedIn, signOut } = useAccount()
   const [page, setPage] = useState<Page>(currentPage)
   const [betaGame, setBetaGame] = useState<Game | null>(null)
@@ -72,11 +76,11 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = i18n.resolvedLanguage === 'no' ? 'nb' : 'en'
     const slug = guideSlug(window.location.pathname)
-    const accountPage = ['login', 'register', 'recover', 'profile'].includes(page)
+    const accountPage = ['login', 'register', 'recover', 'profile', 'party'].includes(page)
     const metadata = pageMetadata(i18n.resolvedLanguage === 'en' ? 'en' : 'no',
       ['home', 'guide'].includes(page) || accountPage ? undefined : page as InfoPage, page === 'guide' ? slug : undefined)
     document.title = accountPage
-      ? t(page === 'profile' ? 'account.yourProfile' : page === 'register' ? 'account.register' : page === 'recover' ? 'account.recovery.title' : 'account.signIn') + ' · SpillArena'
+      ? t(page === 'party' ? 'party.title' : page === 'profile' ? 'account.yourProfile' : page === 'register' ? 'account.register' : page === 'recover' ? 'account.recovery.title' : 'account.signIn') + ' · SpillArena'
       : page === 'home' ? metadata.title : metadata.title + ' · SpillArena'
     document.querySelector('meta[name="description"]')?.setAttribute('content', metadata.description)
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://spillarena.no${metadata.path}`)
@@ -86,11 +90,18 @@ export default function App() {
     document.querySelector('meta[name="robots"]')?.setAttribute('content', accountPage ? 'noindex, follow' : 'index, follow')
   }, [page, i18n.resolvedLanguage, t])
 
+  /** In a party the leader's pick goes to everyone, and nobody else opens a game on their own. */
+  const launch = (game: Game) => {
+    if (!party.view) goToGame(game, t('lobby.loadingGame', { title: game.title }))
+    else if (party.isLeader) party.selectGame(gameSlug(game))
+    else window.location.hash = 'party'
+  }
   const handleGameClick = (game: Game) => {
     game = games.find(item => item.id === game.id) ?? game
     if (game.disabled || !game.liveUrl) return
+    if (party.view && !party.isLeader) { window.location.hash = 'party'; return }
     if (game.beta) setBetaGame(game)
-    else goToGame(game, t('lobby.loadingGame', { title: game.title }))
+    else launch(game)
   }
   const pickGame = () => {
     const pool = games.filter(game => !game.disabled && game.liveUrl && game !== pickedGame)
@@ -110,15 +121,15 @@ export default function App() {
         <GamesSection onClick={handleGameClick} />
         <HomeIntroduction language={i18n.resolvedLanguage === 'en' ? 'en' : 'no'} />
         <aside className="account-strip" aria-labelledby="account-strip-title"><div className="account-symbol" aria-hidden="true"><ArrowUpRight size={28} /></div><div><h2 id="account-strip-title">{t('lobby.accountTitle')}</h2><p>{t('lobby.accountDescription')}</p></div><a className="button secondary" href={isSignedIn ? '#profile' : '#login'}>{t(isSignedIn ? 'account.yourProfile' : 'lobby.accountMore')}<ArrowUpRight size={16} aria-hidden="true" /></a></aside>
-      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' || page === 'about' || page === 'guides' || page === 'guide' ? <EditorialArticle page={page === 'guide' ? undefined : page} slug={slug} action={guideGame && (guideGame.disabled ? <p role="status">{t('content.unavailable')}</p> : <button className="button primary" type="button" onClick={() => handleGameClick(guideGame)}>{t('content.play')}<ArrowUpRight size={16} aria-hidden="true" /></button>)} language={i18n.resolvedLanguage === 'en' ? 'en' : 'no'} /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => void handleSignOut()} onPlay={handleGameClick} onDeleted={() => { setAccountDeleted(true); window.location.hash = ''; setPage('home') }} /> :
+      </> : page === 'contact' ? <ContactForm /> : page === 'privacy' || page === 'terms' || page === 'faq' || page === 'about' || page === 'guides' || page === 'guide' ? <EditorialArticle page={page === 'guide' ? undefined : page} slug={slug} action={guideGame && (guideGame.disabled ? <p role="status">{t('content.unavailable')}</p> : <button className="button primary" type="button" onClick={() => handleGameClick(guideGame)}>{t('content.play')}<ArrowUpRight size={16} aria-hidden="true" /></button>)} language={i18n.resolvedLanguage === 'en' ? 'en' : 'no'} /> : page === 'party' ? <PartyPage /> : page === 'profile' ? <ProfilePage username={username} onSignOut={() => void handleSignOut()} onPlay={handleGameClick} onDeleted={() => { setAccountDeleted(true); window.location.hash = ''; setPage('home') }} /> :
         <AuthModal key={page} open presentation="page" initialMode={page} onClose={() => { window.location.hash = getSession() ? 'profile' : '' }} />}
     </main>
     <FooterSection />
     <InstallPrompt />
-    <BetaWarningModal game={betaGame} onClose={() => setBetaGame(null)} onConfirm={() => { if (betaGame && !games.find(item => item.id === betaGame.id)?.disabled) goToGame(betaGame, t('lobby.loadingGame', { title: betaGame.title })) }} />
+    <BetaWarningModal game={betaGame} onClose={() => setBetaGame(null)} onConfirm={() => { if (betaGame && !games.find(item => item.id === betaGame.id)?.disabled) launch(betaGame) }} />
     <Dialog open={pickedGame !== null} onClose={() => setPickedGame(null)} title={pickedGame?.title ?? ''} eyebrow={t('lobby.pickedLabel')}>
       {pickedGame && <><img className="picked-art" src={gameBanner(pickedGame, i18n.resolvedLanguage)} alt="" /><p>{t(`lobby.descriptions.${pickedGame.id}`)}</p>{pickedGame.beta && <p className="dialog-note">{t('betaWarningMessage', { title: pickedGame.title })}</p>}
-        <div className="dialog-actions"><button className="button secondary" type="button" onClick={pickGame}>{t('lobby.pickAgain')}</button><a className="button primary" href={games.find(item => item.id === pickedGame.id)?.disabled ? undefined : pickedGame.liveUrl}>{t('lobby.play')}<ArrowUpRight size={16} aria-hidden="true" /></a></div></>}
+        <div className="dialog-actions"><button className="button secondary" type="button" onClick={pickGame}>{t('lobby.pickAgain')}</button><a className="button primary" href={games.find(item => item.id === pickedGame.id)?.disabled ? undefined : pickedGame.liveUrl} onClick={party.view ? event => { event.preventDefault(); setPickedGame(null); handleGameClick(pickedGame) } : undefined}>{t('lobby.play')}<ArrowUpRight size={16} aria-hidden="true" /></a></div></>}
     </Dialog>
   </div>
 }

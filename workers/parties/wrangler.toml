@@ -1,0 +1,19 @@
+# Party mode: one Durable Object per party, reached from the lobby's Pages Function through a binding.
+# Free plan: only SQLite-backed Durable Objects exist there, which is what new_sqlite_classes creates.
+# Deploy with `npm run parties:deploy`. Set the signing key once with
+#   npx wrangler secret put AUTH_SECRET -c workers/parties/wrangler.toml
+# (the SAME value as the hub and the other Workers, see wrangler.toml at the repo root).
+name = "spillarena-parties"
+main = "src/index.js"
+compatibility_date = "2026-10-07"
+compatibility_flags = ["nodejs_compat"]
+# Only the Pages project talks to this Worker, through the binding in ../../wrangler.toml.
+workers_dev = false
+
+[[durable_objects.bindings]]
+name = "PARTIES"
+class_name = "PartyRoom"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["PartyRoom"]

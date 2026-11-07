@@ -40,6 +40,14 @@ database_name = "spillarena-hub"
 database_id = "01624d56-fcd9-495d-9dd7-59b59a85da81"
 migrations_dir = "migrations"
 
+# Selskapsmodus: ett Durable Object per selskap i Workeren `spillarena-parties`
+# (workers/parties). En Pages-app kan ikke definere Durable Objects selv, så
+# bindingen peker på Workeren. Rutinga /api/party/<kode> ligger i functions/.
+[[durable_objects.bindings]]
+name = "PARTIES"
+class_name = "PartyRoom"
+script_name = "spillarena-parties"
+
 # AUTH_SECRET er ikke her med vilje — en signeringsnøkkel i git er ingen nøkkel.
 #
 #   npx wrangler pages secret put AUTH_SECRET

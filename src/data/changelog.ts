@@ -8,6 +8,14 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '07-11-2026',
+        title: 'Party mode!',
+        release: '1.20.0',
+        changes: [
+            'Added a Party mode to the lobby, where you can create a room and invite friends to play together in any game',
+        ],
+    },
+    {
+        date: '07-11-2026',
         title: 'Rules, tips and new posters',
         release: '1.19.0',
         changes: [
