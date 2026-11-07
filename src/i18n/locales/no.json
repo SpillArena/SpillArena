@@ -531,15 +531,15 @@
   },
   "party": {
     "title": "Selskap",
-    "lead": "Spill sammen. Én leder selskapet og velger spillene, og alle i selskapet følger med.",
+    "lead": "Ta med vennene, del en kode på fire bokstaver og spill. Én leder selskapet og velger spillene, og alle følger med, spill etter spill.",
     "signInFirst": "Logg inn for å lage eller bli med i et selskap.",
     "createTitle": "Start et selskap",
-    "createText": "Du blir selskapsleder. Del koden med vennene dine.",
+    "createText": "Du blir selskapets leder og får en kode på fire bokstaver. Del den og se rommet fylles opp.",
     "create": "Lag selskap",
     "joinTitle": "Bli med i et selskap",
     "codeLabel": "Selskapskode",
     "join": "Bli med",
-    "copy": "Kopier kode",
+    "copy": "Kopier koden",
     "copied": "Kopiert",
     "leave": "Forlat selskapet",
     "members_one": "{{count}} spiller",
@@ -548,10 +548,10 @@
     "offline": "kobler til igjen…",
     "makeLeader": "Gjør til leder",
     "kick": "Fjern",
-    "pickGame": "Velg spill for selskapet",
-    "waitingForLeader": "Venter på at {{name}} skal velge spill…",
+    "pickGame": "Velg et spill til selskapet",
+    "waitingForLeader": "Venter på at {{name}} velger spill…",
     "beta": "beta",
-    "reconnecting": "Tapte forbindelsen. Prøver å få deg inn igjen…",
+    "reconnecting": "Mistet tilkoblingen. Prøver å få deg inn igjen…",
     "bar": "Selskap {{code}} · {{count}}",
     "playing": "Selskapsspill: {{title}}",
     "changeGame": "Bytt spill",
@@ -562,8 +562,78 @@
       "exists": "Koden er tatt. Prøv igjen.",
       "party_full": "Selskapet er fullt.",
       "signed_out": "Logg inn for å bruke selskapsmodus.",
-      "kicked": "Du ble fjernet fra selskapet."
-    }
+      "kicked": "Du ble fjernet fra selskapet.",
+      "not_party_game": "Det spillet har ikke noe flerspillerrom, så det kan ikke spilles i et selskap.",
+      "too_few_players": "Ikke nok spillere på nett til det spillet.",
+      "too_many_players": "For mange spillere i selskapet til det spillet.",
+      "game_full": "Det åpne spillet er fullt. Be lederen bytte spill."
+    },
+    "eyebrow": "Selskapsmodus",
+    "heroTitle": "Slipp kaoset løs.",
+    "signInHint": "Det tar noen sekunder og krever ingen e-post. Velg brukernavn og PIN, så er du inne.",
+    "joinText": "Har du fått en kode av en venn? Skriv den inn, så havner du rett i lobbyen deres.",
+    "stepsTitle": "Slik fungerer det",
+    "steps": [
+      {
+        "title": "Start eller bli med",
+        "text": "Lag et selskap og få en kode, eller tast inn koden til en venn."
+      },
+      {
+        "title": "Lederen velger",
+        "text": "Lederen velger spillet. Alle dras inn i det samtidig."
+      },
+      {
+        "title": "Spill, bytt, gjenta",
+        "text": "Ferdig med et spill? Lederen bytter, og hele selskapet flytter med."
+      }
+    ],
+    "whyTitle": "Hvorfor spille i selskap",
+    "why": [
+      {
+        "title": "Slutt på lenkejakt",
+        "text": "Ingen limer inn romlenker i gruppechatten. Selskapet tar med alle inn i spillet."
+      },
+      {
+        "title": "Én leder, null krangel",
+        "text": "Én velger. Gi fra deg kronen når du vil, eller kast ut den dårlige taperen."
+      },
+      {
+        "title": "Spillhopping",
+        "text": "Varm opp med et kjapt ordspill, og gå så løs på den lange strategikampen. Selskapet holder sammen."
+      },
+      {
+        "title": "Privat som standard",
+        "text": "Ingen chat og ingenting på ledertavler. Bare koden, brukernavnene og det åpne spillet lagres, og selskapet slettes innen 24 timer."
+      }
+    ],
+    "gamesTitle": "På menyen i kveld",
+    "gamesText": "Alle spillene lederen kan velge mellom.",
+    "starterTitle": "Isbryter",
+    "starterText": "Stille i lobbyen? Kast en av disse på gruppa.",
+    "starterShuffle": "En til",
+    "starters": [
+      "Taperen kjøper snacks til neste runde.",
+      "Alle velger et lagnavn før første spill starter.",
+      "Best av tre avgjør hvem som leder videre.",
+      "Den som ligger sist må velge neste spill.",
+      "Ingen telefoner, bortsett fra den du spiller på.",
+      "Vinneren får dele ut én utfordring.",
+      "Alle gjetter hvem som vinner. Feil gjetning betaler drikken.",
+      "Skryt og tullprat er lov. Hold det vennlig."
+    ],
+    "inviteTitle": "Selskapet ditt er i gang",
+    "inviteText": "Send koden til vennene dine. De skriver den inn under Bli med i et selskap.",
+    "you": "deg",
+    "pickGameText": "Trykk på et spill, så hopper alle i selskapet inn.",
+    "waitingText": "Ta det med ro. Her er noe som kan sparke i gang tullpraten mens du venter.",
+    "playersRange": "{{min}}–{{max}} spillere",
+    "playersExact": "{{count}} spillere",
+    "needMore": "Trenger {{min}} spillere på nett",
+    "needFewer": "Maks {{max}} spillere",
+    "gameOk": "Klar",
+    "soloNote": "Spill som bare kan spilles alene, som AtlasMaster, PixelPanic og Cracked, er ikke med i selskapsutvalget.",
+    "autoRoom": "Selskapskoden er romkoden. Velg et spill, så åpnes rommet for alle, uten koder å taste inn.",
+    "countHint": "{{count}} på nett. Spill som trenger flere eller færre spillere er nedtonet."
   },
   "lobby": {
     "skip": "Hopp til spillene",

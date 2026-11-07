@@ -12,6 +12,24 @@ export const GAMES = ['atlasmaster', 'scribblebot', 'hangbot', 'proportionpanic'
 
 export const isGame = (id) => typeof id === 'string' && GAMES.includes(id)
 
+/**
+ * Party mode: the games that have a room for several players, and how many a room takes. A game that is not here is
+ * solo only (AtlasMaster, PixelPanic, Cracked) and cannot be picked for a party. The limits are the ones the games'
+ * own guides state; MelodyRush Versus is two-player only, but its Together mode takes eight, so the game decides inside.
+ */
+export const PARTY_LIMITS = {
+  fleetbot: { min: 2, max: 2 },
+  hangbot: { min: 2, max: 8 },
+  scribblebot: { min: 2, max: 8 },
+  proportionpanic: { min: 2, max: 8 },
+  erashuffle: { min: 2, max: 8 },
+  melodyrush: { min: 2, max: 8 },
+  hitline: { min: 2, max: 8 },
+  sipzone: { min: 2, max: 8 },
+}
+
+export const partyLimits = (id) => (typeof id === 'string' && Object.hasOwn(PARTY_LIMITS, id) ? PARTY_LIMITS[id] : null)
+
 /*
  * Grensene under er ikke satt mot juks. Profilen er privat for kontoen selv, og
  * det finnes ingen tavle å jukse på her — poengsummer går til spillet sin egen

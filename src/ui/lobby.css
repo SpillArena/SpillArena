@@ -552,12 +552,55 @@ html.dark .button.delete-account-button:hover { background: #3d202b; }
 .party-link { gap: 8px; }
 .party-beta { display: inline-block; vertical-align: middle; margin-left: 8px; border-radius: 4px; background: #ffe5a3; color: #5e3b09; padding: 3px 7px; font-family: inherit; font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; line-height: 1.2; }
 .party-link .party-beta { margin-left: 0; }
-.party-page { max-width: 760px; margin-inline: auto; padding-block: 48px 72px; }
+.party-page { max-width: 880px; margin-inline: auto; padding-block: 48px 72px; }
 .party-page h1 { font-family: var(--serif); font-size: 38px; font-weight: 500; letter-spacing: -.8px; margin: 0 0 10px; }
 .party-page h2 { font-family: var(--serif); font-size: 22px; font-weight: 500; margin: 36px 0 12px; }
 .party-lead { color: var(--muted); line-height: 1.7; margin: 0 0 28px; }
 .party-error { border: 1px solid var(--line); border-left: 3px solid #b92c43; border-radius: 8px; padding: 12px 14px; margin: 0 0 20px; font-size: 14px; }
+.party-hero { margin: 0 0 32px; }
+.party-eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-ink); margin-bottom: 14px; }
+.party-hero h1 { font-size: clamp(44px, 7vw, 76px); line-height: 1; letter-spacing: -2.5px; margin: 0 0 18px; }
+.party-hero h1 .party-beta { font-size: 11px; letter-spacing: .8px; margin-left: 14px; transform: translateY(-14px) rotate(-4deg); }
+.party-hero .party-lead { font-size: 17px; max-width: 560px; margin: 0; }
+.party-title-small { font-size: 30px !important; }
+.party-muted-line { color: var(--muted); font-size: 14px; margin: -6px 0 16px; }
 .party-start { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.party-card-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-ink); }
+.party-card-create { border-color: var(--accent-ink); background: linear-gradient(160deg, var(--accent-soft), var(--card) 70%); }
+.party-signin { margin-bottom: 8px; }
+.party-signin h2 { font-size: 22px; }
+.party-steps, .party-why { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.party-steps { grid-template-columns: repeat(3, 1fr); counter-reset: none; }
+.party-why { grid-template-columns: repeat(2, 1fr); }
+.party-steps li, .party-why li { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.party-steps li svg, .party-why li svg { color: var(--accent-ink); }
+.party-steps p, .party-why p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.party-step-num { position: absolute; top: 14px; right: 16px; font: 600 30px/1 var(--serif); color: var(--line); }
+.party-starter { margin-top: 36px; border: 2px dashed var(--accent-ink); border-radius: 14px; padding: 18px 20px; background: var(--accent-soft); }
+.party-starter-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.party-starter-title { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 12px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent-ink); }
+.party-starter-text { font: 500 24px/1.3 var(--serif); margin: 10px 0 0; }
+.party-ticket { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px 26px; background-image: radial-gradient(circle at 100% 0, var(--accent-soft), transparent 55%); }
+.party-ticket-main { margin-right: auto; }
+.party-ticket-text { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+.party-ticket-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.party-avatar { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-ink); font-weight: 700; flex-shrink: 0; }
+.party-avatar.is-leader { background: var(--accent); color: var(--on-accent); }
+.party-game-text { display: flex; flex-direction: column; gap: 2px; }
+.party-game-meta { margin-left: 0 !important; text-transform: none !important; letter-spacing: 0 !important; font-size: 12px !important; }
+.party-game:disabled { opacity: .5; cursor: not-allowed; }
+.party-game:disabled:hover { transform: none; border-color: var(--line); }
+.party-game.is-static { cursor: default; }
+.party-game.is-static:hover { transform: none; border-color: var(--line); }
+@media (prefers-reduced-motion: no-preference) {
+  .party-starter-text { animation: party-pop 260ms cubic-bezier(.2, .8, .2, 1); }
+  .party-code { animation: party-pop 420ms cubic-bezier(.2, .8, .2, 1); }
+  .party-hero h1 .party-beta { animation: party-wobble 2.4s ease-in-out infinite; }
+  .party-card-create { transition: transform 150ms; }
+  .party-card-create:hover { transform: translateY(-2px); }
+}
+@keyframes party-pop { from { opacity: 0; transform: translateY(6px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes party-wobble { 0%, 100% { transform: translateY(-14px) rotate(-4deg); } 50% { transform: translateY(-14px) rotate(3deg); } }
 .party-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
 .party-card h2 { margin: 0; font-size: 20px; }
 .party-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
@@ -585,7 +628,7 @@ html.dark .button.delete-account-button:hover { background: #3d202b; }
 .party-bar-actions { margin-left: auto; display: flex; gap: 4px; }
 .party-iframe { flex: 1; width: 100%; border: 0; background: var(--paper); }
 @media (max-width: 640px) {
-  .party-start { grid-template-columns: 1fr; }
+  .party-start, .party-steps, .party-why { grid-template-columns: 1fr; }
   .party-code { font-size: 34px; letter-spacing: 8px; }
   .party-bar-game { display: none; }
 }

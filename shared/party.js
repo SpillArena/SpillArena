@@ -4,7 +4,7 @@
  * A party is a plain JSON document. Nothing here does I/O or reads the clock; callers pass `now`.
  * Every transition returns `{ party }` or `{ error }` and never mutates its input.
  */
-import { isGame } from './games-registry.js'
+import { isGame, partyLimits } from './games-registry.js'
 
 /** Second WebSocket subprotocol slot carries the account token, browsers cannot set headers. */
 export const PROTOCOL = 'spillarena-party'
@@ -19,7 +19,7 @@ const find = (party, name) => party.members.find(member => same(member.name, nam
 
 /** A new party with its creator as leader. */
 export function createParty(code, name, now) {
-  return { code, leader: name, game: null, created: now, members: [{ name, joined: now, online: true }] }
+  return { code, leader: name, game: null, host: null, round: 0, created: now, members: [{ name, joined: now, online: true }] }
 }
 
 /** Oldest online member, else oldest member. Used whenever the leader goes away. */
@@ -35,6 +35,9 @@ export function join(party, name, now) {
     return { party: { ...party, members, leader: party.leader } }
   }
   if (party.members.length >= MAX_MEMBERS) return { error: 'party_full' }
+  // The open game's room is full: a late joiner waits on the party screen instead of being refused by the game.
+  const limits = party.game ? partyLimits(party.game) : null
+  if (limits && party.members.length >= limits.max) return { error: 'game_full' }
   return { party: { ...party, members: [...party.members, { name, joined: now, online: true }] } }
 }
 
@@ -58,11 +61,20 @@ export function leave(party, name) {
   return { party: next }
 }
 
-/** Only the leader picks, and only a game this site knows. Availability is enforced by the router when the game loads. */
+/**
+ * Only the leader picks, and only a game this site knows that has a multiplayer room and takes the party as it stands:
+ * at least `min` members online, at most `max` seats taken. Availability is enforced by the router when the game loads.
+ * Picking a game makes the picker the room's host and starts a new round, so the same game picked twice is a fresh room.
+ */
 export function selectGame(party, name, slug) {
   if (!same(party.leader, name)) return { error: 'not_leader' }
-  if (slug !== null && !isGame(slug)) return { error: 'unknown_game' }
-  return { party: { ...party, game: slug } }
+  if (slug === null) return { party: { ...party, game: null, host: null } }
+  if (!isGame(slug)) return { error: 'unknown_game' }
+  const limits = partyLimits(slug)
+  if (!limits) return { error: 'not_party_game' }
+  if (party.members.filter(member => member.online).length < limits.min) return { error: 'too_few_players' }
+  if (party.members.length > limits.max) return { error: 'too_many_players' }
+  return { party: { ...party, game: slug, host: party.leader, round: (party.round ?? 0) + 1 } }
 }
 
 export function kick(party, name, target) {
@@ -110,6 +122,8 @@ export function viewFor(party) {
     code: party.code,
     leader: party.leader,
     game: party.game,
+    host: party.host ?? null,
+    round: party.round ?? 0,
     members: party.members.map(({ name, online }) => ({ name, online })),
   }
 }

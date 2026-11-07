@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 
 export interface PartyMember { name: string; online: boolean }
-export interface PartyView { code: string; leader: string; game: string | null; members: PartyMember[] }
+export interface PartyView { code: string; leader: string; game: string | null; /** Who opened the game's room: the leader at the moment the game was picked. */ host: string | null; /** Counts up with every pick, so the same game picked twice is a new room. */ round: number; members: PartyMember[] }
 export type PartyStatus = 'idle' | 'connecting' | 'open' | 'reconnecting'
 
 export interface PartyApi {

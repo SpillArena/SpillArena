@@ -92,3 +92,37 @@ test('party endpoint rejects bad codes, plain requests and unbound deployments',
   assert.equal(onRequest({ request: upgrade, params: { code: 'abcd' }, env }).status, 200)
   assert.equal(used, 'ABCD')
 })
+
+test('a game must have a multiplayer room and fit the party', () => {
+  const alone = start()
+  assert.deepEqual(selectGame(alone, 'Anna', 'hangbot'), { error: 'too_few_players' })
+  const pair = withBob()
+  assert.deepEqual(selectGame(pair, 'Anna', 'atlasmaster'), { error: 'not_party_game' })
+  assert.equal(selectGame(pair, 'Anna', 'hangbot').party.game, 'hangbot')
+  // An offline member does not count towards the minimum.
+  assert.deepEqual(selectGame(disconnect(pair, 'Bob').party, 'Anna', 'hangbot'), { error: 'too_few_players' })
+  let nine = pair
+  for (let i = 0; i < 6; i++) nine = join(nine, `P${i}`, 10 + i).party
+  assert.equal(selectGame(nine, 'Anna', 'hangbot').party.game, 'hangbot')
+  nine = join(nine, 'P9', 99).party
+  assert.deepEqual(selectGame(nine, 'Anna', 'hangbot'), { error: 'too_many_players' })
+  assert.deepEqual(selectGame(join(pair, 'Cleo', 3).party, 'Anna', 'fleetbot'), { error: 'too_many_players' })
+  assert.equal(selectGame(nine, 'Anna', null).party.game, null)
+})
+
+test('picking a game makes the picker host and starts a new round', () => {
+  const first = selectGame(withBob(), 'Anna', 'hangbot').party
+  assert.deepEqual([first.host, first.round], ['Anna', 1])
+  const swapped = transferLeader(first, 'Anna', 'Bob').party
+  assert.equal(swapped.host, 'Anna')
+  assert.deepEqual([viewFor(swapped).host, viewFor(swapped).round], ['Anna', 1])
+  const again = selectGame(swapped, 'Bob', 'hangbot').party
+  assert.deepEqual([again.host, again.round], ['Bob', 2])
+  assert.equal(selectGame(again, 'Bob', null).party.host, null)
+})
+
+test('a late joiner is turned away when the open game is full', () => {
+  const duel = selectGame(withBob(), 'Anna', 'fleetbot').party
+  assert.deepEqual(join(duel, 'Cleo', 3), { error: 'game_full' })
+  assert.equal(join(disconnect(duel, 'Bob').party, 'Bob', 4).party.members.length, 2)
+})
