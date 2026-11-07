@@ -8,6 +8,18 @@ export interface ChangelogEntry {
 export const changelog: ChangelogEntry[] = [
     {
         date: '07-11-2026',
+        title: 'Party mode gets smarter',
+        release: '1.21.0',
+        changes: [
+            'Party mode is now marked Beta, and the Party page has a new look with a how-it-works guide, a game lineup and party starters to break the ice',
+            'The party only offers games that fit the number of players: two players get games for two or more, bigger parties only get games with room for everyone, and the rest are greyed out with the reason',
+            'Solo-only games (AtlasMaster, PixelPanic and Cracked) are no longer offered in a party',
+            'The party code is now the room code in every multiplayer game: when the leader picks a game, the room opens for everyone, with no room to create and no code to type',
+            'Players who join a party while a game is full are told so instead of landing in a room with no seat',
+        ],
+    },
+    {
+        date: '07-11-2026',
         title: 'Party mode!',
         release: '1.20.0',
         changes: [
