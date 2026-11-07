@@ -9,5 +9,5 @@ const styles: Record<AvatarChoice['style'], Style> = { bottts: new Style(bottts)
 
 export default function DiceBearPicture({ avatar }: { avatar: AvatarChoice }) {
   const src = new DiceBearAvatar(styles[avatar.style], { ...avatar.options, seed: avatar.seed, size: 128 }).toDataUri()
-  return <img src={src} alt="" width={88} height={88} />
+  return <img key={src} src={src} alt="" width={88} height={88} />
 }

@@ -8,6 +8,7 @@ import type { AdminErrorCode, PlayerFilter, PlayerPage, PlayerSort } from '../..
 import { formatDate } from '../../lib/formatDate'
 import { Badge, Button, ErrorNotice } from './ui'
 import Avatar from '../account/Avatar'
+import Select from '../../ui/Select'
 import './admin-players.css'
 
 export interface ListState {
@@ -124,16 +125,11 @@ export default function PlayerList({ state, onChange, onOpen }: PlayerListProps)
                     </div>
                     <label className="admin-player-sort">
                         {t('admin.sort.label')}
-                        <select
+                        <Select
                             value={state.sort}
-                            onChange={(event) => onChange({ ...state, query, sort: event.target.value as PlayerSort })}
-                        >
-                            {SORTS.map((sort) => (
-                                <option key={sort} value={sort}>
-                                    {t(`admin.sort.${sort}`)}
-                                </option>
-                            ))}
-                        </select>
+                            onChange={(sort) => onChange({ ...state, query, sort: sort as PlayerSort })}
+                            options={SORTS.map((sort) => ({ value: sort, label: t(`admin.sort.${sort}`) }))}
+                        />
                     </label>
                 </div>
             </div>

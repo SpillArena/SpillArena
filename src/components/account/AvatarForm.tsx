@@ -3,6 +3,7 @@ import { RotateCcw, Shuffle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { getToken, signOut } from '../../account'
 import Avatar from './Avatar'
+import Select from '../../ui/Select'
 import { AVATAR_CUSTOMIZATION, avatarColors, avatarStyles, type AvatarChoice, type AvatarOption } from './avatar-options'
 
 function ColorControl({ option, value, disabled, onChange }: {
@@ -82,10 +83,7 @@ export default function AvatarForm({ username, current, onCancel, onDone }: {
         <div className="avatar-details">
           {Object.entries(AVATAR_CUSTOMIZATION[choice.style].variants).map(([key, variants]) => {
             const option = key as AvatarOption
-            return <div key={`${choice.style}-${option}`}><label htmlFor={`${formId}-${option}`}>{t(`profile.avatar.parts.${option}`)}</label><select id={`${formId}-${option}`} disabled={busy} value={choice.options?.[option] ?? ''} onChange={event => customize(option, event.target.value)}>
-              <option value="">{t('profile.avatar.automatic')}</option>
-              {variants.map((value, index) => <option key={value} value={value}>{t('profile.avatar.variant', { count: index + 1 })}</option>)}
-            </select></div>
+            return <div key={`${choice.style}-${option}`}><label htmlFor={`${formId}-${option}`}>{t(`profile.avatar.parts.${option}`)}</label><Select id={`${formId}-${option}`} disabled={busy} value={choice.options?.[option] ?? ''} onChange={value => customize(option, value)} options={[{ value: '', label: t('profile.avatar.automatic') }, ...variants.map((value, index) => ({ value, label: t('profile.avatar.variant', { count: index + 1 }) }))]} /></div>
           })}
         </div>
         {AVATAR_CUSTOMIZATION[choice.style].colors.map(option => <ColorControl key={option} option={option} value={choice.options?.[option]} disabled={busy} onChange={value => customize(option, value)} />)}

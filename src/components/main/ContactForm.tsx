@@ -147,9 +147,7 @@ export default function ContactForm() {
         <p className="field-hint">{t('contact.accountHint')}</p>
       </section>}
       <label htmlFor={ids.topic}><span>{t('contact.topic')} <span aria-hidden="true">*</span></span>
-        <select required id={ids.topic} value={topic} onChange={event => setTopic(event.target.value as Topic)} disabled={busy}>
-          {TOPICS.map(value => <option key={value} value={value}>{t(`contact.topics.${value}`)}</option>)}
-        </select>
+        <Select id={ids.topic} value={topic} onChange={value => setTopic(value as Topic)} disabled={busy} options={TOPICS.map(value => ({ value, label: t(`contact.topics.${value}`) }))} />
       </label>
 
       <label htmlFor={ids.message}><span>{t('contact.message')} <span aria-hidden="true">*</span></span>
