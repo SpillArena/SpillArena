@@ -47,6 +47,7 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>
 )
 
-// Første HTML er lesbar uten laster; lasteren brukes ved navigasjon og opptatte handlinger.
+// Første HTML ligger i DOM under lasteren (is-boot i index.html); den tones ut når appen er tegnet.
+// <noscript> skjuler den hvis JavaScript ikke kjører.
 requestAnimationFrame(hideLoader)
 installGameLinkLoader(game => i18n.t('lobby.loadingGame', { title: game.title }))

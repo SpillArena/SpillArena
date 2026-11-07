@@ -3,8 +3,9 @@ import { games, type Game } from '../data/games'
 /*
  * SpillArena-lasteren: brikkene i logoen som lander én etter én langs S-en.
  *
- * Markupen og stilen ligger i index.html, ikke her. Den er skjult ved første lasting slik at det ferdige HTML-innholdet er lesbart
- * også hvis JavaScript ikke starter. Denne
+ * Markupen og stilen ligger i index.html, ikke her. Ved første lasting ligger
+ * den oppå det ferdige HTML-innholdet (som fortsatt ligger i DOM-en), og
+ * <noscript> skjuler den hvis JavaScript ikke starter. Denne
  * filen skrur den samme lasteren av når appen er klar, og på igjen når
  * spilleren går fra forsiden inn i et spill. Da står den på til nettleseren
  * har byttet side, og spilleren ser noe annet enn en hvit skjerm mens spillet

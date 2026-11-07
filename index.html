@@ -246,10 +246,11 @@
 
 <body>
   <div id="root"><!--app-content--><!--/app-content--></div>
-  <div id="arena-loader" class="arena-loader is-hidden" role="status" aria-live="polite">
+  <div id="arena-loader" class="arena-loader is-boot" role="status" aria-live="polite">
     <div class="arena-loader-board" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <p class="arena-loader-label"></p>
   </div>
+  <noscript><style>.arena-loader { display: none; }</style></noscript>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
