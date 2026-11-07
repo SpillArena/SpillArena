@@ -550,6 +550,8 @@ html.dark .button.delete-account-button:hover { background: #3d202b; }
 
 /* Party mode: the party screen and the game frame that sits on top of the lobby. */
 .party-link { gap: 8px; }
+.party-beta { display: inline-block; vertical-align: middle; margin-left: 8px; border-radius: 4px; background: #ffe5a3; color: #5e3b09; padding: 3px 7px; font-family: inherit; font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; line-height: 1.2; }
+.party-link .party-beta { margin-left: 0; }
 .party-page { max-width: 760px; margin-inline: auto; padding-block: 48px 72px; }
 .party-page h1 { font-family: var(--serif); font-size: 38px; font-weight: 500; letter-spacing: -.8px; margin: 0 0 10px; }
 .party-page h2 { font-family: var(--serif); font-size: 22px; font-weight: 500; margin: 36px 0 12px; }

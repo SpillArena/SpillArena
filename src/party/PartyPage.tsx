@@ -22,7 +22,7 @@ export default function PartyPage() {
   const errorText = error ? t(`party.errors.${error}`, { defaultValue: t('party.errors.error') }) : null
 
   if (!isSignedIn) return <section className="party-page" aria-labelledby="party-title">
-    <h1 id="party-title">{t('party.title')}</h1>
+    <h1 id="party-title">{t('party.title')}<span className="party-beta">{t('betaLabel')}</span></h1>
     <p className="party-lead">{t('party.signInFirst')}</p>
     <a className="button primary" href="#login">{t('account.signIn')}</a>
   </section>
@@ -30,7 +30,7 @@ export default function PartyPage() {
   if (!view) {
     const busy = status === 'connecting' || status === 'reconnecting'
     return <section className="party-page" aria-labelledby="party-title">
-      <h1 id="party-title">{t('party.title')}</h1>
+      <h1 id="party-title">{t('party.title')}<span className="party-beta">{t('betaLabel')}</span></h1>
       <p className="party-lead">{t('party.lead')}</p>
       {errorText && <p className="party-error" role="alert">{errorText}</p>}
       <div className="party-start">
@@ -51,7 +51,7 @@ export default function PartyPage() {
   }
 
   return <section className="party-page" aria-labelledby="party-title">
-    <h1 id="party-title">{t('party.title')}</h1>
+    <h1 id="party-title">{t('party.title')}<span className="party-beta">{t('betaLabel')}</span></h1>
     {status === 'reconnecting' && <p className="party-error" role="status">{t('party.reconnecting')}</p>}
     {errorText && <p className="party-error" role="alert">{errorText}</p>}
     <div className="party-header">

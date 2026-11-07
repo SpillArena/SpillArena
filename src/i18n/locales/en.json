@@ -862,7 +862,7 @@
     },
     "faq": {
       "title": "Frequently asked questions",
-      "intro": "Quick answers about SpillArena.",
+      "intro": "Quick answers about SpillArena: account and PIN, points and leaderboards, playing with friends and what to do when something breaks.",
       "items": [
         {
           "q": "Is it free?",
@@ -998,7 +998,7 @@
     "play": "Open game",
     "unavailable": "This game is currently unavailable. Check the catalogue for its latest status.",
     "homeTitle": "Browser games made by SpillArena",
-    "homeIntro": "Play a tactical battle, solve a word puzzle or test your knowledge of geography and history. Each game runs in the browser. Solo games can be tried as a guest; online rooms require a free account.",
+    "homeIntro": "SpillArena (also written Spill Arena) is a free game site. Play a tactical battle, solve a word puzzle or test your knowledge of geography and history. Each game runs in the browser. Solo games can be tried as a guest; online rooms require a free account.",
     "homeDetail": "Read the rules and examples before choosing a game. The guides explain what to do, how to interpret feedback and what to practise next. Games marked Beta are still being developed; availability is shown on each card.",
     "guidesTitle": "Choose a game and learn the rules",
     "guidesIntro": "Instructions, worked examples and practical tips for the SpillArena games. Game availability is shown in the catalogue.",

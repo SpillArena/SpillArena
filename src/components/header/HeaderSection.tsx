@@ -14,7 +14,7 @@ export default function HeaderSection({ username, onSelectGame }: { username: st
     <div className="arena-container header-row">
       <a className="brand" href="/" aria-label="SpillArena"><img src={logo} alt="" width={40} height={40} /><span>SpillArena<span className="brand-dot">.</span></span></a>
       <div className="header-search" role="search"><SpotlightSearch onSelect={onSelectGame} /></div>
-      <div className="header-actions"><a className="account-button party-link" href="/#party" aria-label={view ? `${t('party.title')}: ${view.code}` : t('party.title')}><Users size={18} aria-hidden="true" /><span>{view ? view.code : t('party.title')}</span></a><AccountMenu username={username} /><SettingsMenu /></div>
+      <div className="header-actions"><a className="account-button party-link" href="/#party" aria-label={view ? `${t('party.title')}: ${view.code}` : t('party.title')}><Users size={18} aria-hidden="true" /><span>{view ? view.code : t('party.title')}</span>{!view && <span className="party-beta">{t('betaLabel')}</span>}</a><AccountMenu username={username} /><SettingsMenu /></div>
     </div>
   </header>
 }

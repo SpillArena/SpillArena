@@ -862,7 +862,7 @@
     },
     "faq": {
       "title": "Vanlige spørsmål",
-      "intro": "Raske svar om SpillArena.",
+      "intro": "Raske svar om SpillArena: konto og PIN, poeng og ledertavler, spill mot venner og hva du gjør hvis noe ikke fungerer.",
       "items": [
         {
           "q": "Er det gratis?",
@@ -998,7 +998,7 @@
     "play": "Åpne spillet",
     "unavailable": "Dette spillet er ikke tilgjengelig akkurat nå. Se spilloversikten for oppdatert status.",
     "homeTitle": "Nettleserspill laget av SpillArena",
-    "homeIntro": "Spill en taktisk kamp, løs en ordgåte eller test kunnskapene dine om geografi og historie. Spillene kjører i nettleseren. Solospill kan prøves som gjest; nettrom krever en gratis konto.",
+    "homeIntro": "SpillArena (også skrevet Spill Arena) er en gratis spillside på norsk. Spill en taktisk kamp, løs en ordgåte eller test kunnskapene dine om geografi og historie. Spillene kjører i nettleseren. Solospill kan prøves som gjest; nettrom krever en gratis konto.",
     "homeDetail": "Les reglene og eksemplene før du velger et spill. Guidene forklarer hva du skal gjøre, hvordan du tolker tilbakemeldinger og hva du kan øve på videre. Spill merket Beta er under utvikling; tilgjengelighet vises på hvert kort.",
     "guidesTitle": "Velg et spill og lær reglene",
     "guidesIntro": "Forklaringer, konkrete eksempler og praktiske tips til spillene på SpillArena. Tilgjengelighet vises i spilloversikten.",
