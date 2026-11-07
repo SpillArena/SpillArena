@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { cp, mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import type { Plugin } from 'vite'
-import { EditorialArticle, HomeIntroduction, GUIDE_SLUGS, INFO_PATHS, guideFor, guidePath, copyFor, pageMetadata, type InfoPage, type GuideSlug } from '../src/content/pages.ts'
+import { EditorialArticle, HomeIntroduction, GUIDE_SLUGS, INFO_PATHS, guideFor, guidePath, copyFor, pageMetadata, posterPath, type InfoPage, type GuideSlug } from '../src/content/pages.ts'
 import { GAME_DEFAULTS } from '../shared/game-settings.js'
 import { renderSitemap } from '../shared/site-pages.js'
 
@@ -24,6 +24,33 @@ export function staticDocumentBody(page?: InfoPage, slug?: GuideSlug): string {
     h('footer', { className: 'site-footer arena-container' }, h('nav', { className: 'footer-links', 'aria-label': copy.lobby.footerNavigation },
       ...Object.entries(INFO_PATHS).map(([key, path]) => h('a', { key, href: path }, key === 'about' ? copy.content.aboutLink : key === 'guides' ? copy.content.guidesLink : key === 'contact' ? copy.contact.title : copy.legal[key as 'privacy' | 'terms' | 'faq'].title)))))
   )
+}
+
+
+/** One connected JSON-LD graph per static page, as on the home page: Organization and
+ * WebSite share @ids with index.html, the page points at its breadcrumb, and
+ * FAQPage / VideoGame are only emitted where the visible text holds the same content. */
+function pageSchema(url: string, title: string, description: string, page?: InfoPage, slug?: GuideSlug) {
+  const site = 'https://spillarena.no'
+  const organization = `${site}/#organization`
+  const website = `${site}/#website`
+  const trail = [{ name: 'SpillArena', url: `${site}/` }]
+  if (slug) trail.push({ name: copyFor('no').content.guidesLink, url: `${site}${INFO_PATHS.guides}` })
+  trail.push({ name: title, url })
+  const faq = slug ? guideFor(slug, 'no').faq : page === 'faq' ? copyFor('no').legal.faq.items : []
+  const type = page === 'about' ? 'AboutPage' : page === 'contact' ? 'ContactPage' : page === 'guides' ? 'CollectionPage' : 'WebPage'
+  const graph: object[] = [
+    { '@type': 'Organization', '@id': organization, name: 'SpillArena', url: `${site}/`, logo: `${site}/logo.png`, sameAs: ['https://github.com/SpillArena'] },
+    { '@type': 'WebSite', '@id': website, name: 'SpillArena', alternateName: ['Spill Arena', 'SpillArena.no'], url: `${site}/`, inLanguage: ['nb', 'en'], publisher: { '@id': organization } },
+    { '@type': type, '@id': `${url}#webpage`, url, name: title, description, inLanguage: 'nb', isPartOf: { '@id': website }, breadcrumb: { '@id': `${url}#breadcrumb` },
+      ...(slug ? { mainEntity: { '@id': `${url}#game` } } : {}) },
+    { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: trail.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.name, item: item.url })) },
+  ]
+  if (faq.length) graph.push({ '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) })
+  if (slug) graph.push({ '@type': 'VideoGame', '@id': `${url}#game`, name: title.split(': ')[0], description, url, image: `${site}${posterPath(slug, 'no')}`,
+    inLanguage: ['nb', 'en'], applicationCategory: 'Game', operatingSystem: 'Any', isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'NOK' }, publisher: { '@id': organization } })
+  return { '@context': 'https://schema.org', '@graph': graph }
 }
 
 /** Information is shipped in HTML as well as React; there is no crawler-only
@@ -72,7 +99,7 @@ export function contentPages(): Plugin {
           // The text is the page here and is already readable, so the boot loader must not sit on top of it. It stays in
           // the DOM, hidden, because "Play" on a guide shows it through showLoader() while the game loads.
           .replace('class="arena-loader is-boot"', 'class="arena-loader is-hidden"')
-        const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url, inLanguage: 'nb' }).replaceAll('<', '\\u003c')
+        const schema = JSON.stringify(pageSchema(url, title, description, page, slug)).replaceAll('<', '\\u003c')
         html = html.replace('</head>', `<script type="application/ld+json">${schema}</script>\n</head>`)
         const directory = resolve(outDir, path.slice(1))
         await mkdir(directory, { recursive: true })

@@ -63,6 +63,19 @@ function earlyStyles(): Plugin {
   };
 }
 
-export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss(), contentPages(), earlyStyles(), adsense(loadEnv(mode, process.cwd(), "VITE_").VITE_ADSENSE_CLIENT ?? "")],
-}));
+/*
+ * Søkemotor-bekreftelse. Google Search Console og Bing Webmaster Tools godtar en
+ * meta-tagg i stedet for en fil, og verdiene er ikke hemmeligheter (de står i
+ * kildekoden). Sett VITE_GOOGLE_SITE_VERIFICATION og VITE_BING_SITE_VERIFICATION
+ * i .env.production; tomme gir ingen tagg.
+ */
+function searchConsole(env: Record<string, string>): Plugin {
+  const tags = [["google-site-verification", env.VITE_GOOGLE_SITE_VERIFICATION], ["msvalidate.01", env.VITE_BING_SITE_VERIFICATION]]
+    .filter(([, content]) => content?.trim()).map(([name, content]) => ({ tag: "meta", attrs: { name, content: content.trim() }, injectTo: "head" as const }));
+  return { name: "spillarena-search-console", transformIndexHtml: () => tags };
+}
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "VITE_");
+  return { plugins: [react(), tailwindcss(), contentPages(), earlyStyles(), adsense(env.VITE_ADSENSE_CLIENT ?? ""), searchConsole(env)] };
+});

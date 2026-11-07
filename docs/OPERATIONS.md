@@ -415,7 +415,24 @@ Games are separate documents on separate Pages projects, so a socket in the lobb
 
 **Framing.** Eight of the eleven games send `X-Frame-Options: DENY` or `frame-ancestors 'none'`, which would leave the iframe blank. `spillarena-router/routes/proxy.js` (`allowSameOriginFraming`) narrows them to `SAMEORIGIN` and `'self'` for game responses only; the lobby stays unframeable, and the lobby CSP gets `frame-src 'self'`. The game keeps working standalone. A game's own link to the lobby is caught by the party frame: for the leader it ends the game, for everyone else it does nothing.
 
-**Limits.** Only "which game is open" is synced. A game's own multiplayer room is still created and joined inside the game. The party server checks that the game exists; availability (`coming_soon`, `unavailable`) is enforced by the router when the iframe loads.
+**Which games a party can pick.** `PARTY_LIMITS` in `shared/games-registry.js` lists the games with a multiplayer room and the players a room takes (FleetBot 2, the other seven 2 to 8). AtlasMaster, PixelPanic and Cracked are solo only and are rejected (`not_party_game`). `selectGame` also checks the party as it stands: at least `min` members **online** (`too_few_players`) and no more than `max` **seats** (`too_many_players`). While a game is open, a new joiner is refused with `game_full` when the room would exceed `max`; a member who dropped and comes back keeps their seat. The party picker greys out games that do not fit and says why. Change a limit in the registry and nowhere else.
+
+**One code for every game.** The party code is the room code. Picking a game sets `host` (the leader at that moment) and bumps `round`; the lobby then loads the game at
+
+```
+/<slug>/?party=ABCD&partyRole=host|guest&partyRound=3
+```
+
+A game that supports this does the following when `party` is present, and nothing differently when it is absent:
+
+1. Skips its own menu and lobby, and goes straight to the multiplayer room screen.
+2. `partyRole=host`: opens a room whose id is the party code (the game's own room code format may differ; map the party code onto it). Do not let the user choose mode or code, use the game's default, and let the host change settings in the room as usual.
+3. `partyRole=guest`: joins that room. The host may not have opened it yet, so retry for a few seconds before showing an error.
+4. `partyRound` changes with every pick, also when the same game is picked twice. Treat a new round as a new room, never as a rematch of the old one.
+
+The server never creates rooms in a game. Each game still has to read these parameters; until it does it behaves as before and its members create or join a room by hand. The iframe key includes `round`, so a repick remounts the game.
+
+**Limits.** Only "which game is open", the host and the round are synced. The party server checks the game and the player counts; availability (`coming_soon`, `unavailable`) is enforced by the router when the iframe loads. Per-game modes with a different count (MelodyRush Versus is two players) are still the game's call inside the room.
 
 ### Deploying it
 

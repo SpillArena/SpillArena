@@ -1,0 +1,11 @@
+# SpillArena
+
+> SpillArena (Spill Arena) er en gratis spillside på norsk og engelsk med nettleserspill mot bots og venner: slagskip, galgespill, tegn og gjett, geografiquiz, bildequiz, historiequiz, musikkquiz og festleker. Ingen nedlasting. Solospill kan prøves uten konto.
+
+- [Forside](https://spillarena.no/): Alle spill og dagens utfordring.
+- [Spillguider](https://spillarena.no/games/): Regler, eksempler og tips for hvert spill.
+- [Om SpillArena](https://spillarena.no/about/): Hvem som lager spillene og hvorfor.
+- [Vanlige spørsmål](https://spillarena.no/faq/): Konto, poeng, ledertavler og feilsøking.
+- [Kontakt](https://spillarena.no/contact/): Send melding eller e-post til support@spillarena.no.
+- [Personvern](https://spillarena.no/privacy/) og [vilkår](https://spillarena.no/terms/).
+- [Kildekode](https://github.com/SpillArena): GitHub.

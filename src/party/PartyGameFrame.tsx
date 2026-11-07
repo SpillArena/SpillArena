@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LogOut, Users } from 'lucide-react'
+import { useAccount } from '../account'
 import { useGames } from '../hooks/useGames'
 import { useParty } from './context'
-import { gameSlug } from './slug'
+import { gameSlug, partyGameUrl } from './slug'
 
 /**
  * The game a party plays, on top of the lobby. The party socket lives in PartyProvider, above this, so it survives the
@@ -13,6 +14,7 @@ import { gameSlug } from './slug'
 export default function PartyGameFrame() {
   const { t } = useTranslation()
   const games = useGames()
+  const { username } = useAccount()
   const { view, isLeader, leave, selectGame } = useParty()
   const slug = view?.game ?? null
   const shown = useRef(false)
@@ -58,6 +60,6 @@ export default function PartyGameFrame() {
         <button className="text-button" type="button" onClick={leave}><LogOut size={14} aria-hidden="true" />{t('party.leave')}</button>
       </span>
     </div>
-    <iframe key={slug} className="party-iframe" src={`/${slug}/`} title={title} allow="autoplay; fullscreen; clipboard-write" onLoad={event => watchLinks(event.currentTarget)} />
+    <iframe key={`${slug}-${view.round}`} className="party-iframe" src={partyGameUrl(slug, view.code, view.round, Boolean(username && view.host?.toLowerCase() === username.toLowerCase()))} title={title} allow="autoplay; fullscreen; clipboard-write" onLoad={event => watchLinks(event.currentTarget)} />
   </div>
 }

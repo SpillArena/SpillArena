@@ -531,10 +531,10 @@
   },
   "party": {
     "title": "Party",
-    "lead": "Play together. One person leads the party and picks the games, and everyone in the party follows along.",
+    "lead": "Grab your friends, share a four-letter code and play. One person leads the party and picks the games, and everyone follows along, game after game.",
     "signInFirst": "Sign in to create or join a party.",
     "createTitle": "Start a party",
-    "createText": "You become the party leader. Share the code with your friends.",
+    "createText": "You become the party leader and get a four-letter code. Share it and watch the room fill up.",
     "create": "Create party",
     "joinTitle": "Join a party",
     "codeLabel": "Party code",
@@ -562,8 +562,78 @@
       "exists": "That code is taken. Try again.",
       "party_full": "The party is full.",
       "signed_out": "Sign in to use party mode.",
-      "kicked": "You were removed from the party."
-    }
+      "kicked": "You were removed from the party.",
+      "not_party_game": "That game has no multiplayer room, so it cannot be played in a party.",
+      "too_few_players": "Not enough players online for that game.",
+      "too_many_players": "Too many players in the party for that game.",
+      "game_full": "The open game is full. Ask the leader to switch games."
+    },
+    "eyebrow": "Party mode",
+    "heroTitle": "Bring the chaos.",
+    "signInHint": "It takes a few seconds and no email. Pick a username and a PIN and you are in.",
+    "joinText": "Got a code from a friend? Type it in and you land straight in their lobby.",
+    "stepsTitle": "How it works",
+    "steps": [
+      {
+        "title": "Start or join",
+        "text": "Create a party and get a code, or punch in a friend's code."
+      },
+      {
+        "title": "Leader picks",
+        "text": "The leader chooses the game. Everyone is pulled into it at the same time."
+      },
+      {
+        "title": "Play, switch, repeat",
+        "text": "Done with a game? The leader changes it and the whole party moves along."
+      }
+    ],
+    "whyTitle": "Why play in a party",
+    "why": [
+      {
+        "title": "No more link hunting",
+        "text": "Nobody pastes room links in a group chat. The party takes everyone to the game."
+      },
+      {
+        "title": "One leader, zero arguments",
+        "text": "One person picks. Hand over the crown whenever you want, or kick the sore loser."
+      },
+      {
+        "title": "Game hopping",
+        "text": "Warm up with a quick word game, then go for the long strategy battle. The party stays together."
+      },
+      {
+        "title": "Private by default",
+        "text": "No chat, nothing on leaderboards. Only the code, the usernames and the open game are kept, and the party is gone within 24 hours."
+      }
+    ],
+    "gamesTitle": "On tonight's menu",
+    "gamesText": "Every game the leader can pick from.",
+    "starterTitle": "Party starter",
+    "starterText": "Quiet lobby? Throw one of these at the group.",
+    "starterShuffle": "Another one",
+    "starters": [
+      "Loser buys the next round of snacks.",
+      "Everyone picks a team name before the first game starts.",
+      "Best of three decides who leads next.",
+      "The person in last place has to pick the next game.",
+      "No phones allowed except the one you play on.",
+      "Winner gets to hand out one dare.",
+      "Everyone predicts who wins. Wrong guesses buy the drinks.",
+      "Trash talk is encouraged. Keep it friendly."
+    ],
+    "inviteTitle": "Your party is live",
+    "inviteText": "Send this code to your friends. They enter it under Join a party.",
+    "you": "you",
+    "pickGameText": "Tap a game and everyone in the party jumps in.",
+    "waitingText": "Hang tight. Here is something to start the banter while you wait.",
+    "playersRange": "{{min}}–{{max}} players",
+    "playersExact": "{{count}} players",
+    "needMore": "Needs {{min}} players online",
+    "needFewer": "Max {{max}} players",
+    "gameOk": "Ready",
+    "soloNote": "Solo-only games like AtlasMaster, PixelPanic and Cracked are not in the party lineup.",
+    "autoRoom": "The party code is the room code. Pick a game and the room opens for everyone, with no codes to type.",
+    "countHint": "{{count}} online. Games that need more or fewer players are greyed out."
   },
   "lobby": {
     "skip": "Skip to games",
@@ -862,7 +932,7 @@
     },
     "faq": {
       "title": "Frequently asked questions",
-      "intro": "Quick answers about SpillArena.",
+      "intro": "Quick answers about SpillArena: account and PIN, points and leaderboards, playing with friends and what to do when something breaks.",
       "items": [
         {
           "q": "Is it free?",
@@ -998,7 +1068,7 @@
     "play": "Open game",
     "unavailable": "This game is currently unavailable. Check the catalogue for its latest status.",
     "homeTitle": "Browser games made by SpillArena",
-    "homeIntro": "Play a tactical battle, solve a word puzzle or test your knowledge of geography and history. Each game runs in the browser. Solo games can be tried as a guest; online rooms require a free account.",
+    "homeIntro": "SpillArena (also written Spill Arena) is a free game site. Play a tactical battle, solve a word puzzle or test your knowledge of geography and history. Each game runs in the browser. Solo games can be tried as a guest; online rooms require a free account.",
     "homeDetail": "Read the rules and examples before choosing a game. The guides explain what to do, how to interpret feedback and what to practise next. Games marked Beta are still being developed; availability is shown on each card.",
     "guidesTitle": "Choose a game and learn the rules",
     "guidesIntro": "Instructions, worked examples and practical tips for the SpillArena games. Game availability is shown in the catalogue.",

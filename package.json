@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/check-seo.mjs",
+    "seo:check": "node scripts/check-seo.mjs",
     "lint": "eslint .",
     "test:admin": "node --test tests/admin-traffic.test.mjs tests/admin-session.test.mjs tests/game-settings.test.mjs",
     "test:popularity": "node --test tests/popularity.test.mjs",
