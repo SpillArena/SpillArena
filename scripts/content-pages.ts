@@ -69,6 +69,9 @@ export function contentPages(): Plugin {
           .replace(/<meta name="twitter:title"[^>]*>/, `<meta name="twitter:title" content="${escape(title)}" />`)
           .replace(/<meta name="twitter:description"[^>]*>/, `<meta name="twitter:description" content="${escape(description)}" />`)
           .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, '')
+          // The text is the page here and is already readable, so the boot loader must not sit on top of it. It stays in
+          // the DOM, hidden, because "Play" on a guide shows it through showLoader() while the game loads.
+          .replace('class="arena-loader is-boot"', 'class="arena-loader is-hidden"')
         const schema = JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url, inLanguage: 'nb' }).replaceAll('<', '\\u003c')
         html = html.replace('</head>', `<script type="application/ld+json">${schema}</script>\n</head>`)
         const directory = resolve(outDir, path.slice(1))

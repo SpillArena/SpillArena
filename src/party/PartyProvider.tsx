@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { getToken, onSessionChange, useAccount } from '../account'
+import { getToken, hasConsent, onSessionChange, useAccount } from '../account'
 import { CODE_ALPHABET, PARTY_CODE, PROTOCOL } from '../../shared/party.js'
 import { PartyContext, type PartyApi, type PartyStatus, type PartyView } from './context'
 
@@ -17,15 +17,19 @@ const STORAGE_KEY = 'spillarena.party'
 const FATAL_CLOSE = [4000, 4002, 4003]
 const PING_MS = 25_000
 
+/** Without a yes to the storage question the code lives in memory only: the party works, a reload forgets it (like sign-in). */
+let memoryCode: string | null = null
 const remembered = (): string | null => {
+  if (!hasConsent()) return memoryCode
   try {
     const value = window.sessionStorage.getItem(STORAGE_KEY)
     return value && PARTY_CODE.test(value) ? value : null
   } catch { return null }
 }
 const remember = (code: string | null) => {
+  memoryCode = code
   try {
-    if (code) window.sessionStorage.setItem(STORAGE_KEY, code)
+    if (code && hasConsent()) window.sessionStorage.setItem(STORAGE_KEY, code)
     else window.sessionStorage.removeItem(STORAGE_KEY)
   } catch { /* storage blocked: the party still works until the tab reloads */ }
 }

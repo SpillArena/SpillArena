@@ -144,6 +144,7 @@ npx wrangler d1 migrations apply spillarena-accounts --remote
 npx wrangler pages secret put AUTH_SECRET            # in SpillArena/
 #    AtlasMaster/, ScribbleBot/, FleetBot/battleship-frontend/  (pages secret put)
 #    ProportionPanic/worker/                                    (wrangler secret put)
+#    workers/parties/                                           (wrangler secret put -c workers/parties/wrangler.toml)
 
 # 3. move the accounts that already exist in AtlasMaster
 node scripts/migrate-atlasmaster-accounts.mjs          # writes the SQL
@@ -392,6 +393,41 @@ itself, so that is a change in all repos.
 **For the games (step 5):** a game that calls `loadAdSense()` must keep its
 PIN fields (the AccountBadge sign-in) off the pages with the tag, the same way.
 Its own `_headers` needs the same Google hosts.
+
+## Party mode
+
+A party lets signed-in players follow one leader through the games. The leader opens `#party`, creates a party and shares a four-letter code; whatever game the leader picks opens for every member, and when the leader switches, so does everyone.
+
+Games are separate documents on separate Pages projects, so a socket in the lobby would die on every game switch. The lobby is therefore the shell: it keeps the party socket open and runs the current game in an iframe on top of itself.
+
+| Path | What it is |
+|---|---|
+| `shared/party.js` | The party as a JSON document and every transition (join, leave, leader hand-over, select game, kick). Pure, no I/O, shared by the Worker and the tests. |
+| `workers/parties/` | Worker `spillarena-parties` with the `PartyRoom` Durable Object, one per party. SQLite-backed (free plan), hibernating sockets. A Pages project cannot define Durable Objects, hence a Worker. |
+| `functions/api/party/[code].js` | Checks the code and hands the WebSocket upgrade to that party's object through the `PARTIES` binding in `wrangler.toml`. Answers 503 until the Worker is bound. |
+| `src/party/` | `PartyProvider` (the socket, reconnect with backoff), `PartyPage` (create, join, members, game picker) and `PartyGameFrame` (the iframe and the slim party bar). |
+
+**Identity.** Accounts only. The browser sends the account token as the second WebSocket subprotocol (browsers cannot set headers) and the object verifies it with `AUTH_SECRET`, exactly like `melodyrush-rooms`. A second tab from the same account replaces the first.
+
+**Lifetime.** A party ends 24 hours after it was created, or 10 minutes after its last member disconnects. A dropped member keeps their seat so a reload rejoins; a leader who drops hands over to the longest-standing online member. The server holds only the code, member names, the leader and the open game.
+
+**Storage.** The party code is kept in `sessionStorage` (`spillarena.party`, this tab only) after a yes to the storage question, and in memory otherwise. It is listed in the consent dialog and in the privacy page.
+
+**Framing.** Eight of the eleven games send `X-Frame-Options: DENY` or `frame-ancestors 'none'`, which would leave the iframe blank. `spillarena-router/routes/proxy.js` (`allowSameOriginFraming`) narrows them to `SAMEORIGIN` and `'self'` for game responses only; the lobby stays unframeable, and the lobby CSP gets `frame-src 'self'`. The game keeps working standalone. A game's own link to the lobby is caught by the party frame: for the leader it ends the game, for everyone else it does nothing.
+
+**Limits.** Only "which game is open" is synced. A game's own multiplayer room is still created and joined inside the game. The party server checks that the game exists; availability (`coming_soon`, `unavailable`) is enforced by the router when the iframe loads.
+
+### Deploying it
+
+Order matters: the Pages deployment has the binding, so the Worker must exist first.
+
+```bash
+npm run parties:deploy
+npx wrangler secret put AUTH_SECRET -c workers/parties/wrangler.toml   # the SAME value as the hub
+# then deploy the lobby (Pages) and, last, spillarena-router
+```
+
+Before the Worker is deployed the party page works up to "Create party", which fails with a party error; nothing else on the site is affected. Local development: run `npx wrangler dev -c workers/parties/wrangler.toml` next to `vite` and the Pages dev server, with `AUTH_SECRET` in both `.dev.vars` files. Tests: `npm run test:party`.
 
 ## Release settings in the admin panel
 

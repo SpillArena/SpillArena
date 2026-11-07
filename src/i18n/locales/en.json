@@ -53,6 +53,10 @@
         "title": "Your settings",
         "body": "Whether you chose light or dark mode, your favourite color, your language and whether you hid the tip about adding the site to your home screen."
       },
+      "party": {
+        "title": "Your party",
+        "body": "The code of the party you are in, in this tab only, so you rejoin it if you reload the page."
+      },
       "choice": {
         "title": "Your answer to this question",
         "body": "Whether you said yes or no, so we don't ask again. This is saved even if you decline."
@@ -132,7 +136,7 @@
       "open": "Delete account",
       "summary": "Permanently remove your account, saved progress and linked data.",
       "description": "This permanently deletes {{username}}, including your avatar, recovery codes, saved game progress, leaderboard entries and contact messages linked to this username.",
-      "scope": "Local game saves on devices, active multiplayer rooms, scores under previous usernames and emails already sent are not removed.",
+      "scope": "Local game saves on devices, active multiplayer rooms and parties, scores under previous usernames and emails already sent are not removed.",
       "confirm": "I understand that this cannot be undone.",
       "submit": "Delete permanently",
       "deleting": "Deleting…",
@@ -750,9 +754,16 @@
           ]
         },
         {
+          "h": "Parties",
+          "p": [
+            "In a party, one signed-in player leads and picks the games, and everyone else in the party follows. While a party exists our server holds the party code, the usernames of its members, who the leader is and which game is open. Nothing else is stored, and nothing from a party goes on a leaderboard. The party is deleted at the latest 24 hours after it was created, or 10 minutes after the last member disconnects.",
+            "The party code is also kept in your browser, in this tab only, so you rejoin after a reload, and only if you accepted storage. The game you follow the leader into runs inside the SpillArena page and works as it does when you open it yourself."
+          ]
+        },
+        {
           "h": "Vendors",
           "p": [
-            "Cloudflare, Inc. (USA) hosts the site, the games, the database and the multiplayer rooms. Cloudflare sees ordinary request data such as IP address, browser type and which page was opened, to deliver the pages and protect against abuse. The traffic statistics we see, page views per game, come from Cloudflare’s own server logs and use no cookies or scripts in your browser.",
+            "Cloudflare, Inc. (USA) hosts the site, the games, the database, the multiplayer rooms and the parties. Cloudflare sees ordinary request data such as IP address, browser type and which page was opened, to deliver the pages and protect against abuse. The traffic statistics we see, page views per game, come from Cloudflare’s own server logs and use no cookies or scripts in your browser.",
             "Google Ireland Limited and Google LLC (USA) provide the ads, through Google AdSense, and Google’s consent message. Advertising code loads only on the home page, not on game guides, help pages, the contact form, account pages or in the games. See “Ads”.",
             "Resend, Inc. (USA) sends us an email when you use the contact form, containing what you wrote in it: name, email address, topic, message, and your username if you are signed in.",
             "Domeneshop AS (Norway) provides the support@spillarena.no mailbox, where contact-form notifications and email you send us arrive.",
@@ -784,7 +795,7 @@
         {
           "h": "Your rights",
           "p": [
-            "You can rename your account and delete it yourself on your profile page. Deleting removes the account, your profile picture, recovery codes, saved progress, leaderboard entries and the contact messages linked to the username. Browser storage on your devices, active multiplayer rooms, scores under earlier usernames and emails already sent are not removed by it; contact us for those, or to get access to or correct your data (see below). You may complain to Datatilsynet, the Norwegian Data Protection Authority."
+            "You can rename your account and delete it yourself on your profile page. Deleting removes the account, your profile picture, recovery codes, saved progress, leaderboard entries and the contact messages linked to the username. Browser storage on your devices, active multiplayer rooms and parties, scores under earlier usernames and emails already sent are not removed by it; contact us for those, or to get access to or correct your data (see below). You may complain to Datatilsynet, the Norwegian Data Protection Authority."
           ]
         },
         {
@@ -820,7 +831,7 @@
         {
           "h": "Usernames and conduct",
           "p": [
-            "Usernames appear publicly on leaderboards and in multiplayer rooms. No offensive, hateful or impersonating names, no cheating, automated play, or attempts to attack, overload or probe the service."
+            "Usernames appear publicly on leaderboards, in multiplayer rooms and in parties. No offensive, hateful or impersonating names, no cheating, automated play, or attempts to attack, overload or probe the service."
           ]
         },
         {
@@ -878,8 +889,12 @@
           "a": "Some games have online multiplayer rooms. Others are played against bots or solo."
         },
         {
+          "q": "What is a party?",
+          "a": "A party lets a group of signed-in friends play together. Open Party at the top of the page and create one, then share the four-letter code. The person who created it leads and picks the game, and when they switch games everyone in the party switches too. A game's own multiplayer room is still created or joined inside the game."
+        },
+        {
           "q": "How do I delete my account?",
-          "a": "Open your profile and choose Delete account. Confirm with your PIN and the irreversible-deletion checkbox. This removes your account, avatar, recovery codes, saved progress, leaderboard entries and contact messages linked to your current username. Local saves, active rooms, scores under old usernames and delivered email are not removed automatically; contact support for help with those."
+          "a": "Open your profile and choose Delete account. Confirm with your PIN and the irreversible-deletion checkbox. This removes your account, avatar, recovery codes, saved progress, leaderboard entries and contact messages linked to your current username. Local saves, active rooms and parties, scores under old usernames and delivered email are not removed automatically; contact support for help with those."
         },
         {
           "q": "I found a bug or a bad username.",

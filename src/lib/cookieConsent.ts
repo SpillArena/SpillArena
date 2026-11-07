@@ -19,6 +19,8 @@ export const STORAGE_ITEMS = [
     { id: 'session', keys: ['spillarena.session'], necessary: false },
     // spillarena:install-dismissed: «Legg til på hjem-skjermen» er skjult (InstallPrompt.tsx)
     { id: 'settings', keys: ['theme', 'accent', 'lang', 'spillarena:install-dismissed'], necessary: false },
+    // spillarena.party: koden til selskapet i denne fanen (sessionStorage, src/party/PartyProvider.tsx), lagres bare etter et ja
+    { id: 'party', keys: ['spillarena.party'], necessary: false },
     { id: 'choice', keys: [CONSENT_KEY], necessary: true },
 ] as const
 

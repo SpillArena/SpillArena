@@ -53,6 +53,10 @@
         "title": "Innstillingene dine",
         "body": "Om du har valgt lyst eller mørkt tema, favorittfargen din, språket ditt og om du har skjult tipset om å legge siden på hjem-skjermen."
       },
+      "party": {
+        "title": "Selskapet ditt",
+        "body": "Koden til selskapet du er med i, bare i denne fanen, så du kommer tilbake til det hvis du laster siden på nytt."
+      },
       "choice": {
         "title": "Svaret ditt på dette spørsmålet",
         "body": "Om du sa ja eller nei, så vi ikke spør igjen. Dette lagres også hvis du avslår."
@@ -132,7 +136,7 @@
       "open": "Slett konto",
       "summary": "Fjern kontoen, lagret fremgang og tilknyttede data permanent.",
       "description": "Dette sletter {{username}} permanent, inkludert profilbilde, gjenopprettingskoder, lagret spillfremgang, resultater på ledertavler og kontaktmeldinger knyttet til dette brukernavnet.",
-      "scope": "Lokale spilldata på enheter, aktive flerspillerrom, resultater under tidligere brukernavn og e-poster som allerede er sendt, blir ikke fjernet.",
+      "scope": "Lokale spilldata på enheter, aktive flerspillerrom og selskaper, resultater under tidligere brukernavn og e-poster som allerede er sendt, blir ikke fjernet.",
       "confirm": "Jeg forstår at dette ikke kan angres.",
       "submit": "Slett permanent",
       "deleting": "Sletter …",
@@ -750,9 +754,16 @@
           ]
         },
         {
+          "h": "Selskaper",
+          "p": [
+            "I et selskap leder én innlogget spiller og velger spillene, og alle andre i selskapet følger med. Så lenge et selskap finnes, holder tjeneren vår selskapskoden, brukernavnene til medlemmene, hvem som er leder og hvilket spill som er åpent. Ingenting annet lagres, og ingenting fra et selskap havner på en ledertavle. Selskapet slettes senest 24 timer etter at det ble laget, eller 10 minutter etter at siste medlem koblet fra.",
+            "Selskapskoden lagres også i nettleseren din, bare i denne fanen, så du kommer tilbake etter at du har lastet siden på nytt, og bare hvis du har sagt ja til lagring. Spillet du følger lederen inn i, kjører inne på SpillArena-siden og fungerer som når du åpner det selv."
+          ]
+        },
+        {
           "h": "Leverandører",
           "p": [
-            "Cloudflare, Inc. (USA) drifter nettstedet, spillene, databasen og flerspillerrommene. Cloudflare ser vanlige forespørselsdata som IP-adresse, nettlesertype og hvilken side som ble åpnet, for å levere sidene og beskytte mot misbruk. Trafikkstatistikken vi ser, sidevisninger per spill, kommer fra Cloudflares egne serverlogger og bruker ingen informasjonskapsler eller skript i nettleseren.",
+            "Cloudflare, Inc. (USA) drifter nettstedet, spillene, databasen, flerspillerrommene og selskapene. Cloudflare ser vanlige forespørselsdata som IP-adresse, nettlesertype og hvilken side som ble åpnet, for å levere sidene og beskytte mot misbruk. Trafikkstatistikken vi ser, sidevisninger per spill, kommer fra Cloudflares egne serverlogger og bruker ingen informasjonskapsler eller skript i nettleseren.",
             "Google Ireland Limited og Google LLC (USA) står for reklamen gjennom Google AdSense og for Googles samtykkevindu. Annonsekode lastes bare på forsiden, ikke på spillguider, hjelpesider, kontaktskjema, kontosider eller i spillene. Se «Reklame».",
             "Resend, Inc. (USA) sender oss en e-post når du bruker kontaktskjemaet, med det du skrev der: navn, e-postadresse, emne, melding og brukernavnet ditt hvis du er innlogget.",
             "Domeneshop AS (Norge) leverer e-postkontoen support@spillarena.no, der varsler fra kontaktskjemaet og e-post du sender oss, havner.",
@@ -820,7 +831,7 @@
         {
           "h": "Brukernavn og oppførsel",
           "p": [
-            "Brukernavn vises offentlig på ledertavler og i flerspillerrom. Ingen støtende, hatefulle eller etterlignende navn, ingen juks, automatisert spilling eller forsøk på å angripe, overbelaste eller teste tjenesten."
+            "Brukernavn vises offentlig på ledertavler, i flerspillerrom og i selskaper. Ingen støtende, hatefulle eller etterlignende navn, ingen juks, automatisert spilling eller forsøk på å angripe, overbelaste eller teste tjenesten."
           ]
         },
         {
@@ -878,8 +889,12 @@
           "a": "Noen spill har flerspillerrom på nett. Andre spilles mot bots eller alene."
         },
         {
+          "q": "Hva er et selskap?",
+          "a": "Et selskap lar en gruppe innloggede venner spille sammen. Åpne Selskap øverst på siden og lag et, og del den firebokstavers koden. Den som laget det leder og velger spill, og når lederen bytter spill, bytter alle i selskapet også. Et spills eget flerspillerrom lager eller blir du med i inne i spillet."
+        },
+        {
           "q": "Hvordan sletter jeg kontoen?",
-          "a": "Åpne profilen din og velg Slett konto. Bekreft med PIN-koden og avkrysningen for permanent sletting. Dette fjerner kontoen, profilbildet, gjenopprettingskodene, lagret fremgang, ledertavleoppføringer og kontaktmeldinger knyttet til ditt nåværende brukernavn. Lokale lagringer, aktive rom, poeng under gamle brukernavn og sendte e-poster fjernes ikke automatisk; kontakt oss for hjelp med dette."
+          "a": "Åpne profilen din og velg Slett konto. Bekreft med PIN-koden og avkrysningen for permanent sletting. Dette fjerner kontoen, profilbildet, gjenopprettingskodene, lagret fremgang, ledertavleoppføringer og kontaktmeldinger knyttet til ditt nåværende brukernavn. Lokale lagringer, aktive rom og selskaper, poeng under gamle brukernavn og sendte e-poster fjernes ikke automatisk; kontakt oss for hjelp med dette."
         },
         {
           "q": "Jeg fant en feil eller et upassende brukernavn.",
