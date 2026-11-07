@@ -13,7 +13,7 @@ interface RecoveryCodeNoticeProps {
  *
  * Tjeneren har bare hashen, så dette er det eneste øyeblikket koden finnes i
  * klartekst noe sted. «Fortsett» er derfor låst til spilleren har krysset av
- * for at den er lagret — et klikk forbi av vane ville gjort koden verdiløs, og
+ * for at den er lagret, et klikk forbi av vane ville gjort koden verdiløs, og
  * spilleren ville ikke merket det før PIN-en var glemt.
  *
  * Brukes både i innloggingsvinduet og i kontomenyen.

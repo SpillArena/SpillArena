@@ -16,7 +16,7 @@ import type {
  *
  * The path is ROOT-ABSOLUTE and stays that way in every game. A game is served
  * under /<game>/, so `import.meta.env.BASE_URL` would point at the game's own
- * Pages project — which has no accounts in it. '/api' is the front page's
+ * Pages project, which has no accounts in it. '/api' is the front page's
  * project, and that is the one place that owns identity.
  *
  * In local development there is no router and no front page on :5173, so each
@@ -63,7 +63,7 @@ async function call<T>(
 
         /*
          * Except a wrong PIN or code. That is a 401 too, but the token was
-         * fine — the player mistyped while confirming a change, and signing
+         * fine, the player mistyped while confirming a change, and signing
          * them out for it would be a punishment, not a fix.
          */
         if (response.status === 401) {
@@ -108,7 +108,7 @@ async function call<T>(
  * PIN sitting in it.
  *
  * 'name does not exist' and 'wrong PIN' come back as the same error on
- * purpose — told apart, the sign-in form becomes a list of who plays here.
+ * purpose, told apart, the sign-in form becomes a list of who plays here.
  */
 export async function authenticate(
     action: AuthAction,
@@ -135,7 +135,7 @@ export async function authenticate(
  * look-alikes (O for 0, I or L for 1), so the form does not have to.
  *
  * Every token issued before this is refused by the account service from now on
- * — if someone else got in, this is what throws them out.
+ *, if someone else got in, this is what throws them out.
  */
 export async function recoverAccount(
     username: string,
@@ -170,8 +170,8 @@ export function createRecoveryCode(pin: string): Promise<ApiResult<{ recoveryCod
  * Signs out here AND on the service, so the token stops working on /api/*.
  *
  * `signOut` in session.ts only forgets the token in this browser. The token
- * is signed, not stored, so a copy of it — from a shared computer, a log, an
- * XSS hole — would keep working for the rest of its thirty days. This tells
+ * is signed, not stored, so a copy of it, from a shared computer, a log, an
+ * XSS hole, would keep working for the rest of its thirty days. This tells
  * the service to refuse it.
  *
  * The local sign-out happens first and does not wait: the player pressed the
@@ -182,7 +182,7 @@ export function createRecoveryCode(pin: string): Promise<ApiResult<{ recoveryCod
  *
  * Only this device is signed out. Changing the PIN signs out every device.
  * Games verify tokens without a lookup and do not see the revocation, so a
- * revoked token can still submit results until it expires — but it no longer
+ * revoked token can still submit results until it expires, but it no longer
  * reaches the account.
  */
 export async function endSession(): Promise<void> {
@@ -236,7 +236,7 @@ export function clearProfile(game: GameId): Promise<ApiResult<{ deleted: boolean
     return call(`/profile/${game}`, { auth: true, method: 'DELETE' })
 }
 
-/** Every game at once — what the profile page on the front page shows. */
+/** Every game at once, what the profile page on the front page shows. */
 export function fetchAccount(): Promise<ApiResult<AccountOverview>> {
     return call<AccountOverview>('/profile', { auth: true })
 }
@@ -249,7 +249,7 @@ export function fetchAccount(): Promise<ApiResult<AccountOverview>> {
  * is renamed. Without replacing it the player would be signed out of all five
  * games by renaming themselves.
  *
- * Leaderboard rows already posted keep the OLD name — they live in each game's
+ * Leaderboard rows already posted keep the OLD name, they live in each game's
  * own database, which this service does not touch. Tell the player that before
  * they rename, not after.
  */

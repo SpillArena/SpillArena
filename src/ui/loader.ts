@@ -3,8 +3,9 @@ import { games, type Game } from '../data/games'
 /*
  * SpillArena-lasteren: brikkene i logoen som lander én etter én langs S-en.
  *
- * Markupen og stilen ligger i index.html, ikke her. Den skal vises FØR
- * JavaScript-pakken er lastet, og det er bare index.html som er der da. Denne
+ * Markupen og stilen ligger i index.html, ikke her. Ved første lasting ligger
+ * den oppå det ferdige HTML-innholdet (som fortsatt ligger i DOM-en), og
+ * <noscript> skjuler den hvis JavaScript ikke starter. Denne
  * filen skrur den samme lasteren av når appen er klar, og på igjen når
  * spilleren går fra forsiden inn i et spill. Da står den på til nettleseren
  * har byttet side, og spilleren ser noe annet enn en hvit skjerm mens spillet
@@ -36,8 +37,8 @@ export function goToGame(game: Game, label: string): void {
 const normalizeUrl = (url: string) => new URL(url, window.location.href).href.replace(/\/+$/, '')
 
 /**
- * Viser lasteren for VANLIGE lenker til et spill også — utvalgt spill, «Spill
- * nå» i en dialog — uten at hver av dem må huske det.
+ * Viser lasteren for VANLIGE lenker til et spill også, utvalgt spill, «Spill
+ * nå» i en dialog, uten at hver av dem må huske det.
  *
  * Bare et klikk som blir i fanen: med Ctrl, ⌘, Shift eller midtknapp åpnes
  * spillet et annet sted, og denne siden skal ikke dekkes til. Et klikk en
@@ -56,7 +57,7 @@ export function installGameLinkLoader(labelFor: (game: Game) => string): () => v
   }
 
   /*
-   * Tilbake-knappen kan hente forsiden fra bfcache, akkurat slik den var — med
+   * Tilbake-knappen kan hente forsiden fra bfcache, akkurat slik den var, med
    * lasteren oppe. Da skal den bort med en gang.
    */
   const onPageShow = (event: PageTransitionEvent) => {

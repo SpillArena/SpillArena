@@ -50,7 +50,7 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
     const [code, setCode] = useState('')
     /**
      * Gjenopprettingskoden som skal vises, når det er en. Da er skjemaet borte,
-     * og vinduet lukkes bare med «Fortsett» — ikke med Escape eller et klikk
+     * og vinduet lukkes bare med «Fortsett», ikke med Escape eller et klikk
      * ved siden av, for koden vises aldri igjen.
      */
     const [shown, setShown] = useState<{ username: string; code: string } | null>(null)
@@ -78,7 +78,7 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
          * Registrerer du deg med en tastefeil, har du en konto ingen kommer inn
          * i: PIN-en vises aldri tilbake, det finnes ingen e-post å nullstille
          * med, og navnet er opptatt fra da av. Innlogging har ingen slik felle
-         * — feil PIN feiler bare, og kan prøves på nytt — så det andre feltet
+         *, feil PIN feiler bare, og kan prøves på nytt, så det andre feltet
          * ville bare vært i veien der.
          *
          * `pin_mismatch` er ikke en kode fra tjeneren. Den ligger likevel under
@@ -120,7 +120,7 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
             /*
              * En ny konto får en gjenopprettingskode med en gang, mens PIN-en
              * fortsatt står i skjemaet. Feiler det, er kontoen likevel laget, og
-             * kontomenyen ber om en kode senere — da er det ikke verdt å stoppe her.
+             * kontomenyen ber om en kode senere, da er det ikke verdt å stoppe her.
              */
             if (action === 'register') {
                 const recovery = await createRecoveryCode(pin)
@@ -224,11 +224,11 @@ function AuthForm({ onClose, initialMode, presentation }: { onClose: () => void;
     if (presentation === 'modal') return <Dialog open onClose={onClose} title={title} dismissible={!shown && !busy}>{content}</Dialog>
     return <div className="account-page-layout">
       <aside className="auth-story">
-        {!shown && <a className="back-link" href="#"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>}
+        {!shown && <a className="back-link" href="/"><ArrowLeft size={16} aria-hidden="true" />{t('profile.backToGames')}</a>}
         <img src={logo} alt="" className="auth-logo" width={58} height={58} />
         <p className="eyebrow">SpillArena</p><h1>{t('lobby.accountTitle')}</h1><p className="hero-description">{t('lobby.accountDescription')}</p>
         <ul className="auth-benefits"><li><Check size={16} aria-hidden="true" />{t('profile.benefitProgress')}</li><li><Check size={16} aria-hidden="true" />{t('profile.benefitGames')}</li><li><Check size={16} aria-hidden="true" />{t('profile.benefitGuest')}</li></ul>
-        {!shown && <a className="button secondary" href="#">{t('profile.guestPlay')}<ArrowUpRight size={16} aria-hidden="true" /></a>}
+        {!shown && <a className="button secondary" href="/">{t('profile.guestPlay')}<ArrowUpRight size={16} aria-hidden="true" /></a>}
       </aside>
       <section className="auth-panel" aria-labelledby="auth-title"><p className="eyebrow">{t('account.title')}</p><h2 id="auth-title">{title}</h2>{shown ? <><p className="field-hint">{t('account.recovery.saveIntro')}</p><Dialog open onClose={onClose} title={title} dismissible={false}>{content}</Dialog></> : content}</section>
     </div>

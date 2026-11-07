@@ -8,7 +8,7 @@ export function errorText(t: TFunction, code: AdminErrorCode | string): string {
     return t(`admin.errors.${code}`, { defaultValue: t('admin.errors.service_failed') })
 }
 
-/** 12 345 på norsk, 12,345 på engelsk — tall i panelet følger språket på siden. */
+/** 12 345 på norsk, 12,345 på engelsk, tall i panelet følger språket på siden. */
 export function formatNumber(value: number, language: string): string {
     return new Intl.NumberFormat(language === 'no' ? 'nb-NO' : 'en-GB').format(value)
 }

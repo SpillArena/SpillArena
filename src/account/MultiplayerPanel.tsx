@@ -7,7 +7,7 @@ import { PlayerAvatar } from './avatar'
  * One multiplayer chooser for every game.
  *
  * The same two steps everywhere: "Create room" or "Join room". A game with
- * several multiplayer modes lists them under Create — the mode is part of making
+ * several multiplayer modes lists them under Create, the mode is part of making
  * the room, not a separate entry on the landing page. Both steps need an
  * account (a room's scores belong to someone), so signed out, the buttons open
  * the sign-in panel instead.
@@ -17,7 +17,7 @@ import { PlayerAvatar } from './avatar'
  * text and `--sa-mp-accent`, so it takes on each game's own look.
  *
  * Signed in, it opens with who the player will be in the room (picture and
- * account name) and, under Create, the three steps from room to match — so a
+ * account name) and, under Create, the three steps from room to match, so a
  * first-time player knows a code is coming and that a friend needs it.
  */
 

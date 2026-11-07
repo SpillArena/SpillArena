@@ -1,0 +1,74 @@
+{
+  "no": {
+    "title": "Cracked: dagens kodeord med piler gjennom alfabetet",
+    "intro": "Cracked er et daglig ordpuzzle. Du har fem forsøk på å knekke dagens skjulte ord, og i tillegg til fargene forteller piler deg om riktig bokstav kommer tidligere eller senere i alfabetet.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Du gjetter et skjult ord på fire til sju bokstaver i fem forsøk. På norsk bruker spillet norske ord, på engelsk engelske, og hvert språk har sin egen daglige lås, mesterkode, historikk og rekke. Lengden på ordet varierer fra dag til dag.",
+        "Etter hvert gjett får hver rute en farge. Grønn betyr riktig bokstav på riktig plass, og dette hjulet i låsen klikker på plass. Oransje betyr at bokstaven er i ordet, men på en annen plass. Grå betyr at bokstaven ikke er i ordet, eller at det ikke er flere av den."
+      ]},
+      { "h": "Pilene", "p": [
+        "Det som skiller Cracked fra andre ordspill, er pilene. Hver rute som ikke er grønn, får en pil: → betyr at riktig bokstav på den plassen kommer senere i alfabetet, og ← betyr at den kommer tidligere. Æ, Ø og Å kommer sist.",
+        "Låsen over brettet samler pilene. Hvert hjul viser området av bokstaver som fortsatt er mulig, for eksempel M–Å, helt til hjulet låses."
+      ]},
+      { "h": "Spillmodi", "p": [
+        "Dagens lås er samme ord for alle og byttes ved midnatt norsk tid. Lengdene følger et ukemønster på 5, 4, 6, 5, 7, 4 og 6 bokstaver. Øving gir ubegrensede låser med valgfri lengde fra fire til sju. Ukens mesterkode gir deg en bokstav av et blandet sjubokstavers ord for hver daglige lås du knekker, og du kan løse det før mandag på tre forsøk for en stor XP-bonus. En lås til en venn lar deg velge et ord og sende en lenke, uten server.",
+        "Resultatet deles som et rutenett uten spoilere. Rekker, statistikk, XP og nivåer lagres på enheten og synkroniseres med SpillArena-kontoen når du er innlogget."
+      ]},
+      { "h": "Ekstra utfordringer", "p": [
+        "Hint er en gang per lås og avslører én tilfeldig uløst bokstav på riktig plass, men koster 150 poeng. Mestertyv fjerner pilene og områdene de to første gjettene og gir dobbelt poeng. Alarm gir 90 sekunder i øvingsmodus og venne-låser, med 8 poeng per sekund igjen. Lyd og vibrasjon er av til du slår dem på. Tittelen din går fra Lommetyv, Dirkeplukker og Innbruddstyv via Safeknekker og Mestertyv til Legende, etter XP-nivået ditt."
+      ]},
+      { "h": "Et eksempel", "p": [
+        "Dagens ord har fem bokstaver. Du gjetter «SKOLE». Første rute S blir oransje, K blir grå med pil →, O blir grønn, L blir grå med pil ←, og E blir grønn. Du vet nå at ordet har O på plass tre og E på plass fem, at S er med på en annen plass, og at andre bokstav ligger senere i alfabetet enn K. Neste gjett blir langt mer treffsikkert."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Start med et ord som har vanlige bokstaver og blandede vokaler. Det gir deg flest mulig farger i første gjett.",
+        "Bruk pilene aktivt. Hver pil halverer området for en plass, så etter to gjett har du ofte begrenset flere plasser til et smalt utvalg.",
+        "Se på låsen, ikke bare på brettet. Områdene viser hvilke bokstaver som fortsatt er mulige på hver plass.",
+        "Spar hintet til du virkelig står fast. Det koster 150 poeng, men kan redde en rekke."
+      ]}
+    ],
+    "faq": [
+      { "q": "Hvor mange forsøk har jeg?", "a": "Fem." },
+      { "q": "Hvor lange er ordene?", "a": "Fra fire til sju bokstaver, og lengden endres fra dag til dag." },
+      { "q": "Når kommer nytt ord?", "a": "Ved midnatt norsk tid." },
+      { "q": "Kan jeg spille på engelsk?", "a": "Ja. Engelsk har egen daglig lås, mesterkode og statistikk." }
+    ]
+  },
+  "en": {
+    "title": "Cracked: today’s code word, with arrows through the alphabet",
+    "intro": "Cracked is a daily word puzzle. You have five tries to crack today’s hidden word, and besides the colours, arrows tell you whether the right letter comes earlier or later in the alphabet.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "You guess a hidden word of four to seven letters in five tries. In Norwegian the game uses Norwegian words, in English English ones, and each language has its own daily lock, master code, history and streak. The length of the word changes from day to day.",
+        "After each guess every tile gets a colour. Green means the right letter in the right spot, and that wheel of the lock clicks into place. Orange means the letter is in the word but in another spot. Grey means the letter is not in the word, or there are no more copies of it."
+      ]},
+      { "h": "The arrows", "p": [
+        "What sets Cracked apart from other word games is the arrows. Every tile that is not green gets an arrow: → means the right letter for that spot comes later in the alphabet, and ← means it comes earlier. Æ, Ø and Å come last.",
+        "The lock above the board gathers the arrows. Each wheel shows the span of letters still possible, such as M–Å, until the wheel locks."
+      ]},
+      { "h": "Ways to play", "p": [
+        "Today’s lock is the same word for everyone and changes at midnight in Norway. Lengths follow a weekly pattern of 5, 4, 6, 5, 7, 4 and 6 letters. Practice gives unlimited locks of 4 to 7 letters. The master code of the week hands you one letter of a scrambled seven-letter word for each daily lock you crack, and you can solve it before Monday in three tries for a big XP bonus. A lock for a friend lets you pick a word and send a link, with no server involved.",
+        "Results share as a spoiler-free grid. Streaks, statistics, XP and levels are stored on the device and sync to a SpillArena account when you are signed in."
+      ]},
+      { "h": "Extra challenges", "p": [
+        "The hint works once per lock and reveals one random unsolved letter in its right spot, but costs 150 points. Master thief removes arrows and spans for the first two guesses and doubles the points. Alarm gives 90 seconds in practice and friend locks, with 8 points per second left. Sound and vibration are off until you turn them on. Your title runs from Pickpocket, Lock-picker and Burglar through Safe-cracker and Master thief to Legend, following your XP level."
+      ]},
+      { "h": "An example", "p": [
+        "Today’s word has five letters. You guess “SKOLE”. The S tile turns orange, K turns grey with an arrow →, O turns green, L turns grey with an arrow ←, and E turns green. You now know the word has O in position three and E in position five, that S is present in another spot, and that the second letter comes later in the alphabet than K. Your next guess will be far more precise."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Start with a word that has common letters and mixed vowels. It gives you as many colours as possible on the first guess.",
+        "Use the arrows actively. Each arrow roughly halves the range for a spot, so after two guesses you have often narrowed several spots to a small set.",
+        "Look at the lock, not just the board. The spans show which letters are still possible in each position.",
+        "Save the hint until you are really stuck. It costs 150 points but can save a streak."
+      ]}
+    ],
+    "faq": [
+      { "q": "How many tries do I get?", "a": "Five." },
+      { "q": "How long are the words?", "a": "Four to seven letters, and the length changes from day to day." },
+      { "q": "When does a new word arrive?", "a": "At midnight Norwegian time." },
+      { "q": "Can I play in English?", "a": "Yes. English has its own daily lock, master code and statistics." }
+    ]
+  }
+}

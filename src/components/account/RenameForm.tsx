@@ -12,7 +12,7 @@ interface RenameFormProps {
  * Bytte av brukernavn.
  *
  * PIN-en spørres om på nytt. Tegnet ligger i nettleseren i tretti dager, så
- * uten den kunne hvem som helst med en åpen fane døpt om kontoen — og navnet er
+ * uten den kunne hvem som helst med en åpen fane døpt om kontoen, og navnet er
  * det eneste en topplassering henger på.
  *
  * ADVARSELEN ER IKKE PYNT. Ledertavlene ligger i hver sitt spill sin egen

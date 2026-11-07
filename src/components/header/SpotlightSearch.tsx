@@ -171,7 +171,7 @@ export default function SpotlightSearch({ onSelect }: { onSelect: (game: Game) =
         </li>)}
       </ul> : <div className="spotlight-empty">
         <p>{t('lobby.search.empty', { query: query.trim() })}</p>
-        <a className="button text-button" href="#games" onClick={close}>{t('lobby.search.showAll')}</a>
+        <a className="button text-button" href="/#games" onClick={close}>{t('lobby.search.showAll')}</a>
       </div>}
 
       <div className="spotlight-hints" aria-hidden="true">

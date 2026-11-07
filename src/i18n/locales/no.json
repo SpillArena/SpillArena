@@ -35,7 +35,7 @@
     "section": "Personvern",
     "title": "Lagre fremgangen din på denne enheten?",
     "lead": "SpillArena lagrer noen få ting i nettleseren din, slik at du forblir innlogget og fremgangen din følger deg mellom spillene.",
-    "scope": "Svaret gjelder hele SpillArena – forsiden og alle spillene.",
+    "scope": "Svaret gjelder hele SpillArena: forsiden og alle spillene.",
     "withoutTitle": "Hvis du avslår:",
     "without": {
       "signin": "Du blir ikke husket. Du må logge inn på nytt hver gang du åpner et spill eller laster siden på nytt.",
@@ -52,6 +52,10 @@
       "settings": {
         "title": "Innstillingene dine",
         "body": "Om du har valgt lyst eller mørkt tema, favorittfargen din, språket ditt og om du har skjult tipset om å legge siden på hjem-skjermen."
+      },
+      "party": {
+        "title": "Selskapet ditt",
+        "body": "Koden til selskapet du er med i, bare i denne fanen, så du kommer tilbake til det hvis du laster siden på nytt."
       },
       "choice": {
         "title": "Svaret ditt på dette spørsmålet",
@@ -122,7 +126,7 @@
     "pin": "PIN",
     "pinHint": "4–6 siffer. Den brukes på alle spillene.",
     "blurb": "Én konto for hele SpillArena. Fremgangen din følger deg mellom spillene.",
-    "noConsent": "Lagring er slått av, så du er bare innlogget til du forlater siden. I et spill kan du logge inn igjen fra merket i hjørnet – da lagres fremgang og resultater på kontoen din.",
+    "noConsent": "Lagring er slått av, så du er bare innlogget til du forlater siden. I et spill kan du logge inn igjen fra merket i hjørnet. Da lagres fremgang og resultater på kontoen din.",
     "enableStorage": "Slå på lagring",
     "switchToRegister": "Har du ikke konto? Lag en.",
     "switchToSignIn": "Har du konto? Logg inn.",
@@ -132,7 +136,7 @@
       "open": "Slett konto",
       "summary": "Fjern kontoen, lagret fremgang og tilknyttede data permanent.",
       "description": "Dette sletter {{username}} permanent, inkludert profilbilde, gjenopprettingskoder, lagret spillfremgang, resultater på ledertavler og kontaktmeldinger knyttet til dette brukernavnet.",
-      "scope": "Lokale spilldata på enheter, aktive flerspillerrom, resultater under tidligere brukernavn og e-poster som allerede er sendt, blir ikke fjernet.",
+      "scope": "Lokale spilldata på enheter, aktive flerspillerrom og selskaper, resultater under tidligere brukernavn og e-poster som allerede er sendt, blir ikke fjernet.",
       "confirm": "Jeg forstår at dette ikke kan angres.",
       "submit": "Slett permanent",
       "deleting": "Sletter …",
@@ -156,10 +160,10 @@
       "name_reserved": "Det navnet er reservert.",
       "pin_mismatch": "De to PIN-kodene er ikke like.",
       "username_empty": "Skriv et brukernavn først.",
-      "username_too_long": "Brukernavnet er for langt — maks 20 tegn.",
+      "username_too_long": "Brukernavnet er for langt. Maks 20 tegn.",
       "username_chars": "Brukernavn kan bare bruke bokstaver, tall, mellomrom og . _ ' -",
       "locked_wait": "For mange feil forsøk. Prøv igjen om {{wait}}.",
-      "bad_code_format": "Koden ser ikke riktig ut. Den har 8 eller 12 tegn — bokstaver og tall."
+      "bad_code_format": "Koden ser ikke riktig ut. Den har 8 eller 12 tegn, bokstaver og tall."
     },
     "rename": "Endre",
     "newUsername": "Nytt brukernavn",
@@ -187,7 +191,7 @@
       "badCode": "Feil brukernavn eller kode, eller koden er brukt eller utløpt.",
       "savedTitle": "Gjenopprettingskode",
       "saveTitle": "Lagre gjenopprettingskoden din",
-      "saveIntro": "Glemmer du PIN-en, er dette koden som slipper deg inn igjen. Den vises bare nå, og virker én gang — da får du en ny.",
+      "saveIntro": "Glemmer du PIN-en, er dette koden som slipper deg inn igjen. Den vises bare nå, og virker én gang. Da får du en ny.",
       "codeLabel": "Gjenopprettingskoden din",
       "copy": "Kopier",
       "copied": "Kopiert",
@@ -196,7 +200,7 @@
       "fileText": "SpillArena\n\nBrukernavn: {{username}}\nGjenopprettingskode: {{code}}\n\nGlemmer du PIN-en, velg «Glemt PIN?» på spillarena.no og skriv inn koden.\nKoden virker én gang. Etterpå får du en ny.\nIkke del den med noen.\n",
       "confirmSaved": "Jeg har lagret koden et trygt sted",
       "continue": "Fortsett",
-      "missing": "Du har ingen gjenopprettingskode. Lag en nå, mens du husker PIN-en — ellers trenger du hjelp fra en admin om du glemmer den.",
+      "missing": "Du har ingen gjenopprettingskode. Lag en nå, mens du husker PIN-en. Ellers trenger du hjelp fra en admin om du glemmer den.",
       "create": "Lag gjenopprettingskode",
       "replace": "Ny gjenopprettingskode",
       "createIntro": "Med koden kan du velge ny PIN selv hvis du glemmer den.",
@@ -316,7 +320,7 @@
       "adminHint": "Admins kan ikke stenges ute, døpes om, slettes eller få engangskode. Admin fjernes i databasen, ikke her.",
       "issueResetCode": "Lag engangskode",
       "resetCodeTitle": "Engangskode for ny PIN",
-      "resetCodeHelp": "Gi koden til spilleren. De velger «Glemt PIN?», skriver inn brukernavnet og koden, og velger ny PIN selv. Koden virker én gang og går ut {{date}}. Den vises bare nå — lager du en ny, slutter denne å virke.",
+      "resetCodeHelp": "Gi koden til spilleren. De velger «Glemt PIN?», skriver inn brukernavnet og koden, og velger ny PIN selv. Koden virker én gang og går ut {{date}}. Den vises bare nå. Lager du en ny, slutter denne å virke.",
       "copy": "Kopier",
       "copied": "Kopiert"
     },
@@ -463,7 +467,13 @@
       "accountCreated": "Konto opprettet",
       "accountLastSeen": "Sist aktiv",
       "notification": "E-postvarsel",
-      "notificationStatus": {"unknown": "Ikke registrert", "pending": "Venter — sjekk igjen om litt", "sent": "Godtatt av e-postleverandøren", "failed": "Mislyktes — meldingen er lagret her", "not_configured": "Ikke satt opp — meldingen er lagret her"},
+      "notificationStatus": {
+        "unknown": "Ikke registrert",
+        "pending": "Venter, sjekk igjen om litt",
+        "sent": "Godtatt av e-postleverandøren",
+        "failed": "Mislyktes, meldingen er lagret her",
+        "not_configured": "Ikke satt opp, meldingen er lagret her"
+      },
       "empty": "Ingen meldinger ennå.",
       "from": "Fra",
       "topic": "Emne",
@@ -506,10 +516,10 @@
       }
     }
   },
-  "melodyRushDescription": "MelodyRush – kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
-  "hitlineDescription": "Hitline – kjenn igjen låten og plasser den på tidslinjen etter utgivelsesår. Spill alene, del en skjerm eller inviter venner til et rom på nett.",
-  "sipZoneDescription": "SipZone – norske drikkeleker til vors og hyttetur. Spill på én mobil eller på hver deres enhet med SipZone Live. Dere bestemmer selv hva som er i glasset.",
-  "crackedDescription": "Cracked – knekk dagens kodeord på fem forsøk. Pilene viser vei gjennom alfabetet, med øvelseslåser og en ukentlig mesterkode.",
+  "melodyRushDescription": "MelodyRush: kjenn igjen musikken fra korte lydklipp. Spill dagens mixtape, øv på et tiår eller velg en spilleliste. Jo mindre du hører, desto flere poeng får du!",
+  "hitlineDescription": "Hitline: kjenn igjen låten og plasser den på tidslinjen etter utgivelsesår. Spill alene, del en skjerm eller inviter venner til et rom på nett.",
+  "sipZoneDescription": "SipZone: norske drikkeleker til vors og hyttetur. Spill på én mobil eller på hver deres enhet med SipZone Live. Dere bestemmer selv hva som er i glasset.",
+  "crackedDescription": "Cracked: knekk dagens kodeord på fem forsøk. Pilene viser vei gjennom alfabetet, med øvelseslåser og en ukentlig mesterkode.",
   "install": {
     "title": "Legg SpillArena på hjem-skjermen",
     "description": "Åpner i fullskjerm, med alle spillene ett trykk unna.",
@@ -518,6 +528,42 @@
     "shareIcon": "Del",
     "action": "Installer",
     "dismiss": "Ikke nå"
+  },
+  "party": {
+    "title": "Selskap",
+    "lead": "Spill sammen. Én leder selskapet og velger spillene, og alle i selskapet følger med.",
+    "signInFirst": "Logg inn for å lage eller bli med i et selskap.",
+    "createTitle": "Start et selskap",
+    "createText": "Du blir selskapsleder. Del koden med vennene dine.",
+    "create": "Lag selskap",
+    "joinTitle": "Bli med i et selskap",
+    "codeLabel": "Selskapskode",
+    "join": "Bli med",
+    "copy": "Kopier kode",
+    "copied": "Kopiert",
+    "leave": "Forlat selskapet",
+    "members_one": "{{count}} spiller",
+    "members_other": "{{count}} spillere",
+    "leader": "Selskapsleder",
+    "offline": "kobler til igjen…",
+    "makeLeader": "Gjør til leder",
+    "kick": "Fjern",
+    "pickGame": "Velg spill for selskapet",
+    "waitingForLeader": "Venter på at {{name}} skal velge spill…",
+    "beta": "beta",
+    "reconnecting": "Tapte forbindelsen. Prøver å få deg inn igjen…",
+    "bar": "Selskap {{code}} · {{count}}",
+    "playing": "Selskapsspill: {{title}}",
+    "changeGame": "Bytt spill",
+    "errors": {
+      "error": "Noe gikk galt med selskapet. Prøv igjen.",
+      "bad_code": "En selskapskode er fire bokstaver.",
+      "not_found": "Fant ikke noe selskap med den koden.",
+      "exists": "Koden er tatt. Prøv igjen.",
+      "party_full": "Selskapet er fullt.",
+      "signed_out": "Logg inn for å bruke selskapsmodus.",
+      "kicked": "Du ble fjernet fra selskapet."
+    }
   },
   "lobby": {
     "skip": "Hopp til spillene",
@@ -558,7 +604,7 @@
     "knowledge": "Kunnskap",
     "music": "Musikk",
     "accountTitle": "Én konto. Hele arenaen.",
-    "accountDescription": "Ta med deg fremgangen mellom spillene. Eller spill som gjest — du velger.",
+    "accountDescription": "Ta med deg fremgangen mellom spillene. Eller spill som gjest, du velger.",
     "accountMore": "Om SpillArena-kontoen",
     "footerTagline": "Laget for spillegleden.",
     "footerNavigation": "Navigasjon i bunnteksten",
@@ -669,7 +715,7 @@
   },
   "legal": {
     "back": "Tilbake til spillene",
-    "updated": "Sist oppdatert 5. november 2026",
+    "updated": "Sist oppdatert 7. november 2026",
     "contactLabel": "Kontakt",
     "contact": "Spørsmål, feil, sletting av konto eller innsynsforespørsler:",
     "privacy": {
@@ -704,14 +750,21 @@
         {
           "h": "Spille uten konto",
           "p": [
-            "Alle spillene fungerer uten konto. Gjesteresultater blir i nettleseren din og havner aldri på en ledertavle under navnet ditt."
+            "Du kan prøve solospillene uten konto. Flerspillerrom på nett krever en gratis konto. Gjesteresultater blir i nettleseren din og havner ikke på en ledertavle under navnet ditt."
+          ]
+        },
+        {
+          "h": "Selskaper",
+          "p": [
+            "I et selskap leder én innlogget spiller og velger spillene, og alle andre i selskapet følger med. Så lenge et selskap finnes, holder tjeneren vår selskapskoden, brukernavnene til medlemmene, hvem som er leder og hvilket spill som er åpent. Ingenting annet lagres, og ingenting fra et selskap havner på en ledertavle. Selskapet slettes senest 24 timer etter at det ble laget, eller 10 minutter etter at siste medlem koblet fra.",
+            "Selskapskoden lagres også i nettleseren din, bare i denne fanen, så du kommer tilbake etter at du har lastet siden på nytt, og bare hvis du har sagt ja til lagring. Spillet du følger lederen inn i, kjører inne på SpillArena-siden og fungerer som når du åpner det selv."
           ]
         },
         {
           "h": "Leverandører",
           "p": [
-            "Cloudflare, Inc. (USA) drifter nettstedet, spillene, databasen og flerspillerrommene. Cloudflare ser vanlige forespørselsdata som IP-adresse, nettlesertype og hvilken side som ble åpnet, for å levere sidene og beskytte mot misbruk. Trafikkstatistikken vi ser, sidevisninger per spill, kommer fra Cloudflares egne serverlogger og bruker ingen informasjonskapsler eller skript i nettleseren.",
-            "Google Ireland Limited og Google LLC (USA) står for reklamen gjennom Google AdSense og for Googles samtykkevindu. Reklamen vises på forsiden, ikke på sidene for innlogging, registrering, gjenoppretting og profil, og ikke i spillene. Se «Reklame».",
+            "Cloudflare, Inc. (USA) drifter nettstedet, spillene, databasen, flerspillerrommene og selskapene. Cloudflare ser vanlige forespørselsdata som IP-adresse, nettlesertype og hvilken side som ble åpnet, for å levere sidene og beskytte mot misbruk. Trafikkstatistikken vi ser, sidevisninger per spill, kommer fra Cloudflares egne serverlogger og bruker ingen informasjonskapsler eller skript i nettleseren.",
+            "Google Ireland Limited og Google LLC (USA) står for reklamen gjennom Google AdSense og for Googles samtykkevindu. Annonsekode lastes bare på forsiden, ikke på spillguider, hjelpesider, kontaktskjema, kontosider eller i spillene. Se «Reklame».",
             "Resend, Inc. (USA) sender oss en e-post når du bruker kontaktskjemaet, med det du skrev der: navn, e-postadresse, emne, melding og brukernavnet ditt hvis du er innlogget.",
             "Domeneshop AS (Norge) leverer e-postkontoen support@spillarena.no, der varsler fra kontaktskjemaet og e-post du sender oss, havner.",
             "Deezer SA (Frankrike) leverer musikken i MelodyRush og Hitline. Albumcoverne og de korte lydklippene lastes rett fra Deezers servere når du åpner eller spiller disse spillene, så Deezer ser IP-adressen din og hvilke låter som lastes. Vi sender ingen kontoopplysninger til Deezer, og du trenger ingen Deezer-konto.",
@@ -778,7 +831,7 @@
         {
           "h": "Brukernavn og oppførsel",
           "p": [
-            "Brukernavn vises offentlig på ledertavler og i flerspillerrom. Ingen støtende, hatefulle eller etterlignende navn, ingen juks, automatisert spilling eller forsøk på å angripe, overbelaste eller teste tjenesten."
+            "Brukernavn vises offentlig på ledertavler, i flerspillerrom og i selskaper. Ingen støtende, hatefulle eller etterlignende navn, ingen juks, automatisert spilling eller forsøk på å angripe, overbelaste eller teste tjenesten."
           ]
         },
         {
@@ -817,7 +870,7 @@
         },
         {
           "q": "Trenger jeg konto?",
-          "a": "Nei. En konto lagrer bare XP og fremgang og setter navnet ditt på ledertavlene."
+          "a": "Du kan prøve solospillene som gjest. En konto lagrer fremgang på tvers av spill og kreves for flerspillerrom på nett og resultater under navnet ditt."
         },
         {
           "q": "Hvordan logger jeg inn?",
@@ -836,8 +889,12 @@
           "a": "Noen spill har flerspillerrom på nett. Andre spilles mot bots eller alene."
         },
         {
+          "q": "Hva er et selskap?",
+          "a": "Et selskap lar en gruppe innloggede venner spille sammen. Åpne Selskap øverst på siden og lag et, og del den firebokstavers koden. Den som laget det leder og velger spill, og når lederen bytter spill, bytter alle i selskapet også. Et spills eget flerspillerrom lager eller blir du med i inne i spillet."
+        },
+        {
           "q": "Hvordan sletter jeg kontoen?",
-          "a": "Send e-post til support@spillarena.no. Vi sletter kontoen, fremgangen og, på forespørsel, ledertavleoppføringene."
+          "a": "Åpne profilen din og velg Slett konto. Bekreft med PIN-koden og avkrysningen for permanent sletting. Dette fjerner kontoen, profilbildet, gjenopprettingskodene, lagret fremgang, ledertavleoppføringer og kontaktmeldinger knyttet til ditt nåværende brukernavn. Lokale lagringer, aktive rom og selskaper, poeng under gamle brukernavn og sendte e-poster fjernes ikke automatisk; kontakt oss for hjelp med dette."
         },
         {
           "q": "Jeg fant en feil eller et upassende brukernavn.",
@@ -930,5 +987,44 @@
       "network": "Fikk ikke kontakt med tjeneren. Sjekk tilkoblingen og prøv igjen."
     }
   },
-  "gameUnavailable": "Utilgjengelig"
+  "gameUnavailable": "Utilgjengelig",
+  "content": {
+    "aboutLink": "Om SpillArena",
+    "guidesLink": "Spilleregler og guider",
+    "guideLink": "Regler og tips",
+    "rules": "Slik spiller du",
+    "example": "Et eksempel",
+    "tip": "Tips til neste runde",
+    "play": "Åpne spillet",
+    "unavailable": "Dette spillet er ikke tilgjengelig akkurat nå. Se spilloversikten for oppdatert status.",
+    "homeTitle": "Nettleserspill laget av SpillArena",
+    "homeIntro": "Spill en taktisk kamp, løs en ordgåte eller test kunnskapene dine om geografi og historie. Spillene kjører i nettleseren. Solospill kan prøves som gjest; nettrom krever en gratis konto.",
+    "homeDetail": "Les reglene og eksemplene før du velger et spill. Guidene forklarer hva du skal gjøre, hvordan du tolker tilbakemeldinger og hva du kan øve på videre. Spill merket Beta er under utvikling; tilgjengelighet vises på hvert kort.",
+    "guidesTitle": "Velg et spill og lær reglene",
+    "guidesIntro": "Forklaringer, konkrete eksempler og praktiske tips til spillene på SpillArena. Tilgjengelighet vises i spilloversikten.",
+    "aboutTitle": "Om SpillArena",
+    "aboutIntro": "SpillArena er en samling nettleserspill laget og vedlikeholdt av Emil Berglund i Norge. Spillene utforsker ulike utfordringer: strategi, språk, bildegjenkjenning, geografi, historie og musikk.",
+    "aboutSections": [
+      {
+        "h": "Hva du kan spille",
+        "p": [
+          "FleetBot handler om å finne en skjult flåte. HangBot og Cracked tester ord på ulike måter, mens ScribbleBot og Pixel Panic lar deg kjenne igjen bilder. AtlasMaster bruker geografispørsmål og kart; EraShuffle setter historiske hendelser i rekkefølge. Musikkspillene bruker eksterne lydklipp, og SipZone er beregnet på voksne."
+        ]
+      },
+      {
+        "h": "Utvikling og tilbakemeldinger",
+        "p": [
+          "SpillArena er et hobbyprosjekt. Kildekoden ligger offentlig på GitHub, og endringsloggen i bunnteksten viser oppdateringer. Beta-merking viser spill som fortsatt er under utvikling. Hvis noe feiler, meld fra via kontaktskjemaet med spillnavn, enhet, nettleser og hva du gjorde før feilen."
+        ]
+      },
+      {
+        "h": "Konto og driftskostnader",
+        "p": [
+          "Du kan prøve solospillene uten konto. En gratis konto gir lagret fremgang og tilgang til nettrom. SpillArena kan bruke annonser på forsiden for å bidra til driftskostnadene. Spillguidene, hjelpesidene og kontosidene laster ikke annonsekode."
+        ]
+      }
+    ],
+    "backToGuides": "Alle guider",
+    "faqTitle": "Vanlige spørsmål"
+  }
 }

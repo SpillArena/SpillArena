@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
+import { contentPages } from "./scripts/content-pages.ts";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -38,6 +39,30 @@ function adsense(client: string): Plugin {
   };
 }
 
+/*
+ * Vite puts the module script before the stylesheet in <head>. Put the
+ * stylesheet first and preload the Latin fonts, so the browser asks for the
+ * styles and the text fonts before it has parsed anything else, and the first
+ * paint is styled with the right font.
+ */
+function earlyStyles(): Plugin {
+  return {
+    name: "spillarena-early-styles",
+    transformIndexHtml: {
+      order: "post",
+      handler(html, ctx) {
+        const css = html.match(/[ \t]*<link rel="stylesheet"[^>]*>\n?/);
+        if (!css) return html;
+        const fonts = Object.keys(ctx.bundle ?? {})
+          .filter(name => /^assets\/(fraunces|space-grotesk)-normal-latin-(?!ext-)[\w-]+\.woff2$/.test(name))
+          .map(name => `  <link rel="preload" as="font" type="font/woff2" crossorigin href="/${name}">\n`)
+          .join("");
+        return html.replace(css[0], "").replace(/(\s*)(<script type="module")/, `$1${css[0].trimEnd()}\n${fonts}  $2`);
+      },
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss(), adsense(loadEnv(mode, process.cwd(), "VITE_").VITE_ADSENSE_CLIENT ?? "")],
+  plugins: [react(), tailwindcss(), contentPages(), earlyStyles(), adsense(loadEnv(mode, process.cwd(), "VITE_").VITE_ADSENSE_CLIENT ?? "")],
 }));

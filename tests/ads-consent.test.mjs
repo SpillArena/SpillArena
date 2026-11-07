@@ -205,3 +205,13 @@ test('pages where a PIN is typed never load the ad tag', async () => {
     assert.equal(isPinPage(href), false, href)
   }
 })
+
+test('only the home catalogue can request advertising, including legacy and account URLs', async () => {
+  const { isAdFreePage } = await import('../src/lib/adFreePages.ts')
+  for (const path of ['/', '/#games', '/#main-content', '/?lang=en']) {
+    assert.equal(isAdFreePage(`https://spillarena.no${path}`), false, path)
+  }
+  for (const path of ['/about/', '/games/', '/games/fleetbot/', '/contact/', '/privacy/', '/faq/', '/terms/', '/#contact', '/#privacy', '/#faq', '/#terms', '/#login', '/#profile', '/?recover=1', '/unknown/', '/#unknown']) {
+    assert.equal(isAdFreePage(`https://spillarena.no${path}`), true, path)
+  }
+})

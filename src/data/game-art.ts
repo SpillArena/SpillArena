@@ -1,4 +1,4 @@
-// Laget av scripts/generate-game-art.mjs — kjør `npm run art` i stedet for å endre her.
+// Laget av scripts/generate-game-art.mjs, kjør `npm run art` i stedet for å endre her.
 import FleetBotNo from '../assets/games/FleetBot.no.svg'
 import FleetBotEn from '../assets/games/FleetBot.en.svg'
 import FleetBotIcon from '../assets/games/icons/FleetBot.svg'

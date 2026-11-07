@@ -22,7 +22,7 @@ export default function HeroSection({ onSurprise, onPlay }: { onSurprise: () => 
       <p className="eyebrow">{t('lobby.eyebrow')}</p>
       <h1 id="hero-title"><span>{t('lobby.titleFirst')}</span><br /><em>{t('lobby.titleSecond')}</em></h1>
       <p className="hero-description">{t('lobby.intro')}</p>
-      <div className="hero-actions"><a className="button primary" href="#games">{t('lobby.explore')}<ArrowDownRight size={18} aria-hidden="true" /></a><button type="button" className="button text-button" onClick={onSurprise} disabled={!featured}><Dice5 size={18} aria-hidden="true" />{t('lobby.surprise')}</button></div>
+      <div className="hero-actions"><a className="button primary" href="/#games">{t('lobby.explore')}<ArrowDownRight size={18} aria-hidden="true" /></a><button type="button" className="button text-button" onClick={onSurprise} disabled={!featured}><Dice5 size={18} aria-hidden="true" />{t('lobby.surprise')}</button></div>
       <p className="guest-note"><Check size={14} aria-hidden="true" />{t('lobby.guestNote')}</p>
     </div>
     {featured && <article className="featured" aria-labelledby="featured-title">

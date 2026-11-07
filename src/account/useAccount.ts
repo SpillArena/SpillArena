@@ -24,7 +24,7 @@ export function useAccount() {
         if (!getSession()) return
         let cancelled = false
         void verifySession().finally(() => {
-            // an unreachable service leaves the stored session alone — see
+            // an unreachable service leaves the stored session alone, see
             // `call` in api.ts: only a 401 signs out
             if (!cancelled) setChecking(false)
         })
@@ -45,7 +45,7 @@ export function useAccount() {
         isSignedIn: session !== null,
         checking,
         authenticate: submit,
-        // revokes the token on the service too — see endSession
+        // revokes the token on the service too, see endSession
         signOut: endSession,
     }
 }

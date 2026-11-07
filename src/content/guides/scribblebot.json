@@ -1,0 +1,72 @@
+{
+  "no": {
+    "title": "ScribbleBot: tegn og gjett alene eller med venner",
+    "intro": "ScribbleBot er et fargerikt tegnespill. Boten tegner strek for strek, og du gjetter hva det blir så fort du kan. Du kan spille alene, løpe mot venner om samme tegning eller bytte på å tegne for hverandre.",
+    "sections": [
+      { "h": "Tre måter å spille på", "p": [
+        "I Solo studio spiller du alene. Boten avslører en håndtegnet illustrasjon mens du gjetter. I Bot Race konkurrerer 2 til 8 spillere om å gjette samme tegning på samme klokke. I Draw & Guess bytter 2 til 8 spillere på å tegne et privat ord mens de andre gjetter.",
+        "Solo kan du spille som gjest eller med SpillArena-navnet ditt. Nettrom krever en SpillArena-konto og bruker invitasjonskoder på fire tegn. Både norske og engelske svar godtas, så du trenger ikke tenke på hvilket språk spillet står på."
+      ]},
+      { "h": "Tegningene", "p": [
+        "Spillet har 185 originale illustrasjoner, og hver har tre varianter. Tegningene spilles av igjen med løftede penner og små endringer i tempo, slik at det føles som om noen tegner foran deg. Jo tidligere du gjetter riktig, jo flere poeng får du."
+      ]},
+      { "h": "Tegneverktøyene", "p": [
+        "I Draw & Guess har du ni farger, flere penselbredder, viskelær, angre, gjør om og tøm. Strekene reagerer på trykk fra mus, berøring og digital penn, så en lett strek blir tynn og et fast trykk blir tykt. Romsystemet takler ferdig-sjekk, vertsbytte, gjenkobling, sen innmelding og omkamp, så en runde faller ikke fra hverandre om noen mister nettet."
+      ]},
+      { "h": "Poeng i solospill", "p": [
+        "Poengene per runde regnes slik: grunnpoeng ganger fart ganger hint, minus gale gjett, pluss rekke. Letteste nivå har 90 sekunder og 100 i grunnpoeng. Middels har 60 sekunder og 150. Vanskelig har 30 sekunder og 200. Maksimum per runde er henholdsvis 200, 250 og 300.",
+        "Farten holder seg mellom 40 og 100 prosent av grunnpoengene. Hver bokstav du avslører som hint, koster 6 prosent, ned til et gulv på 50 prosent. Hvert galt gjett trekker 5 poeng. En rekke legger til 25 poeng per runde på rad du gjetter riktig, opp til 100."
+      ]},
+      { "h": "Et eksempel på en runde", "p": [
+        "Du spiller Middels, og boten begynner å tegne en rund form med to små trekanter på toppen. Det kan være en katt, men også en ugle. Du venter en strek til. Kommer det en lang hale og værhår, gjetter du «katt» og får full fartsbonus. Hadde du gjettet «hund» for tidlig, hadde du mistet 5 poeng og kanskje avbrutt rekken din."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Se på formen før detaljene. De første strekene viser ofte hovedtrekkene, som størrelse, antall bein eller om noe er rundt eller kantete.",
+        "Gjett tidlig bare når du er rimelig sikker. Et galt gjett koster poeng og kan bryte en rekke, mens et riktig gjett sent likevel gir minst 40 prosent av grunnpoengene.",
+        "Bruk hint med omhu. En bokstav koster 6 prosent, så ett hint er billig hvis det skiller to svar du er usikker på.",
+        "Når du tegner for andre, start med den mest gjenkjennelige formen. Skriv ikke bokstaver og ikke bruk tegn som røper ordet."
+      ]}
+    ],
+    "faq": [
+      { "q": "Kan jeg spille ScribbleBot uten konto?", "a": "Ja, solo studio fungerer som gjest. Nettrom og ledertavle krever SpillArena-konto." },
+      { "q": "Godtas både norske og engelske svar?", "a": "Ja. Begge språk godtas som svar." },
+      { "q": "Hvor mange kan være med i et rom?", "a": "Fra to til åtte spillere, med invitasjonskode på fire tegn." },
+      { "q": "Fungerer det på mobil og med digital penn?", "a": "Ja. Tegneverktøyet støtter mus, berøring og penn, med trykkfølsomme streker." }
+    ]
+  },
+  "en": {
+    "title": "ScribbleBot: draw and guess, solo or with friends",
+    "intro": "ScribbleBot is a colourful drawing party game. The bot draws stroke by stroke and you guess what it is as fast as you can. You can play alone, race friends to guess the same drawing, or take turns drawing for each other.",
+    "sections": [
+      { "h": "Three ways to play", "p": [
+        "In Solo studio you play alone, and the bot reveals a hand-drawn illustration while you guess. In Bot Race, 2 to 8 players compete to guess the same drawing on the same clock. In Draw & Guess, 2 to 8 players take turns drawing a private word while the others guess.",
+        "You can play solo as a guest or under your SpillArena name. Online rooms need a SpillArena account and use four-character invite codes. Both Norwegian and English answers are accepted, so you do not need to worry about which language the game is set to."
+      ]},
+      { "h": "The drawings", "p": [
+        "The game has 185 original illustrations, and each one has three takes. Drawings are replayed with pen lifts and small changes in pace so it feels as if someone is drawing in front of you. The earlier you guess correctly, the more points you get."
+      ]},
+      { "h": "The drawing tools", "p": [
+        "In Draw & Guess you have nine colours, several brush widths, erase, undo, redo and clear. Strokes respond to pressure from a mouse, touch or digital pen, so a light stroke is thin and a firm press is thick. The room system handles ready checks, host transfer, reconnection, late joining and rematches, so a round does not fall apart if someone loses their connection."
+      ]},
+      { "h": "Solo scoring", "p": [
+        "Points per round are worked out as base times speed times hints, minus wrong guesses, plus streak. The easiest level has 90 seconds and a base of 100. Medium has 60 seconds and 150. Hard has 30 seconds and 200. The maximum per round is 200, 250 and 300 respectively.",
+        "Speed stays between 40 and 100 percent of base. Each hint letter you reveal costs 6 percent, down to a floor of 50 percent. Each wrong guess takes off 5 points. A streak adds 25 points for each consecutive correct round, up to 100."
+      ]},
+      { "h": "An example round", "p": [
+        "You are playing Medium, and the bot starts drawing a round shape with two small triangles on top. It could be a cat, but also an owl. You wait for one more stroke. When a long tail and whiskers appear, you guess “cat” and get the full speed bonus. If you had guessed “dog” too early, you would have lost 5 points and perhaps broken your streak."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Look at the shape before the details. The first strokes often show the main features, such as size, number of legs, or whether something is round or angular.",
+        "Guess early only when you are reasonably sure. A wrong guess costs points and can break a streak, while a late correct guess still gives at least 40 percent of the base points.",
+        "Use hints sparingly. A letter costs 6 percent, so one hint is cheap if it separates two answers you are unsure about.",
+        "When you draw for others, start with the most recognisable shape. Do not write letters or use symbols that give the word away."
+      ]}
+    ],
+    "faq": [
+      { "q": "Can I play ScribbleBot without an account?", "a": "Yes, Solo studio works as a guest. Online rooms and the leaderboard need a SpillArena account." },
+      { "q": "Are both Norwegian and English answers accepted?", "a": "Yes. Both languages are accepted as answers." },
+      { "q": "How many can join a room?", "a": "From two to eight players, using a four-character invite code." },
+      { "q": "Does it work on mobile and with a digital pen?", "a": "Yes. The drawing tool supports mouse, touch and pen, with pressure-sensitive strokes." }
+    ]
+  }
+}

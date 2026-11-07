@@ -2,7 +2,7 @@ import { SESSION_STORAGE_KEY } from './keys'
 import { forgetSession, getSession, setSession } from './session'
 
 /**
- * One answer to "may we store things in this browser?" — for the whole domain.
+ * One answer to "may we store things in this browser?", for the whole domain.
  *
  * Every game is served from spillarena.no, so every game shares ONE
  * localStorage. Before this file, each game asked (or did not ask) on its own:
@@ -14,7 +14,7 @@ import { forgetSession, getSession, setSession } from './session'
  *
  * WHAT A "NO" MEANS, precisely: nothing is written to disk. It does NOT mean
  * nothing works. The session, the local profile and every setting are kept in
- * memory for the life of the tab — see `consentStorage` below — so a player
+ * memory for the life of the tab, see `consentStorage` below, so a player
  * who declines can still sign in from the badge, play, and have their progress
  * and results saved to their ACCOUNT. What they lose is being remembered: the
  * next page load starts signed out.
@@ -32,7 +32,7 @@ const declared = new Set<string>([SESSION_STORAGE_KEY])
 
 /**
  * Values written while there is no consent. They make the rest of the visit
- * behave normally — a chosen theme stays chosen — without touching the disk.
+ * behave normally, a chosen theme stays chosen, without touching the disk.
  */
 const memory = new Map<string, string>()
 
@@ -71,7 +71,7 @@ function wipe(): void {
 }
 
 /**
- * Records the answer. The answer itself is always stored — it is the one thing
+ * Records the answer. The answer itself is always stored, it is the one thing
  * that has to be, or the question comes back on every page.
  */
 export function setConsent(status: Exclude<ConsentStatus, null>): void {
@@ -85,7 +85,7 @@ export function setConsent(status: Exclude<ConsentStatus, null>): void {
         /*
          * Whatever was kept in memory goes to disk now. The session matters
          * most: a player who signed in before answering would otherwise be
-         * signed out the moment they opened the next game — exactly what they
+         * signed out the moment they opened the next game, exactly what they
          * just said yes to avoid.
          */
         const store = disk()
@@ -102,7 +102,7 @@ export function setConsent(status: Exclude<ConsentStatus, null>): void {
             setSession(session)
         } else {
             // nobody signed in on this page, but a session from an earlier visit
-            // may be on disk — read it again now that it may be used, and let the
+            // may be on disk, read it again now that it may be used, and let the
             // badge and the sync hear about it
             forgetSession()
             const stored = getSession()
@@ -135,7 +135,7 @@ export function setConsent(status: Exclude<ConsentStatus, null>): void {
  * Tells this module which keys the game stores, so a "no" can remove them.
  *
  * Call it once at startup with every key the game uses. If the answer is
- * already "no" — given on the front page, or in another game — the keys are
+ * already "no", given on the front page, or in another game, the keys are
  * wiped right away: the player said no before this game had a chance to hear
  * it, and whatever an older build wrote before then should not linger.
  */
@@ -161,13 +161,13 @@ export function onConsentChange(listener: Listener): () => void {
  * localStorage, behind the answer.
  *
  * Accepted: it IS localStorage. Declined: reads and writes go to a Map that
- * lives as long as the page — the disk was wiped when they said no. Not yet
+ * lives as long as the page, the disk was wiped when they said no. Not yet
  * answered: writes go to the Map, but reads fall through to the disk.
  *
  * That last case is for players who were here before anyone asked. Four games
  * stored progress and settings without a consent question; their players have
- * data on disk and no answer. Hiding that data while the question is open —
- * and then writing the empty defaults over it when they say yes — would cost
+ * data on disk and no answer. Hiding that data while the question is open -
+ * and then writing the empty defaults over it when they say yes, would cost
  * them their local progress for having been asked. Reading it costs nothing:
  * nothing new is written until they answer, and a "no" removes it.
  *
@@ -213,7 +213,7 @@ export const consentStorage = {
 
 const openers = new Set<() => void>()
 
-/** Opens the consent dialog again — for a "privacy" entry in a settings menu. */
+/** Opens the consent dialog again, for a "privacy" entry in a settings menu. */
 export function openConsentDialog(): void {
     for (const open of openers) open()
 }

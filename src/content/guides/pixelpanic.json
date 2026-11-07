@@ -1,0 +1,74 @@
+{
+  "no": {
+    "title": "Pixel Panic: bildequiz med uskarpe bilder",
+    "intro": "Pixel Panic er en bildequiz der et bilde starter som en grov 32×32-uskarphet og blir skarpere hvert fjerde sekund. Jo raskere du gjenkjenner en film, et spill, et sted, en gjenstand, et dyr, en rett eller et flagg, jo flere poeng får du.",
+    "sections": [
+      { "h": "Slik fungerer en runde", "p": [
+        "Bildet vises først veldig grovt, bare 32 piksler bredt, sammen med kategorien. Hvert fjerde sekund blir det skarpere gjennom åtte trinn: 32, 37, 43, 50, 58, 68, 80 og 96 piksler. Du skriver for å søke og velger svaret fra listen mens bildet løser seg opp.",
+        "Du velger svaret fra listen i stedet for å skrive det helt ut, så stavemåten koster deg aldri en runde. Et galt svar gjør bildet skarpere med en gang, og knappen Skarpere gjør det samme hvis du heller vil det selv. Etter 32 sekunder, eller etter et bom på siste trinn, avsløres det ferdige bildet."
+      ]},
+      { "h": "Poeng", "p": [
+        "Poengene avhenger av på hvilket trinn du navngir bildet. Trinn 0 gir 250 poeng, trinn 1 gir 220, trinn 2 gir 190, trinn 3 gir 160, trinn 4 gir 130, trinn 5 gir 100, trinn 6 gir 70 og trinn 7 gir 40. Fire runder gir til sammen opptil 1000 poeng.",
+        "Det betyr at en tidlig gjetning er verdt mye mer enn en sen en, men et galt svar sparker deg til neste trinn og koster dermed poeng. Det er forskjellen mellom å tørre og å vite."
+      ]},
+      { "h": "Daglig brett og øving", "p": [
+        "Det daglige brettet består av fire bilder fra fire kategorier og er likt for alle den dagen. Du kan dele et resultat som emoji-rutenett uten å røpe svarene, og det finnes en ledertavle. Øving lar deg velge en kategori og spille tilfeldige bilder.",
+        "Spillet er rettferdig bygd. Serveren leverer ett bilde av gangen og regner ut poengene i det daglige brettet, så ingen kan se det skarpe bildet på forhånd."
+      ]},
+      { "h": "Norske navn fungerer", "p": [
+        "Søket finner norske titler og navn, for eksempel «Eiffeltårnet», «ostehøvel» og «Løvenes konge». Du trenger ikke å gjette engelsk tittel."
+      ]},
+      { "h": "Bildene", "p": [
+        "Hver kategori har rundt hundre håndplukkede bilder. Steder, gjenstander, dyr, mat og flagg kommer fra Wikimedia Commons med åpne lisenser. Filmer kommer fra TMDB og spill fra RAWG. Ved hver avsløring vises opphavsperson og lisens."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Se på farger og hovedformer først. Selv i 32 piksler kan en blå himmel, en grønn bakgrunn eller en tydelig silhuett snevre inn mulighetene.",
+        "Bruk kategorien. En film, et flagg og en matrett har helt ulike typiske farger og former.",
+        "Vent ikke for lenge på hvert trinn. Poengtapet mellom trinn er jevnt, så en rimelig sikker gjetning tidlig lønner seg oftere enn en helt sikker sent.",
+        "Vær kritisk til første inntrykk. Er svaret feil, får du et skarpere bilde med en gang, men du har brukt et forsøk."
+      ]}
+    ],
+    "faq": [
+      { "q": "Kan jeg se det skarpe bildet på forhånd?", "a": "Nei. Serveren sender ett bilde av gangen." },
+      { "q": "Må jeg stave riktig?", "a": "Nei. Du velger svaret fra en liste, så stavemåten betyr ikke noe." },
+      { "q": "Fungerer norske navn?", "a": "Ja. Søket finner norske titler og navn." },
+      { "q": "Er det daglige brettet likt for alle?", "a": "Ja. Alle får de samme fire bildene samme dag." }
+    ]
+  },
+  "en": {
+    "title": "Pixel Panic: a picture quiz with blurred images",
+    "intro": "Pixel Panic is a picture quiz in which an image starts as a rough 32×32 blur and sharpens every four seconds. The sooner you recognise a film, game, place, thing, animal, dish or flag, the more you score.",
+    "sections": [
+      { "h": "How a round works", "p": [
+        "The picture first appears very coarse, only 32 pixels wide, together with its category. Every four seconds it sharpens through eight steps: 32, 37, 43, 50, 58, 68, 80 and 96 pixels. You type to search and pick your answer from the list as the picture resolves.",
+        "You pick the answer from the list rather than typing it out, so spelling never costs you a round. A wrong answer sharpens the picture at once, and the Sharpen button does the same if you prefer to do it yourself. After 32 seconds, or after a miss on the last step, the clean picture is revealed."
+      ]},
+      { "h": "Scoring", "p": [
+        "Points depend on the step at which you name the picture. Step 0 gives 250 points, step 1 gives 220, step 2 gives 190, step 3 gives 160, step 4 gives 130, step 5 gives 100, step 6 gives 70 and step 7 gives 40. Four rounds add up to 1,000 points.",
+        "An early guess is worth far more than a late one, but a wrong answer pushes you to the next step and so costs points. That is the difference between daring and knowing."
+      ]},
+      { "h": "Daily board and practice", "p": [
+        "The daily board is four pictures from four categories and is the same for everyone that day. You can share a result as an emoji grid without giving away the answers, and there is a leaderboard. Practice lets you pick a category and play random pictures.",
+        "The game is built to be fair. The server hands out one picture at a time and works out the daily score, so nobody can peek at the sharp image."
+      ]},
+      { "h": "Norwegian names work", "p": [
+        "The search finds Norwegian titles and names, such as “Eiffeltårnet”, “ostehøvel” and “Løvenes konge”. You do not need to guess the English title."
+      ]},
+      { "h": "The pictures", "p": [
+        "Each category has about a hundred hand-picked pictures. Places, things, animals, food and flags come from Wikimedia Commons under open licences. Films come from TMDB and games from RAWG. Author and licence are shown on every reveal."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Look at colours and main shapes first. Even at 32 pixels, a blue sky, a green background or a clear silhouette can narrow the options.",
+        "Use the category. A film, a flag and a dish have very different typical colours and shapes.",
+        "Do not wait too long on each step. The score drops evenly between steps, so a reasonably confident guess early pays off more often than a certain one late.",
+        "Be critical of your first impression. If the answer is wrong, you get a sharper picture at once, but you have used up an attempt."
+      ]}
+    ],
+    "faq": [
+      { "q": "Can I see the sharp image in advance?", "a": "No. The server sends one picture at a time." },
+      { "q": "Do I have to spell correctly?", "a": "No. You pick the answer from a list, so spelling does not matter." },
+      { "q": "Do Norwegian names work?", "a": "Yes. The search finds Norwegian titles and names." },
+      { "q": "Is the daily board the same for everyone?", "a": "Yes. Everyone gets the same four pictures on the same day." }
+    ]
+  }
+}

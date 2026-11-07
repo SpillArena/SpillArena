@@ -9,8 +9,8 @@
  *
  * TEKSTEN ER STREKER, IKKE <text>. En SVG vist i <img> får ikke laste webfonter,
  * så <text> ville blitt tegnet med det nettleseren tilfeldigvis har. Her gjøres
- * hver bokstav om til en path med Fraunces og Space Grotesk — de samme fontene
- * som lobbyen — og bildet ser likt ut overalt.
+ * hver bokstav om til en path med Fraunces og Space Grotesk, de samme fontene
+ * som lobbyen, og bildet ser likt ut overalt.
  *
  * FORMSPRÅKET er brikkene fra logoen: avrundede kvadrater med en mørkere sokkel
  * under og en lys glans øverst. Hvert spill har sin egen farge; illustrasjonen
@@ -47,7 +47,7 @@ const FONTS = {
 
 /**
  * Kerning mellom to glyfer, i fontenheter. opentype.js gir NaN for noen par
- * (GPOS-oppslag den ikke støtter), og én NaN gjør resten av streken ugyldig —
+ * (GPOS-oppslag den ikke støtter), og én NaN gjør resten av streken ugyldig -
  * teksten stopper midt i et ord.
  */
 function kern(font, a, b) {
@@ -87,7 +87,7 @@ function measure(str, font, size, tracking = 0) {
 
 /**
  * Tekst som én path. `anchor` er start, middle eller end. `middle: true`
- * plasserer y på midten av versalhøyden i stedet for på grunnlinja — det som
+ * plasserer y på midten av versalhøyden i stedet for på grunnlinja, det som
  * trengs for en bokstav midt i en brikke.
  */
 function text(str, font, size, x, y, { fill = '#fff', tracking = 0, anchor = 'start', middle = false, opacity, decimals } = {}) {
@@ -166,7 +166,7 @@ function tile(x, y, w, h, color, { r, depth, gloss = true, opacity, stroke } = {
   return out + '</g>'
 }
 
-/** En flat, gjennomsiktig plass på et brett — der en brikke kan ligge. */
+/** En flat, gjennomsiktig plass på et brett, der en brikke kan ligge. */
 const slot = (x, y, s, fill = '#fff', opacity = 0.1) =>
   `<rect x="${r1(x)}" y="${r1(y)}" width="${r1(s)}" height="${r1(s)}" rx="${r1(s * 0.27)}" fill="${fill}" fill-opacity="${opacity}"/>`
 
@@ -196,23 +196,23 @@ function logoMark(x, y, size) {
 // ---------------------------------------------------------------- spillene
 
 /*
- * Hvert spill: farger, tekst på begge språk, og to tegninger — `art` til
+ * Hvert spill: farger, tekst på begge språk, og to tegninger, `art` til
  * banneret (et felt på 500×520) og `glyph` til ikonet (512×512).
  */
 const GAMES = [
   {
     id: 1, file: 'FleetBot', title: ['Fleet', 'Bot'],
-    bg: '#0c3753', deep: '#06121e', accent: '#ffb703',
+    bg: '#0c3753', deep: '#06121e', accent: '#ffb703', bot: true, pattern: 'none', scatter: 'naval',
     genre: { no: 'Strategi · bot / online', en: 'Strategy · bot / online' },
     tagline: { no: 'Finn flåten deres før de finner din.', en: 'Find their fleet before they find yours.' },
     // Exported by FleetBot's npm run art -- --spillarena ../../SpillArena.
     // Local copies keep this repository's art build independent of FleetBot.
-    art: () => readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-board.svg'), 'utf8'),
+    art: (lang) => fleetArt(lang),
     icon: () => readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-icon.svg'), 'utf8'),
   },
   {
     id: 2, file: 'HangBot', title: ['Hang', 'Bot'],
-    bg: '#20262e', deep: '#101419', accent: '#b9ee64', ink: '#f5f7f0',
+    bg: '#20262e', deep: '#101419', accent: '#b9ee64', ink: '#f5f7f0', bot: true, pattern: 'none', scatter: 'letters',
     genre: { no: 'Ordspill · alene / venner', en: 'Word game · solo / friends' },
     tagline: { no: 'Gjett ordet før tegningen er ferdig.', en: 'Guess the word before the drawing is done.' },
     word: { no: ['S', 'P', '?', 'L', 'L'], en: ['W', 'O', '?', 'D', 'S'] },
@@ -221,7 +221,7 @@ const GAMES = [
   },
   {
     id: 3, file: 'ScribbleBot', title: ['Scribble', 'Bot'],
-    bg: '#2d3050', deep: '#141728', accent: '#b79bff', ink: '#f4f2ff',
+    bg: '#2d3050', deep: '#141728', accent: '#b79bff', ink: '#f4f2ff', bot: true, pattern: 'none', scatter: 'doodle',
     genre: { no: 'Tegnespill · alene / venner', en: 'Drawing game · solo / friends' },
     tagline: { no: 'Gjett tegningen før tiden renner ut.', en: 'Guess the doodle before the clock runs out.' },
     hint: { no: '_ _ _ _ b _ _', en: '_ _ _ _ b _ _ _' },
@@ -232,7 +232,7 @@ const GAMES = [
   {
     id: 4, file: 'AtlasMaster', title: ['Atlas', 'Master'],
     // Samme nattkart som spillet selv: marineblå grunn og limegrønn aksent.
-    bg: '#16213a', deep: '#070e1a', accent: '#c8ff3c', ink: '#e8eef7',
+    bg: '#0e5a63', deep: '#04242a', accent: '#c8ff3c', ink: '#effaf8', pattern: 'grid',
     genre: { no: 'Geografi', en: 'Geography' },
     tagline: { no: 'Land, hovedsteder og byer – på tid.', en: 'Countries, capitals and cities – against the clock.' },
     question: { no: 'Hvor er Norge?', en: 'Where is Norway?' },
@@ -260,14 +260,15 @@ const GAMES = [
   },
   {
     id: 7, file: 'EraShuffle', title: ['Era', 'Shuffle'],
-    bg: '#0d9488', deep: '#042f2e', accent: '#fde68a',
+    // Samme nattblå flate og ravgule aksent som spillets forside etter redesignet.
+    bg: '#2f4fd8', deep: '#0b1550', accent: '#ffc08a', ink: '#f6f7ff', pattern: 'rings',
     genre: { no: 'Historie', en: 'History' },
     tagline: { no: 'Fem øyeblikk. Én tidslinje. Ny hver dag.', en: 'Five moments. One timeline. New every day.' },
-    events: {
-      no: ['Columbus seiler vest', 'Månelandingen', 'Berlinmuren faller', 'OL på Lillehammer'],
-      en: ['Columbus sails west', 'The Moon landing', 'The Berlin Wall falls', 'Lillehammer Olympics'],
+    cards: {
+      no: [['VERDEN', 'Berlinmuren faller'], ['VITENSKAP', 'Månelandingen'], ['VITENSKAP', 'Smarttelefonen']],
+      en: [['WORLD', 'The Berlin Wall falls'], ['SCIENCE', 'The Moon landing'], ['SCIENCE', 'The smartphone']],
     },
-    art: (lang, game) => eraArt(game.events[lang], game),
+    art: (lang, game) => eraArt(game.cards[lang], game),
     glyph: (game) => eraGlyph(game),
   },
   {
@@ -280,7 +281,7 @@ const GAMES = [
   },
   {
     id: 9, file: 'Hitline', title: ['Hit', 'line'],
-    bg: '#252c4a', deep: '#10142a', accent: '#ffb52e',
+    bg: '#be123c', deep: '#4c0519', accent: '#fde68a', pattern: 'lines',
     bannerOffsetY: -18, // Gi Beta-merket plass under slagordet på små spillkort.
     genre: { no: 'Musikktidslinje', en: 'Music timeline' },
     tagline: { no: 'Kjenn igjen låten. Finn plassen i tiden.', en: 'Know the song. Find its place in time.' },
@@ -298,7 +299,7 @@ const GAMES = [
   },
   {
     id: 11, file: 'Cracked', title: ['Cracked'],
-    bg: '#202632', deep: '#11141b', accent: '#f2b544', ink: '#f3f1ea',
+    bg: '#6b1d2e', deep: '#2a0a12', accent: '#f2b544', ink: '#f6efe6', pattern: 'hatch',
     bannerOffsetY: -18,
     genre: { no: 'Daglig ordgåte', en: 'Daily word puzzle' },
     tagline: { no: 'Knekk dagens kodeord. Pilene viser vei.', en: 'Crack today’s code word. Follow the arrows.' },
@@ -306,6 +307,20 @@ const GAMES = [
     glyph: () => crackedGlyph(),
   },
 ]
+
+// ---- FleetBot: brettet og admiralen fra spillet, i botskjermen
+
+/** Admiralen (eksportert fra FleetBot) med en snakkeboble over brettet. */
+function fleetArt(lang) {
+  const board = readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-board.svg'), 'utf8')
+  const captain = readFileSync(join(ROOT, 'src/assets/games/art/fleetbot-captain.svg'), 'utf8')
+    .replace(/<svg ([^>]*?)width="236" height="236"/, '<svg x="-6" y="318" width="200" height="200" $1')
+  const line = lang === 'no' ? 'Overgi dere?' : 'Surrender?'
+  const w = measure(line, FONTS.sansBold, 21) + 44
+  return board + captain
+    + `<path d="M176 372l-28 34 34-12z" fill="#fffaf0"/><rect x="170" y="340" width="${r1(w)}" height="50" rx="25" fill="#fffaf0"/>`
+    + text(line, FONTS.sansBold, 21, 170 + w / 2, 365, { fill: '#0c1e2e', anchor: 'middle', middle: true })
+}
 
 // ---- HangBot: håndtegnet galge, en liten bot og bokstavbrikker
 
@@ -465,7 +480,7 @@ function scribbleGlyph() {
 
 /*
  * Landene er Natural Earth i 1:50 mill. (world-atlas), projisert ortografisk
- * med d3-geo — samme projeksjon som et fotografi av jorda. Kloden er dreid så
+ * med d3-geo, samme projeksjon som et fotografi av jorda. Kloden er dreid så
  * Europa vender mot oss og Norge ligger øverst, der nåla står.
  */
 const WORLD = (() => {
@@ -478,7 +493,7 @@ const NORWAY_PIN = [18.9, 69.6]
 /*
  * Landene får fargen til regionen de hører til i AtlasMaster, slik forsidekartet
  * der viser dem. Id-ene er de samme M49-kodene som world-atlas bruker, og
- * listene er kopiert fra AtlasMaster/src/components/menu/WorldMapPicker.tsx —
+ * listene er kopiert fra AtlasMaster/src/components/menu/WorldMapPicker.tsx -
  * endres regionene der, må de endres her også. Rekkefølgen betyr noe: Russland
  * ligger i både Asia og Europa, og havner i den første som treffer.
  */
@@ -492,7 +507,7 @@ const ATLAS_REGIONS = [
   ['#7458e6', [8, 40, 56, 70, 100, 112, 191, 196, 203, 208, 233, 246, 250, 276, 300, 348, 352, 372, 380, 428, 440, 442, 470, 498, 499, 528, 578, 616, 620, 642, 643, 688, 703, 705, 724, 752, 756, 804, 807, 826]],
 ].map(([color, ids]) => [color, new Set(ids)])
 
-/** Land utenfor en spillbar region — Verden i AtlasMaster. */
+/** Land utenfor en spillbar region, Verden i AtlasMaster. */
 const ATLAS_OTHER = '#2a3550'
 
 function landColor(country) {
@@ -614,7 +629,7 @@ const GIRAFFE = { coat: '#fcd34d', spot: '#b45309', dark: '#431407' }
 
 /**
  * En giraff som ser mot høyre, med bakken på y = 360 og hodet rundt y = 0.
- * Flekkene er avrundede brikker — samme form som i logoen — klippet til
+ * Flekkene er avrundede brikker, samme form som i logoen, klippet til
  * kroppen og halsen.
  */
 function giraffe(id) {
@@ -765,40 +780,74 @@ function pixelArt(guess, button, game) {
   return out
 }
 
-// ---- EraShuffle: en tidslinje med kort, og ett som flyttes på plass
+// ---- EraShuffle: tre vippede kort fra forsiden, og tidslinjen de skal inn på
 
-function eraCard(x, y, w, h, year, event, game, { tilt = 0, lift = false } = {}) {
-  const ink = shade(game.deep, 0.05)
-  const yearW = h * 1.15
-  const size = fit(event, FONTS.serifRegular, w - yearW - 40, 24)
-  return g(`transform="rotate(${tilt} ${r1(x + w / 2)} ${r1(y + h / 2)})"`,
-    cardShadow(x, y, w, h, 20, lift ? 18 : 8, lift ? 0.3 : 0.18),
-    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="20" fill="#fefce8"/>`,
-    tile(x + 12, y + 12, yearW, h - 24, year === '?' ? game.accent : game.deep, { depth: 0 }),
-    text(year, FONTS.serif, 28, x + 12 + yearW / 2, y + h / 2, { fill: year === '?' ? ink : '#fefce8', anchor: 'middle', middle: true }),
-    text(event, FONTS.serifRegular, size, x + yearW + 28, y + h / 2, { fill: ink, middle: true }))
+const ERA_PAPER = [
+  { bg: '#d8c9ff', ink: '#3a286e', tilt: -11, x: 0, y: 128, year: '1989', kind: 'wall' },
+  { bg: '#ffdfb4', ink: '#6e3616', tilt: -2, x: 170, y: 76, year: '1969', kind: 'rocket' },
+  { bg: '#bcebdc', ink: '#1b5549', tilt: 11, x: 340, y: 128, year: '2007', kind: 'phone' },
+]
+
+/** Små tegninger i kortenes strekstil, i et felt på 110×88. */
+function eraIllustration(kind, color) {
+  const open = `<g fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">`
+  const halo = `<circle cx="55" cy="46" r="33" fill="${color}" fill-opacity="0.15" stroke="none"/>`
+  if (kind === 'wall') return open + halo
+    + `<path d="M24 68V34h22l-4 9 5 8-4 17ZM88 68V40H66l4 8-5 8 3 12Z" fill="${color}" fill-opacity="0.2"/>`
+    + `<path d="M24 45h19M24 56h20M34 34v11M31 45v11M37 56v12M68 50h20M66 60h22M78 40v10M75 50v10M80 60v8M16 68h78"/>`
+    + `<rect x="61" y="10" width="8" height="5" rx="1" transform="rotate(18 65 12)"/></g>`
+  if (kind === 'rocket') return open + halo
+    + `<path d="M28 9a9.5 9.5 0 1 0 6 15 8 8 0 0 1-6-15Z" fill="${color}" fill-opacity="0.3"/>`
+    + `<g transform="rotate(35 55 46)"><path d="M50 62c0 6 2 10 5 15 3-5 5-9 5-15" fill="${color}" fill-opacity="0.3"/>`
+    + `<path d="M55 12c6 5 9 13 9 24v22H46V36c0-11 3-19 9-24ZM46 44l-8 9v7h8M64 44l8 9v7h-8M46 48h18"/>`
+    + `<circle cx="55" cy="32" r="4.5" fill="${color}" fill-opacity="0.3"/></g></g>`
+  return open + halo + `<g transform="rotate(-8 55 44)"><rect x="38" y="10" width="34" height="66" rx="8"/>`
+    + `<rect x="43" y="20" width="24" height="42" rx="2" fill="${color}" fill-opacity="0.2" stroke-width="2"/><path d="M51 15h8"/><circle cx="55" cy="69" r="3"/></g></g>`
 }
 
-function eraArt(events, game) {
-  let out = `<path d="M52 40V500" stroke="#fff" stroke-opacity="0.35" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12"/>`
-  const rows = [['1492', events[0], 40], ['1969', events[1], 160], ['1994', events[3], 400]]
-  for (const [year, event, y] of rows) {
-    out += `<circle cx="52" cy="${y + 46}" r="11" fill="${game.accent}" stroke="${game.deep}" stroke-width="4"/>`
-    out += eraCard(86, y, 400, 92, year, event, game)
-  }
-  // den tomme plassen, og kortet som er på vei inn i den
-  out += `<rect x="86" y="280" width="400" height="92" rx="20" fill="none" stroke="#fff" stroke-opacity="0.45" stroke-width="3" stroke-dasharray="10 10"/>`
-  out += eraCard(118, 262, 400, 92, '?', events[2], game, { tilt: -3, lift: true })
+function eraPaperCard(card, [category, label], game) {
+  const w = 160, h = 250, x = card.x, y = card.y
+  const cx = x + w / 2
+  let out = cardShadow(x, y, w, h, 24, 14, 0.32)
+  out += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="24" fill="${card.bg}" stroke="#fff" stroke-opacity="0.45" stroke-width="2"/>`
+  out += text(category, FONTS.sansBold, 12, cx, y + 34, { fill: card.ink, anchor: 'middle', tracking: 2.2, opacity: 0.8 })
+  out += g(`transform="translate(${r1(cx - 55)} ${y + 46}) scale(1)"`, eraIllustration(card.kind, card.ink))
+  out += text(card.year, FONTS.serif, 50, cx, y + 178, { fill: card.ink, anchor: 'middle' })
+  const size = fit(label, FONTS.sansBold, w - 24, 16)
+  out += text(label, FONTS.sansBold, size, cx, y + 222, { fill: card.ink, anchor: 'middle' })
+  return g(`transform="rotate(${card.tilt} ${r1(cx)} ${y + h / 2})"`, out)
+}
+
+function eraArt(cards, game) {
+  let out = ''
+  for (const i of [0, 2, 1]) out += eraPaperCard(ERA_PAPER[i], cards[i], game)
+  // tidslinjen: fem brikker, og den ene som mangler
+  const y = 458
+  out += `<path d="M30 ${y + 18}H470" stroke="#fff" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12"/>`
+  ;[0, 1, 2, 3, 4].forEach((i) => {
+    const x = 36 + i * 90
+    out += i === 2
+      ? `<rect x="${x}" y="${y}" width="36" height="36" rx="10" fill="none" stroke="${game.accent}" stroke-width="3" stroke-dasharray="7 6"/>`
+      : tile(x, y, 36, 36, i < 2 ? game.accent : '#5a6a94', { depth: 4, gloss: true })
+  })
   return out
 }
 
 function eraGlyph(game) {
-  let out = `<path d="M90 96V420" stroke="#fff" stroke-opacity="0.35" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 16"/>`
-  for (const [y, year] of [[96, '1492'], [314, '1994']]) {
-    out += `<circle cx="90" cy="${y + 50}" r="14" fill="${game.accent}" stroke="${game.deep}" stroke-width="5"/>`
-    out += g('', cardShadow(126, y, 300, 100, 24), `<rect x="126" y="${y}" width="300" height="100" rx="24" fill="#fefce8"/>`, tile(140, y + 14, 120, 72, game.deep, { depth: 0 }), text(year, FONTS.serif, 34, 200, y + 50, { fill: '#fefce8', anchor: 'middle', middle: true }), `<rect x="278" y="${y + 38}" width="120" height="24" rx="12" fill="${game.deep}" fill-opacity="0.18"/>`)
+  let out = ''
+  const cards = [
+    { ...ERA_PAPER[0], x: 28, y: 170, tilt: -12 },
+    { ...ERA_PAPER[2], x: 324, y: 170, tilt: 12 },
+    { ...ERA_PAPER[1], x: 176, y: 96, tilt: -2 },
+  ]
+  for (const card of cards) {
+    const w = 160, h = 250, cx = card.x + w / 2
+    out += g(`transform="rotate(${card.tilt} ${r1(cx)} ${card.y + h / 2})"`,
+      cardShadow(card.x, card.y, w, h, 24, 14, 0.32),
+      `<rect x="${card.x}" y="${card.y}" width="${w}" height="${h}" rx="24" fill="${card.bg}" stroke="#fff" stroke-opacity="0.45" stroke-width="2"/>`,
+      g(`transform="translate(${r1(cx - 55)} ${card.y + 40}) scale(1)"`, eraIllustration(card.kind, card.ink)),
+      text(card.year, FONTS.serif, 54, cx, card.y + 196, { fill: card.ink, anchor: 'middle' }))
   }
-  out += g('transform="rotate(-4 290 255)"', cardShadow(150, 205, 300, 100, 24, 18, 0.3), `<rect x="150" y="205" width="300" height="100" rx="24" fill="#fefce8"/>`, tile(164, 219, 120, 72, game.accent, { depth: 0 }), text('?', FONTS.serif, 44, 224, 255, { fill: game.deep, anchor: 'middle', middle: true }), `<rect x="302" y="243" width="120" height="24" rx="12" fill="${game.deep}" fill-opacity="0.18"/>`)
   return out
 }
 
@@ -965,16 +1014,114 @@ function crackedArt(lang) {
 
 // ---------------------------------------------------------------- bilder
 
+/** Bakgrunnsmønster: `dots` er standard, de andre gir spillene hver sin tekstur. */
+function patternDef(kind = 'dots', color = '#ffffff') {
+  const c = `stroke="${color}" stroke-opacity="0.1" stroke-width="2" fill="none"`
+  switch (kind) {
+    case 'none': return `<pattern id="dots" width="1" height="1" patternUnits="userSpaceOnUse"/>`
+    case 'circuit': return `<pattern id="dots" width="120" height="120" patternUnits="userSpaceOnUse"><path d="M0 30H34L50 46H96M60 120V84L76 68H120M0 96H20" ${c}/><circle cx="96" cy="46" r="4" ${c}/><circle cx="20" cy="96" r="4" ${c}/><circle cx="60" cy="84" r="4" ${c}/></pattern>`
+    case 'grid': return `<pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0H0V60" ${c}/></pattern>`
+    case 'hatch': return `<pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M-4 32L32 -4M-4 4L4 -4M24 32L32 24" ${c}/></pattern>`
+    case 'lines': return `<pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20 0V40" ${c}/></pattern>`
+    case 'rings': return `<pattern id="dots" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="26" ${c}/><circle cx="40" cy="40" r="10" ${c}/></pattern>`
+    default: return `<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2" fill="${color}" fill-opacity="0.12"/></pattern>`
+  }
+}
+
 function background(w, h, game, radius = 0) {
   const dots = game.dots ?? '#ffffff'
   return `<defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${tint(game.bg, 0.06)}"/><stop offset="1" stop-color="${mix(game.bg, game.deep, 0.62)}"/></linearGradient>
 <radialGradient id="glow" cx="0.72" cy="0.42" r="0.55"><stop offset="0" stop-color="#fff" stop-opacity="0.2"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-<pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2" fill="${dots}" fill-opacity="0.12"/></pattern>
+${patternDef(game.pattern, dots)}
 </defs>
 <rect width="${w}" height="${h}" rx="${radius}" fill="url(#bg)"/>
 <rect width="${w}" height="${h}" rx="${radius}" fill="url(#glow)"/>
 <rect width="${w}" height="${h}" rx="${radius}" fill="url(#dots)"/>`
+}
+
+/**
+ * Bot-seriens felles uttrykk: selve plakaten er et robothode. Antenne, ører og
+ * en skjerm med skannelinjer rammer inn spillscenen, så FleetBot, HangBot og
+ * ScribbleBot hører sammen og skiller seg fra resten av arenaen.
+ */
+function botHead(game, lang) {
+  const a = game.accent, metal = mix(game.bg, '#ffffff', 0.1), cx = 890
+  const screen = { x: 634, y: 74, w: 512, h: 532, r: 44 }
+  return `<defs>
+<clipPath id="bot-screen"><rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" rx="${screen.r}"/></clipPath>
+<pattern id="scan" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="2" fill="#000" fill-opacity="0.16"/></pattern>
+<radialGradient id="screen-glow" cx="0.5" cy="0.35" r="0.8"><stop offset="0" stop-color="${mix(game.bg, '#ffffff', 0.08)}"/><stop offset="1" stop-color="${game.deep}"/></radialGradient>
+</defs>
+<ellipse cx="${cx}" cy="652" rx="270" ry="12" fill="#000" fill-opacity="0.28"/>
+<path d="M${cx} 54V28" stroke="${a}" stroke-width="8" stroke-linecap="round"/><circle cx="${cx}" cy="22" r="13" fill="${a}"/><circle cx="${cx - 4}" cy="18" r="4" fill="#fff" fill-opacity="0.55"/>
+<rect x="584" y="262" width="34" height="140" rx="16" fill="${a}"/><rect x="1162" y="262" width="34" height="140" rx="16" fill="${a}"/>
+<rect x="612" y="52" width="556" height="588" rx="70" fill="${shade(metal, 0.42)}"/>
+<rect x="612" y="52" width="556" height="576" rx="70" fill="${metal}" stroke="${a}" stroke-width="4"/>
+<path d="M660 66H820" stroke="#fff" stroke-opacity="0.3" stroke-width="5" stroke-linecap="round"/>
+<g fill="${a}"><circle cx="632" cy="612" r="4.5"/><circle cx="1148" cy="612" r="4.5"/></g>
+<rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" rx="${screen.r}" fill="url(#screen-glow)"/>
+<g clip-path="url(#bot-screen)"><g transform="translate(640 78)">${game.art(lang, game)}</g>
+<rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" fill="url(#scan)"/></g>
+<rect x="${screen.x}" y="${screen.y}" width="${screen.w}" height="${screen.h}" rx="${screen.r}" fill="none" stroke="#000" stroke-opacity="0.45" stroke-width="5"/>`
+}
+
+/** Små, gjentakelsesfrie motiver til bot-seriens bakgrunn. Hvert motiv er tegnet rundt (0, 0), ca. 40 px bredt. */
+const SCATTER = {
+  naval: [
+    () => '<circle cy="-15" r="4.5"/><path d="M0 -10.5V16M-9 -3H9M-15 4Q-13 17 0 17Q13 17 15 4"/>',
+    () => '<path d="M-24 0q8 -9 16 0t16 0t16 0"/>',
+    () => '<circle r="5"/><circle r="13"/><circle r="22" stroke-dasharray="4 7"/>',
+    () => '<path d="M-20 4H20L13 15H-13Z"/><path d="M-4 4V-12H8V4M0 -12V-20"/>',
+    () => '<circle r="9"/><path d="M-17 0H-5M5 0H17M0 -17V-5M0 5V17"/>',
+    () => '<path d="M0 -18L5 -5L18 0L5 5L0 18L-5 5L-18 0L-5 -5Z"/>',
+  ],
+  letters: [
+    ...'AWSOEDRTNHGLKP'.split('').map((ch) => () => text(ch, FONTS.serif, 40, 0, 0, { fill: '#fff', anchor: 'middle', middle: true, opacity: 0.16 }).replace('<path ', '<path stroke="none" ')),
+    () => text('?', FONTS.serif, 42, 0, 0, { fill: '#fff', anchor: 'middle', middle: true, opacity: 0.16 }).replace('<path ', '<path stroke="none" '),
+    () => '<path d="M-16 20H16M-8 20V-20H10V-12"/><circle cx="10" cy="-6" r="5"/>',
+    () => '<path d="M-24 0H-10M-5 0H9M14 0H28"/>',
+    () => '<circle cy="-14" r="6"/><path d="M0 -8V8M0 -3L-9 4M0 -3L9 4M0 8L-7 20M0 8L7 20"/>',
+  ],
+  doodle: [
+    () => '<g transform="rotate(-30)"><rect x="-27" y="-6" width="54" height="12" rx="2"/><path d="M27 -6L42 0L27 6M-18 -6V6"/></g>',
+    () => '<g transform="rotate(-30)"><rect x="-27" y="-6" width="54" height="12" rx="2"/><path d="M27 -6L42 0L27 6M-18 -6V6"/></g>',
+    () => '<g transform="rotate(40)"><rect x="-27" y="-6" width="54" height="12" rx="2"/><path d="M27 -6L42 0L27 6M-18 -6V6"/></g>',
+    () => '<path d="M0 -10L2.8 -3L10 -3L4.2 1.6L6.2 9L0 4.6L-6.2 9L-4.2 1.6L-10 -3L-2.8 -3Z"/>',
+    () => '<path d="M0 -12Q11 2 0 11Q-11 2 0 -12Z"/>',
+    () => '<path d="M-21 0q7 -11 14 0t14 0t14 0"/>',
+    () => '<g transform="rotate(25)"><rect x="-4" y="-22" width="8" height="30" rx="3"/><path d="M-4 8Q0 22 4 8M-4 -6H4"/></g>',
+    () => '<circle r="10"/><circle r="4"/>',
+    () => '<path d="M-8 0H8M0 -8V8"/>',
+    () => '<path d="M-14 8Q-14 -12 0 -12Q14 -12 14 0Q14 12 0 12Q-8 12 -8 4Q-8 -4 0 -4"/>',
+    () => '<path d="M-12 10L0 -12L12 10Z"/>',
+  ],
+}
+
+/** Slumpmessig, men like hver gang: samme spill gir samme bakgrunn. Hopper over robothodet. */
+function scatterBackground(game, W, H) {
+  const motifs = SCATTER[game.scatter]
+  if (!motifs) return ''
+  let seed = game.id * 7919
+  const rand = () => {
+    seed = (seed + 0x6d2b79f5) | 0
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+  const placed = []
+  let out = ''
+  for (let n = 0; n < 700 && placed.length < 46; n++) {
+    const x = rand() * W, y = rand() * H
+    if (x > 560 && y > 10 && y < 665) continue // robothodet dekker dette
+    if (x > 60 && x < 540 && y > 140 && y < 580 && rand() < 0.9) continue // luft rundt teksten
+    if (placed.some(([px, py]) => Math.hypot(px - x, py - y) < 82)) continue
+    placed.push([x, y])
+    const motif = motifs[Math.floor(rand() * motifs.length)]
+    const rot = Math.round(rand() * 70 - 35), scale = r1(0.8 + rand() * 0.75), op = r1(0.07 + rand() * 0.07)
+    out += `<g transform="translate(${r1(x)} ${r1(y)}) rotate(${rot}) scale(${scale})" opacity="${op / 0.1}">${motif()}</g>`
+  }
+  return `<g fill="none" stroke="#fff" stroke-opacity="0.2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${out}</g>`
 }
 
 function banner(game, lang) {
@@ -1013,9 +1160,10 @@ function banner(game, lang) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${label}">
 <title>${label}</title>
 ${background(W, H, game)}
+${scatterBackground(game, W, H)}
 ${mark}
 ${body}
-<g transform="translate(640 78)">${game.art(lang, game)}</g>
+${game.bot ? botHead(game, lang) : `<g transform="translate(640 78)">${game.art(lang, game)}</g>`}
 </svg>
 `
 }
@@ -1041,11 +1189,8 @@ if (filterIndex !== -1 && !GAMES.some((game) => game.file === onlyGame)) throw n
 const selected = onlyGame ? GAMES.filter((game) => game.file === onlyGame) : GAMES
 const manifest = []
 for (const game of selected) {
-  // Keep FleetBot's current posters exactly as exported by its own repository.
   for (const lang of LANGS) writeFileSync(join(OUT, `${game.file}.${lang}.svg`),
-    game.file === 'FleetBot'
-      ? readFileSync(join(ROOT, `src/assets/games/art/fleetbot-poster.${lang}.svg`), 'utf8')
-      : banner(game, lang))
+    banner(game, lang))
   writeFileSync(join(OUT, 'icons', `${game.file}.svg`), icon(game))
   manifest.push(game)
 }
@@ -1057,7 +1202,7 @@ const imports = GAMES.flatMap((game) => [
 ])
 const entries = GAMES.map((game) => `    ${game.id}: { banner: { no: ${game.file}No, en: ${game.file}En }, icon: ${game.file}Icon },`)
 
-writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs — kjør \`npm run art\` i stedet for å endre her.
+writeFileSync(join(ROOT, 'src/data/game-art.ts'), `// Laget av scripts/generate-game-art.mjs, kjør \`npm run art\` i stedet for å endre her.
 ${imports.join('\n')}
 
 export type ArtLanguage = 'no' | 'en'

@@ -10,6 +10,8 @@ The lobby and all seven games use a 1760px maximum page width, including horizon
 
 Every site uses the shared `src/account/ConsentDialog.tsx`, `consent.ts` and the `cookie-consent` key on the same origin. Settings and the footer can reopen the dialog. An undecided or declined choice keeps new optional data in memory. Accepting flushes that data to browser storage; declining removes the game's declared optional keys and keeps the current visit usable. The consent choice itself is remembered. The choice applies to the lobby and all games served on `spillarena.no`. On a page that loads AdSense (`loadAdSense()` in `src/account/ads.ts`), Google's certified consent message asks first and the dialog only steps in if that message does not come; see "Ads (Google AdSense)" in `docs/OPERATIONS.md`.
 
+In party mode the lobby runs the current game in an iframe (`src/party/PartyGameFrame.tsx`), so a game must work when framed by `spillarena.no`. The router relaxes `X-Frame-Options` and `frame-ancestors` for same-origin framing (see "Party mode" in `docs/OPERATIONS.md`); a game's link back to the lobby is intercepted by the frame, so it should be an ordinary link to `https://spillarena.no/` rather than script navigation. The party code is stored in `sessionStorage` under `spillarena.party`, only after a yes.
+
 Storage controls show the same accept, decline, status and manage actions in English and Norwegian. Each game still explains its own stored data in the dialog.
 
 ## Branding and link previews

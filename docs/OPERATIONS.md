@@ -144,6 +144,7 @@ npx wrangler d1 migrations apply spillarena-accounts --remote
 npx wrangler pages secret put AUTH_SECRET            # in SpillArena/
 #    AtlasMaster/, ScribbleBot/, FleetBot/battleship-frontend/  (pages secret put)
 #    ProportionPanic/worker/                                    (wrangler secret put)
+#    workers/parties/                                           (wrangler secret put -c workers/parties/wrangler.toml)
 
 # 3. move the accounts that already exist in AtlasMaster
 node scripts/migrate-atlasmaster-accounts.mjs          # writes the SQL
@@ -283,7 +284,7 @@ before ads existed.
 | `src/account/ads.ts` | Loads Google's consent message (IAB TCF) on its own, and the AdSense tag only once the message has an answer. **Vendored** like the rest of `src/account/`. |
 | `src/account/ConsentDialog.tsx` | Waits for Google's message and points to Google's ad settings (also vendored). |
 | `vite.config.ts` | Writes `/ads.txt` and `<meta name="google-adsense-account">` from the id, and stops the build on a malformed one. |
-| `src/main.tsx` | `loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)` before the first render. |
+| `src/main.tsx` | Loads AdSense only on the home catalogue, before the first render; `isAdFreePage()` excludes guides, help, contact and account pages, including legacy hashes. |
 | `tests/ads-consent.test.mjs` | `npm run test:ads`: the consent rules below, against a fake Google tag. |
 
 ### Two questions, one prompt
@@ -393,6 +394,41 @@ itself, so that is a change in all repos.
 PIN fields (the AccountBadge sign-in) off the pages with the tag, the same way.
 Its own `_headers` needs the same Google hosts.
 
+## Party mode
+
+A party lets signed-in players follow one leader through the games. The leader opens `#party`, creates a party and shares a four-letter code; whatever game the leader picks opens for every member, and when the leader switches, so does everyone.
+
+Games are separate documents on separate Pages projects, so a socket in the lobby would die on every game switch. The lobby is therefore the shell: it keeps the party socket open and runs the current game in an iframe on top of itself.
+
+| Path | What it is |
+|---|---|
+| `shared/party.js` | The party as a JSON document and every transition (join, leave, leader hand-over, select game, kick). Pure, no I/O, shared by the Worker and the tests. |
+| `workers/parties/` | Worker `spillarena-parties` with the `PartyRoom` Durable Object, one per party. SQLite-backed (free plan), hibernating sockets. A Pages project cannot define Durable Objects, hence a Worker. |
+| `functions/api/party/[code].js` | Checks the code and hands the WebSocket upgrade to that party's object through the `PARTIES` binding in `wrangler.toml`. Answers 503 until the Worker is bound. |
+| `src/party/` | `PartyProvider` (the socket, reconnect with backoff), `PartyPage` (create, join, members, game picker) and `PartyGameFrame` (the iframe and the slim party bar). |
+
+**Identity.** Accounts only. The browser sends the account token as the second WebSocket subprotocol (browsers cannot set headers) and the object verifies it with `AUTH_SECRET`, exactly like `melodyrush-rooms`. A second tab from the same account replaces the first.
+
+**Lifetime.** A party ends 24 hours after it was created, or 10 minutes after its last member disconnects. A dropped member keeps their seat so a reload rejoins; a leader who drops hands over to the longest-standing online member. The server holds only the code, member names, the leader and the open game.
+
+**Storage.** The party code is kept in `sessionStorage` (`spillarena.party`, this tab only) after a yes to the storage question, and in memory otherwise. It is listed in the consent dialog and in the privacy page.
+
+**Framing.** Eight of the eleven games send `X-Frame-Options: DENY` or `frame-ancestors 'none'`, which would leave the iframe blank. `spillarena-router/routes/proxy.js` (`allowSameOriginFraming`) narrows them to `SAMEORIGIN` and `'self'` for game responses only; the lobby stays unframeable, and the lobby CSP gets `frame-src 'self'`. The game keeps working standalone. A game's own link to the lobby is caught by the party frame: for the leader it ends the game, for everyone else it does nothing.
+
+**Limits.** Only "which game is open" is synced. A game's own multiplayer room is still created and joined inside the game. The party server checks that the game exists; availability (`coming_soon`, `unavailable`) is enforced by the router when the iframe loads.
+
+### Deploying it
+
+Order matters: the Pages deployment has the binding, so the Worker must exist first.
+
+```bash
+npm run parties:deploy
+npx wrangler secret put AUTH_SECRET -c workers/parties/wrangler.toml   # the SAME value as the hub
+# then deploy the lobby (Pages) and, last, spillarena-router
+```
+
+Before the Worker is deployed the party page works up to "Create party", which fails with a party error; nothing else on the site is affected. Local development: run `npx wrangler dev -c workers/parties/wrangler.toml` next to `vite` and the Pages dev server, with `AUTH_SECRET` in both `.dev.vars` files. Tests: `npm run test:party`.
+
 ## Release settings in the admin panel
 
 The **Games** tab controls each game's availability (`available`, `coming_soon`,
@@ -432,3 +468,13 @@ need a catalogue entry, origin route, and seeded database setting.
 
 Local checks: `npm run test:admin`, `npm run test:popularity`, `npm run lint`,
 `npm run build`, and the router's `node --test tests/proxy.test.mjs`.
+
+## Public content and AdSense review (7 November 2026)
+
+- `src/content/guides.json` holds Norwegian and English rules, examples and tips for all eleven games. These are editorial instructions, not an approval guarantee.
+- `/games/`, `/games/<slug>/`, `/about/`, `/faq/`, `/privacy/`, `/terms/` and `/contact/` are real document routes. Old `#faq`, `#privacy`, `#terms` and `#contact` links still resolve. Root-relative account/home links are required on these routes.
+- `scripts/content-pages.ts` uses the same `EditorialArticle` renderer as React and writes all public documents with their own title, description and canonical. The initial HTML stays readable if JS is unavailable; the loader is used for transitions only. Run `npm run build` before the content tests.
+- `/sitemap.xml` is served by `functions/sitemap.xml.js`, reading the existing `game_settings` table. Play URLs are included only for available games; guides remain available during maintenance. There are no fabricated `lastmod` dates. A static build has a defaults-based sitemap for preview; live Pages Functions overrides it. No migration is needed.
+- Only the home catalogue requests advertising. Information pages, guides, contact and account pages do not load either the Google consent script or ad script. Hash navigation to an ad-free screen reloads a document that has not loaded advertising code.
+- Each game's `index.html` has readable initial information and an expandable rules section outside React's root. `public/game-information.css` scopes styling and follows the document language. After changing guide introductions or rules, run `node scripts/sync-game-information.mjs --check`; `--write` explicitly updates the eleven sibling repos. This is never a side effect of the hub build. Review and deploy those repos separately.
+- Validation: `npm run build`, `npm run lint`, `node --test tests/*.test.mjs`. Build each changed game. Publish the hub and game changes, verify the public documents/sitemap and game availability, then request AdSense review manually. Do not describe a passing local check as a live deployment or Google approval.

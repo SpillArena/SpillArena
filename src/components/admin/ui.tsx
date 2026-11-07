@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Ban, Lock, ShieldCheck } from 'lucide-react'
 
 /*
- * Småbitene adminpanelet er bygget av. Samme uttrykk som resten av forsiden —
+ * Småbitene adminpanelet er bygget av. Samme uttrykk som resten av forsiden -
  * CSS-variablene for flater og tekst, rødt og gult bare for tilstand, og aldri
  * farge alene: hvert merke har et ikon og et ord.
  */

@@ -8,12 +8,12 @@ import { getConsent, setConsent } from './consent'
  * Google and its partners use cookies to show, measure and personalise ads. In
  * the EEA, the UK and Switzerland Google only serves personalised ads when that
  * second answer comes from a Google-certified consent platform speaking IAB
- * TCF, so our own dialog cannot ask it. Google's free one does — it arrives with
+ * TCF, so our own dialog cannot ask it. Google's free one does, it arrives with
  * the AdSense tag, once a European regulations message is published under
  * Privacy & messaging in AdSense.
  *
  * NOTHING FOR ADS LOADS BEFORE THAT ANSWER. Before it, the page loads only
- * Google's consent message on its own (the Privacy & messaging tag) — it is the
+ * Google's consent message on its own (the Privacy & messaging tag), it is the
  * question, so it has to come first. The ad tag itself, adsbygoogle.js, and the
  * ad requests, cookies and pixels that come with it, are added only once
  * Google's message has an answer: given now, or stored from an earlier visit.
@@ -28,7 +28,7 @@ import { getConsent, setConsent } from './consent'
  * - Google's message is shown, or was answered on an earlier visit: our dialog
  *   does not open by itself. If SpillArena's own question has no answer yet, it
  *   takes Google's answer to TCF purpose 1, "store and/or access information on
- *   a device" — the same question in other words. A "no" there is a "no" here,
+ *   a device", the same question in other words. A "no" there is a "no" here,
  *   and the strip saying progress is not being saved offers a way to turn it on.
  *   After that the two answers are separate: changing one never changes the
  *   other.
@@ -104,7 +104,7 @@ export function getAdConsentState(): AdConsentState {
     return state
 }
 
-/** Whether this page asked for ads — even if they were blocked or never came. */
+/** Whether this page asked for ads, even if they were blocked or never came. */
 export function adsRequested(): boolean {
     return loaded
 }

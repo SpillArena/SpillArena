@@ -1,0 +1,78 @@
+{
+  "no": {
+    "title": "Hitline: plasser låta etter utgivelsesår",
+    "intro": "Hitline er et musikalsk tidslinjespill. Du lytter til et kort lydklipp og plasserer låta der den hører hjemme blant kortene dine, etter utgivelsesår. Spill alene, send enheten rundt eller spill mot venner på nett.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Hver spiller starter med ett kort på tidslinjen, med årstallet synlig. Når det er din tur, spiller spillet et lydklipp. Du legger kortet før, mellom eller etter kortene dine ut fra hvilket år du tror låta kom ut. Låter fra samme år kan stå i valgfri rekkefølge. Spillet har 671 låter fra 1970 til 2026.",
+        "Er plasseringen riktig, beholder du kortet og tidslinjen din vokser. Den første til 5, 10 eller 15 kort vinner, avhengig av hva dere har valgt."
+      ]},
+      { "h": "Tre måter å spille på", "p": [
+        "Spill alene gir deg én tidslinje med fem tokens, tre på Ekspert, og du mister én token for hvert feil svar. Fest på én skjerm er for to til åtte spillere som sender enheten rundt, uten konto. Spill med venner er for to til åtte spillere på nett, og krever SpillArena-konto. Du oppretter et rom og deler koden eller invitasjonslenken."
+      ]},
+      { "h": "Vanskelighetsgrader", "p": [
+        "På Original må du bare plassere kortet riktig. På Pro må du også oppgi tittel og artist. På Ekspert kreves i tillegg det nøyaktige årstallet med fire sifre. Original starter med to tokens i flerspiller og fem alene, Pro med fem, Ekspert med tre. Bare på Original kan du tjene tokens."
+      ]},
+      { "h": "Tokens og utfordringer", "p": [
+        "Før kortet snus, kan andre spillere bruke én token på å utfordre ved å velge en annen ledig plass på tidslinjen. Hvis den aktive spilleren har helt rett, beholder hen kortet. Ellers stjeler den første utfordreren med riktig plassering og alle påkrevde svar kortet. En utfordring koster tokenen uansett utfall.",
+        "En token hopper over låta og gir samme spiller en ny. Tre tokens kjøper et kort som settes rett inn på tidslinjen. På Original gir riktig tittel og artist på din tur én token, opp til fem."
+      ]},
+      { "h": "Husregel: samme år", "p": [
+        "Trykk Samme år under et kort og velg året. Med riktig år og alle påkrevde svar får du kortet pluss ett bonuskort fra bunnen av bunken, hvis det er flere kort igjen. Et feil svar gir ikke bonus, og kortet kan stjeles."
+      ]},
+      { "h": "Et eksempel", "p": [
+        "Du har et kort fra 1985 og et fra 2005. Lydklippet er en låt med tydelig 90-tallssynth. Du legger kortet mellom de to. Er låta fra 1994, har du plassert riktig og beholder kortet. Hvis en annen spiller mener den hører hjemme etter 2005, kan hen bruke en token på å utfordre, men tapet er hens."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Bruk produksjonen som ledetråd. Trommemaskiner, gitarlyd og vokalbehandling endrer seg fra tiår til tiår, og de gir ofte en bedre pekepinn enn selve melodien.",
+        "Spar tokens til viktige øyeblikk. Hopp over låter du ikke kjenner igjen, og vær selektiv med utfordringer.",
+        "Se på hullene i tidslinjen din. Er det et stort gap mellom to kort, er det en bred sone hvor låta kan havne, og da lønner det seg å plassere tryggere.",
+        "Vinn med lengst tidslinje. Går bunken tom, vinner den med flest kort i flerspiller."
+      ]}
+    ],
+    "faq": [
+      { "q": "Må jeg ha konto?", "a": "Ikke for å spille alene eller på én skjerm. Nett-rom krever SpillArena-konto." },
+      { "q": "Hvor mange kort trengs for å vinne?", "a": "Den første til 5, 10 eller 15 kort vinner, avhengig av valgt mål." },
+      { "q": "Hva er forskjellen på Original, Pro og Ekspert?", "a": "Original krever riktig plassering. Pro krever også tittel og artist. Ekspert krever dessuten nøyaktig år." },
+      { "q": "Hva skjer hvis jeg ikke har flere tokens alene?", "a": "Runden avsluttes når du har null tokens." }
+    ]
+  },
+  "en": {
+    "title": "Hitline: place the song by its release year",
+    "intro": "Hitline is a musical timeline game. You listen to a short clip and place the song where it belongs among your cards, by release year. Play alone, pass one device around, or play friends online.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "Each player starts with one card on their timeline, with the year visible. When it is your turn, the game plays an audio clip. You place the card before, between or after your cards according to the year you think the song came out. Songs from the same year may stand in any order. The game has 671 songs from 1970 to 2026.",
+        "If the placement is right, you keep the card and your timeline grows. The first to 5, 10 or 15 cards wins, depending on what you have chosen."
+      ]},
+      { "h": "Three ways to play", "p": [
+        "Play alone gives you one timeline with five tokens, three on Expert, and you lose one token for each wrong answer. Party on one screen is for two to eight players passing a device around, with no account. Play with friends is for two to eight players online and needs a SpillArena account. You create a room and share the code or the invite link."
+      ]},
+      { "h": "Difficulty levels", "p": [
+        "On Original you only need to place the card correctly. On Pro you must also give the title and artist. On Expert you also need the exact year in four digits. Original starts with two tokens in multiplayer and five alone, Pro with five, Expert with three. Only on Original can you earn tokens."
+      ]},
+      { "h": "Tokens and challenges", "p": [
+        "Before the card is flipped, other players can spend one token to challenge by picking another free slot on the timeline. If the active player is entirely right, they keep the card. Otherwise the first challenger with the right placement and all required answers steals it. A challenge costs the token whatever the outcome.",
+        "One token skips the song and gives the same player a new one. Three tokens buy a card that goes straight onto the timeline. On Original, the right title and artist on your turn earn one token, up to five."
+      ]},
+      { "h": "House rule: same year", "p": [
+        "Tap Same year under a card and pick the year. With the right year and all required answers you get the card plus one bonus card from the bottom of the deck, if more cards remain. A wrong answer gives no bonus, and the card can be stolen."
+      ]},
+      { "h": "An example", "p": [
+        "You hold a card from 1985 and one from 2005. The clip is a song with a clear 1990s synth. You place the card between the two. If the song is from 1994, you placed it correctly and keep the card. If another player thinks it belongs after 2005, they can spend a token to challenge, but the loss is theirs."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Use the production as a clue. Drum machines, guitar tone and vocal processing change from decade to decade, and they often point better than the melody itself.",
+        "Save tokens for important moments. Skip songs you do not recognise, and be selective with challenges.",
+        "Look at the gaps in your timeline. A big gap between two cards is a wide zone where the song could land, so place more safely there.",
+        "Win with the longest timeline. If the deck runs out, the player with the most cards wins in multiplayer."
+      ]}
+    ],
+    "faq": [
+      { "q": "Do I need an account?", "a": "Not to play alone or on one screen. Online rooms need a SpillArena account." },
+      { "q": "How many cards do I need to win?", "a": "The first to 5, 10 or 15 cards wins, depending on the chosen goal." },
+      { "q": "What is the difference between Original, Pro and Expert?", "a": "Original needs the right placement. Pro also needs title and artist. Expert also needs the exact year." },
+      { "q": "What happens if I run out of tokens playing alone?", "a": "The round ends when you reach zero tokens." }
+    ]
+  }
+}

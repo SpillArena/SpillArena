@@ -1,0 +1,82 @@
+{
+  "no": {
+    "title": "SipZone: Bussruta og festleker for voksne",
+    "intro": "SipZone er norske festleker for vors, hyttetur og spillkveld. Akkurat nå er Bussruta, med fasene Fire gjetninger, H-en og Pyramiden, den tilgjengelige leken. Innholdet omtaler alkohol og er kun for voksne.",
+    "sections": [
+      { "h": "Slik fungerer Bussruta", "p": [
+        "Bussruta spilles av to til åtte spillere som har hver sin mobil og hver sin SpillArena-konto. Én oppretter et rom, og de andre blir med med romkode eller invitasjonslenke. Spillet har tre faser, i denne rekkefølgen: Fire gjetninger, H-en og Pyramiden.",
+        "Før hver fase vises en animert intro med korte regler. Alle må trykke «Jeg er klar» på sin egen enhet før fasen starter. Det håndheves på serveren, så verten kan ikke starte alene."
+      ]},
+      { "h": "Fase 1: Fire gjetninger", "p": [
+        "Spillerne gjetter ett kort hver på rundgang, i fire runder: rød eller svart, høyere eller lavere, innenfor eller utenfor, og til slutt sort. Ess er høyest, likt er feil, og innenfor/utenfor bruker strenge grenser. Riktig svar gir bort 1 til 4 slurker til en valgt spiller, og feil svar gir samme antall til deg selv.",
+        "Den som skal drikke, må trykke «Jeg har drukket» før turen går videre. Kun riktig mottaker kan bekrefte, og det kontrolleres på serveren. De fire kortene du har gjettet på, blir hånden din i neste fase."
+      ]},
+      { "h": "Fase 2: H-en", "p": [
+        "H-en består av 12 kort fra resten av samme stokk, så ingen kort finnes både på hånden og på bordet. Verten snur kort annenhver gang mot høyre og venstre. Matcher du et kort til venstre, gir du bort en slurk. Til høyre tar du en slurk selv, og de to kortene i midten gir en shot. Trykk på et spillbart håndkort for å legge det på det sist snudde H-kortet med samme verdi.",
+        "Målet er å bli kvitt hånden. Den med flest kort igjen når H-en er ferdig, går videre til Pyramiden og tar bussen."
+      ]},
+      { "h": "Fase 3: Pyramiden", "p": [
+        "Den med flest kort igjen tar bussen. Ved likt avgjør dere med stein, saks, papir, eller tar bussen sammen. Har ingen kort igjen, blir det ingen busstur. Du velger ett kort per rad i pyramiden og skal unngå knekt, dame og konge. Ess er trygt.",
+        "Bildekort gir 2, 4, 6 eller 8 slurker på rad 1 til 4, og en shot på toppen. Treffer du et bildekort, stokkes hele pyramiden, og du starter på nytt fra bunnen uten fast grense på antall forsøk. Trygge kort åpner neste rad automatisk. Når alle på bussen har bekreftet drikkingen, starter neste forsøk av seg selv."
+      ]},
+      { "h": "Etter runden", "p": [
+        "Avslutningen viser resultat og spillerne i en egen scene. Alle kan åpne en ny lobby og beholde romkoden, og verten starter neste runde med nye kort og ny klarstatus."
+      ]},
+      { "h": "Spill ansvarlig", "p": [
+        "SipZone er for voksne. Deltakelse skal være frivillig, og du kan spille helt uten alkohol, med vann, brus eller et annet valg i stedet for slurkene. Avklar grenser før dere starter, og la alle stå over uten å forklare hvorfor.",
+        "Ingen spillregel skal bestemme hvor mye noen drikker. Ta pauser, drikk vann, og ikke kjør etter alkohol. Er noen ukomfortable, avslutter dere leken eller velger noe annet."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Snakk sammen om slurkereglene før dere begynner, slik at alle forstår hva en slurk betyr, og at det er greit å bytte til en alkoholfri variant.",
+        "Hold telefonen låst opp og lyden på, siden spillet bruker varsler og bekreftelser underveis.",
+        "Alle må ha konto og må være logget inn før rommet opprettes, så ta det før gjengen samles."
+      ]}
+    ],
+    "faq": [
+      { "q": "Kan jeg spille uten alkohol?", "a": "Ja. Deltakelsen er frivillig, og dere kan bruke alkoholfrie drikker i stedet for slurkene." },
+      { "q": "Hvor mange kan spille?", "a": "Fra to til åtte spillere, hver på sin egen mobil." },
+      { "q": "Trenger jeg konto?", "a": "Ja. Bussruta krever SpillArena-konto for hver spiller." },
+      { "q": "Er det flere leker?", "a": "Foreløpig er Bussruta den eneste tilgjengelige leken. Flere leker er planlagt." }
+    ]
+  },
+  "en": {
+    "title": "SipZone: the Bus Route and party games for adults",
+    "intro": "SipZone is Norwegian party games for pre-drinks, cabin trips and game nights. Right now the Bus Route, with the phases Four guesses, the H and the Pyramid, is the available game. The content mentions alcohol and is for adults only.",
+    "sections": [
+      { "h": "How the Bus Route works", "p": [
+        "The Bus Route is played by two to eight players who each have their own phone and their own SpillArena account. One person creates a room and the others join with the room code or invite link. The game has three phases, in this order: Four guesses, the H and the Pyramid.",
+        "Before each phase an animated intro shows short rules. Everyone must press “I’m ready” on their own device before the phase begins. This is enforced on the server, so the host cannot start alone."
+      ]},
+      { "h": "Phase 1: Four guesses", "p": [
+        "Players each guess one card in turn, over four rounds: red or black, higher or lower, inside or outside, and finally the card’s suit. Ace is highest, a tie counts as wrong, and inside/outside uses strict limits. A correct answer gives 1 to 4 sips to a chosen player, and a wrong answer gives the same number to yourself.",
+        "The person who has to drink must press “I have drunk” before the turn moves on. Only the right recipient can confirm, and this is checked on the server. The four cards you guessed on become your hand in the next phase."
+      ]},
+      { "h": "Phase 2: the H", "p": [
+        "The H is 12 cards from the rest of the same deck, so no card is both in your hand and on the table. The host flips cards alternately toward the right and the left. If you match a card to the left, you give away a sip. To the right you take a sip yourself, and the two cards in the middle give a shot. Tap a playable hand card to put it on the most recently flipped H card of the same value.",
+        "The goal is to get rid of your hand. Whoever has the most cards left when the H ends moves on to the Pyramid and takes the bus."
+      ]},
+      { "h": "Phase 3: the Pyramid", "p": [
+        "The player with the most cards left takes the bus. If tied, you decide with rock, paper, scissors, or take the bus together. If nobody has cards left, there is no bus ride. You pick one card per row of the pyramid and must avoid jack, queen and king. Ace is safe.",
+        "Face cards give 2, 4, 6 or 8 sips on rows 1 to 4, and a shot at the top. If you hit a face card, the whole pyramid is reshuffled and you start again from the bottom, with no fixed limit on attempts. Safe cards open the next row automatically. When everyone on the bus has confirmed their drinking, the next attempt starts by itself."
+      ]},
+      { "h": "After the round", "p": [
+        "The ending shows the result and the players in a scene of its own. Everyone can open a new lobby and keep the room code, and the host starts the next round with new cards and fresh ready status."
+      ]},
+      { "h": "Play responsibly", "p": [
+        "SipZone is for adults. Taking part should be voluntary, and you can play entirely without alcohol, using water, soda or another choice in place of sips. Agree on limits before you start, and let anyone sit out without explaining why.",
+        "No game rule should decide how much anyone drinks. Take breaks, drink water, and never drive after drinking. If anyone is uncomfortable, end the game or pick something else."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Talk through the sip rules before you start, so everyone understands what a sip means and that it is fine to switch to an alcohol-free version.",
+        "Keep your phone unlocked and the sound on, since the game uses notifications and confirmations along the way.",
+        "Everyone needs an account and must be signed in before the room is created, so do it before the group gathers."
+      ]}
+    ],
+    "faq": [
+      { "q": "Can I play without alcohol?", "a": "Yes. Taking part is voluntary, and you can use non-alcoholic drinks in place of sips." },
+      { "q": "How many can play?", "a": "Two to eight players, each on their own phone." },
+      { "q": "Do I need an account?", "a": "Yes. The Bus Route requires a SpillArena account for every player." },
+      { "q": "Are there more games?", "a": "For now the Bus Route is the only available game. More are planned." }
+    ]
+  }
+}

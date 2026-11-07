@@ -69,6 +69,7 @@ npm run test:avatar
 npm run test:popularity
 npm run test:contact
 npm run test:ads
+npm run test:party
 npm run build
 ```
 
@@ -90,9 +91,9 @@ docs/         Architecture, operations, branding, and design notes
 
 ## Architecture and documentation
 
-Games are routed under `spillarena.no/<game>` and share the same origin. The hub issues signed sessions and owns the account APIs; games keep their own gameplay and interfaces. The admin panel checks the current account permissions on every request. Analytics are supplied by Cloudflare without an added browser beacon.
+Games are routed under `spillarena.no/<game>` and share the same origin. The hub issues signed sessions and owns the account APIs; games keep their own gameplay and interfaces. The admin panel checks the current account permissions on every request. Analytics are supplied by Cloudflare without an added browser beacon. Party mode lets signed-in friends follow a leader from game to game: the lobby keeps one WebSocket to a Durable Object and runs the open game in an iframe.
 
-- [Account architecture, analytics, and deployment](docs/OPERATIONS.md)
+- [Account architecture, analytics, party mode and deployment](docs/OPERATIONS.md)
 - [Shared shell and branding](docs/SITE_SHELL.md)
 - [Lobby and account design](docs/design/IMPLEMENTATION.md)
 - [Avatar credits and licences](docs/AVATAR_CREDITS.md)

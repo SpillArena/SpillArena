@@ -2,7 +2,7 @@
 //
 // This folder is VENDORED: the same files exist in AtlasMaster, ScribbleBot,
 // HangBot, ProportionPanic, PixelPanic, FleetBot and EraShuffle, byte for byte. SpillArena
-// is the canonical copy — fix it here, then copy it out. That is why the
+// is the canonical copy, fix it here, then copy it out. That is why the
 // comments in this folder are English while the rest of this repo is
 // Norwegian: this file also lives in repos that are written in English.
 
@@ -27,7 +27,7 @@ export type AuthErrorCode =
      * One code per reason.
      *
      * These three used to arrive as a single `bad_username`, which left the
-     * form able to say only "that name cannot be used" — true, and useless:
+     * form able to say only "that name cannot be used", true, and useless:
      * the player still had to guess whether the name was too long, held a
      * character that is not allowed, or was empty.
      */
@@ -68,7 +68,7 @@ export type ApiResult<T> = { ok: true; data: T } | AuthFailure
 
 /**
  * A forgotten PIN reset with a code. Signs the player in like any other success,
- * and carries the NEW recovery code — the old one is spent. Show it once and
+ * and carries the NEW recovery code, the old one is spent. Show it once and
  * make the player keep it: the service only has its hash.
  */
 export type RecoverResult = { ok: true; session: Session; recoveryCode: string } | AuthFailure
@@ -94,7 +94,7 @@ export interface AccountOverview {
      */
     admin?: boolean
     /**
-     * False when the account has no recovery code yet — every account made
+     * False when the account has no recovery code yet, every account made
      * before codes existed, and any made from a game's badge. The front page
      * asks those players to make one while they still know their PIN.
      */

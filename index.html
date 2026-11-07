@@ -29,7 +29,7 @@
   <meta property="og:description"
     content="Gratis nettleserspill mot bots og venner: slagskip, galgespill, tegn og gjett, geografiquiz, bildequiz, historie, musikk og festleker. Ingen konto, ingen nedlasting. Spill på norsk eller engelsk." />
   <meta property="og:image" content="https://spillarena.no/og-image.png" />
-  <meta property="og:image:alt" content="SpillArena: Alt står på spill — gratis nettleserspill mot bots" />
+  <meta property="og:image:alt" content="SpillArena: Alt står på spill. Gratis nettleserspill mot bots" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="nb_NO" />
@@ -41,7 +41,7 @@
   <meta name="twitter:description"
     content="Gratis nettleserspill mot bots og venner. Ingen konto, ingen nedlasting." />
   <meta name="twitter:image" content="https://spillarena.no/og-image.png" />
-  <meta name="twitter:image:alt" content="SpillArena: Alt står på spill — gratis nettleserspill mot bots" />
+  <meta name="twitter:image:alt" content="SpillArena: Alt står på spill. Gratis nettleserspill mot bots" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -49,8 +49,8 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <!--
-    SpillArena-lasteren. Inline og ikke i pakken: den skal vises mens pakken
-    lastes. Brikkene er de 13 i logoen, i samme rekkefølge som S-en tegnes.
+    SpillArena-lasteren. Inline og ikke i pakken: den brukes ved navigasjon etter at siden
+    er lastet. Brikkene er de 13 i logoen, i samme rekkefølge som S-en tegnes.
     src/ui/loader.ts skrur den av og på.
   -->
   <style>
@@ -115,7 +115,7 @@
     .arena-loader-board i:nth-child(13) { --x: 1; --y: 5; --i: 12; --c: #f97316; }
     /*
      * Lyset går langs S-en: hver brikke spretter opp i full farge, blir
-     * liggende, og dimmes tilbake i samme rekkefølge. Dimmet, ikke borte —
+     * liggende, og dimmes tilbake i samme rekkefølge. Dimmet, ikke borte -
      * S-en skimtes hele tiden, så brettet aldri står tomt.
      */
     @keyframes arena-tile {
@@ -245,11 +245,12 @@
 </head>
 
 <body>
-  <div id="root"><main style="max-width:720px;margin:0 auto;padding:32px 16px;font-family:system-ui,sans-serif"><h1>SpillArena: gratis nettleserspill på norsk</h1><p>Alt står på spill. SpillArena er en samling gratis nettleserspill mot bots og venner. Ingen konto, ingen nedlasting.</p><ul><li><a href="/fleetbot">FleetBot</a>: Slagskip på nett. Plasser skipene dine og senk motstanderens flåte.</li><li><a href="/hangbot">HangBot</a>: Galgespill på nett. Gjett ordet før tegningen er ferdig.</li><li><a href="/scribblebot">ScribbleBot</a>: Tegn og gjett mot bots og venner.</li><li><a href="/atlasmaster">AtlasMaster</a>: Geografiquiz: land, hovedsteder, byer, elver og fjelltopper.</li><li><a href="/proportionpanic">Proportion Panic</a>: Gjett hvor store ting egentlig er.</li><li><a href="/pixelpanic">Pixel Panic</a>: Bildequiz: gjett filmen, spillet, stedet eller flagget mens bildet blir skarpere.</li><li><a href="/erashuffle">EraShuffle</a>: Historiespill: sett fem hendelser i riktig rekkefølge.</li><li><a href="/melodyrush/">MelodyRush</a>: Musikkquiz: gjett sangen fra korte lydklipp.</li><li><a href="/hitline/">Hitline</a>: Musikkspill: plasser låten på tidslinjen etter utgivelsesår.</li></ul></main></div>
+  <div id="root"><!--app-content--><!--/app-content--></div>
   <div id="arena-loader" class="arena-loader is-boot" role="status" aria-live="polite">
     <div class="arena-loader-board" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <p class="arena-loader-label"></p>
   </div>
+  <noscript><style>.arena-loader { display: none; }</style></noscript>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getSession, onSessionChange } from './session'
 
 /**
- * Who the player is competing as — and whether they get a say in it.
+ * Who the player is competing as, and whether they get a say in it.
  *
  * Signed in, they do not. The name on a leaderboard row is taken from the
  * signed token by every game's API (see each `functions/api/leaderboard*`), so
@@ -15,11 +15,11 @@ import { getSession, onSessionChange } from './session'
  * instead, and points at spillarena.no for changing it.
  *
  * VALIDATION IS THE PART THAT IS EASY TO GET WRONG. Games have their own
- * username rules — ScribbleBot wants /^[a-zA-Z0-9_æøåÆØÅ]{2,16}$/, FleetBot has
+ * username rules, ScribbleBot wants /^[a-zA-Z0-9_æøåÆØÅ]{2,16}$/, FleetBot has
  * its own, HangBot has a reserved-word list. Account names are validated once,
  * when the account is made, against a LOOSER rule that allows spaces, dots and
  * apostrophes. Running a game's stricter rule over an account name would lock a
- * legitimate player — "Emil B." — out of their own game. When `locked` is true,
+ * legitimate player, "Emil B.", out of their own game. When `locked` is true,
  * the game's rule must be skipped entirely; the name has already passed the
  * only check that governs it.
  */

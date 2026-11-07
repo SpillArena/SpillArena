@@ -1,0 +1,72 @@
+{
+  "no": {
+    "title": "EraShuffle: sorter historiske hendelser i riktig rekkefølge",
+    "intro": "EraShuffle er et tidslinjespill. Du får fem hendelser og skal ordne dem fra tidligst til senest. Når du er ferdig, avsløres årstallene sammen med korte historier og lenker til videre lesning.",
+    "sections": [
+      { "h": "Slik spiller du", "p": [
+        "Fem hendelser vises som kort. Du drar dem på plass, eller flytter dem med pilknappene, til du mener rekkefølgen stemmer. Du kan bruke mus, pen eller berøring. På smale skjermer, under 880 piksler, blir det vannrette brettet til en loddrett liste.",
+        "Når du leverer, får du se årstallene, hvor mange kort som lå riktig, og en kort forklaring på hver hendelse med en kilde du kan lese mer i."
+      ]},
+      { "h": "Daglig runde, øving og rom", "p": [
+        "Daglig runde består av fem hendelser som er like for alle spillere. De velges ut fra datoen i UTC, og du har 90 sekunder. Øving gir ubegrensede tilfeldige tidslinjer, med eller uten tidtaker.",
+        "I flerspiller kan to til åtte innloggede spillere løpe om de samme tre tidslinjene på samme klokke. Du får løpende stilling, invitasjonslenker og omkamp. Et resultat kan deles uten å røpe svarene."
+      ]},
+      { "h": "Fem emner", "p": [
+        "Du kan velge blandet, verdenshistorie, vitenskap og teknologi, popkultur eller Norge. Spillet har 160 håndplukkede hendelser, 40 i hvert emne, fra antikken til i dag. Hver hendelse har tittel og forklaring på både norsk og engelsk, og ingen tidslinje inneholder to hendelser fra samme år, så det finnes alltid én riktig rekkefølge."
+      ]},
+      { "h": "Poeng", "p": [
+        "Hvert kort som står på nøyaktig riktig plass, gir 1000 poeng, til sammen opptil 5000 for alle fem. Med og uten tidtaker gjelder de samme reglene, uten fartsbonus. Resultatet viser både poeng av 5000 og antall riktige kort av fem. En flerspillerkamp legger sammen tre runder, opptil 15 000 poeng."
+      ]},
+      { "h": "Et eksempel", "p": [
+        "Anta at du får Berlinmurens fall, første måneferd, oppfinnelsen av boktrykkerkunsten, den franske revolusjon og lanseringen av iPhone. Boktrykkerkunsten kommer klart først, i 1400-årene. Deretter den franske revolusjon i 1789. Månelandingen kommer i 1969, Berlinmurens fall i 1989 og iPhone i 2007. Spiller du dem i den rekkefølgen, har du alle fem riktig og får 5000 poeng."
+      ]},
+      { "h": "Tips til neste runde", "p": [
+        "Start med ytterpunktene. Finn den eldste og den nyeste hendelsen først, og arbeid deg innover mot midten.",
+        "Tenk i epoker før årstall. Er en hendelse før eller etter industrialiseringen, før eller etter andre verdenskrig? Noen få slike ankerpunkter gir deg raskt en grov rekkefølge.",
+        "Bruk forklaringene etter hver runde. Hver hendelse har en kort historie og en lesekilde, og du bygger opp et mentalt kart over tiden for hver runde du spiller.",
+        "Øv på ett emne om gangen. Popkultur og teknologi har kortere tidsspenn enn verdenshistorie, så presisjonen må være høyere."
+      ]}
+    ],
+    "faq": [
+      { "q": "Må jeg ha konto?", "a": "Nei. Solospill fungerer uten konto. Flerspiller krever innlogging." },
+      { "q": "Er daglig runde lik for alle?", "a": "Ja. Hendelsene velges etter datoen i UTC, så alle får de samme fem." },
+      { "q": "Kan to hendelser ha samme år?", "a": "Nei. Ingen tidslinje har to hendelser fra samme år." },
+      { "q": "Gir fart ekstra poeng?", "a": "Nei. Poengene avhenger bare av hvor mange kort som står riktig." }
+    ]
+  },
+  "en": {
+    "title": "EraShuffle: put historical events in order",
+    "intro": "EraShuffle is a timeline puzzle. You get five events and must order them from earliest to latest. When you are done, the real years are revealed along with short stories and links for further reading.",
+    "sections": [
+      { "h": "How to play", "p": [
+        "Five events appear as cards. You drag them into place, or nudge them with the arrow buttons, until you think the order is right. You can use a mouse, a pen or touch. On narrow screens, below 880 pixels, the horizontal board becomes a vertical list.",
+        "When you submit, you see the years, how many cards were in the right place, and a short explanation of each event with a source to read more."
+      ]},
+      { "h": "Daily shuffle, practice and rooms", "p": [
+        "The daily shuffle is five events that are the same for every player. They are chosen from the date in UTC, and you have 90 seconds. Practice gives unlimited random timelines, with or without a timer.",
+        "In multiplayer, two to eight signed-in players race the same three timelines on the same clock. You get live standings, invite links and rematches. A result can be shared without revealing the answers."
+      ]},
+      { "h": "Five subjects", "p": [
+        "You can choose mixed, world history, science and technology, pop culture, or Norway. The game has 160 hand-picked events, 40 per subject, from antiquity to today. Every event has a title and explanation in both Norwegian and English, and no timeline holds two events from the same year, so there is always exactly one correct order."
+      ]},
+      { "h": "Scoring", "p": [
+        "Each card in exactly the right position earns 1,000 points, up to 5,000 for all five. Timed and untimed rounds use the same rules, with no speed bonus. The result shows both the score out of 5,000 and the number of correct cards out of five. A multiplayer match adds up three rounds, for up to 15,000 points."
+      ]},
+      { "h": "An example", "p": [
+        "Say you get the fall of the Berlin Wall, the first Moon landing, the invention of the printing press, the French Revolution and the launch of the iPhone. The printing press clearly comes first, in the 1400s. Then the French Revolution in 1789. The Moon landing follows in 1969, the fall of the Berlin Wall in 1989 and the iPhone in 2007. Play them in that order and you have all five right for 5,000 points."
+      ]},
+      { "h": "Tips for your next round", "p": [
+        "Start with the extremes. Find the oldest and the newest event first, then work inward toward the middle.",
+        "Think in eras before years. Is an event before or after industrialisation, before or after the Second World War? A few such anchor points quickly give you a rough order.",
+        "Use the explanations after each round. Every event has a short story and a reading source, and you build a mental map of time with each round you play.",
+        "Practise one subject at a time. Pop culture and technology cover shorter spans than world history, so your precision has to be higher."
+      ]}
+    ],
+    "faq": [
+      { "q": "Do I need an account?", "a": "No. Solo play works without one. Multiplayer requires signing in." },
+      { "q": "Is the daily shuffle the same for everyone?", "a": "Yes. Events are chosen from the date in UTC, so everyone gets the same five." },
+      { "q": "Can two events share the same year?", "a": "No. No timeline has two events from the same year." },
+      { "q": "Does speed give extra points?", "a": "No. Points depend only on how many cards are in the right place." }
+    ]
+  }
+}

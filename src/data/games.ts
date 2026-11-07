@@ -22,7 +22,7 @@ export type Game = {
 /** Språket bildene finnes på. Norsk er standard, som resten av siden. */
 export const artLanguage = (language: string | undefined): ArtLanguage => language?.startsWith('en') ? 'en' : 'no'
 
-/** Banneret (1200×675) på valgt språk — teksten i bildet følger språket på siden. */
+/** Banneret (1200×675) på valgt språk, teksten i bildet følger språket på siden. */
 export const gameBanner = (game: Game, language: string | undefined): string | undefined =>
     gameArt[game.id]?.banner[artLanguage(language)]
 

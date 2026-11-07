@@ -6,7 +6,7 @@
  *   node scripts/migrate-atlasmaster-accounts.mjs --apply    # og kjør den
  *
  * AtlasMaster hadde kontoer i drift før forsiden fikk dem. PIN-hashene kopieres
- * ORDRETT — samme salt, samme antall runder — så en spiller som har logget inn
+ * ORDRETT, samme salt, samme antall runder, så en spiller som har logget inn
  * på AtlasMaster logger inn på spillarena.no med nøyaktig samme PIN og merker
  * ingenting. Det er hele grunnen til at PBKDF2_ROUNDS i
  * shared/account-server.js ikke kan endres.
@@ -63,8 +63,8 @@ try {
     'SELECT username, data, updated_at FROM player_progress',
   )
 } catch {
-  // 0006 er kanskje ikke kjørt på den gamle databasen — da er det ingen profiler å flytte
-  console.log('  (ingen player_progress-tabell — hopper over profilene)')
+  // 0006 er kanskje ikke kjørt på den gamle databasen, da er det ingen profiler å flytte
+  console.log('  (ingen player_progress-tabell, hopper over profilene)')
 }
 
 console.log(`  ${players.length} kontoer, ${progress.length} profiler`)

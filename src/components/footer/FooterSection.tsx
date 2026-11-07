@@ -6,7 +6,7 @@ import Changelog from './Changelog'
 export default function FooterSection() {
   const { t } = useTranslation()
   return <footer className="site-footer arena-container"><div className="footer-row">
-    <div className="footer-identity"><a className="footer-brand" href="#"><img src={logo} alt="" width={24} height={24} /><span className="footer-brand-copy"><span>SpillArena</span><span className="footer-tagline">{t('lobby.footerTagline')}</span></span></a></div>
-    <nav className="footer-links" aria-label={t('lobby.footerNavigation')}><Changelog /><a href="#privacy">{t('lobby.privacyLink')}</a><a href="#terms">{t('lobby.termsLink')}</a><a href="#faq">{t('lobby.faqLink')}</a><a href="#contact">{t('lobby.contactLink')}</a><button type="button" onClick={openConsentDialog}>{t('lobby.storage')}</button><a href="https://github.com/SpillArena/SpillArena" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+    <div className="footer-identity"><a className="footer-brand" href="/"><img src={logo} alt="" width={24} height={24} /><span className="footer-brand-copy"><span>SpillArena</span><span className="footer-tagline">{t('lobby.footerTagline')}</span></span></a></div>
+    <nav className="footer-links" aria-label={t('lobby.footerNavigation')}><Changelog /><a href="/about/">{t('content.aboutLink')}</a><a href="/games/">{t('content.guidesLink')}</a><a href="/privacy/">{t('lobby.privacyLink')}</a><a href="/terms/">{t('lobby.termsLink')}</a><a href="/faq/">{t('lobby.faqLink')}</a><a href="/contact/">{t('lobby.contactLink')}</a><button type="button" onClick={openConsentDialog}>{t('lobby.storage')}</button><a href="https://github.com/SpillArena/SpillArena" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
   </div></footer>
 }
