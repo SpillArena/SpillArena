@@ -5,6 +5,7 @@ import { CONTACT_LIMITS, TOPICS, checkContact, sendContact, type ContactReceipt,
 import { matchFaq, type FaqItem } from '../../lib/faqMatch'
 import { useAccount } from '../../account'
 import logoUrl from '../../assets/logo.svg'
+import Select from '../../ui/Select'
 
 type Phase = 'writing' | 'sending' | 'sent' | 'helped'
 
