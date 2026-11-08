@@ -1,4 +1,5 @@
 import { GAME_DEFAULTS, type Availability } from "../../shared/game-settings.js";
+import { partyLimits } from "../../shared/games-registry.js";
 import type { GameId } from "../account";
 import { gameArt, type ArtLanguage } from "./game-art";
 
@@ -34,7 +35,6 @@ const catalogue: Game[] = [
         id: 1,
         title: "FleetBot",
         category: "strategy",
-        multiplayer: true,
         descriptionKey: "fleetBotDescription",
         icon: "Anchor",
         color: "bg-blue-600",
@@ -45,7 +45,6 @@ const catalogue: Game[] = [
         id: 2,
         title: "HangBot",
         category: "words",
-        multiplayer: true,
         descriptionKey: "hangBotDescription",
         icon: "Type",
         color: "bg-red-500",
@@ -106,7 +105,6 @@ const catalogue: Game[] = [
         id: 8,
         title: "MelodyRush",
         category: "music",
-        multiplayer: true,
         descriptionKey: "melodyRushDescription",
         icon: "Music",
         color: "bg-orange-600",
@@ -117,7 +115,6 @@ const catalogue: Game[] = [
         id: 9,
         title: "Hitline",
         category: "music",
-        multiplayer: true,
         descriptionKey: "hitlineDescription",
         icon: "Music",
         color: "bg-teal-700",
@@ -128,7 +125,6 @@ const catalogue: Game[] = [
         id: 10,
         title: "SipZone",
         category: "party",
-        multiplayer: true,
         descriptionKey: "sipZoneDescription",
         icon: "PartyPopper",
         color: "bg-emerald-900",
@@ -149,8 +145,9 @@ const catalogue: Game[] = [
 
 /** Initial render and offline fallback; live settings come from useGames. */
 export const games: Game[] = catalogue.map(game => {
-    const setting = GAME_DEFAULTS.find(item => item.game === new URL(game.liveUrl).pathname.split('/')[1])!
-    return { ...game, beta: setting.beta, availability: setting.availability, disabled: setting.availability !== 'available' }
+    const slug = new URL(game.liveUrl).pathname.split('/')[1]
+    const setting = GAME_DEFAULTS.find(item => item.game === slug)!
+    return { ...game, multiplayer: partyLimits(slug) !== null, beta: setting.beta, availability: setting.availability, disabled: setting.availability !== 'available' }
 });
 
 /** Spillnavnet slik forsiden viser det, ut fra id-en tjeneren lagrer. */
