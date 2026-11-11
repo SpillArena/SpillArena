@@ -34,7 +34,8 @@
       { "q": "Hvor lange er klippene?", "a": "Seks trinn, fra 0,2 sekunder til 16 sekunder." },
       { "q": "Hvor kommer lyden fra?", "a": "Fra 30 sekunders forhåndsvisninger hos Deezer. De strømmes og lagres ikke." },
       { "q": "Er daglig mikstape lik for alle?", "a": "Ja. De samme fem sangene for alle, nye ved midnatt norsk tid." },
-      { "q": "Må jeg ha konto?", "a": "Ikke for solo. Sammen og Versus krever innlogging." }
+      { "q": "Må jeg ha konto?", "a": "Ikke for solo. Sammen og Versus krever innlogging." },
+      { "q": "Er det reklame i MelodyRush?", "a": "Nei, aldri. Musikken kommer fra Deezer, og vilkårene for den tillater ikke reklame. Spillet, guiden og party-modus laster ingen annonsekode." }
     ]
   },
   "en": {
@@ -72,7 +73,8 @@
       { "q": "How long are the clips?", "a": "Six steps, from 0.2 seconds to 16 seconds." },
       { "q": "Where does the audio come from?", "a": "From 30-second previews at Deezer. They are streamed and not stored." },
       { "q": "Is the daily mixtape the same for everyone?", "a": "Yes. The same five songs for everyone, new at midnight Norwegian time." },
-      { "q": "Do I need an account?", "a": "Not for solo. Together and Versus need a sign-in." }
+      { "q": "Do I need an account?", "a": "Not for solo. Together and Versus need a sign-in." },
+      { "q": "Are there ads in MelodyRush?", "a": "No, never. The music comes from Deezer, and the terms for it do not allow ads. The game, this guide and party mode load no ad code." }
     ]
   }
 }

@@ -336,7 +336,24 @@ that the "no ads" line no longer claims anything for the whole domain.
 | Lobby | Yes, once switched on | |
 | AtlasMaster, EraShuffle, FleetBot, HangBot, PixelPanic, ProportionPanic, ScribbleBot | Later, menus and result screens only, never during play | Each game opts in by calling `loadAdSense()` itself. Not done yet. |
 | SipZone | **No** | Drinking games and snus fall under Google's publisher restrictions (alcohol misuse: "competition drinking"; tobacco). |
-| MelodyRush, Hitline | **No** | Deezer's developer terms restrict commercial use, and `MelodyRush/docs/MUSIC_SOURCE.md` asks Deezer for an *ad-free* quiz. Revisit only with Deezer's written approval. |
+| MelodyRush, Hitline | **No, never** | The music comes from the Deezer API. Deezer's developer terms restrict commercial use, and `MelodyRush/docs/MUSIC_SOURCE.md` asks Deezer for an *ad-free* quiz. Revisit only with Deezer's written approval. Enforced in code, see below. |
+
+### How MelodyRush and Hitline stay ad-free
+
+Four layers, so one mistake does not put ads next to Deezer's music:
+
+1. **Game CSP.** `MelodyRush/public/_headers` and `Hitline/public/_headers` set `script-src 'self' 'unsafe-inline'`.
+   Google's ad tag cannot run there, even if someone adds `loadAdSense()` by mistake. Each game has `tests/no-ads.test.ts`
+   (no ad code in the sources, no Google host in the CSP).
+2. **Hub paths.** `AD_FREE_GAMES` in `shared/games-registry.js` (`melodyrush`, `hitline`, `sipzone`). `isAdFreePage()`
+   returns true for any path containing one of them, so `/games/melodyrush/` stays ad-free even if guides get ads later.
+3. **Party mode.** The leader can open either game in an iframe over the lobby, and a loaded ad tag cannot be removed.
+   So a tab that holds a party code (`isInParty()`) does not load the tag, and `PartyGameFrame` reloads the page instead
+   of showing an ad-free game next to a tag that did load.
+4. **Text.** The privacy policy ("Ads"), the FAQ and the guides' FAQ say these games have no ads and why.
+
+Adding a game that uses Deezer, or another source with the same limit: add its slug to `AD_FREE_GAMES`, give it the same
+CSP and test. Test: `node --test tests/site-content.test.mjs`.
 
 ### Turning it on
 

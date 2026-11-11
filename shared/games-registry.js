@@ -13,6 +13,22 @@ export const GAMES = ['atlasmaster', 'scribblebot', 'hangbot', 'proportionpanic'
 export const isGame = (id) => typeof id === 'string' && GAMES.includes(id)
 
 /**
+ * Games that must never show ads, and never run on a page that loaded ad code. Not a preference: a licence condition.
+ *
+ * - melodyrush, hitline: the music comes from the Deezer API. Deezer's developer terms restrict commercial use, and the
+ *   permission asked for is for an ad-free quiz (MelodyRush/docs/MUSIC_SOURCE.md). Ads next to that music would break it.
+ * - sipzone: drinking games fall under Google's publisher restrictions.
+ *
+ * What reads this: src/lib/adFreePages.ts (the game's guide and any path under its slug stay ad-free) and
+ * src/party/PartyGameFrame.tsx (a party never opens one of these over a page with the ad tag). Each of these games also
+ * blocks the ad tag in its own public/_headers and has a test for it, so the rule holds without the hub.
+ * Taking a game off this list needs the licence holder's written yes first. See docs/OPERATIONS.md, "Ads".
+ */
+export const AD_FREE_GAMES = ['melodyrush', 'hitline', 'sipzone']
+
+export const isAdFreeGame = (id) => typeof id === 'string' && AD_FREE_GAMES.includes(id)
+
+/**
  * Party mode: the games that have a room for several players, and how many a room takes. A game that is not here is
  * solo only (AtlasMaster, PixelPanic, Cracked) and cannot be picked for a party. The limits are the ones the games'
  * own guides state; MelodyRush Versus is two-player only, but its Together mode takes eight, so the game decides inside.

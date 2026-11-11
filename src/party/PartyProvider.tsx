@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { getToken, hasConsent, onSessionChange, useAccount } from '../account'
 import { CODE_ALPHABET, PARTY_CODE, PROTOCOL } from '../../shared/party.js'
 import { PartyContext, type PartyApi, type PartyStatus, type PartyView } from './context'
+import { PARTY_STORAGE_KEY } from '../lib/adFreePages'
 
 /*
  * Party mode client: one WebSocket to the party's Durable Object (workers/parties) for as long as the player is in a party.
@@ -13,7 +14,7 @@ import { PartyContext, type PartyApi, type PartyStatus, type PartyView } from '.
  * the seat for a dropped member until the party itself expires.
  */
 
-const STORAGE_KEY = 'spillarena.party'
+const STORAGE_KEY = PARTY_STORAGE_KEY
 const FATAL_CLOSE = [4000, 4002, 4003]
 const PING_MS = 25_000
 
