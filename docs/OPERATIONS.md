@@ -413,9 +413,11 @@ Its own `_headers` needs the same Google hosts.
 
 ## Game footer
 
-Every game has the same footer: *Part of SpillArena*, then **How to play**, **FAQ**, the game's own extras (image
-credits, licences, music sources), and **Cookies & storage**. There is no GitHub link: the repos are often private. **How to play** opens the rules text in a
-window (a native `<dialog>`), not as a card under the page.
+Every game has the same footer: *Part of SpillArena*, then **How to play**, the game's own extras (image credits,
+licences, music sources) and **Cookies & storage**. There is no GitHub link: the repos are often private. There is no
+separate FAQ link either: **How to play** opens the rules text in a window (a native `<dialog>`), and the link at the
+bottom of that window goes to the full guide with example, tips and FAQ on spillarena.no. One link in the footer, not two
+that lead to the same page.
 
 - `src/ui/SiteFooter.tsx` and `src/ui/site-footer.css` are **vendored**, byte for byte, in all ten games (FleetBot:
   `battleship-frontend/`). The canonical copies are `docs/footer/SiteFooter.tsx.txt` and `docs/footer/site-footer.css`
@@ -425,7 +427,7 @@ window (a native `<dialog>`), not as a card under the page.
   is readable before any script runs. When the footer mounts it moves that section into its dialog, and puts it back if
   the footer unmounts. Without the section, **How to play** links to the guide.
 - The language shown follows the game's own language setting, not the page's `lang` attribute.
-- **FAQ** opens the game's guide on spillarena.no in a new tab. The guides carry the FAQ.
+- The guide pages (`/games/<slug>/`) carry the FAQ. They are reached from the dialog's last link, the hub's `/games/` page and the sitemap, so crawlers find them without a second footer link.
 - The per-game footer buttons for rules and FAQ were removed. FleetBot's FAQ dialog is deleted. The rules dialogs in
   MelodyRush, Hitline and Cracked stay, since other buttons open them.
 
