@@ -86,8 +86,12 @@ export default function App() {
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', `https://spillarena.no${metadata.path}`)
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title)
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', metadata.description)
+    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', i18n.resolvedLanguage === 'en' ? 'en_US' : 'nb_NO')
+    document.querySelector('meta[property="og:locale:alternate"]')?.setAttribute('content', i18n.resolvedLanguage === 'en' ? 'nb_NO' : 'en_US')
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', document.title)
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', metadata.description)
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://spillarena.no${metadata.path}`)
-    document.querySelector('meta[name="robots"]')?.setAttribute('content', accountPage ? 'noindex, follow' : 'index, follow')
+    document.querySelector('meta[name="robots"]')?.setAttribute('content', accountPage ? 'noindex, follow' : 'index, follow, max-image-preview:large')
   }, [page, i18n.resolvedLanguage, t])
 
   /** In a party the leader's pick goes to everyone, and nobody else opens a game on their own. */
