@@ -414,7 +414,7 @@ Its own `_headers` needs the same Google hosts.
 ## Game footer
 
 Every game has the same footer: *Part of SpillArena*, then **How to play**, **FAQ**, the game's own extras (image
-credits, licences, music sources), **Cookies & storage** and **GitHub**. **How to play** opens the rules text in a
+credits, licences, music sources), and **Cookies & storage**. There is no GitHub link: the repos are often private. **How to play** opens the rules text in a
 window (a native `<dialog>`), not as a card under the page.
 
 - `src/ui/SiteFooter.tsx` and `src/ui/site-footer.css` are **vendored**, byte for byte, in all ten games (FleetBot:
