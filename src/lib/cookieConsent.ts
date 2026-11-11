@@ -1,3 +1,4 @@
+import { hasConsent as domainHasConsent } from '../account'
 export type ConsentStatus = 'accepted' | 'declined' | null
 
 export const CONSENT_KEY = 'cookie-consent'
@@ -35,8 +36,9 @@ export function getConsent(): ConsentStatus {
     return stored === 'accepted' || stored === 'declined' ? stored : null
 }
 
+/** Forsiden lagrer bare innstillinger her, og de følger delen «Innstillinger» i valget. */
 export function hasConsent(): boolean {
-    return getConsent() === 'accepted'
+    return domainHasConsent('settings')
 }
 
 export function readPreference(key: string): string | null {
