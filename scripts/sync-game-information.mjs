@@ -20,12 +20,22 @@ const css = `/* Shared by the initial HTML and the running game. Scoped to avoid
 html[lang^="en"] .spillarena-game-information [data-game-info-language="no"] { display: none; }
 html[lang^="en"] .spillarena-game-information [data-game-info-language="en"] { display: block; }
 @media (prefers-color-scheme: dark) { .spillarena-game-information { color: var(--ink, #f5f0f7); background: var(--paper, #211d29); } }
+/* With scripting on, the game replaces the fallback in #root and moves the rules text into its footer dialog, so neither
+   may flash as a card while the game loads. Still in the document, only out of sight. Without scripting they stay visible. */
+@media (scripting: enabled) {
+  #root > main.spillarena-game-information, body > section.spillarena-game-information { position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+}
 `
 let changed = 0
 for (const [slug, directory] of Object.entries(roots)) {
   const root = resolve(hub, '..', directory)
   const path = resolve(root, 'index.html')
-  let html = await readFile(path, 'utf8')
+  let html
+  try { html = await readFile(path, 'utf8') } catch (error) {
+    if (error.code !== 'ENOENT') throw error
+    console.log(`${directory}: not checked out here, skipped`)
+    continue
+  }
   const original = html
   const block = '<!--game-information-->\n<section class="spillarena-game-information" aria-label="Spillinformasjon / Game information">\n'
     + ['no', 'en'].map(lang => {
