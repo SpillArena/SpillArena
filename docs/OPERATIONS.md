@@ -414,16 +414,16 @@ Its own `_headers` needs the same Google hosts.
 ## Game footer
 
 Every game has the same footer: *Part of SpillArena*, then **How to play**, **FAQ**, the game's own extras (image
-credits, licences, music sources), **Cookies & storage** and **GitHub**. The rules text that used to sit as a card
-under the page now lives in the footer.
+credits, licences, music sources), **Cookies & storage** and **GitHub**. **How to play** opens the rules text in a
+window (a native `<dialog>`), not as a card under the page.
 
 - `src/ui/SiteFooter.tsx` and `src/ui/site-footer.css` are **vendored**, byte for byte, in all ten games (FleetBot:
   `battleship-frontend/`). The canonical copies are `docs/footer/SiteFooter.tsx.txt` and `docs/footer/site-footer.css`
   here (a `.txt` so this repo's lint and build ignore them). Change them here, then copy them out.
 - Each game's `SiteShell.tsx` re-exports `SiteFooter` from it. A game passes only its extras as children.
 - The rules text is still plain HTML in each game's `index.html` (written by `scripts/sync-game-information.mjs`), so it
-  is readable before any script runs. When the footer mounts it moves that section inside itself, and puts it back if the
-  footer unmounts. **How to play** opens it; without the section it links to the guide.
+  is readable before any script runs. When the footer mounts it moves that section into its dialog, and puts it back if
+  the footer unmounts. Without the section, **How to play** links to the guide.
 - The language shown follows the game's own language setting, not the page's `lang` attribute.
 - **FAQ** opens the game's guide on spillarena.no in a new tab. The guides carry the FAQ.
 - The per-game footer buttons for rules and FAQ were removed. FleetBot's FAQ dialog is deleted. The rules dialogs in
