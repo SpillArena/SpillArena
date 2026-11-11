@@ -411,6 +411,24 @@ itself, so that is a change in all repos.
 PIN fields (the AccountBadge sign-in) off the pages with the tag, the same way.
 Its own `_headers` needs the same Google hosts.
 
+## Game footer
+
+Every game has the same footer: *Part of SpillArena*, then **How to play**, **FAQ**, the game's own extras (image
+credits, licences, music sources), **Cookies & storage** and **GitHub**. The rules text that used to sit as a card
+under the page now lives in the footer.
+
+- `src/ui/SiteFooter.tsx` and `src/ui/site-footer.css` are **vendored**, byte for byte, in all ten games (FleetBot:
+  `battleship-frontend/`). The canonical copies are `docs/footer/SiteFooter.tsx.txt` and `docs/footer/site-footer.css`
+  here (a `.txt` so this repo's lint and build ignore them). Change them here, then copy them out.
+- Each game's `SiteShell.tsx` re-exports `SiteFooter` from it. A game passes only its extras as children.
+- The rules text is still plain HTML in each game's `index.html` (written by `scripts/sync-game-information.mjs`), so it
+  is readable before any script runs. When the footer mounts it moves that section inside itself, and puts it back if the
+  footer unmounts. **How to play** opens it; without the section it links to the guide.
+- The language shown follows the game's own language setting, not the page's `lang` attribute.
+- **FAQ** opens the game's guide on spillarena.no in a new tab. The guides carry the FAQ.
+- The per-game footer buttons for rules and FAQ were removed. FleetBot's FAQ dialog is deleted. The rules dialogs in
+  MelodyRush, Hitline and Cracked stay, since other buttons open them.
+
 ## Party mode
 
 A party lets signed-in players follow one leader through the games. The leader opens `#party`, creates a party and shares a four-letter code; whatever game the leader picks opens for every member, and when the leader switches, so does everyone.
