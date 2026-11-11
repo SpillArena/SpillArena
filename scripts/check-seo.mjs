@@ -5,6 +5,8 @@ import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+const norwegian = JSON.parse(readFileSync(new URL('../src/i18n/locales/no.json', import.meta.url), 'utf8'))
+
 const dist = join(dirname(fileURLToPath(import.meta.url)), '../dist')
 const read = path => readFileSync(join(dist, path), 'utf8')
 const decode = value => value.replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
@@ -35,7 +37,19 @@ for (const path of [...documents, '/404.html']) {
   assert.ok(!/class="arena-loader is-boot"/.test(html) || path === '/', `${path}: readable text must not sit under the boot loader`)
   const scripts = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]))
   assert.ok(scripts.length > 0, `${path}: structured data`)
-  if (path === '/') continue
+  if (path === '/') {
+    assert.equal(title, norwegian.seoTitle, 'home: initial title matches the Norwegian app')
+    assert.equal(description, norwegian.seoDescription, 'home: initial description matches the Norwegian app')
+    for (const [attribute, name, expected] of [
+      ['property', 'og:title', title], ['property', 'og:description', description],
+      ['name', 'twitter:title', title], ['name', 'twitter:description', description],
+      ['property', 'og:locale', 'nb_NO'],
+    ]) {
+      const content = html.match(new RegExp(`<meta ${attribute}="${name}"\\s+content="([^"]+)"`))?.[1] ?? ''
+      assert.equal(decode(content), expected, `home: ${name}`)
+    }
+    continue
+  }
   const graph = scripts.flatMap(script => script['@graph'] ?? [script])
   const page = graph.find(item => item['@id'] === `${canonical}#webpage`)
   assert.ok(page, `${path}: page node`)

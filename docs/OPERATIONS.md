@@ -495,3 +495,22 @@ Local checks: `npm run test:admin`, `npm run test:popularity`, `npm run lint`,
 - Only the home catalogue requests advertising. Information pages, guides, contact and account pages do not load either the Google consent script or ad script. Hash navigation to an ad-free screen reloads a document that has not loaded advertising code.
 - Each game's `index.html` has readable initial information and an expandable rules section outside React's root. `public/game-information.css` scopes styling and follows the document language. After changing guide introductions or rules, run `node scripts/sync-game-information.mjs --check`; `--write` explicitly updates the eleven sibling repos. This is never a side effect of the hub build. Review and deploy those repos separately.
 - Validation: `npm run build`, `npm run lint`, `node --test tests/*.test.mjs`. Build each changed game. Publish the hub and game changes, verify the public documents/sitemap and game availability, then request AdSense review manually. Do not describe a passing local check as a live deployment or Google approval.
+
+## Norwegian-first search appearance
+
+The lobby and public documents default to Norwegian, both in initial HTML and
+when React renders. An explicit English choice in Settings still works and is
+remembered when preference storage is accepted. Browser language alone does not
+switch these URLs to English: doing so let Google's rendered page replace the
+Norwegian title and text with English at the same canonical URL.
+
+Home search and sharing copy comes from `seoTitle` / `seoDescription` in the
+locale files and must match `index.html`; `npm run seo:check` checks that agreement.
+The longer visible introduction is separate from the concise search description.
+Canonical URLs, sitemap and Norwegian initial text remain available without JS.
+English is currently a visitor preference, not a separate indexed language site;
+do not add English hreflang links until matching English document URLs exist.
+
+After deploying, inspect `https://spillarena.no/` in Google Search Console and
+request indexing. Google chooses its own title/snippet and must crawl the update
+before an existing English result can change. Check `/games/` and a guide as well.

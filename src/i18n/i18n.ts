@@ -9,20 +9,11 @@ export const SUPPORTED_LANGUAGES = [
     { code: 'en', label: 'English' },
 ] as const
 
-function detectBrowserLanguage(): string {
-    if (typeof navigator === 'undefined') return 'en'
-    const supported = new Set(SUPPORTED_LANGUAGES.map((l) => l.code as string))
-    const candidates = navigator.languages?.length ? navigator.languages : [navigator.language]
-    for (const raw of candidates) {
-        if (!raw) continue
-        const base = raw.toLowerCase().split('-')[0]
-        const code = base === 'nb' || base === 'nn' ? 'no' : base
-        if (supported.has(code)) return code
-    }
-    return 'en'
-}
-
-const savedLanguage = readPreference('lang') ?? detectBrowserLanguage()
+// Public URLs are Norwegian first, including after JavaScript renders. Browser
+// language detection would let an English browser/crawler replace the indexable
+// Norwegian content and title at the very same canonical URL.
+const preference = readPreference('lang')
+const savedLanguage = preference === 'en' ? 'en' : 'no'
 
 void i18n.use(initReactI18next).init({
     resources: {
@@ -30,7 +21,7 @@ void i18n.use(initReactI18next).init({
         en: { translation: en },
     },
     lng: savedLanguage,
-    fallbackLng: 'en',
+    fallbackLng: 'no',
     interpolation: {
         escapeValue: false,
     },

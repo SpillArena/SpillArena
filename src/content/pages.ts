@@ -96,5 +96,5 @@ export function pageMetadata(language: Language, page?: InfoPage, slug?: GuideSl
   if (page === 'guides') return { title: copy.content.guidesTitle, description: copy.content.guidesIntro, path: INFO_PATHS.guides }
   if (page === 'contact') return { title: copy.contact.title, description: copy.contact.intro, path: INFO_PATHS.contact }
   if (page) return { title: copy.legal[page].title, description: copy.legal[page].intro, path: INFO_PATHS[page] }
-  return { title: copy.seoTitle, description: copy.content.homeIntro, path: '/' }
+  return { title: copy.seoTitle, description: copy.seoDescription, path: '/' }
 }
