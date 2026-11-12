@@ -40,7 +40,7 @@ for (const [slug, directory] of Object.entries(roots)) {
   const block = '<!--game-information-->\n<section class="spillarena-game-information" aria-label="Spillinformasjon / Game information">\n'
     + ['no', 'en'].map(lang => {
       const g = guides[slug][lang]
-      return `<div lang="${lang === 'no' ? 'nb' : 'en'}" data-game-info-language="${lang}"><details><summary>${esc(g.title)}</summary><p>${esc(g.intro)}</p><h2>${esc(g.sections[0].h)}</h2>${g.sections[0].p.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}<p><a href="https://spillarena.no/games/${slug}/">${lang === 'no' ? 'Les hele guiden med eksempel, tips og vanlige spørsmål' : 'Read the full guide with an example, tips and FAQ'}</a> · <a href="https://spillarena.no/">${lang === 'no' ? 'Alle spill' : 'All games'}</a></p></details></div>`
+      return `<div lang="${lang === 'no' ? 'nb' : 'en'}" data-game-info-language="${lang}"><details><summary>${esc(g.title)}</summary><p>${esc(g.intro)}</p><h2>${esc(g.sections[0].h)}</h2>${g.sections[0].p.map(paragraph => `<p>${esc(paragraph)}</p>`).join('')}<p><a href="https://spillarena.no/games/${slug}/" target="_blank" rel="noopener">${lang === 'no' ? 'Les hele guiden med eksempel, tips og vanlige spørsmål' : 'Read the full guide with an example, tips and FAQ'}</a> · <a href="https://spillarena.no/">${lang === 'no' ? 'Alle spill' : 'All games'}</a></p></details></div>`
     }).join('\n') + '\n</section>\n<!--/game-information-->'
   if (html.includes('<!--game-information-->')) html = html.replace(/<!--game-information-->[\s\S]*?<!--\/game-information-->/, block)
   else html = html.replace('</body>', `${block}\n</body>`)
