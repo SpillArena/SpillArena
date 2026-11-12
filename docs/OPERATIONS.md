@@ -426,6 +426,9 @@ that lead to the same page.
 - The rules text is still plain HTML in each game's `index.html` (written by `scripts/sync-game-information.mjs`), so it
   is readable before any script runs. When the footer mounts it moves that section into its dialog, and puts it back if
   the footer unmounts. Without the section, **How to play** links to the guide.
+- The window takes its colours and typeface from the game (`--arena-*` variables, inherited font). The game name is the
+  heading and the rest of the guide title the line under it, the guide intro is the lead, and the last line of the text
+  (guide link, all games) becomes a bar that stays in view. On a phone it is a sheet from the bottom edge.
 - The language shown follows the game's own language setting, not the page's `lang` attribute.
 - The guide pages (`/games/<slug>/`) carry the FAQ. They are reached from the dialog's last link, the hub's `/games/` page and the sitemap, so crawlers find them without a second footer link.
 - The per-game footer buttons for rules and FAQ were removed. FleetBot's FAQ dialog is deleted. The rules dialogs in
