@@ -7,6 +7,19 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
     {
+        date: '12-11-2026',
+        title: 'Choose what is stored, and one footer for every game',
+        release: '1.22.0',
+        changes: [
+            'You can now choose what SpillArena stores on your device: your sign-in, your progress and results, and your settings. Say yes to some and no to the rest, and change it any time under Cookies & storage',
+            'Declining is now a small link under the main button in the storage dialog',
+            'Every game now has the same footer. How to play opens in its own window, with a link to the full guide that opens in a new tab',
+            'MelodyRush and Hitline never show ads, because their music comes from Deezer. SipZone has no ads either',
+            'The rules text no longer flashes on screen while a game loads',
+            'EraShuffle now has the same header and footer lines as the other games',
+        ],
+    },
+    {
         date: '07-11-2026',
         title: 'Party mode gets smarter',
         release: '1.21.0',
