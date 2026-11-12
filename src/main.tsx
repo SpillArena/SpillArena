@@ -15,7 +15,7 @@ import { PartyProvider } from './party/PartyProvider'
 import PartyGameFrame from './party/PartyGameFrame'
 import { hideLoader, installGameLinkLoader } from './ui/loader'
 import { loadAdSense } from './account'
-import { isAdFreePage } from './lib/adFreePages'
+import { isAdFreePage, isInParty } from './lib/adFreePages'
 import { legacyInfoPath } from './lib/pages'
 
 /*
@@ -29,12 +29,13 @@ import { legacyInfoPath } from './lib/pages'
  * Reklame, og Googles samtykkevindu med den. Før første tegning, så
  * samtykkedialogen vet at den skal vente på Googles. Uten VITE_ADSENSE_CLIENT
  * (se .env.production) gjør kallet ingenting. Bare på forsiden, aldri på hjelpe-, kontakt- eller kontosider
- * (src/lib/adFreePages.ts). Hvorfor og hvordan: src/account/ads.ts og
+ * (src/lib/adFreePages.ts), og aldri i en fane som er med i en party: der kan MelodyRush eller Hitline åpnes oppå
+ * forsiden, og Deezer-musikken deres skal ikke stå ved siden av reklame. Hvorfor og hvordan: src/account/ads.ts og
  * docs/OPERATIONS.md.
  */
 const legacyPath = legacyInfoPath()
 if (legacyPath) window.history.replaceState(window.history.state, '', legacyPath)
-if (!isAdFreePage()) loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)
+if (!isAdFreePage() && !isInParty()) loadAdSense(import.meta.env.VITE_ADSENSE_CLIENT)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

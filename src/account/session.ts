@@ -35,7 +35,7 @@ const STORAGE_KEY = SESSION_STORAGE_KEY
  *
  * configureSession can still override it, for a game that has not moved over.
  */
-let hasConsent: () => boolean = () => domainConsent()
+let hasConsent: () => boolean = () => domainConsent('session')
 
 /** Held in memory so a declined consent still gives a working session. */
 let session: Session | null | undefined

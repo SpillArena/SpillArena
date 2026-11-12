@@ -336,7 +336,24 @@ that the "no ads" line no longer claims anything for the whole domain.
 | Lobby | Yes, once switched on | |
 | AtlasMaster, EraShuffle, FleetBot, HangBot, PixelPanic, ProportionPanic, ScribbleBot | Later, menus and result screens only, never during play | Each game opts in by calling `loadAdSense()` itself. Not done yet. |
 | SipZone | **No** | Drinking games and snus fall under Google's publisher restrictions (alcohol misuse: "competition drinking"; tobacco). |
-| MelodyRush, Hitline | **No** | Deezer's developer terms restrict commercial use, and `MelodyRush/docs/MUSIC_SOURCE.md` asks Deezer for an *ad-free* quiz. Revisit only with Deezer's written approval. |
+| MelodyRush, Hitline | **No, never** | The music comes from the Deezer API. Deezer's developer terms restrict commercial use, and `MelodyRush/docs/MUSIC_SOURCE.md` asks Deezer for an *ad-free* quiz. Revisit only with Deezer's written approval. Enforced in code, see below. |
+
+### How MelodyRush and Hitline stay ad-free
+
+Four layers, so one mistake does not put ads next to Deezer's music:
+
+1. **Game CSP.** `MelodyRush/public/_headers` and `Hitline/public/_headers` set `script-src 'self' 'unsafe-inline'`.
+   Google's ad tag cannot run there, even if someone adds `loadAdSense()` by mistake. Each game has `tests/no-ads.test.ts`
+   (no ad code in the sources, no Google host in the CSP).
+2. **Hub paths.** `AD_FREE_GAMES` in `shared/games-registry.js` (`melodyrush`, `hitline`, `sipzone`). `isAdFreePage()`
+   returns true for any path containing one of them, so `/games/melodyrush/` stays ad-free even if guides get ads later.
+3. **Party mode.** The leader can open either game in an iframe over the lobby, and a loaded ad tag cannot be removed.
+   So a tab that holds a party code (`isInParty()`) does not load the tag, and `PartyGameFrame` reloads the page instead
+   of showing an ad-free game next to a tag that did load.
+4. **Text.** The privacy policy ("Ads"), the FAQ and the guides' FAQ say these games have no ads and why.
+
+Adding a game that uses Deezer, or another source with the same limit: add its slug to `AD_FREE_GAMES`, give it the same
+CSP and test. Test: `node --test tests/site-content.test.mjs`.
 
 ### Turning it on
 
@@ -393,6 +410,29 @@ itself, so that is a change in all repos.
 **For the games (step 5):** a game that calls `loadAdSense()` must keep its
 PIN fields (the AccountBadge sign-in) off the pages with the tag, the same way.
 Its own `_headers` needs the same Google hosts.
+
+## Game footer
+
+Every game has the same footer: *Part of SpillArena*, then **How to play**, the game's own extras (image credits,
+licences, music sources) and **Cookies & storage**. There is no GitHub link: the repos are often private. There is no
+separate FAQ link either: **How to play** opens the rules text in a window (a native `<dialog>`), and the link at the
+bottom of that window goes to the full guide with example, tips and FAQ on spillarena.no. One link in the footer, not two
+that lead to the same page.
+
+- `src/ui/SiteFooter.tsx` and `src/ui/site-footer.css` are **vendored**, byte for byte, in all ten games (FleetBot:
+  `battleship-frontend/`). The canonical copies are `docs/footer/SiteFooter.tsx.txt` and `docs/footer/site-footer.css`
+  here (a `.txt` so this repo's lint and build ignore them). Change them here, then copy them out.
+- Each game's `SiteShell.tsx` re-exports `SiteFooter` from it. A game passes only its extras as children.
+- The rules text is still plain HTML in each game's `index.html` (written by `scripts/sync-game-information.mjs`), so it
+  is readable before any script runs. When the footer mounts it moves that section into its dialog, and puts it back if
+  the footer unmounts. Without the section, **How to play** links to the guide.
+- The window takes its colours and typeface from the game (`--arena-*` variables, inherited font). The game name is the
+  heading and the rest of the guide title the line under it, the guide intro is the lead, and the last line of the text
+  (guide link, all games) becomes a bar that stays in view. On a phone it is a sheet from the bottom edge.
+- The language shown follows the game's own language setting, not the page's `lang` attribute.
+- The guide pages (`/games/<slug>/`) carry the FAQ. They are reached from the dialog's last link, the hub's `/games/` page and the sitemap, so crawlers find them without a second footer link.
+- The per-game footer buttons for rules and FAQ were removed. FleetBot's FAQ dialog is deleted. The rules dialogs in
+  MelodyRush, Hitline and Cracked stay, since other buttons open them.
 
 ## Party mode
 

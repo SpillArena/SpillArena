@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LogOut, Users } from 'lucide-react'
-import { useAccount } from '../account'
+import { adsRequested, useAccount } from '../account'
+import { isAdFreeGame } from '../../shared/games-registry.js'
 import { useGames } from '../hooks/useGames'
 import { useParty } from './context'
 import { gameSlug, partyGameUrl } from './slug'
@@ -35,7 +36,12 @@ export default function PartyGameFrame() {
     else if (shown.current) { shown.current = false; window.location.hash = 'party' }
   }, [slug])
 
-  if (!view || !slug) return null
+  // MelodyRush, Hitline and SipZone never run on a page that loaded the ad tag (shared/games-registry.js). A tab in a
+  // party loads without the tag (main.tsx), so this is the backstop: reload instead of showing the game next to ads.
+  const besideAds = isAdFreeGame(slug) && adsRequested()
+  useEffect(() => { if (besideAds) window.location.reload() }, [besideAds])
+
+  if (!view || !slug || besideAds) return null
 
   /** Links out of the game to the lobby are the leader's call (end the game) and a no-op for everyone else. */
   const watchLinks = (frame: HTMLIFrameElement) => {

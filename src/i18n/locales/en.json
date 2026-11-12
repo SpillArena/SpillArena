@@ -805,7 +805,8 @@
           "h": "What we store in your browser",
           "p": [
             "SpillArena sets no cookies. What we store is kept in your browser’s local storage, and only if you accept: a sign-in token that lasts up to 30 days, your theme, accent colour and language, whether you hid the tip about adding the site to your home screen, and your progress, results and settings in the games.",
-            "If you decline, none of this is stored on your device. What you do lasts only until you close the tab, and anything already stored is deleted. You can change your answer any time under “Storage & privacy” in the footer.",
+            "You choose what is stored, in three parts: sign-in, progress and results, and settings. You can say yes to some and no to the rest, and change the choice any time. A part you have not said yes to is not stored on your device: it lasts only until you close the tab, and anything already stored for that part is deleted. The choice applies to all of SpillArena.",
+            "If you decline everything, none of this is stored on your device. What you do lasts only until you close the tab, and anything already stored is deleted. You can change your answer any time under “Storage & privacy” in the footer.",
             "Two things are stored either way, because they only remember the answer itself: your answer to the storage question, so we don’t ask again, and that you have seen the reminder that your progress isn’t being saved. The reminder is remembered only until the tab closes.",
             "Pages that show ads may let Google store cookies and similar identifiers in your browser, but only as you choose in Google’s consent message, not by the answer above. See “Ads”."
           ]
@@ -848,6 +849,7 @@
           "p": [
             "SpillArena can show ads from Google AdSense to help cover running costs. On pages with ads, Google and the ad partners it works with use cookies and similar technology to show ads, limit how often you see the same one, measure them and prevent fraud, and, only if you allow it, to personalise them based on your activity here and on other sites.",
             "In the EEA, the UK and Switzerland, Google asks for that consent in its own message, built on the IAB Transparency and Consent Framework, before the ad code loads. You can change your choice at any time with “Ad settings” under “Storage & privacy”, or with the privacy and cookie settings link Google adds to the page. How Google uses this data: policies.google.com/technologies/partner-sites.",
+            "MelodyRush and Hitline are always ad-free. Their music comes from Deezer, and the terms for it do not allow ads. Ad code therefore never loads in those two games, in their guides or when they are played in a party. SipZone has no ads either.",
             "Your SpillArena account, PIN, progress and contact messages are never shared with Google or advertisers."
           ]
         },
@@ -1091,7 +1093,7 @@
       {
         "h": "Accounts and running costs",
         "p": [
-          "You can try the solo games without an account. A free account supports saved progress and online rooms. SpillArena may use advertising on the home page to help cover hosting costs. The game guides, help pages and account pages do not load advertising code."
+          "You can try the solo games without an account. A free account supports saved progress and online rooms. SpillArena may use advertising on the home page to help cover hosting costs. The game guides, help pages and account pages do not load advertising code. MelodyRush and Hitline are always ad-free, because their music comes from Deezer."
         ]
       }
     ],

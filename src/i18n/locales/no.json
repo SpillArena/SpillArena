@@ -805,7 +805,8 @@
           "h": "Hva vi lagrer i nettleseren din",
           "p": [
             "SpillArena setter ingen informasjonskapsler (cookies). Det vi lagrer, ligger i nettleserens lokale lagring, og bare hvis du godtar: en innloggingsnøkkel som varer i opptil 30 dager, tema, aksentfarge og språk, om du har skjult tipset om å legge siden på hjem-skjermen, og fremgang, resultater og innstillinger i spillene.",
-            "Avslår du, lagres ingenting av dette på enheten. Det du gjør, lever bare til du lukker fanen, og det som alt lå lagret, slettes. Du kan endre svaret når som helst under «Lagring & personvern» i bunnen av siden.",
+            "Du velger selv hva som lagres, i tre deler: innlogging, fremgang og resultater, og innstillinger. Du kan si ja til noen og nei til resten, og endre valget når som helst. En del du ikke har sagt ja til, lagres ikke på enheten: den lever bare til du lukker fanen, og det som alt lå lagret for den delen, slettes. Valget gjelder hele SpillArena.",
+            "Avslår du alt, lagres ingenting av dette på enheten. Det du gjør, lever bare til du lukker fanen, og det som alt lå lagret, slettes. Du kan endre svaret når som helst under «Lagring & personvern» i bunnen av siden.",
             "To ting lagres uansett, fordi de bare husker selve svaret: svaret ditt på lagringsspørsmålet, så vi ikke spør igjen, og at du har sett påminnelsen om at fremgangen ikke lagres. Påminnelsen huskes bare til fanen lukkes.",
             "På sider med reklame kan Google lagre informasjonskapsler og lignende kjennetegn i nettleseren din, men bare etter valget du gjør i Googles samtykkevindu, ikke etter svaret over. Se «Reklame»."
           ]
@@ -848,6 +849,7 @@
           "p": [
             "SpillArena kan vise reklame fra Google AdSense for å dekke driftskostnadene. På sidene med reklame bruker Google og annonsepartnerne Google samarbeider med informasjonskapsler og lignende teknologi for å vise annonser, begrense hvor ofte du ser den samme, måle dem og hindre svindel, og bare hvis du tillater det, for å tilpasse dem etter aktiviteten din her og på andre nettsteder.",
             "I EØS, Storbritannia og Sveits spør Google om dette samtykket i sitt eget vindu, bygget på IABs Transparency and Consent Framework, før annonsekoden lastes. Du kan endre valget når som helst med «Annonseinnstillinger» under «Lagring & personvern», eller med lenken til personvern- og informasjonskapselinnstillinger som Google legger til på siden. Slik bruker Google dataene: policies.google.com/technologies/partner-sites.",
+            "MelodyRush og Hitline er alltid reklamefrie. Musikken der kommer fra Deezer, og vilkårene for den tillater ikke reklame. Annonsekode lastes derfor aldri i de to spillene, i guidene deres eller når de spilles i en party. SipZone er også uten reklame.",
             "Kontoen din, PIN-koden, fremgangen og kontaktmeldingene dine deles aldri med Google eller annonsører."
           ]
         },
@@ -1091,7 +1093,7 @@
       {
         "h": "Konto og driftskostnader",
         "p": [
-          "Du kan prøve solospillene uten konto. En gratis konto gir lagret fremgang og tilgang til nettrom. SpillArena kan bruke annonser på forsiden for å bidra til driftskostnadene. Spillguidene, hjelpesidene og kontosidene laster ikke annonsekode."
+          "Du kan prøve solospillene uten konto. En gratis konto gir lagret fremgang og tilgang til nettrom. SpillArena kan bruke annonser på forsiden for å bidra til driftskostnadene. Spillguidene, hjelpesidene og kontosidene laster ikke annonsekode. MelodyRush og Hitline er alltid reklamefrie, fordi musikken kommer fra Deezer."
         ]
       }
     ],

@@ -93,3 +93,27 @@ test('guide index is a poster grid with one linked card per game, and posters sh
   for (const slug of GUIDE_SLUGS) assert.ok(html.includes(`href="${guidePath(slug)}"`), slug)
   for (const src of html.match(/\/art\/games\/[A-Za-z]+\.no\.svg/g)) await readFile(`dist${src}`, 'utf8')
 })
+
+test('MelodyRush, Hitline and SipZone never get ads, on their own paths, guides or in a party', async () => {
+  const { isAdFreePage, isAdFreeGamePath, isInParty, PARTY_STORAGE_KEY } = await import('../src/lib/adFreePages.ts')
+  const { AD_FREE_GAMES, isAdFreeGame } = await import('../shared/games-registry.js')
+  assert.deepEqual([...AD_FREE_GAMES].sort(), ['hitline', 'melodyrush', 'sipzone'])
+  for (const slug of AD_FREE_GAMES) {
+    for (const path of [`/${slug}`, `/${slug}/`, `/games/${slug}/`, `/${slug.toUpperCase()}/`]) {
+      assert.equal(isAdFreeGamePath(`https://spillarena.no${path}`), true, path)
+      assert.equal(isAdFreePage(`https://spillarena.no${path}`), true, path)
+    }
+    assert.equal(isAdFreeGame(slug), true)
+  }
+  assert.equal(isAdFreeGame('hangbot'), false)
+  assert.equal(isAdFreePage('https://spillarena.no/'), false, 'the home catalogue is still the one page with ads')
+  // A tab in a party never loads the tag: the leader can open MelodyRush or Hitline over the lobby.
+  const store = new Map()
+  globalThis.window = { sessionStorage: { getItem: k => store.get(k) ?? null } }
+  assert.equal(isInParty(), false)
+  store.set(PARTY_STORAGE_KEY, 'ABCD')
+  assert.equal(isInParty(), true)
+  store.set(PARTY_STORAGE_KEY, 'not a code')
+  assert.equal(isInParty(), false)
+  delete globalThis.window
+})
