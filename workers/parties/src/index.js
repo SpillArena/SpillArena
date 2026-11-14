@@ -53,6 +53,8 @@ export class PartyRoom extends DurableObject {
     if (error) {
       this.send(server, { t: 'error', code: error })
       server.close(4000, error)
+      // A join to a code nobody created must not leave an object behind.
+      if (!this.party) await this.ctx.storage.deleteAll()
     }
     return new Response(null, { status: 101, webSocket: client, headers: { 'Sec-WebSocket-Protocol': PROTOCOL } })
   }
@@ -116,7 +118,9 @@ export class PartyRoom extends DurableObject {
 
   async schedule() {
     if (!this.party) return
-    await this.ctx.storage.setAlarm(Math.min(this.party.created + TTL_MS, this.party.idleUntil ?? Infinity))
+    // A due time already in the past must not re-arm the alarm in a tight loop: every firing is a billed request.
+    const due = Math.min(this.party.created + TTL_MS, this.party.idleUntil ?? Infinity)
+    await this.ctx.storage.setAlarm(Math.max(due, Date.now() + 1000))
   }
 
   async save(party) {

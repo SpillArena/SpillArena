@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { MAX_MEMBERS, apply, createParty, disconnect, join, kick, leave, parseClientMessage, selectGame, transferLeader, viewFor } from '../shared/party.js'
+import { MAX_MEMBERS, PROTOCOL, apply, createParty, disconnect, join, kick, leave, parseClientMessage, selectGame, transferLeader, viewFor } from '../shared/party.js'
+import { issueToken } from '../shared/account-server.js'
 import { onRequest } from '../functions/api/party/[code].js'
 
 const start = () => createParty('ABCD', 'Anna', 1)
@@ -82,14 +83,21 @@ test('client messages outside the protocol are dropped', () => {
   assert.deepEqual(apply(start(), 'Anna', { t: 'leave' }), { error: 'bad_message' })
 })
 
-test('party endpoint rejects bad codes, plain requests and unbound deployments', async () => {
+test('party endpoint rejects bad codes, plain requests, unbound deployments and anonymous callers before any object is woken', async () => {
+  const secret = 'test-secret'
+  const token = await issueToken(secret, 'Anna')
   const upgrade = new Request('https://spillarena.no/api/party/ABCD', { headers: { Upgrade: 'websocket' } })
-  assert.equal(onRequest({ request: upgrade, params: { code: 'AB1D' }, env: {} }).status, 400)
-  assert.equal(onRequest({ request: new Request('https://spillarena.no/api/party/ABCD'), params: { code: 'ABCD' }, env: {} }).status, 426)
-  assert.equal(onRequest({ request: upgrade, params: { code: 'ABCD' }, env: {} }).status, 503)
+  const signedIn = new Request('https://spillarena.no/api/party/ABCD', { headers: { Upgrade: 'websocket', 'Sec-WebSocket-Protocol': `${PROTOCOL}, ${token}` } })
+  assert.equal((await onRequest({ request: upgrade, params: { code: 'AB1D' }, env: {} })).status, 400)
+  assert.equal((await onRequest({ request: new Request('https://spillarena.no/api/party/ABCD'), params: { code: 'ABCD' }, env: {} })).status, 426)
+  assert.equal((await onRequest({ request: upgrade, params: { code: 'ABCD' }, env: {} })).status, 503)
   let used = null
-  const env = { PARTIES: { idFromName: name => name, get: id => ({ fetch: () => { used = id; return new Response('ok') } }) } }
-  assert.equal(onRequest({ request: upgrade, params: { code: 'abcd' }, env }).status, 200)
+  const env = { AUTH_SECRET: secret, PARTIES: { idFromName: name => name, get: id => ({ fetch: () => { used = id; return new Response('ok') } }) } }
+  assert.equal((await onRequest({ request: upgrade, params: { code: 'ABCD' }, env })).status, 401)
+  const forged = new Request('https://spillarena.no/api/party/ABCD', { headers: { Upgrade: 'websocket', 'Sec-WebSocket-Protocol': `${PROTOCOL}, ${token}x` } })
+  assert.equal((await onRequest({ request: forged, params: { code: 'ABCD' }, env })).status, 401)
+  assert.equal(used, null)
+  assert.equal((await onRequest({ request: signedIn, params: { code: 'abcd' }, env })).status, 200)
   assert.equal(used, 'ABCD')
 })
 
